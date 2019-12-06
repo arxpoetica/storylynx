@@ -1,11 +1,11 @@
 {
-  "name": "storylynx-engine",
+  "name": "storylynx",
   "version": "0.0.1",
-  "description": "Internals for your StoryLynx site.",
-  "main": "index.js",
-  "repository": "git@github.com:arxpoetica/storylynx-engine.git",
+  "description": "Internal engine for your StoryLynx site.",
+  "repository": "git@github.com:arxpoetica/storylynx.git",
   "author": "Robert Hall <@arxpoetica>",
   "license": "MIT",
+  "files": ["lib/**/*"],
   "scripts": {
     "watch": "trim watch --svgo"
   },

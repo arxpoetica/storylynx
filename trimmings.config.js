@@ -1,7 +1,7 @@
 export default {
 	svgo: {
 		input: 'src/svgo',
-		outputSvelte: 'dist/svg',
+		outputSvelte: 'svg',
 		outputStatic: false,
 	},
 }
