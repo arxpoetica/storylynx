@@ -1,0 +1,16 @@
+{
+  "name": "storylynx-engine",
+  "version": "0.0.1",
+  "description": "Internals for your StoryLynx site.",
+  "main": "index.js",
+  "repository": "git@github.com:arxpoetica/storylynx-engine.git",
+  "author": "Robert Hall <@arxpoetica>",
+  "license": "MIT",
+  "scripts": {
+    "watch": "trim watch --svgo"
+  },
+  "devDependencies": {
+    "@sapper-dragon/svgo": "0.1.0",
+    "@sapper-dragon/trimmings": "0.1.1"
+  }
+}
