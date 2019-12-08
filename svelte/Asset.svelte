@@ -30,10 +30,10 @@
 {/if}
 
 <script>
-	import { src, alt } from '@lynx/utils/basic-utils'
-	import LazyImg from '@lynx/svelte/LazyImg.svelte'
-	import LazyVid from '@lynx/svelte/LazyVid.svelte'
-	import Magnifier from '@lynx/svelte/Magnifier.svelte'
+	import { src, alt } from '../utils/basic-utils'
+	import LazyImg from './LazyImg.svelte'
+	import LazyVid from './LazyVid.svelte'
+	import Magnifier from './Magnifier.svelte'
 
 	let loaded = false
 	export let asset

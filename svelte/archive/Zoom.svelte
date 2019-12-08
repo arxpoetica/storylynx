@@ -38,10 +38,10 @@
 </div>
 
 <script>
-	import Close from '@lynx/svg/icon-close.svelte'
-	import ZoomIn from '@lynx/svg/zoom-in.svelte'
-	import ZoomOut from '@lynx/svg/zoom-out.svelte'
-	import LazyImg from '@lynx/svelte/LazyImg.svelte'
+	import Close from '../../svg/icon-close.svelte'
+	import ZoomIn from '../../svg/zoom-in.svelte'
+	import ZoomOut from '../../svg/zoom-out.svelte'
+	import LazyImg from '../LazyImg.svelte'
 
 	export let zoomshow = false
 

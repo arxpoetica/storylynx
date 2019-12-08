@@ -5,12 +5,16 @@
   "repository": "git@github.com:arxpoetica/storylynx.git",
   "author": "Robert Hall <@arxpoetica>",
   "license": "MIT",
-  "files": ["lib/**/*"],
   "scripts": {
     "watch": "trim watch --svgo"
   },
   "devDependencies": {
     "@sapper-dragon/svgo": "0.1.0",
     "@sapper-dragon/trimmings": "0.1.1"
+  },
+  "dependencies": {
+    "cross-fetch": "3.0.4",
+    "dayjs": "1.8.17",
+    "svelte": "3.16.0"
   }
 }

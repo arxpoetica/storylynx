@@ -4,7 +4,7 @@
 </div>
 
 <script>
-	import { search_term } from '@lynx/stores/app-store'
+	import { search_term } from '../stores/app-store'
 
 	let indirect_value = ''
 	let no_touch_backs = false

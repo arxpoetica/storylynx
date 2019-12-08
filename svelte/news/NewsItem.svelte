@@ -17,9 +17,9 @@
 </div>
 
 <script>
-	import { formattedstamp, src as source } from '@lynx/utils/basic-utils'
-	import LazyImg from '@lynx/svelte/LazyImg.svelte'
-	import Tags from '@lynx/svelte/Tags.svelte'
+	import { formattedstamp, src as source } from '../../utils/basic-utils'
+	import LazyImg from '../LazyImg.svelte'
+	import Tags from '../Tags.svelte'
 	export let item
 
 	$: asset = item.assets ? item.assets[0] : false

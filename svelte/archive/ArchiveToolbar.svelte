@@ -33,8 +33,8 @@
 </div>
 
 <script>
-	import SelectBox from '@lynx/svelte/SelectBox.svelte'
-	import SearchBar from '@lynx/svelte/SearchBar.svelte'
+	import SelectBox from '../SelectBox.svelte'
+	import SearchBar from '../SearchBar.svelte'
 
 	export let content_types = []
 	// TODO: preload this from the backend

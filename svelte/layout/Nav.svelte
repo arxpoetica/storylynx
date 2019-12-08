@@ -7,8 +7,9 @@
 
 <script>
 	export let section
-	import { stores } from '@sapper/app'
-	const { session } = stores()
+	// import { getContext } from 'svelte'
+	// const { get_sapper_stores } = getContext('@sapper/app')
+	// const { session } = get_sapper_stores()
 </script>
 
 <style type="text/scss">

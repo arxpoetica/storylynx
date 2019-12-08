@@ -30,12 +30,12 @@
 </div>
 
 <script>
-	import { stores } from '@sapper/app'
-	const { page: pageStore } = stores()
-	import { createPaginationRange, createQuery } from '@lynx/utils/page-helpers'
-
-	import Prev from '@lynx/svg/prev.svelte'
-	import Next from '@lynx/svg/next.svelte'
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { page: pageStore } = get_sapper_stores()
+	import { createPaginationRange, createQuery } from '../../utils/page-helpers'
+	import Prev from '../../svg/prev.svelte'
+	import Next from '../../svg/next.svelte'
 
 	export let href = ''
 	export let page = 1

@@ -19,7 +19,7 @@
 </div>
 
 <script>
-	import Asset from '@lynx/svelte/Asset.svelte'
+	import Asset from '../Asset.svelte'
 	export let asset
 	$: all_assets = asset.assetLinks.concat(asset.assets)
 	// FIXME: if no asset, then it shouldn't display at all...
