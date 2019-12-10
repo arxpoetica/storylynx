@@ -18,7 +18,7 @@
 </div>
 
 <script>
-	import SelectCaret from '../svg/select-caret.svelte'
+	import SelectCaret from './svg/select-caret.svelte'
 	export let title
 	export let value = ''
 	export let primary

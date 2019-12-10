@@ -34,8 +34,8 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page: pageStore } = get_sapper_stores()
 	import { createPaginationRange, createQuery } from '../../utils/page-helpers'
-	import Prev from '../../svg/prev.svelte'
-	import Next from '../../svg/next.svelte'
+	import Prev from '../svg/prev.svelte'
+	import Next from '../svg/next.svelte'
 
 	export let href = ''
 	export let page = 1

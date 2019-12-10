@@ -16,13 +16,13 @@
 </footer>
 
 <script>
-	import FacebookIcon from '../../svg/social-facebook.svelte'
-	import GoogleIcon from '../../svg/social-google.svelte'
-	import InstagramIcon from '../../svg/social-instagram.svelte'
-	import LinkedinIcon from '../../svg/social-linkedin.svelte'
-	import TwitterIcon from '../../svg/social-twitter.svelte'
-	import YoutubeIcon from '../../svg/social-youtube.svelte'
-	import EmailIcon from '../../svg/social-email.svelte'
+	import FacebookIcon from '../svg/social-facebook.svelte'
+	import GoogleIcon from '../svg/social-google.svelte'
+	import InstagramIcon from '../svg/social-instagram.svelte'
+	import LinkedinIcon from '../svg/social-linkedin.svelte'
+	import TwitterIcon from '../svg/social-twitter.svelte'
+	import YoutubeIcon from '../svg/social-youtube.svelte'
+	import EmailIcon from '../svg/social-email.svelte'
 </script>
 
 <style type="text/scss">

@@ -38,9 +38,9 @@
 </div>
 
 <script>
-	import Close from '../../svg/icon-close.svelte'
-	import ZoomIn from '../../svg/zoom-in.svelte'
-	import ZoomOut from '../../svg/zoom-out.svelte'
+	import Close from '../svg/icon-close.svelte'
+	import ZoomIn from '../svg/zoom-in.svelte'
+	import ZoomOut from '../svg/zoom-out.svelte'
 	import LazyImg from '../LazyImg.svelte'
 
 	export let zoomshow = false

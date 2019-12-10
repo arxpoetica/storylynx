@@ -12,7 +12,7 @@
 </div>
 
 <script>
-	import Hourglass from '../svg/hourglass.svelte'
+	import Hourglass from './svg/hourglass.svelte'
 	export let src
 	export let alt = 'No information present about this image.'
 	export let width = 100
