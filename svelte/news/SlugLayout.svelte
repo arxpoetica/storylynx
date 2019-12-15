@@ -36,7 +36,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="https://www.linkedin.com/shareArticle?mini=true&url={safe_url}&title={safe_headline}&summary={safe_summary}&source=The%20Johnny%20Miller%20Experience" target="_blank" rel="nofollow">
+					<a href="https://www.linkedin.com/shareArticle?mini=true&url={safe_url}&title={safe_headline}&summary={safe_summary}&source=The%20StoryLynx%20Experience" target="_blank" rel="nofollow">
 						<LinkedInIcon/>
 					</a>
 				</li>
