@@ -1,28 +1,42 @@
 <footer class="layout-outer">
 	<nav class="layout-inner">
 		<ul>
-			<li>Copyright &copy; 2019 {process.env.LYNX_SITE_NAME}</li>
+			{#if copyright}
+				<li><span>{@html copyright}</span></li>
+			{/if}
+			{#each navs as nav}
+				<li data-on={section === nav.state}>
+					{#if nav.prefetch}
+						<a href={nav.href} rel=prefetch>{@html nav.text}</a>
+					{:else}
+						<a href={nav.href}>{@html nav.text}</a>
+					{/if}
+				</li>
+			{/each}
 		</ul>
-		<ul class="share">
-			<li><a href="https://www.facebook.com" target="_blank" rel="nofollow"><FacebookIcon/></a></li>
-			<li><a href="https://aboutme.google.com" target="_blank" rel="nofollow"><GoogleIcon/></a></li>
-			<li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><InstagramIcon/></a></li>
-			<li><a href="https://www.linkedin.com" target="_blank" rel="nofollow"><LinkedinIcon/></a></li>
-			<li><a href="https://twitter.com" target="_blank" rel="nofollow"><TwitterIcon/></a></li>
-			<li><a href="https://www.youtube.com/" target="_blank" rel="nofollow"><YoutubeIcon/></a></li>
-			<li><a href="mailto:?to=&amp;subject=headline&amp;body=body" rel="nofollow"><EmailIcon/></a></li>
-		</ul>
+		{#if brands.length}
+			<ul class="brands">
+				{#each brands as brand}
+					<li><a class="brand" href={brand.href} target="_blank">{@html brand.text}</a></li>
+				{/each}
+			</ul>
+		{/if}
+		{#if share}
+			<Share/>
+		{/if}
 	</nav>
 </footer>
 
 <script>
-	import FacebookIcon from '../svg/social-facebook.svelte'
-	import GoogleIcon from '../svg/social-google.svelte'
-	import InstagramIcon from '../svg/social-instagram.svelte'
-	import LinkedinIcon from '../svg/social-linkedin.svelte'
-	import TwitterIcon from '../svg/social-twitter.svelte'
-	import YoutubeIcon from '../svg/social-youtube.svelte'
-	import EmailIcon from '../svg/social-email.svelte'
+	import Share from './Share.svelte'
+	export let section
+	export let copyright = `Copyright &copy; ${(new Date()).getFullYear()} <br>${process.env.LYNX_SITE_NAME}`
+	export let navs = [
+		{ href: '/terms', text: 'Terms &amp; Conditions', state: 'terms', prefetch: true },
+		{ href: '/privacy', text: 'Privacy Policy', state: 'privacy', prefetch: true },
+	]
+	export let brands = []
+	export let share
 </script>
 
 <style type="text/scss">
@@ -37,37 +51,10 @@
 	}
 	ul {
 		display: flex;
-	}
-	ul {
-		display: flex;
 		margin: 0 0 20rem;
 	}
 	li {
 		margin: 0 10rem;
-	}
-	.share {
-		display: flex;
-		flex-wrap: wrap;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		li {
-			width: 20rem;
-			margin: 0 10rem 10rem;
-		}
-		a {
-			display: block;
-			width: 100%;
-			height: 100%;
-			color: $black;
-			transition: color 0.2s ease-in-out;
-			&:hover {
-				color: $links;
-			}
-		}
 	}
 	@media (--medium-down) {
 		ul {

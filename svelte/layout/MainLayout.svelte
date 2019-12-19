@@ -1,14 +1,24 @@
+<slot name="pre-site"></slot>
 <div class="site">
-	<Header {section}/>
+	<slot name="pre-header"></slot>
+	<slot name="header"><Header {section} navs={headernav}/></slot>
+	<slot name="post-header"></slot>
 	<div class="layout-{section} layout-all">
+		<slot name="pre-main"></slot>
 		<main class="layout-outer">
+			<slot name="pre-inner"></slot>
 			<div class="layout-inner">
 				<slot></slot>
 			</div>
+			<slot name="post-inner"></slot>
 		</main>
+		<slot name="post-main"></slot>
 	</div>
-	<Footer {section}/>
+	<slot name="pre-footer"></slot>
+	<slot name="footer"><Footer {section} navs={footernav} {copyright} {brands}/></slot>
+	<slot name="post-footer"></slot>
 </div>
+<slot name="post-site"></slot>
 
 <script>
 	import { onMount, getContext } from 'svelte'
@@ -17,6 +27,11 @@
 
 	import Header from './Header.svelte'
 	import Footer from './Footer.svelte'
+
+	export let headernav
+	export let footernav
+	export let copyright
+	export let brands
 
 	// DOM ONLY STUFF ---------- >>>>
 	let html
