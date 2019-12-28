@@ -1,9 +1,17 @@
-import path from 'path'
-import { EOL } from 'os'
-import { yellow, red } from 'ansi-colors'
-import { readFile, writeFile } from 'fs-extra'
-import totalist from 'totalist'
-import CheapWatch from 'cheap-watch'
+// TODO: use rollup to roll this thing. in the meantime, hardcoding
+
+// import path from 'path'
+// import { EOL } from 'os'
+// import { yellow, red } from 'ansi-colors'
+// import { readFile, writeFile } from 'fs-extra'
+// import totalist from 'totalist'
+// import CheapWatch from 'cheap-watch'
+const path = require('path')
+const { EOL } = require('os')
+const { yellow, red } = require('ansi-colors')
+const { readFile, writeFile } = require('fs-extra')
+const totalist = require('totalist')
+const CheapWatch = require('cheap-watch')
 
 let overrides_path
 const storylynx_svelte_path = path.join(process.cwd(), '/node_modules/storylynx/svelte')
@@ -13,7 +21,8 @@ const js_regex = /<script>([\S\s]*?)<\/script>/ig
 const files = {}
 let init = false
 
-export default function overrides({ template }) {
+// export default function overrides({ template }) {
+module.exports = function overrides({ template }) {
 	return {
 		name: 'svelte-overrides',
 		async buildStart() {
