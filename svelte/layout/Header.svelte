@@ -1,7 +1,7 @@
 <header class="layout-outer">
 	<div class="layout-inner">
 		<a class="logo" href="/">
-			{process.env.LYNX_SITE_NAME}
+			<span>{process.env.LYNX_SITE_NAME}</span>
 		</a>
 		<nav>
 			<ul>
