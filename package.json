@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "cross-fetch": "3.0.4",
-    "dayjs": "1.8.17",
-    "svelte": "3.16.4"
+    "dayjs": "1.8.18",
+    "jsonwebtoken": "8.5.1",
+    "svelte": "3.16.7"
   }
 }
