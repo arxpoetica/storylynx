@@ -21,10 +21,7 @@
 
 <script>
 	export let section
-	export let navs = [
-		{ href: '/archive', text: 'Archive', state: 'archive', prefetch: true },
-		{ href: '/news', text: 'News', state: 'news', prefetch: true },
-	]
+	export let navs
 	// import { getContext } from 'svelte'
 	// const { get_sapper_stores } = getContext('@sapper/app')
 	// const { session } = get_sapper_stores()

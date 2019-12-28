@@ -28,10 +28,16 @@
 	import Header from './Header.svelte'
 	import Footer from './Footer.svelte'
 
-	export let headernav
-	export let footernav
-	export let copyright
-	export let brands
+	export let headernav = [
+		{ href: '/archive', text: 'Archive', state: 'archive', prefetch: true },
+		{ href: '/news', text: 'News', state: 'news', prefetch: true },
+	]
+	export let footernav = [
+		{ href: '/terms', text: 'Terms &amp; Conditions', state: 'terms', prefetch: true },
+		{ href: '/privacy', text: 'Privacy Policy', state: 'privacy', prefetch: true },
+	]
+	export let copyright = `Copyright &copy; ${(new Date()).getFullYear()} <br>${process.env.LYNX_SITE_NAME}`
+	export let brands = []
 
 	// DOM ONLY STUFF ---------- >>>>
 	let html

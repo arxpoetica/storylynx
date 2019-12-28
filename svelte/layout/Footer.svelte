@@ -17,7 +17,7 @@
 		{#if brands.length}
 			<ul class="brands">
 				{#each brands as brand}
-					<li><a class="brand" href={brand.href} target="_blank">{@html brand.text}</a></li>
+					<li><a href={brand.href} target="_blank">{@html brand.text}</a></li>
 				{/each}
 			</ul>
 		{/if}
@@ -30,13 +30,10 @@
 <script>
 	import Share from './Share.svelte'
 	export let section
-	export let copyright = `Copyright &copy; ${(new Date()).getFullYear()} <br>${process.env.LYNX_SITE_NAME}`
-	export let navs = [
-		{ href: '/terms', text: 'Terms &amp; Conditions', state: 'terms', prefetch: true },
-		{ href: '/privacy', text: 'Privacy Policy', state: 'privacy', prefetch: true },
-	]
-	export let brands = []
-	export let share
+	export let copyright
+	export let navs
+	export let brands
+	export let share = false
 </script>
 
 <style type="text/scss">
