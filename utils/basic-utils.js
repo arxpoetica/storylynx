@@ -1,5 +1,8 @@
 // TODO: throw this in an npm repository ???
 
+// string
+export const hyphenate = str => str.replace(/[^a-z0-9+]+/gi, ' ').trim().replace(/ /g, '-')
+
 // date/time
 import dayjs from 'dayjs'
 export const datestamp = datetime => dayjs(datetime).format('MMMM DD, YYYY')

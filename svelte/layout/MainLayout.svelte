@@ -40,19 +40,13 @@
 	export let brands = []
 
 	// DOM ONLY STUFF ---------- >>>>
+	import { hyphenate } from '../../utils/basic-utils.js'
 	let html
+	// this delay removes the `preload` class from the `html` element
+	onMount(async () => setTimeout(() => html = document.querySelector('html'), 150))
 	$: section = $page.path === '/' ? 'home' : $page.path.split('/')[1]
-	let priorSection
-	$: if (process.browser && html) {
-		html.classList.remove(`${priorSection}-section`)
-		html.classList.add(`${section}-section`)
-		priorSection = section
-	}
-
-	onMount(async () => {
-		html = document.querySelector('html')
-		setTimeout(() => html.classList.remove('preloaded'), 150)
-	})
+	$: section_page = Object.keys($page.params).length ? `${section}-${Object.keys($page.params).join('-')}` : section
+	$: if (process.browser && html) { html.setAttribute('class', `${section}-section ${section_page}-page`) }
 </script>
 
 <style type="text/scss">
