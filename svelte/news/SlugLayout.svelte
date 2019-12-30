@@ -1,4 +1,5 @@
 <div class="layout-main">
+	<slot name="pre-image"></slot>
 	{#if asset}
 		<div class="main-img">
 			<LazyImg {src} {alt} width={asset.width} height={asset.height}/>
@@ -10,6 +11,7 @@
 			<h2>{article.subheadline}</h2>
 		{/if}
 
+		<slot name="pre-content"></slot>
 		<div class="info-bar">
 			{#if article.byline || formatted_stamp}
 				<div class="info">
@@ -56,6 +58,7 @@
 			<p class="source-article"><strong>Source article:</strong> <a href={article.linkBack} target="_blank">{article.linkBack}</a></p>
 		{/if}
 		<Tags url="/news" {tags}/>
+		<slot name="post-content"></slot>
 	</div>
 </div>
 

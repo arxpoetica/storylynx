@@ -8,6 +8,7 @@
 		</h1>
 		<h2 class="h6">Archive | {asset.contentType || 'Uncategorized'}</h2>
 	</div>
+	<slot name="pre-content"></slot>
 	<div class:many class="assets-group" on:contextmenu={event => event.preventDefault()}>
 		{#if all_assets.length > 1}
 			<div class="thumbs">
@@ -31,6 +32,7 @@
 		{/if}
 		<Tags url="/archive" {tags}/>
 	</div>
+	<slot name="post-content"></slot>
 </div>
 {#if main_asset.url}
 	<Zoom bind:zoomshow src={main_asset.url} alt={alt(main_asset)} width={main_asset.width} height={main_asset.height}/>

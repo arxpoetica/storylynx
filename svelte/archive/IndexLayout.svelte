@@ -8,6 +8,7 @@
 		{subjects}
 	/>
 	<h1>Archive</h1>
+	<slot name="pre-content"></slot>
 	{#if items}
 		{#if items.length}
 			<div class="archive">
@@ -24,6 +25,7 @@
 	{:else}
 		<h2>Loading . . .</h2>
 	{/if}
+	<slot name="post-content"></slot>
 </div>
 
 <script>

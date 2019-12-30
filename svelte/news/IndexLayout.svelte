@@ -1,5 +1,6 @@
-<h1>News</h1>
 <div class="layout-main">
+	<h1>News</h1>
+	<slot name="pre-content"></slot>
 	{#if items.length}
 		<div class="news-items">
 			{#each items as item}
@@ -12,6 +13,7 @@
 	{:else}
 		<h2>Loading . . .</h2>
 	{/if}
+	<slot name="post-content"></slot>
 </div>
 
 <script>
