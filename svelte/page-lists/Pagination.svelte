@@ -1,5 +1,5 @@
 <div class="pagination">
-	<div class="info">Page {page} of {Math.ceil(itemsCount / pageSize)}</div>
+	<div class="info">Page {page} of {Math.ceil(items_count / page_size)}</div>
 	<nav>
 		{#if href}
 			<a href="{href}?{createQuery(page - 1, query)}" class="prev-next prev" class:on={page > 1}>Prev</a>
@@ -39,13 +39,13 @@
 
 	export let href = ''
 	export let page = 1
-	export let pageSize
-	export let itemsCount
+	export let page_size
+	export let items_count
 
 	// REMINDER: what is a page in this context?
 	// ANSWER: it's a navigational number (1, 2, 3) representing the page to turn to
 	// ALSO: `page` is the current number
-	$: pagesCount = Math.ceil(itemsCount / pageSize)
+	$: pagesCount = Math.ceil(items_count / page_size)
 	$: range = createPaginationRange(page, pagesCount)
 	$: query = $pageStore.query
 </script>

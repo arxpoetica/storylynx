@@ -4,9 +4,9 @@ export async function page(req, res) {
 
 	try {
 
-		let { page, pageSize, tags } = req.body
+		let { page, page_size, tags } = req.body
 		page = parseInt(page || 1)
-		pageSize = parseInt(pageSize || 12) // just hard coding for now
+		page_size = parseInt(page_size || 12) // just hard coding for now
 		tags = typeof tags === 'string' ? [tags] : tags
 
 		let where
@@ -20,8 +20,8 @@ export async function page(req, res) {
 
 		const { articles, articlesConnection } = await cmsQuery(`{
 			articles(
-				first: ${pageSize},
-				skip: ${(page - 1) * pageSize},
+				first: ${page_size},
+				skip: ${(page - 1) * page_size},
 				where: ${where},
 				orderBy: publishedDatetime_DESC
 			) {
@@ -38,9 +38,9 @@ export async function page(req, res) {
 		}`)
 
 		return res.json({
-			pageSize,
+			page_size,
 			items: articles,
-			itemsCount: articlesConnection.aggregate.count,
+			items_count: articlesConnection.aggregate.count,
 		})
 
 	} catch (error) {

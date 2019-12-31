@@ -7,8 +7,8 @@
 				<NewsItem {item}/>
 			{/each}
 		</div>
-		{#if itemsCount > pageSize}
-			<Pagination href="/news" {page} {pageSize} {itemsCount}/>
+		{#if items_count > page_size}
+			<Pagination href="/news" {page} {page_size} {items_count}/>
 		{/if}
 	{:else}
 		<h2>Loading . . .</h2>
@@ -25,8 +25,8 @@
 	import Pagination from '../page-lists/Pagination.svelte'
 
 	export let items = []
-	export let itemsCount = 0
-	export let pageSize = 0
+	export let items_count = 0
+	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
 </script>
 

@@ -16,8 +16,8 @@
 					<ArchiveItem {asset}/>
 				{/each}
 			</div>
-			{#if itemsCount > pageSize}
-				<Pagination href="/archive" {page} {pageSize} {itemsCount}/>
+			{#if items_count > page_size}
+				<Pagination href="/archive" {page} {page_size} {items_count}/>
 			{/if}
 		{:else}
 			<h2>No content found.</h2>
@@ -41,10 +41,10 @@
 	import ArchiveItem from './ArchiveItem.svelte'
 
 	export let items
-	export let itemsCount = 0
+	export let items_count = 0
 	export let content_types = []
 	export let subjects = []
-	export let pageSize = 0
+	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
 	$: contentValue = $pageStore.query.type || ''
 	$: decadeValue = $pageStore.query.decade || ''
@@ -78,9 +78,9 @@
 		// SEE: https://github.com/sveltejs/sapper/blob/a52bdb2f4e1a722f06134b4065da2a32969e12e2/runtime/src/app/app.ts#L191
 		if (is_search_term) {
 			const res = await POST('/api/assets/page.json', query_string_to_json(params.toString()))
-			pageSize = res.pageSize
+			page_size = res.page_size
 			items = res.items
-			itemsCount = res.itemsCount
+			items_count = res.items_count
 			content_types = res.content_types
 			subjects = res.subjects
 			history.pushState({}, '', `${location.pathname}?${params.toString()}`)
