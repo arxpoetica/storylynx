@@ -1,49 +1,32 @@
 import fetch from 'cross-fetch'
 
+// HONESTLY, THIS WHOLE CACHING THING MAY BE ENTIRELY UNNECESSARY...???
+const api_cache = {}
+export const get_api = async(path) => {
+	const import_path = `${process.env.LYNX_API_PLUGIN}/api/${path}`
+	if (api_cache[import_path]) {
+		return api_cache[import_path]
+	} else {
+		try {
+			const api = (await import(`storylynx-api-graphcms/api/${path}`)).default
+			if (api) {
+				api_cache[import_path] = api
+				return api_cache[import_path]
+			} else {
+				throw new Error('API not loading for unknown reason')
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+
 export const handleError = (error, res) => {
 	console.log(require('ansi-colors').red('Error:'), error.message)
 	if (error.message === 'Unauthorized') {
 		return res.status(401).json({ error: 1, message: 'Unauthorized' })
 	}
 	return res.status(401).json({ error: 1, message: error.message })
-}
-
-export const cmsQuery = async function(query) {
-	try {
-		const res = await fetch(process.env.LYNX_GRAPHCMS_ENDPOINT, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + process.env.LYNX_GRAPHCMS_TOKEN,
-			},
-			body: JSON.stringify({ query }),
-		})
-		const json = await res.json()
-		if (json.errors) { throw Error(json.errors.map(err => `  ${err.message}`).join('\n')) }
-		return json.data
-	} catch (error) {
-		console.log(require('ansi-colors').red('cmsQuery Errors:\n'), error.message)
-		return { error: 1, message: error.message }
-	}
-}
-
-export const cmsMutate = async function(query, variables) {
-	try {
-		const res = await fetch(process.env.LYNX_GRAPHCMS_ENDPOINT, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: 'Bearer ' + process.env.LYNX_GRAPHCMS_MUTATE_TOKEN,
-			},
-			body: JSON.stringify({ query, variables }),
-		})
-		const json = await res.json()
-		if (json.errors) { throw Error(json.errors.map(err => `  ${err.message}`).join('\n')) }
-		return json.data
-	} catch (error) {
-		console.log(require('ansi-colors').red('cmsMutate Errors:\n'), error.message)
-		return { error: 1, message: error.message }
-	}
 }
 
 export const GET = async function(url) {
