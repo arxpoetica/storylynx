@@ -1,7 +1,6 @@
 import { get_api } from '../../utils/loaders.js'
 
 export default async function(req, res) {
-
 	try {
 		let { page, page_size, tags } = req.body
 		page = parseInt(page || 1)

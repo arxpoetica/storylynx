@@ -8,7 +8,7 @@ export const get_api = async(path) => {
 		return api_cache[import_path]
 	} else {
 		try {
-			const api = (await import(`storylynx-api-graphcms/api/${path}`)).default
+			const api = (await import(import_path)).default
 			if (api) {
 				api_cache[import_path] = api
 				return api_cache[import_path]
