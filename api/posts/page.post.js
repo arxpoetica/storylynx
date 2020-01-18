@@ -7,7 +7,7 @@ export default async function(req, res) {
 		page_size = parseInt(page_size || 12) // just hard coding for now
 		tags = typeof tags === 'string' ? [tags] : tags
 
-		const api = await get_api('articles/page.post.js')
+		const api = await get_api('posts/page.post.js')
 		const { items, items_count } = await api({ page, page_size, tags })
 		return res.json({ page_size, items, items_count })
 	} catch (error) {

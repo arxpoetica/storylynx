@@ -6,17 +6,17 @@
 		</div>
 	{/if}
 	<div class="box">
-		<h1>{article.headline}</h1>
-		{#if article.subheadline}
-			<h2>{article.subheadline}</h2>
+		<h1>{post.headline}</h1>
+		{#if post.subheadline}
+			<h2>{post.subheadline}</h2>
 		{/if}
 
 		<slot name="pre-content"></slot>
 		<div class="info-bar">
-			{#if article.byline || formatted_stamp}
+			{#if post.byline || formatted_stamp}
 				<div class="info">
-					{#if article.byline}
-						<h3>{article.byline}</h3>
+					{#if post.byline}
+						<h3>{post.byline}</h3>
 					{/if}
 					{#if formatted_stamp}
 						<h4>{formatted_stamp}</h4>
@@ -54,10 +54,10 @@
 		<div class="detail">
 			{@html html}
 		</div>
-		{#if article.linkBack}
-			<p class="source-article"><strong>Source article:</strong> <a href={article.linkBack} target="_blank">{article.linkBack}</a></p>
+		{#if post.linkBack}
+			<p class="source-post"><strong>Source post:</strong> <a href={post.linkBack} target="_blank">{post.linkBack}</a></p>
 		{/if}
-		<Tags url="/news" {tags}/>
+		<Tags url="/posts" {tags}/>
 		<slot name="post-content"></slot>
 	</div>
 </div>
@@ -65,29 +65,29 @@
 <script>
 	import dayjs from 'dayjs'
 	import { src as source } from '../../utils/basic-utils.js'
-	export let article
+	export let post
 
 	import LazyImg from '../LazyImg.svelte'
-	$: asset = article.assets ? article.assets[0] : false
+	$: asset = post.assets ? post.assets[0] : false
 	$: src = asset ? source(asset, { crop: true, height: Math.floor(asset.height / asset.width * 1000), width: 1000 }) : false
 	$: alt = asset ? asset.summary : 'No description for this image.'
 
-	$: formatted_stamp = article.publishedDatetime ? dayjs(article.publishedDatetime).format('MMMM D, YYYY') : false
+	$: formatted_stamp = post.publishedDatetime ? dayjs(post.publishedDatetime).format('MMMM D, YYYY') : false
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
-	$: html = article.detail.html ? article.detail.html.replace(/<p><\/p>/gi, '') : ''
+	$: html = post.detail.html ? post.detail.html.replace(/<p><\/p>/gi, '') : ''
 
 	import Tags from '../Tags.svelte'
-	$: tags = article.tags.map(tag => tag.tag)
+	$: tags = post.tags.map(tag => tag.tag)
 
 	import FacebookIcon from '../svg/social-facebook.svelte'
 	import TwitterIcon from '../svg/social-twitter.svelte'
 	import LinkedInIcon from '../svg/social-linkedin.svelte'
 	import EmailIcon from '../svg/social-email.svelte'
-	$: safe_headline = encodeURIComponent(article.headline)
-	$: safe_summary = encodeURIComponent(article.subheadline)
-	$: safe_url = encodeURIComponent(`${process.env.LYNX_HOST}/news/${article.slug}`)
+	$: safe_headline = encodeURIComponent(post.headline)
+	$: safe_summary = encodeURIComponent(post.subheadline)
+	$: safe_url = encodeURIComponent(`${process.env.LYNX_HOST}/posts/${post.slug}`)
 </script>
 
 <style type="text/scss">
@@ -190,7 +190,7 @@
 			}
 		}
 	}
-	.source-article {
+	.source-post {
 		margin: 25rem 0 50rem;
 		padding: 25rem 0 0;
 		border-top: 1px solid #cdccd0;

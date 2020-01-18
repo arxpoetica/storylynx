@@ -1,7 +1,7 @@
 <!-- <p>{JSON.stringify(item)}</p> -->
 
-<div class="news-item">
-	<a href="/news/{item.slug}" rel=prefetch>
+<div class="post">
+	<a href="/posts/{item.slug}" rel=prefetch>
 		<div class="img">
 			<LazyImg {src} {alt}/>
 		</div>
@@ -12,7 +12,7 @@
 		{#if item.subheadline}
 			<p class="subheadline">{item.subheadline}</p>
 		{/if}
-		<Tags url="/news" {tags}/>
+		<Tags url="/posts" {tags}/>
 	</div>
 </div>
 
@@ -30,7 +30,7 @@
 </script>
 
 <style type="text/scss">
-	.news-item {
+	.post {
 		// margin: 0 0 50rem;
 		padding: 35rem;
 		border: 1px solid transparent;
@@ -79,7 +79,7 @@
 		margin: 0 0 15rem;
 	}
 	@media (--small-down) {
-		.news-item {
+		.post {
 			margin: 0 0 75rem;
 			padding: 0;
 			&:hover {
