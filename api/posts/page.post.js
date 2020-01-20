@@ -1,5 +1,3 @@
-import { get_api } from '../../utils/loaders.js'
-
 export default async function(req, res) {
 	try {
 		let { page, page_size, tags } = req.body
@@ -7,8 +5,10 @@ export default async function(req, res) {
 		page_size = parseInt(page_size || 12) // just hard coding for now
 		tags = typeof tags === 'string' ? [tags] : tags
 
-		const api = await get_api('posts/page.post.js')
+		const path = `${process.env.LYNX_API_PLUGIN}/api/posts/page.post.js`
+		const { default: api } = await import(path)
 		const { items, items_count } = await api({ page, page_size, tags })
+
 		return res.json({ page_size, items, items_count })
 	} catch (error) {
 		// console.log(error)

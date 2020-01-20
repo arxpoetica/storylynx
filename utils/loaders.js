@@ -1,26 +1,5 @@
 import fetch from 'cross-fetch'
 
-// HONESTLY, THIS WHOLE CACHING THING MAY BE ENTIRELY UNNECESSARY...???
-const api_cache = {}
-export const get_api = async(path) => {
-	const import_path = `${process.env.LYNX_API_PLUGIN}/api/${path}`
-	if (api_cache[import_path]) {
-		return api_cache[import_path]
-	} else {
-		try {
-			const api = (await import(import_path)).default
-			if (api) {
-				api_cache[import_path] = api
-				return api_cache[import_path]
-			} else {
-				throw new Error('API not loading for unknown reason')
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
-}
-
 export const handleError = (error, res) => {
 	console.log(require('ansi-colors').red('Error:'), error.message)
 	if (error.message === 'Unauthorized') {

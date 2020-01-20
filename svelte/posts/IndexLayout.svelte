@@ -8,6 +8,7 @@
 			{/each}
 		</div>
 		{#if items_count > page_size}
+			<!-- FIXME: we have to figure out what to do about pagination now... -->
 			<Pagination href="/posts" {page} {page_size} {items_count}/>
 		{/if}
 	{:else}
