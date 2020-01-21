@@ -54,10 +54,10 @@
 		<div class="detail">
 			{@html html}
 		</div>
-		{#if post.linkBack}
-			<p class="source-post"><strong>Source post:</strong> <a href={post.linkBack} target="_blank">{post.linkBack}</a></p>
+		{#if post.link_back}
+			<p class="source-post"><strong>Source post:</strong> <a href={post.link_back} target="_blank">{post.link_back}</a></p>
 		{/if}
-		<Tags url="/posts" {tags}/>
+		<Tags url="/posts" tags={post.tags}/>
 		<slot name="post-content"></slot>
 	</div>
 </div>
@@ -72,14 +72,13 @@
 	$: src = asset ? source(asset, { crop: true, height: Math.floor(asset.height / asset.width * 1000), width: 1000 }) : false
 	$: alt = asset ? asset.summary : 'No description for this image.'
 
-	$: formatted_stamp = post.publishedDatetime ? dayjs(post.publishedDatetime).format('MMMM D, YYYY') : false
+	$: formatted_stamp = post.published ? dayjs(post.published).format('MMMM D, YYYY') : false
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
-	$: html = post.detail.html ? post.detail.html.replace(/<p><\/p>/gi, '') : ''
+	$: html = post.html ? post.html.replace(/<p><\/p>/gi, '') : ''
 
 	import Tags from '../Tags.svelte'
-	$: tags = post.tags.map(tag => tag.tag)
 
 	import FacebookIcon from '../svg/social-facebook.svelte'
 	import TwitterIcon from '../svg/social-twitter.svelte'
