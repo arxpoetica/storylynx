@@ -31,6 +31,7 @@
 	export let headernav = [
 		{ href: '/archive', text: 'Archive', state: 'archive', prefetch: true },
 		{ href: '/posts', text: 'Posts', state: 'posts', prefetch: true },
+		{ href: '/stories', text: 'Stories', state: 'stories', prefetch: true },
 	]
 	export let footernav = [
 		{ href: '/terms', text: 'Terms &amp; Conditions', state: 'terms', prefetch: true },
