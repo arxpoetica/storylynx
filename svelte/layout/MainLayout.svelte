@@ -29,8 +29,9 @@
 	import Footer from './Footer.svelte'
 
 	export let headernav = [
-		{ href: '/archive', text: 'Archive', state: 'archive', prefetch: true },
-		{ href: '/news', text: 'News', state: 'news', prefetch: true },
+		{ href: '/assets', text: 'Assets', state: 'assets', prefetch: true },
+		{ href: '/posts', text: 'Posts', state: 'posts', prefetch: true },
+		{ href: '/stories', text: 'Stories', state: 'stories', prefetch: true },
 	]
 	export let footernav = [
 		{ href: '/terms', text: 'Terms &amp; Conditions', state: 'terms', prefetch: true },

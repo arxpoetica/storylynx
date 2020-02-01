@@ -1,5 +1,5 @@
 import { POST } from '../../utils/loaders.js'
 export async function preloader({ params }) {
-	const asset = await POST('/api/assets/single.json', { slug: params.slug })
-	return { asset }
+	const post = await POST('/api/posts/single.post', { slug: params.slug })
+	return { post }
 }

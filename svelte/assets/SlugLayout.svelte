@@ -1,18 +1,18 @@
-<div class="layout-main" class:external>
+<div class="layout-main">
 	<div class="pre-texts">
 		<h1>
-			{asset.title}
-			{#if asset.year}
-				<span>({asset.year})</span>
+			{asset_group.title}
+			{#if asset_group.year}
+				<span>({asset_group.year})</span>
 			{/if}
 		</h1>
-		<h2 class="h6">Archive | {asset.contentType || 'Uncategorized'}</h2>
+		<h2 class="h6">Assets | {asset_group.content_type || 'Uncategorized'}</h2>
 	</div>
 	<slot name="pre-content"></slot>
 	<div class:many class="assets-group" on:contextmenu={event => event.preventDefault()}>
-		{#if all_assets.length > 1}
+		{#if asset_group.assets.length > 1}
 			<div class="thumbs">
-				{#each all_assets as thumb, index}
+				{#each asset_group.assets as thumb, index}
 					<div class="thumb" on:mouseover={() => selected = index} on:click={show_zoom}>
 						<Asset asset={thumb} thumb={true}/>
 					</div>
@@ -27,10 +27,10 @@
 		<div class="detail">
 			{@html html}
 		</div>
-		{#if asset.source}
-			<h3 class="source h6">Source: {asset.source}</h3>
+		{#if asset_group.source}
+			<h3 class="source h6">Source: {asset_group.source}</h3>
 		{/if}
-		<Tags url="/archive" {tags}/>
+		<Tags url="/assets" {tags}/>
 	</div>
 	<slot name="post-content"></slot>
 </div>
@@ -39,35 +39,30 @@
 {/if}
 
 <script>
-	export let asset
+	export let asset_group
+
 	import { src, alt } from '../../utils/basic-utils'
 	import Asset from '../Asset.svelte'
 	import Zoom from './Zoom.svelte'
 	let zoomshow = false
 
-	$: all_assets = asset.assetLinks.concat(asset.assets)
-	$: many = all_assets.length > 1
+	$: many = asset_group.assets.length > 1
 	let selected = 0
-	$: main_asset = all_assets[selected]
-	$: video = main_asset.mimeType && main_asset.mimeType.split('/')[0] === 'video'
-	$: external = main_asset.link
+	$: main_asset = asset_group.assets[selected]
+	$: video = main_asset.mime_type.split('/')[0] === 'video'
 
-	const show_zoom = () => {
-		if (!external && !video) {
-			zoomshow = true
-		}
-	}
+	const show_zoom = () => zoomshow = !video
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
-	$: html = asset.detail.html ? asset.detail.html.replace(/<p><\/p>/gi, '') : ''
+	$: html = asset_group.html ? asset_group.html.replace(/<p><\/p>/gi, '') : ''
 
 	import Tags from '../Tags.svelte'
-	$: decade = asset.year ? Math.floor(asset.year / 10) * 10 : undefined
-	$: tags = asset.tags.map(tag => tag.tag)
+	$: decade = asset_group.year ? Math.floor(asset_group.year / 10) * 10 : undefined
+	$: tags = asset_group.tags
 		.concat(decade ? [`${decade}s`] : [])
-		.concat(asset.contentType ? asset.contentType : [])
-		.concat(asset.subject ? asset.subject : [])
+		.concat(asset_group.content_type ? asset_group.content_type : [])
+		.concat(asset_group.subject ? asset_group.subject : [])
 </script>
 
 <style type="text/scss">
@@ -112,12 +107,6 @@
 	.media {
 		cursor: zoom-in;
 		&.video {
-			cursor: default;
-		}
-	}
-	.external {
-		.many .thumb,
-		.media {
 			cursor: default;
 		}
 	}

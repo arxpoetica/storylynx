@@ -1,29 +1,31 @@
 <!-- <p>{JSON.stringify(asset)}</p> -->
 
-<div class="asset">
-	<a href="/archive/{asset.slug}" rel=prefetch>
-		<div class="media" on:contextmenu={event => event.preventDefault()}>
-			<Asset asset={first_asset} thumb={true}/>
-		</div>
-		<div class="texts">
-			<h2>
-				{asset.title || '[This Asset has no title.]'} 
-				{#if asset.year}
-					<span>({asset.year})</span>
-				{/if}
-			</h2>
-			<h3 class="h6">{asset.contentType || 'Uncategorized'}</h3>
-			<h4 class="h6">Explore</h4>
-		</div>
-	</a>
-</div>
+<!-- FIXME: we might need to bring back external assets :( -->
+{#if first_asset}
+	<div class="asset">
+		<a href="/assets/{asset_group.slug}" rel=prefetch>
+			<div class="media" on:contextmenu={event => event.preventDefault()}>
+				<Asset asset={first_asset} thumb={true}/>
+			</div>
+			<div class="texts">
+				<h2>
+					{asset_group.title || '[This Asset has no title.]'} 
+					{#if asset_group.year}
+						<span>({asset_group.year})</span>
+					{/if}
+				</h2>
+				<h3 class="h6">{asset_group.content_type || 'Uncategorized'}</h3>
+				<h4 class="h6">Explore</h4>
+			</div>
+		</a>
+	</div>
+{/if}
 
 <script>
 	import Asset from '../Asset.svelte'
-	export let asset
-	$: all_assets = asset.assetLinks.concat(asset.assets)
+	export let asset_group
 	// FIXME: if no asset, then it shouldn't display at all...
-	$: first_asset = all_assets.length ? all_assets[0] : 'FIXME:'
+	$: first_asset = asset_group.assets.length ? asset_group.assets[0] : false
 </script>
 
 <style type="text/scss">

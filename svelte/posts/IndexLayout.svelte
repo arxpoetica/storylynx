@@ -1,14 +1,15 @@
 <div class="layout-main">
-	<h1>News</h1>
+	<h1>Posts</h1>
 	<slot name="pre-content"></slot>
 	{#if items.length}
-		<div class="news-items">
+		<div class="post-items">
 			{#each items as item}
-				<NewsItem {item}/>
+				<PostItem {item}/>
 			{/each}
 		</div>
-		{#if itemsCount > pageSize}
-			<Pagination href="/news" {page} {pageSize} {itemsCount}/>
+		{#if items_count > page_size}
+			<!-- FIXME: we have to figure out what to do about pagination now... -->
+			<Pagination href="/posts" {page} {page_size} {items_count}/>
 		{/if}
 	{:else}
 		<h2>Loading . . .</h2>
@@ -21,28 +22,28 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page: pageStore } = get_sapper_stores()
 
-	import NewsItem from './NewsItem.svelte'
+	import PostItem from './PostItem.svelte'
 	import Pagination from '../page-lists/Pagination.svelte'
 
 	export let items = []
-	export let itemsCount = 0
-	export let pageSize = 0
+	export let items_count = 0
+	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
 </script>
 
 <style type="text/scss">
-	.news-items {
+	.post-items {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		margin: 0 0 40rem;
 	}
 	@media (--large-to-medium) {
-		.news-items {
+		.post-items {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
 	@media (--small-down) {
-		.news-items {
+		.post-items {
 			display: block;
 		}
 	}

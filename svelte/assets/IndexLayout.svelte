@@ -1,5 +1,5 @@
 <div class="layout-main">
-	<ArchiveToolbar
+	<AssetsToolbar
 		bind:contentValue
 		bind:decadeValue
 		bind:subjectValue
@@ -7,17 +7,17 @@
 		{content_types}
 		{subjects}
 	/>
-	<h1>Archive</h1>
+	<h1>Assets</h1>
 	<slot name="pre-content"></slot>
 	{#if items}
 		{#if items.length}
-			<div class="archive">
-				{#each items as asset}
-					<ArchiveItem {asset}/>
+			<div class="assets">
+				{#each items as asset_group}
+					<AssetsGroup {asset_group}/>
 				{/each}
 			</div>
-			{#if itemsCount > pageSize}
-				<Pagination href="/archive" {page} {pageSize} {itemsCount}/>
+			{#if items_count > page_size}
+				<Pagination href="/assets" {page} {page_size} {items_count}/>
 			{/if}
 		{:else}
 			<h2>No content found.</h2>
@@ -37,14 +37,14 @@
 	import { search_term } from '../../stores/app-store'
 
 	import Pagination from '../page-lists/Pagination.svelte'
-	import ArchiveToolbar from './ArchiveToolbar.svelte'
-	import ArchiveItem from './ArchiveItem.svelte'
+	import AssetsToolbar from './AssetsToolbar.svelte'
+	import AssetsGroup from './AssetsGroup.svelte'
 
 	export let items
-	export let itemsCount = 0
+	export let items_count = 0
 	export let content_types = []
 	export let subjects = []
-	export let pageSize = 0
+	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
 	$: contentValue = $pageStore.query.type || ''
 	$: decadeValue = $pageStore.query.decade || ''
@@ -78,9 +78,9 @@
 		// SEE: https://github.com/sveltejs/sapper/blob/a52bdb2f4e1a722f06134b4065da2a32969e12e2/runtime/src/app/app.ts#L191
 		if (is_search_term) {
 			const res = await POST('/api/assets/page.json', query_string_to_json(params.toString()))
-			pageSize = res.pageSize
+			page_size = res.page_size
 			items = res.items
-			itemsCount = res.itemsCount
+			items_count = res.items_count
 			content_types = res.content_types
 			subjects = res.subjects
 			history.pushState({}, '', `${location.pathname}?${params.toString()}`)
@@ -92,18 +92,18 @@
 </script>
 
 <style type="text/scss">
-	.archive {
+	.assets {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		margin: 0 0 100rem;
 	}
 	@media (--large-to-medium) {
-		.archive {
+		.assets {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
 	@media (--small-down) {
-		.archive {
+		.assets {
 			display: block;
 		}
 	}

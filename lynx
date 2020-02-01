@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+// TODO: let's break this out into it's own package `storylynx-cli` ????
+
+const sade = require('sade')
+const { green, yellow, red, gray } = require('ansi-colors')
+const pkg = require('storylynx/package.json')
+const prog = sade('lynx').version(pkg.version)
+
+prog
+	.command('init')
+	.describe(`Initialize your StoryLynx project`)
+	.option('-e, --env', 'Use .env file')
+	.action(async(opts) => {
+		console.log()
+
+		try {
+			const { LYNX_API_PLUGIN } = process.env
+			if (!LYNX_API_PLUGIN) {
+				throw new Error('You need to set `LYNX_API_PLUGIN` for StoryLynx initialization to work.')
+			}
+			console.log(` :: Initializing StoryLynx using the ${green(LYNX_API_PLUGIN)} plugin ::`)
+			const init = require(`${LYNX_API_PLUGIN}/init.js`)
+			await init()
+		} catch (err) {
+			console.log(red(`> ${err.message}`))
+			console.log(gray(err.stack))
+			process.exit(1)
+		}
+
+		console.log()
+	})
+
+
+prog.parse(process.argv)

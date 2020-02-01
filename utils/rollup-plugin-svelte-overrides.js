@@ -9,7 +9,7 @@
 const path = require('path')
 const { EOL } = require('os')
 const { yellow, red } = require('ansi-colors')
-const { readFile, writeFile } = require('fs-extra')
+const { exists, readFile, writeFile } = require('fs-extra')
 const totalist = require('totalist')
 const CheapWatch = require('cheap-watch')
 
@@ -27,41 +27,46 @@ module.exports = function overrides({ template }) {
 		name: 'svelte-overrides',
 		async buildStart() {
 			if (!init) {
+
 				overrides_path = path.join(process.cwd(), `/src/node_modules/@themes/${template}/overrides`)
 
-				await totalist(overrides_path, async(name, abs) => {
-					if (ext_regex.test(abs)) {
-						await add_file(name)
-					}
-				})
+				if (await exists(overrides_path)) {
 
-				const watch = new CheapWatch({
-					dir: overrides_path,
-					filter: ({ path, stats }) => ext_regex.test(path) || stats.isDirectory(),
-					debounce: 100,
-				})
-				await watch.init()
-				watch.on('+', async({ path: filepath, stats, isNew }) => {
-					if (stats.isFile()) {
-						console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
-						if (isNew) {
-							await add_file(filepath)
+					await totalist(overrides_path, async(name, abs) => {
+						if (ext_regex.test(abs)) {
+							await add_file(name)
 						}
-						await mutate_and_bump_file(filepath)
-					}
-				})
-				watch.on('-', async({ path: filepath, stats }) => {
-					if (stats.isFile()) {
-						console.log('\n~>', red('Deleting'), './' + filepath, '\n')
-						const filename = filepath.replace(ext_regex, '')
-						const ext = filepath.match(ext_regex)[0]
-						delete files[filename][ext]
-						if (Object.keys(files[filename]).length === 0) {
-							delete files[filename]
+					})
+
+					const watch = new CheapWatch({
+						dir: overrides_path,
+						filter: ({ path, stats }) => ext_regex.test(path) || stats.isDirectory(),
+						debounce: 100,
+					})
+					await watch.init()
+					watch.on('+', async({ path: filepath, stats, isNew }) => {
+						if (stats.isFile()) {
+							console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
+							if (isNew) {
+								await add_file(filepath)
+							}
+							await mutate_and_bump_file(filepath)
 						}
-						await mutate_and_bump_file(filepath)
-					}
-				})
+					})
+					watch.on('-', async({ path: filepath, stats }) => {
+						if (stats.isFile()) {
+							console.log('\n~>', red('Deleting'), './' + filepath, '\n')
+							const filename = filepath.replace(ext_regex, '')
+							const ext = filepath.match(ext_regex)[0]
+							delete files[filename][ext]
+							if (Object.keys(files[filename]).length === 0) {
+								delete files[filename]
+							}
+							await mutate_and_bump_file(filepath)
+						}
+					})
+
+				}
 			}
 		},
 		async transform(code, id) {
