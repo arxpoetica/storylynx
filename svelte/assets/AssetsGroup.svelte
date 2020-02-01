@@ -3,7 +3,7 @@
 <!-- FIXME: we might need to bring back external assets :( -->
 {#if first_asset}
 	<div class="asset">
-		<a href="/archive/{asset_group.slug}" rel=prefetch>
+		<a href="/assets/{asset_group.slug}" rel=prefetch>
 			<div class="media" on:contextmenu={event => event.preventDefault()}>
 				<Asset asset={first_asset} thumb={true}/>
 			</div>

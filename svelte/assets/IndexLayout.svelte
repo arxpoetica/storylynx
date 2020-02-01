@@ -1,5 +1,5 @@
 <div class="layout-main">
-	<ArchiveToolbar
+	<AssetsToolbar
 		bind:contentValue
 		bind:decadeValue
 		bind:subjectValue
@@ -7,17 +7,17 @@
 		{content_types}
 		{subjects}
 	/>
-	<h1>Archive</h1>
+	<h1>Assets</h1>
 	<slot name="pre-content"></slot>
 	{#if items}
 		{#if items.length}
-			<div class="archive">
+			<div class="assets">
 				{#each items as asset_group}
-					<ArchiveItem {asset_group}/>
+					<AssetsGroup {asset_group}/>
 				{/each}
 			</div>
 			{#if items_count > page_size}
-				<Pagination href="/archive" {page} {page_size} {items_count}/>
+				<Pagination href="/assets" {page} {page_size} {items_count}/>
 			{/if}
 		{:else}
 			<h2>No content found.</h2>
@@ -37,8 +37,8 @@
 	import { search_term } from '../../stores/app-store'
 
 	import Pagination from '../page-lists/Pagination.svelte'
-	import ArchiveToolbar from './ArchiveToolbar.svelte'
-	import ArchiveItem from './ArchiveItem.svelte'
+	import AssetsToolbar from './AssetsToolbar.svelte'
+	import AssetsGroup from './AssetsGroup.svelte'
 
 	export let items
 	export let items_count = 0
@@ -92,18 +92,18 @@
 </script>
 
 <style type="text/scss">
-	.archive {
+	.assets {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		margin: 0 0 100rem;
 	}
 	@media (--large-to-medium) {
-		.archive {
+		.assets {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
 	@media (--small-down) {
-		.archive {
+		.assets {
 			display: block;
 		}
 	}

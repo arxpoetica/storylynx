@@ -6,7 +6,7 @@
 				<span>({asset_group.year})</span>
 			{/if}
 		</h1>
-		<h2 class="h6">Archive | {asset_group.content_type || 'Uncategorized'}</h2>
+		<h2 class="h6">Assets | {asset_group.content_type || 'Uncategorized'}</h2>
 	</div>
 	<slot name="pre-content"></slot>
 	<div class:many class="assets-group" on:contextmenu={event => event.preventDefault()}>
@@ -30,7 +30,7 @@
 		{#if asset_group.source}
 			<h3 class="source h6">Source: {asset_group.source}</h3>
 		{/if}
-		<Tags url="/archive" {tags}/>
+		<Tags url="/assets" {tags}/>
 	</div>
 	<slot name="post-content"></slot>
 </div>
