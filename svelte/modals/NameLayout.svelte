@@ -2,7 +2,23 @@
 	<div class="box">
 		<slot name="pre-content"></slot>
 
-		<p>Modal: {modal}</p>
+		{#if modal}
+			<h1>{modal.name}</h1>
+			<!-- <p>Modal: {JSON.stringify(modal)}</p> -->
+			{#each modal.rootclip.sequences as sequence}
+				<div class="sequence">
+					<h2>{sequence.name}</h2>
+					{#each sequence.clips as clip}
+						<div class="clip">
+							<h3>{clip.name}</h3>
+							<div class="detail">
+								{@html clip.html}
+							</div>
+						</div>
+					{/each}
+				</div>
+			{/each}
+		{/if}
 
 		<slot name="post-content"></slot>
 	</div>
