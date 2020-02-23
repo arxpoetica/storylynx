@@ -1,17 +1,11 @@
 <slot name="pre-site"></slot>
 <div class="site">
 	<slot name="header"></slot>
-	<div class="layout-{section} layout-all">
+	<main class="layout-{section} layout-all">
 		<slot name="pre-main"></slot>
-		<main class="layout-outer">
-			<slot name="pre-inner"></slot>
-			<div class="layout-inner">
-				<slot></slot>
-			</div>
-			<slot name="post-inner"></slot>
-		</main>
+			<slot></slot>
 		<slot name="post-main"></slot>
-	</div>
+	</main>
 	<slot name="footer"></slot>
 </div>
 <slot name="post-site"></slot>
