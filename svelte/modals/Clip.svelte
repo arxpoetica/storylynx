@@ -1,3 +1,4 @@
+<!-- {#if clip.order === '1-1-1'} -->
 <div class="clip template-{template} theme-{theme} clip-{clip.order} {clip.classes ? clip.classes : ''}">
 	<div class="clip-wrap">
 		{#if clip.asset}
@@ -17,18 +18,34 @@
 		{/if}
 	</div>
 </div>
+<!-- {/if} -->
 
 <script>
 	export let clip
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 
+	import Default from './templates/Default.svelte'
+	import Column from './templates/Column.svelte'
+	import Fullscreen from './templates/Fullscreen.svelte'
+	import TwoUp from './templates/TwoUp.svelte'
+	import ThreeUp from './templates/ThreeUp.svelte'
+	import PhotoGrid from './templates/PhotoGrid.svelte'
+	import TitleCard from './templates/TitleCard.svelte'
+
 	$: template = clip.template ? camel_to_hyphen(clip.template) : 'default'
 	$: theme = clip.theme ? camel_to_hyphen(clip.theme) : 'default'
 
-	// import LazyImg from '../LazyImg.svelte'
-	// $: asset = modal.assets ? modal.assets[0] : false
-	// $: src = asset ? source(asset, { crop: true, height: Math.floor(asset.height / asset.width * 1000), width: 1000 }) : false
-	// $: alt = asset ? asset.summary : 'No description for this image.'
+	let component = {
+		Column,
+		ColumnLeft: Column,
+		ColumnRight: Column,
+		Fullscreen,
+		FullscreenNoBorder: Fullscreen,
+		TwoUp,
+		ThreeUp,
+		PhotoGrid,
+		TitleCard,
+	}
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
