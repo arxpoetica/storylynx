@@ -1,23 +1,10 @@
 <!-- {#if clip.order === '1-1-1'} -->
-<div class="clip template-{template} theme-{theme} clip-{clip.order} {clip.classes ? clip.classes : ''}">
-	<div class="clip-wrap">
-		{#if clip.asset}
-			<img src={clip.asset.url} alt={clip.summary || ''}/>
-			<!-- {JSON.stringify(clip.asset)} -->
-		{/if}
-		<!-- <h3>{clip.name}</h3> -->
-		{#if html || clip.name}
-			<div class="detail">
-				{#if clip.name}
-					<h2 class="title">{clip.name}</h2>
-				{/if}
-				{#if html}
-					{@html html}
-				{/if}
-			</div>
-		{/if}
-	</div>
-</div>
+{#if clip.template}
+	<!-- <div class="asdf">{clip.template}</div> -->
+	<svelte:component this={component[clip.template]} {clip} {html} {template} {theme}/>
+{:else}
+	<svelte:component this={Default} {clip} {html} {template} {theme}/>
+{/if}
 <!-- {/if} -->
 
 <script>
@@ -52,11 +39,7 @@
 	$: html = clip.html ? clip.html.replace(/<p><\/p>/gi, '') : ''
 </script>
 
-<style type="text/scss">
-	.clip {
-		padding: 50rem;
-		background-color: white;
-	}
+<!-- <style type="text/scss">
 	.detail {
 		& :global {
 			> p:first-child::first-letter {
@@ -101,4 +84,4 @@
 			}
 		}
 	}
-</style>
+</style> -->
