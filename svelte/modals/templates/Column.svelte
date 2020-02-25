@@ -1,4 +1,4 @@
-<div class="clip template-{template} theme-{theme} clip-{clip.order}">
+<div class="clip template-{template} {themes.join(' ')} transition-{transition} clip-{clip.order}">
 	<!-- TODO: use an HTML component wrapper for shared CSS styles... -->
 	<!-- TODO: use an HTML component wrapper for shared CSS styles... -->
 	<!-- TODO: use an HTML component wrapper for shared CSS styles... -->
@@ -17,7 +17,8 @@
 <script>
 	export let clip
 	export let template
-	export let theme
+	export let themes
+	export let transition
 	export let html
 </script>
 

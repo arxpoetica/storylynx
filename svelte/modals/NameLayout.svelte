@@ -3,22 +3,8 @@
 		<slot name="pre-content"></slot>
 
 		{#if modal}
-			<!-- <h1>{modal.name}</h1> -->
-			<!-- <p>Modal: {JSON.stringify(modal)}</p> -->
 			{#each modal.rootclip.sequences as sequence}
 				<div class="sequence {sequence.classes ? sequence.classes : ''}">
-					<!-- {#if sequence.name || sequence.html}
-						<div class="sequence-header">
-							<div class="detail">
-								{#if sequence.name}
-									<h2>{sequence.name}</h2>
-								{/if}
-								{#if sequence.html}
-									{@html html(sequence.html)}
-								{/if}
-							</div>
-						</div>
-					{/if} -->
 					<div class="clips">
 						{#each sequence.clips as clip}
 							<Clip {clip}/>

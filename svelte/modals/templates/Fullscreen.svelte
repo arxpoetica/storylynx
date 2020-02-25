@@ -1,4 +1,4 @@
-<div class="clip template-{template} theme-{theme} clip-{clip.order}">
+<div class="clip template-{template} {themes.join(' ')} transition-{transition} clip-{clip.order}">
 	<div class="clip-wrap" style={bg}>
 		<div class="detail">
 			{#if clip.name}
@@ -12,11 +12,12 @@
 <script>
 	export let clip
 	export let template
-	export let theme
+	export let themes
+	export let transition
 	export let html
 
 	$: bg
-		= (theme === 'default' || theme.indexOf('background-') > -1) && clip.assets.length
+		= (themes.indexOf('theme-default') > -1 || themes.find(theme => theme.indexOf('background') > -1)) && clip.assets.length
 		? `background-image:url(${clip.assets[0].url});`
 		: undefined
 </script>
@@ -24,14 +25,8 @@
 <style type="text/scss">
 	.clip {
 		height: 100vh;
+		padding: 50rem;
 		background: none repeat center transparent;
-		.clip-wrap {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100%;
-			background: none repeat center transparent;
-		}
 		&.theme-default,
 		&[class*="theme-background-"] {
 			background-color: white;
@@ -50,5 +45,15 @@
 		&.theme-background-top-right .clip-wrap { background-position: right top; }
 		&.theme-background-bottom-left .clip-wrap { background-position: left bottom; }
 		&.theme-background-bottom-right .clip-wrap { background-position: right bottom; }
+	}
+	.clip-wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		background: none repeat center transparent;
+	}
+	.theme-no-border {
+		padding: 0;
 	}
 </style>

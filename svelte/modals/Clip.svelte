@@ -1,38 +1,24 @@
 <!-- {#if clip.order === '1-1-1'} -->
-{#if clip.template}
-	<!-- <div class="asdf">{clip.template}</div> -->
-	<svelte:component this={component[clip.template]} {clip} {html} {template} {theme}/>
-{:else}
-	<svelte:component this={Default} {clip} {html} {template} {theme}/>
-{/if}
+<!-- <div>{clip.template}</div> -->
+<!-- <div>{clip.order}</div> -->
+<svelte:component this={component[clip.template]} {clip} {html} {template} {themes} {transition}/>
 <!-- {/if} -->
 
 <script>
 	export let clip
-	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 
-	import Default from './templates/Default.svelte'
 	import Column from './templates/Column.svelte'
 	import Fullscreen from './templates/Fullscreen.svelte'
 	import TwoUp from './templates/TwoUp.svelte'
 	import ThreeUp from './templates/ThreeUp.svelte'
 	import PhotoGrid from './templates/PhotoGrid.svelte'
 	import TitleCard from './templates/TitleCard.svelte'
+	let component = { Column, Fullscreen, TwoUp, ThreeUp, PhotoGrid, TitleCard }
 
+	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: template = clip.template ? camel_to_hyphen(clip.template) : 'default'
-	$: theme = clip.theme ? camel_to_hyphen(clip.theme) : 'default'
-
-	let component = {
-		Column,
-		ColumnLeft: Column,
-		ColumnRight: Column,
-		Fullscreen,
-		FullscreenNoBorder: Fullscreen,
-		TwoUp,
-		ThreeUp,
-		PhotoGrid,
-		TitleCard,
-	}
+	$: themes = clip.themes.length ? clip.themes.map(theme => `theme-${camel_to_hyphen(theme)}`) : ['theme-default']
+	$: transition = clip.transition ? camel_to_hyphen(clip.transition) : 'default'
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
