@@ -7,13 +7,8 @@
 <script>
 	export let clip
 
-	import Column from './templates/Column.svelte'
-	import Fullscreen from './templates/Fullscreen.svelte'
-	import TwoUp from './templates/TwoUp.svelte'
-	import ThreeUp from './templates/ThreeUp.svelte'
-	import PhotoGrid from './templates/PhotoGrid.svelte'
-	import TitleCard from './templates/TitleCard.svelte'
-	let component = { Column, Fullscreen, TwoUp, ThreeUp, PhotoGrid, TitleCard }
+	let component
+	// INSERT ROLLUP CODE HERE // DO NOT DELETE THIS LINE!!! Rollup relies on it to replace code
 
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: template = clip.template ? camel_to_hyphen(clip.template) : 'default'

@@ -1,11 +1,3 @@
-// TODO: use rollup to roll this thing. in the meantime, hardcoding
-
-// import path from 'path'
-// import { EOL } from 'os'
-// import { yellow, red } from 'ansi-colors'
-// import { readFile, writeFile } from 'fs-extra'
-// import totalist from 'totalist'
-// import CheapWatch from 'cheap-watch'
 const path = require('path')
 const { EOL } = require('os')
 const { yellow, red } = require('ansi-colors')
