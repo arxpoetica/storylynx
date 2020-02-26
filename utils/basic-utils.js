@@ -2,6 +2,7 @@
 
 // string
 export const hyphenate = str => str.replace(/[^a-z0-9+]+/gi, ' ').trim().replace(/ /g, '-')
+export const camel_to_hyphen = str => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
 // date/time
 import dayjs from 'dayjs'
