@@ -6,6 +6,7 @@ const totalist = require('totalist')
 const CheapWatch = require('cheap-watch')
 
 let templates_path
+const script = process.env.npm_lifecycle_event
 const ext_regex = /\.(html|svelte)$/
 const files = {}
 let init = false
@@ -27,34 +28,36 @@ module.exports = function overrides({ template, domain }) {
 						}
 					})
 
-					const watch = new CheapWatch({
-						dir: templates_path,
-						filter: ({ path, stats }) => ext_regex.test(path),
-						debounce: 100,
-					})
-					await watch.init()
-					watch.on('+', async({ path: filepath, stats, isNew }) => {
-						if (stats.isFile()) {
-							if (domain === 'client') {
-								console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
+					if (script !== 'build' && script !== 'export') {
+						const watch = new CheapWatch({
+							dir: templates_path,
+							filter: ({ path, stats }) => ext_regex.test(path),
+							debounce: 100,
+						})
+						await watch.init()
+						watch.on('+', async({ path: filepath, stats, isNew }) => {
+							if (stats.isFile()) {
+								if (domain === 'client') {
+									console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
+								}
+								if (isNew) {
+									const filename = filepath.replace(ext_regex, '')
+									files[filename] = filename
+								}
+								await mutate_and_bump_clip_file()
 							}
-							if (isNew) {
+						})
+						watch.on('-', async({ path: filepath, stats }) => {
+							if (stats.isFile()) {
+								if (domain === 'client') {
+									console.log('\n~>', red('Deleting'), './' + filepath, '\n')
+								}
 								const filename = filepath.replace(ext_regex, '')
-								files[filename] = filename
+								delete files[filename]
+								await mutate_and_bump_clip_file()
 							}
-							await mutate_and_bump_clip_file()
-						}
-					})
-					watch.on('-', async({ path: filepath, stats }) => {
-						if (stats.isFile()) {
-							if (domain === 'client') {
-								console.log('\n~>', red('Deleting'), './' + filepath, '\n')
-							}
-							const filename = filepath.replace(ext_regex, '')
-							delete files[filename]
-							await mutate_and_bump_clip_file()
-						}
-					})
+						})
+					}
 
 				}
 			}

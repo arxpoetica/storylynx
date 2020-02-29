@@ -6,6 +6,7 @@ const totalist = require('totalist')
 const CheapWatch = require('cheap-watch')
 
 let overrides_path
+const script = process.env.npm_lifecycle_event
 const storylynx_svelte_path = path.join(process.cwd(), '/node_modules/storylynx/svelte')
 const ext_regex = /\.(html|js|postcss)$/
 const postcss_regex = /<style([\S\s]*?)>([\S\s]*?)<\/style>/ig
@@ -30,33 +31,35 @@ module.exports = function overrides({ template }) {
 						}
 					})
 
-					const watch = new CheapWatch({
-						dir: overrides_path,
-						filter: ({ path, stats }) => ext_regex.test(path) || stats.isDirectory(),
-						debounce: 100,
-					})
-					await watch.init()
-					watch.on('+', async({ path: filepath, stats, isNew }) => {
-						if (stats.isFile()) {
-							console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
-							if (isNew) {
-								await add_file(filepath)
+					if (script !== 'build' && script !== 'export') {
+						const watch = new CheapWatch({
+							dir: overrides_path,
+							filter: ({ path, stats }) => ext_regex.test(path) || stats.isDirectory(),
+							debounce: 100,
+						})
+						await watch.init()
+						watch.on('+', async({ path: filepath, stats, isNew }) => {
+							if (stats.isFile()) {
+								console.log('\n~>', yellow(isNew ? 'Adding' : 'Changing'), './' + filepath, '\n')
+								if (isNew) {
+									await add_file(filepath)
+								}
+								await mutate_and_bump_file(filepath)
 							}
-							await mutate_and_bump_file(filepath)
-						}
-					})
-					watch.on('-', async({ path: filepath, stats }) => {
-						if (stats.isFile()) {
-							console.log('\n~>', red('Deleting'), './' + filepath, '\n')
-							const filename = filepath.replace(ext_regex, '')
-							const ext = filepath.match(ext_regex)[0]
-							delete files[filename][ext]
-							if (Object.keys(files[filename]).length === 0) {
-								delete files[filename]
+						})
+						watch.on('-', async({ path: filepath, stats }) => {
+							if (stats.isFile()) {
+								console.log('\n~>', red('Deleting'), './' + filepath, '\n')
+								const filename = filepath.replace(ext_regex, '')
+								const ext = filepath.match(ext_regex)[0]
+								delete files[filename][ext]
+								if (Object.keys(files[filename]).length === 0) {
+									delete files[filename]
+								}
+								await mutate_and_bump_file(filepath)
 							}
-							await mutate_and_bump_file(filepath)
-						}
-					})
+						})
+					}
 
 				}
 			}
