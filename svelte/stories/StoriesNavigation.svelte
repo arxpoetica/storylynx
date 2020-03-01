@@ -3,12 +3,12 @@
 	<!-- {JSON.stringify(navigation)} -->
 		{#each navigation.sequences as sequence}
 			<li class="sequence">
-				<h2>{sequence.name || sequence.order}</h2>
+				<h2>{sequence.title || sequence.order}</h2>
 				{#if sequence.clips.length}
 					<ul class="clips">
 						{#each sequence.clips as clip}
 							<li class="clip">
-								<h3>{clip.name || clip.order}</h3>
+								<h3>{clip.title || clip.order}</h3>
 							</li>
 						{/each}
 					</ul>
@@ -19,7 +19,8 @@
 </nav>
 
 <script>
-	export let navigation
+	export let story
+	$: navigation = story.rootclip
 </script>
 
 <style type="text/scss">
