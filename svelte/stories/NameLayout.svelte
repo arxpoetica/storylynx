@@ -1,3 +1,4 @@
+<StoriesNavigation {navigation}/>
 <div class="layout-main">
 	<div class="box">
 		<slot name="pre-content"></slot>
@@ -19,6 +20,9 @@
 </div>
 
 <script>
+	export let navigation
+	import StoriesNavigation from './StoriesNavigation.svelte'
+
 	export let story
 	import Clip from './Clip.svelte'
 
