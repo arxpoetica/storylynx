@@ -63,7 +63,7 @@ module.exports = function overrides({ template, domain }) {
 			}
 		},
 		async transform(code, id) {
-			if (/\/storylynx\/svelte\/modals\/Clip\.svelte$/.test(id)) {
+			if (/\/storylynx\/svelte\/stories\/Clip\.svelte$/.test(id)) {
 				let importers = ''
 				for (const file in files) {
 					const filepath = path.join(process.cwd(), `/src/node_modules/@themes/${template}/templates/${file}.svelte`)
@@ -86,7 +86,7 @@ module.exports = function overrides({ template, domain }) {
 }
 
 // ...yes, we're mutating the file, but in a premeditated, controlled fashion...
-const filepath = path.join(process.cwd(), '/node_modules/storylynx/svelte/modals/Clip.svelte')
+const filepath = path.join(process.cwd(), '/node_modules/storylynx/svelte/stories/Clip.svelte')
 async function mutate_and_bump_clip_file() {
 	const contents = await readFile(filepath, 'utf8')
 	if (contents.endsWith(' ')) {

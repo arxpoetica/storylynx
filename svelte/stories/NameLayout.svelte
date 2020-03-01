@@ -2,8 +2,8 @@
 	<div class="box">
 		<slot name="pre-content"></slot>
 
-		{#if modal}
-			{#each modal.rootclip.sequences as sequence}
+		{#if story}
+			{#each story.rootclip.sequences as sequence}
 				<div class="sequence {sequence.classes ? sequence.classes : ''}">
 					<div class="clips">
 						{#each sequence.clips as clip}
@@ -19,7 +19,7 @@
 </div>
 
 <script>
-	export let modal
+	export let story
 	import Clip from './Clip.svelte'
 
 	// FIXME: ????? CAN I EVEN???
