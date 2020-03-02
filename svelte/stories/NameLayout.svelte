@@ -1,4 +1,4 @@
-<StoriesNavigation {story}/>
+<Navigation {story}/>
 <div class="layout-main">
 	<div class="box">
 		<slot name="pre-content"></slot>
@@ -21,7 +21,7 @@
 
 <script>
 	export let story
-	import StoriesNavigation from './StoriesNavigation.svelte'
+	import Navigation from './Navigation.svelte'
 	import Clip from './Clip.svelte'
 
 	// FIXME: ????? CAN I EVEN???
