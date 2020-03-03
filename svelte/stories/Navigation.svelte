@@ -1,6 +1,7 @@
-<nav>
-	<!-- {JSON.stringify(navigation)} -->
-	<ul class="sequences">
+<svelte:window on:resize={set_widths}/>
+
+<nav bind:this={nav} on:wheel={faff} class:scrolling>
+	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
 		{#each navigation.sequences as sequence, index}
 			<li class="sequence">
 				<h2><a href="/stories/{$page.params.title}/">{sequence.title || index}</a></h2>
@@ -9,7 +10,7 @@
 						{#each sequence.clips as clip}
 							{#if clip.title}
 								<li class="clip">
-									<h3><span>{clip.title}</span></h3>
+									<h3><span class="out"><span class="in">{clip.title}</span></span></h3>
 								</li>
 							{/if}
 						{/each}
@@ -21,18 +22,70 @@
 </nav>
 
 <script>
-	import { getContext } from 'svelte'
+	import { onMount, getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
 	export let story
 	$: navigation = story.rootclip
+
+	// scrolling helpers:
+
+	// SEE: https://stackoverflow.com/questions/41740082/scroll-events-requestanimationframe-vs-requestidlecallback-vs-passive-event-lis
+	// NOTE: `passive: true` is not really needed, but info on it anyway... 🐃
+	// SEE: https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
+	// TODO: add `touchmove` ???
+
+	let nav
+	let seq
+	let pos_x = 0
+	let delta_x = 0
+	let prev_delta_x = 0
+	let ticking = false
+
+	let nav_width = 0
+	let seq_width = 0
+	let body_width = 0
+	$: scrolling = body_width < seq_width
+
+	onMount(() => set_widths())
+
+	function set_widths() {
+		nav_width = nav.getBoundingClientRect().width
+		seq_width = seq.getBoundingClientRect().width
+		body_width =  document.body.getBoundingClientRect().width
+		pos_x = set_boundaries(pos_x)
+	}
+
+	function set_boundaries(pos) {
+		if (pos < 0) {
+			pos = 0
+		} else if (pos > seq_width - nav_width) {
+			pos = Math.floor(seq_width - nav_width)
+		}
+		return pos
+	}
+
+	function faff(event) {
+		if (scrolling) {
+			event.preventDefault()
+			prev_delta_x = event.deltaX
+			if (!ticking) {
+				requestAnimationFrame(() => {
+					delta_x = event.deltaX
+					let new_pos_x = pos_x + event.deltaX
+					new_pos_x = set_boundaries(new_pos_x)
+					pos_x = new_pos_x
+					ticking = false
+				})
+				ticking = true
+			}
+		}
+	}
 </script>
 
 <style type="text/scss">
 	nav {
-		// overflow-x: auto;
-		// overflow-y: visible;
 		display: flex;
 		justify-content: center;
 		position: fixed;
@@ -41,9 +94,13 @@
 		left: 0;
 		background-color: black;
 		color: white;
+		&.scrolling {
+			justify-content: flex-start;
+		}
 	}
 	.sequences {
 		display: flex;
+		transform:translateX(0px);
 	}
 	.sequence {
 		display: flex;
@@ -79,7 +136,7 @@
 		cursor: pointer;
 		&:hover {
 			background-color: #333;
-			span {
+			.out {
 				transition: opacity 0.25s ease-in-out;
 				opacity: 1;
 			}
@@ -92,7 +149,7 @@
 		background-color: $red-main;
 		pointer-events: none;
 	}
-	span {
+	.out {
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
@@ -106,4 +163,5 @@
 		transition: none;
 		opacity: 0;
 	}
+	// .in {}
 </style>
