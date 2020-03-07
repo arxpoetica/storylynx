@@ -146,7 +146,7 @@
 		width: 4rem;
 		height: 20rem;
 		margin: 0;
-		background-color: $red-main;
+		background-color: blue;
 		pointer-events: none;
 	}
 	.out {

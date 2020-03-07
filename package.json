@@ -15,6 +15,7 @@
     "ansi-colors": "4.1.1",
     "cheap-watch": "1.0.2",
     "cross-fetch": "3.0.4",
+    "crypto-js": "4.0.0",
     "dayjs": "1.8.18",
     "fs-extra": "8.1.0",
     "jsonwebtoken": "8.5.1",
