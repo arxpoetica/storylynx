@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs'
+// import bcrypt from 'bcryptjs'
 import { handleError } from '../../utils/loaders.js'
 import { getToken, setToken } from '../../utils/auth-utils.js'
 
@@ -27,6 +27,7 @@ export default async function(req, res) {
 			throw Error('Password must be at least 20 characters.')
 		}
 
+		// FIXME: bcrypt goes in the plugin!!!!
 		// FIXME: salt this -- in a more secure auth example, we would salt with a
 		// unique imprint and store on the user or somewhere safe
 		const hash = await bcrypt.hash(password, 10)

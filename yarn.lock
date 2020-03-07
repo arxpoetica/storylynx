@@ -46,11 +46,6 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-bcryptjs@2.4.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
-  integrity sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=
-
 boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
