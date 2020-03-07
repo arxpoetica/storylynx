@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { handleError } from '../../utils/loaders.js'
-import { getToken, setToken } from '../../utils/auth-helpers.js'
+import { getToken, setToken } from '../../utils/auth-utils.js'
 
-export async function post(req, res) {
+export default async function(req, res) {
 
 	try {
 		const token = getToken(req)

@@ -1,6 +1,6 @@
 import { handleError } from '../../utils/loaders.js'
 
-export async function get(req, res) {
+export default async function(req, res) {
 	try {
 		res.clearCookie('lynx')
 		return res.json({ loggedOut: true })

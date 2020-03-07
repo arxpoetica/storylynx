@@ -3,7 +3,7 @@ import { handleError } from '../../utils/loaders.js'
 import { setToken } from '../../utils/auth-utils.js'
 import { src } from '../../utils/basic-utils.js'
 
-export async function post(req, res) {
+export default async function(req, res) {
 
 	try {
 

@@ -1,7 +1,7 @@
 import { getToken } from '../../../utils/auth-utils.js'
-import { handleError } from '../../utils/loaders.js'
+import { handleError } from '../../../utils/loaders.js'
 
-export async function post(req, res) {
+export default async function(req, res) {
 	try {
 		const token = getToken(req)
 		if (token.unauthorized) { throw Error('Unauthorized') }
