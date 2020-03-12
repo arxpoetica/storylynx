@@ -61,7 +61,7 @@
 
 	$: path = $page.path
 
-	// import { GET } from '@johnny/utils/loaders'
+	import { GET } from '../../utils/loaders.js'
 	import Settings from './svg/admin-settings.svelte'
 	import Post from './svg/admin-post.svelte'
 	import Asset from './svg/admin-asset.svelte'
@@ -69,7 +69,7 @@
 
 	async function logout(event) {
 		event.preventDefault()
-		await GET('/api/auth/logout.json')
+		await GET('/api/auth/logout.get')
 		window.location.reload(true)
 	}
 </script>
