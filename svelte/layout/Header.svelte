@@ -14,6 +14,11 @@
 						{/if}
 					</li>
 				{/each}
+				{#if $session.user}
+					<li data-on={section === 'admin'}>
+						<a href="/admin">Admin</a>
+					</li>
+				{/if}
 			</ul>
 		</nav>
 	</div>
@@ -22,9 +27,9 @@
 <script>
 	export let section
 	export let navs
-	// import { getContext } from 'svelte'
-	// const { get_sapper_stores } = getContext('@sapper/app')
-	// const { session } = get_sapper_stores()
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
 </script>
 
 <style type="text/scss">
