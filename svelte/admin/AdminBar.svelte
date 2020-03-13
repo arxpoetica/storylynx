@@ -32,13 +32,13 @@
 			</div> -->
 		</div>
 		<div class="second">
-			<h2 class:on={path.indexOf('/admin/accounts') === 0}>
+			<h2 class:on={path.indexOf('/admin/users') === 0}>
 				<div class="svg"><Settings/></div>
 				Settings
 			</h2>
 			<div class="links">
-				<a href="/admin/accounts" class:on={path === '/admin/accounts'}>All Accounts</a>
-				<!-- <a href="/admin/accounts/{$session.user.username}">Edit Your Account</a> -->
+				<a href="/admin/users" class:on={path === '/admin/users'}>Users</a>
+				<a href="/admin/users/{$session.user.username}">Your User</a>
 				<div class="div"></div>
 				<a href="/auth/logout" on:click={logout}>Log Out</a>
 			</div>
@@ -54,7 +54,6 @@
 </nav>
 
 <script>
-
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session, page } = get_sapper_stores()
@@ -99,10 +98,10 @@
 		padding: 10rem;
 		font: 18rem/1 var(--admin-font);
 		background-color: var(--admin-gray-darker);
-		color: var(--admin-white);
+		color: var(--admin-gray-lighter);
 		cursor: default;
 		&.on {
-			// background-color: $orange-l2;
+			background-color: var(--admin-blue);
 			color: var(--admin-black);
 		}
 	}
@@ -125,7 +124,7 @@
 			transition: background-color 0.15s ease-in-out;
 		}
 		&.on {
-			// color: $orange-l2;
+			color: var(--admin-blue);
 			font-weight: bold;
 			pointer-events: none;
 		}

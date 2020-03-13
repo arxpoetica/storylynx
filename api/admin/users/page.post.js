@@ -9,11 +9,11 @@ export default async function(req, res) {
 
 		let { sort = 'DESC' } = req.body
 
-		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/accounts/page.post.js`
+		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/users/page.post.js`
 		const { default: api } = await import(path)
-		const { items, itemsCount } = await api({ sort })
+		const { items, items_count } = await api({ sort })
 
-		res.json({ items, itemsCount })
+		res.json({ items, items_count })
 
 	} catch (error) {
 		return handleError(error, res)

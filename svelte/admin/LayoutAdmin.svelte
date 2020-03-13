@@ -23,15 +23,6 @@
 	$: section_page = Object.keys($page.params).length ? `${section}-${Object.keys($page.params).join('-')}` : section
 	$: if (process.browser && html) { html.setAttribute('class', `${section}-section ${section_page}-page`) }
 
-	// TODO: probably move to the admin page...
-	// import { target } from '@johnny/stores/app-store'
-	// onMount(async () => {
-	// 	document.addEventListener('click', event => target.set(event.target))
-	// 	html = document.querySelector('html')
-	// 	html.classList.add($session.user ? 'auth' : 'no-auth')
-	// 	setTimeout(() => html.classList.remove('preloaded'), 150)
-	// })
-
 	// import { QuillCss } from './_components/QuillCss'
 	// import { Quill } from '@johnny/stores/admin-store'
 	beforeUpdate(async() => {
@@ -55,30 +46,37 @@
 		--admin-gray-dark: #333;
 		--admin-gray-med: #888;
 		--admin-gray-light: #bbb;
-		--admin-white: #ddd;
+		--admin-gray-lighter: #e3e3e3;
+		--admin-white: #fff;
+		--admin-offwhite: #f3f3f3;
+		--admin-blue: #1ac0ff;
 		// --admin-links: #9dcbdd;
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	.admin-layout {
 		display: grid;
-		// grid-template-areas:
-		// 	"admin header"
-		// 	"admin main"
-		// 	"admin footer"
-		// ;
-		grid-template-areas: "admin main";
-		// grid-template-rows: auto 1fr auto;
 		grid-template-columns: 250rem 1fr;
 		flex: 1;
-		background-color: var(--admin-gray-light);
-		// & :global(> header) {
-		// 	grid-row: header;
-		// 	grid-column: header;
-		// }
-		// & :global(> footer) {
-		// 	grid-row: footer;
-		// 	grid-column: footer;
-		// }
+		background-color: var(--admin-gray-lighter);
+		// TODO: put these all in a global CSS file
+		:global {
+			table {
+				width: 100%;
+				background-color: var(--admin-white);
+				border-collapse: collapse;
+				border-spacing: 0;
+				border: 1px solid var(--admin-gray-light);
+				font-family: inherit;
+				line-height: 1.2;
+			}
+			thead, tfoot { tr { border: 1px solid var(--admin-gray-light); } }
+			tbody tr:nth-child(odd) { background-color: var(--admin-offwhite); }
+			th, td {
+				padding: 8rem;
+				text-align: left;
+				vertical-align: middle;
+			}
+		}
 	}
 	main {
 		display: grid;
