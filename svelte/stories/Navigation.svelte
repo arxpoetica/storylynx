@@ -94,6 +94,7 @@
 		left: 0;
 		background-color: black;
 		color: white;
+		z-index: 1;
 		&.scrolling {
 			justify-content: flex-start;
 		}
