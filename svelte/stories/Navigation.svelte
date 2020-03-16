@@ -1,10 +1,11 @@
 <svelte:window on:resize={set_widths}/>
 
 <nav bind:this={nav} on:wheel={faff} class:scrolling>
+	<!-- {JSON.stringify($page.params)} -->
 	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
 		{#each navigation.sequences as sequence, index}
-			<li class="sequence">
-				<h2><a href="/stories/{$page.params.title}/">{sequence.title || index}</a></h2>
+			<li class="sequence sequence-{index}">
+				<h2><a href={href(sequence)}>{sequence.title}</a></h2>
 				{#if sequence.clips.length}
 					<ul class="clips">
 						{#each sequence.clips as clip}
@@ -28,6 +29,10 @@
 
 	export let story
 	$: navigation = story.rootclip
+
+	function href(sequence) {
+		return `/stories/${$page.params.story}/${sequence.title.toLowerCase()}`
+	}
 
 	// scrolling helpers:
 

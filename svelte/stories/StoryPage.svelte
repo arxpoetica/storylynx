@@ -5,16 +5,15 @@
 <!-- <p>{JSON.stringify(story)}</p> -->
 
 <div class="story-layout">
-	{#if story}
-		{#if sequence}
-			<div class="sequence {sequence.classes ? sequence.classes : ''}">
-				<div class="clips">
-					{#each sequence.clips as clip}
-						<Clip {clip}/>
-					{/each}
-				</div>
+	{#if story && sequence}
+		<div class="sequence {sequence.classes ? sequence.classes : ''}">
+			<div class="clips">
+				{#each sequence.clips as clip}
+					<Clip {clip}/>
+				{/each}
 			</div>
-		{/if}
+		</div>
+		<InlineNavigation {story}/>
 	{/if}
 </div>
 
@@ -25,6 +24,7 @@
 
 	export let story
 	import Navigation from './Navigation.svelte'
+	import InlineNavigation from './InlineNavigation.svelte'
 
 	$: sequence = story.rootclip.sequences.find(seq => seq.title.toLowerCase() === $page.params.sequence)
 		|| story.rootclip.sequences[0]
@@ -38,7 +38,8 @@
 
 <style type="text/scss">
 	.sequence {
+		margin: 50rem;
 		padding: 50rem;
-		border: 3px solid black;
+		border: 1px solid gray;
 	}
 </style>
