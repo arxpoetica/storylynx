@@ -1,7 +1,8 @@
 <!-- {#if clip.order === '1-1-1'} -->
+<!-- <div>{JSON.stringify(clip)}</div> -->
 <!-- <div>{clip.template}</div> -->
 <!-- <div>{clip.order}</div> -->
-<svelte:component this={component[clip.template]} {clip} {html} {template} {themes} {transition}/>
+<svelte:component this={component[clip.template]} clip={vars}/>
 <!-- {/if} -->
 
 <script>
@@ -11,13 +12,14 @@
 	// INSERT ROLLUP CODE HERE // DO NOT DELETE THIS LINE!!! Rollup relies on it to replace code
 
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
-	$: template = clip.template ? camel_to_hyphen(clip.template) : 'default'
-	$: themes = clip.themes.length ? clip.themes.map(theme => `theme-${camel_to_hyphen(theme)}`) : ['theme-default']
-	$: transition = clip.transition ? camel_to_hyphen(clip.transition) : 'default'
-
-	// FIXME: ????? CAN I EVEN???
-	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
-	$: html = clip.html ? clip.html.replace(/<p><\/p>/gi, '') : ''
+	$: vars = Object.assign({}, clip, {
+		template: clip.template ? camel_to_hyphen(clip.template) : 'default',
+		themes: clip.themes.length ? clip.themes.map(theme => `theme-${camel_to_hyphen(theme)}`) : ['theme-default'],
+		transition: clip.transition ? camel_to_hyphen(clip.transition) : 'default',
+		// FIXME: ????? CAN I EVEN???
+		// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
+		html: clip.html ? clip.html.replace(/<p><\/p>/gi, '') : '',
+	})
 </script>
 
 <!-- <style type="text/scss">
