@@ -26,6 +26,33 @@ export const bytesFormat = bytes => {
 }
 
 // links / urls
+export const get_src = (clip, opts = {}) => {
+	opts.index = typeof opts.index === 'number' ? opts.index : 0
+	const asset = clip.assets[opts.index]
+	if (!asset && !asset.mime_type.includes('image')) {
+		return undefined
+	}
+
+	let src = asset.url.split(asset.handle)[0]
+	if (opts.width || opts.height) {
+		src += 'resize='
+		if (opts.width && opts.height) {
+			src += `w:${opts.width},h:${opts.height}`
+		} else if (opts.width) {
+			src += `w:${opts.width}`
+		} else {
+			src += `h:${opts.height}`
+		}
+		src += opts.crop ? ',fit:crop/' : '/'
+	} else if (opts.crop) {
+		// just a default size if crop only
+		src += 'resize=w:600,h:600,fit:crop/'
+	}
+	return src + asset.handle
+}
+// TODO: deprecated, remove and replace w/ `get_src` (DO NO RENAME IT TO `src` because that causes native name conflicts...)
+// TODO: deprecated, remove and replace w/ `get_src` (DO NO RENAME IT TO `src` because that causes native name conflicts...)
+// TODO: deprecated, remove and replace w/ `get_src` (DO NO RENAME IT TO `src` because that causes native name conflicts...)
 export const src = (asset, options = {}) => {
 	if (asset) {
 		let src = asset.url.split(asset.handle)[0]
