@@ -46,7 +46,6 @@
 
 <style type="text/scss">
 	.bg-wrap {
-		overflow: hidden;
 		position: relative;
 		width: 100%;
 		height: 100%;

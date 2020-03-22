@@ -1,7 +1,8 @@
 {#if asset}
 	<div class="asset">
 		{#if type === 'video'}
-			<InlineVideo {asset} {options}/>
+			<!-- <InlineVideo {asset} {options}/> -->
+			<InlineVideo {asset}/>
 		{:else if type === 'audio'}
 			InlineAudio asset options
 		{:else}
@@ -44,6 +45,5 @@
 		bottom: 0;
 		left: 0;
 		z-index: 1;
-		background-color: pink;
 	}
 </style>
