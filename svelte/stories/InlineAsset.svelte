@@ -1,10 +1,9 @@
 {#if asset}
 	<div class="asset">
 		{#if type === 'video'}
-			<!-- <InlineVideo {asset} {options}/> -->
-			<InlineVideo {asset}/>
+			<InlineVideo {asset} {image} {options}/>
 		{:else if type === 'audio'}
-			InlineAudio asset options
+			<InlineAudio {asset} {image} {options}/>
 		{:else}
 			<InlineImage {asset} {options}/>
 		{/if}
@@ -16,7 +15,7 @@
 	export let options = {}
 
 	import InlineVideo from './InlineVideo.svelte'
-	// import InlineAudio from './InlineAudio.svelte'
+	import InlineAudio from './InlineAudio.svelte'
 	import InlineImage from './InlineImage.svelte'
 
 	$: videos = assets.filter(asset => asset.mime_type.includes('video'))
@@ -29,11 +28,10 @@
 	)
 	$: type = asset ? asset.mime_type.split('/')[0] : undefined
 
-	$: asset_two
+	$: image
 		= (type === 'video' || type === 'audio') && images.length
 		? images[0]
 		: undefined
-	// $: type_two = asset_two ? asset_two.mime_type.split('/')[0] : undefined
 </script>
 
 <style type="text/scss">
