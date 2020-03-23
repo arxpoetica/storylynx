@@ -1,6 +1,6 @@
 <div class:show class="bg-wrap">
 	<img {src} alt="n/a" use:lazy/>
-	<div class:show class="bg" style="background-image:url({src});"></div>
+	<div class:show class="bg" style="background-image:url({src});{bg_pos}"></div>
 </div>
 
 <script>
@@ -27,6 +27,9 @@
 		}
 		src = path + asset.handle
 	}
+
+	import { camel_to_hyphen } from '../../utils/basic-utils.js'
+	$: bg_pos = asset.bg_pos ? `background-position:${camel_to_hyphen(asset.bg_pos).replace('-', ' ')};` : ''
 
 	function lazy(node) {
 		if (loaded) {
