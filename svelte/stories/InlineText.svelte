@@ -10,7 +10,7 @@
 
 <script>
 	export let asset
-	export let options
+	// export let options
 
 	// // TODO: how to fix height on smaller windows??????? (SEE media left / media right)
 	// let content
