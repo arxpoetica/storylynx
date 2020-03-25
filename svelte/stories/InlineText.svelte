@@ -1,55 +1,54 @@
 <!-- <svelte:window on:resize={set_template_height} bind:innerHeight/> -->
 
-<div class="text-wrap">
-	<div class="content">
-		{@html asset.html}
+<!-- <figure>
+	<img...>
+	<figcaption>...</figcaption>
+</figure> -->
+
+<div class:show class="text-wrap">
+	<div bind:this={content} class="content">
+		<!-- {@html asset.html} -->
 	</div>
-	<!-- <img {src} alt="n/a" use:lazy/> -->
-	<!-- <div class:show class="bg" style="background-image:url({src});"></div> -->
 </div>
 
 <script>
+	// TODO: how to fix height on smaller windows??????? (SEE media left / media right)
+
 	export let asset
 	// export let options
+	let content
 
-	// // TODO: how to fix height on smaller windows??????? (SEE media left / media right)
-	// let content
+	import { onMount } from 'svelte'
+	import { format_url } from './inline-helpers.js'
+	// $: src = format_url(asset.url, options)
 
-	// let loaded = false
-	// let show = false
-	// let src; $: {
-	// 	let path = asset.url.split(asset.handle)[0]
-	// 	if (options.width || options.height) {
-	// 		path += 'resize='
-	// 		if (options.width && options.height) {
-	// 			path += `w:${options.width},h:${options.height}`
-	// 		} else if (options.width) {
-	// 			path += `w:${options.width}`
-	// 		} else {
-	// 			path += `h:${options.height}`
-	// 		}
-	// 		path += options.crop ? ',fit:crop/' : '/'
-	// 	} else if (options.crop) {
-	// 		// just a default size if crop only
-	// 		path += 'resize=w:600,h:600,fit:crop/'
-	// 	}
-	// 	src = path + asset.handle
-	// }
+	const loading = []
+	let loaded = 0
+	let transpired = false
+	$: show = loading.length === loaded && transpired
 
-	// function lazy(node) {
-	// 	if (loaded) {
-	// 		node.setAttribute('src', src)
-	// 	} else {
-	// 		const img = new Image()
-	// 		img.onload = () => {
-	// 			loaded = true
-	// 			node.setAttribute('src', src)
-	// 			setTimeout(() => show = true, 100)
-	// 		}
-	// 		img.src = src
-	// 	}
-	// 	return { destroy() {} } // noop
-	// }
+	onMount(() => {
+		const div = document.createElement('div');
+		div.innerHTML = asset.html
+		const images = div.querySelectorAll('img')
+
+		for (let img of images) {
+			// just some basic cleanup:
+			// TODO: remove later when we have a non-graphcms think...need to think through that all...
+			img.removeAttribute('title')
+			img.removeAttribute('width')
+			img.removeAttribute('height')
+			// TODO: remove later when we have a non-graphcms think...need to think through that all...
+			if (img.src.includes('graphcms')) {
+				loading.push({ img, src: format_url(img.src, { width: 600 }) })
+				img.removeAttribute('src')
+				img.onload = () => loaded++
+			}
+		}
+		content.appendChild(div)
+		for (let load of loading) { load.img.src = load.src }
+		transpired = true
+	})
 </script>
 
 <style type="text/scss">
@@ -60,12 +59,17 @@
 		width: 100%;
 		height: 100%;
 		padding: 60rem;
-		background-color: #f7f7f7;
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+		&.show {
+			opacity: 1;
+		}
 		& :global {
 			img {
-				// opacity: 0;
-				width: 100%;
+				display: block;
+				max-width: 100%;
 				height: auto;
+				margin: 0 auto;
 				line-height: 0;
 			}
 		}

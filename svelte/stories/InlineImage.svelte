@@ -6,43 +6,18 @@
 <script>
 	export let asset
 	export let options
-
-	let loaded = false
 	let show = false
-	let src; $: {
-		let path = asset.url.split(asset.handle)[0]
-		if (options.width || options.height) {
-			path += 'resize='
-			if (options.width && options.height) {
-				path += `w:${options.width},h:${options.height}`
-			} else if (options.width) {
-				path += `w:${options.width}`
-			} else {
-				path += `h:${options.height}`
-			}
-			path += options.crop ? ',fit:crop/' : '/'
-		} else if (options.crop) {
-			// just a default size if crop only
-			path += 'resize=w:600,h:600,fit:crop/'
-		}
-		src = path + asset.handle
-	}
+
+	import { format_url } from './inline-helpers.js'
+	$: src = format_url(asset.url, options)
 
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: bg_pos = asset.bg_pos ? `background-position:${camel_to_hyphen(asset.bg_pos).replace('-', ' ')};` : ''
 
 	function lazy(node) {
-		if (loaded) {
-			node.setAttribute('src', src)
-		} else {
-			const img = new Image()
-			img.onload = () => {
-				loaded = true
-				node.setAttribute('src', src)
-				setTimeout(() => show = true, 100)
-			}
-			img.src = src
-		}
+		const img = new Image()
+		img.onload = () => setTimeout(() => show = true, 100)
+		img.src = src
 		return { destroy() {} } // noop
 	}
 </script>

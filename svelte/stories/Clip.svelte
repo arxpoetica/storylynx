@@ -1,4 +1,4 @@
-<!-- {#if clip.order === '1-1-1'} -->
+<!-- {#if clip.order === '0000-0020'} -->
 <!-- <div>{JSON.stringify(clip)}</div> -->
 <!-- <div>{clip.template}</div> -->
 <!-- <div>{clip.order}</div> -->
