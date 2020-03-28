@@ -27,7 +27,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
-		background-color: #f7f7f7;
+		// background-color: #f7f7f7;
 	}
 	.bg {
 		position: absolute;

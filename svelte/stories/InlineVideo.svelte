@@ -13,9 +13,7 @@
 	let video_source
 	let src = ''
 	function lazy(video) {
-		console.log('yes')
 		video.oncanplaythrough = async() => {
-			console.log('yes sir!')
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
@@ -23,7 +21,7 @@
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			video.muted = true
-			await video.play()
+			// await video.play()
 			show = true
 		}
 		src = asset.url

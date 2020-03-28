@@ -1,11 +1,13 @@
 {#if asset}
 	<div class="asset">
 		{#if type === 'video'}
-			<InlineVideo {asset} {image} {options}/>
+			<!-- <InlineVideo {asset} {image} {options}/> -->
+			<InlineVideo {asset}/>
 		{:else if type === 'audio'}
 			<InlineAudio {asset} {image} {options}/>
 		{:else if type === 'text'}
-			<InlineText {asset} {options}/>
+			<!-- <InlineText {asset} {options}/> -->
+			<InlineText {asset}/>
 		{:else}
 			<InlineImage {asset} {options}/>
 		{/if}
