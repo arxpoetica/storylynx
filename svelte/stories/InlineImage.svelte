@@ -6,7 +6,11 @@
 <script>
 	export let asset
 	export let options
-	let show = false
+	export let intersecting
+
+	let loaded = false
+	let intersected; $: if (intersecting) { intersected = true }
+	$: show = loaded && intersected
 
 	import { format_url } from './inline-helpers.js'
 	$: src = format_url(asset.url, options)
@@ -16,7 +20,7 @@
 
 	function lazy(node) {
 		const img = new Image()
-		img.onload = () => setTimeout(() => show = true, 100)
+		img.onload = () => loaded = true
 		img.src = src
 		return { destroy() {} } // noop
 	}

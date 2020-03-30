@@ -2,13 +2,15 @@
 <!-- <div>{JSON.stringify(clip)}</div> -->
 <!-- <div>{clip.template}</div> -->
 <!-- <div>{clip.order}</div> -->
-<div class="clip">
+<div bind:this={el} class="clip">
 	<svelte:component this={component[clip.template]} clip={vars}/>
 </div>
 <!-- {/if} -->
 
 <script>
+	import { onMount } from 'svelte'
 	export let clip
+	let el
 
 	let component
 	// INSERT ROLLUP CODE HERE // DO NOT DELETE THIS LINE!!! Rollup relies on it to replace code
@@ -21,6 +23,27 @@
 		// FIXME: ????? CAN I EVEN???
 		// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
 		html: clip.html ? clip.html.replace(/<p><\/p>/gi, '') : '',
+		intersecting,
+	})
+
+	import { story_scroll, root, rootMargin, threshold } from '../../stores/app-store.js'
+
+	let intersecting = false
+	$: scroll = intersecting ? $story_scroll : false
+
+	onMount(() => {
+		const observer = new IntersectionObserver((entries, observer) => {
+			if (entries[0].isIntersecting) {
+				intersecting = true
+			} else {
+				intersecting = false
+			}
+		}, {
+			root: $root,
+			rootMargin: $rootMargin,
+			threshold:  $threshold,
+		})
+		observer.observe(el)
 	})
 </script>
 

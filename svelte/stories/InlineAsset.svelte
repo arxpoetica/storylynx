@@ -1,22 +1,36 @@
 {#if asset}
-	<div class="asset">
-		{#if type === 'video'}
-			<!-- <InlineVideo {asset} {image} {options}/> -->
-			<InlineVideo {asset}/>
-		{:else if type === 'audio'}
-			<InlineAudio {asset} {image} {options}/>
-		{:else if type === 'text'}
-			<!-- <InlineText {asset} {options}/> -->
-			<InlineText {asset}/>
-		{:else}
-			<InlineImage {asset} {options}/>
-		{/if}
+	<div bind:this={elem} class="asset {transition}">
+		<div class="asset-action" style={animation_style}>
+			{#if type === 'video'}
+				<!-- <InlineVideo {asset} {image} {options}/> -->
+				<InlineVideo intersecting={clip.intersecting} {asset}/>
+			{:else if type === 'audio'}
+				<InlineAudio intersecting={clip.intersecting} {asset} {image} {options}/>
+			{:else if type === 'text'}
+				<!-- <InlineText {asset} {options}/> -->
+				<InlineText intersecting={clip.intersecting} {asset}/>
+			{:else}
+				<InlineImage intersecting={clip.intersecting} {asset} {options}/>
+			{/if}
+		</div>
 	</div>
 {/if}
 
 <script>
-	export let assets = []
+	export let index = 0
+	export let clip
 	export let options = {}
+	export let overrides = []
+
+	import { camel_to_hyphen } from '../../utils/basic-utils.js'
+	$: group = clip.asset_groups.length ? clip.asset_groups[index] : undefined
+	$: assets = overrides.length && overrides || (group.assets.length ? group.assets : undefined)
+
+	let elem
+	import { animate } from '../../utils/transition-utils.js'
+	import { story_scroll } from '../../stores/app-store.js'
+	$: transition = group.transition ? camel_to_hyphen(group.transition) : ''
+	$: animation_style = animate(elem, group.transition, clip.intersecting, $story_scroll)
 
 	import InlineVideo from './InlineVideo.svelte'
 	import InlineAudio from './InlineAudio.svelte'
@@ -52,5 +66,10 @@
 		bottom: 0;
 		left: 0;
 		z-index: 1;
+	}
+	.asset-action {
+		position: relative;
+		width: 100%;
+		height: 100%;
 	}
 </style>

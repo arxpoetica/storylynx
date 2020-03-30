@@ -16,6 +16,8 @@
 
 	export let asset
 	// export let options
+	export let intersecting
+
 	let content
 
 	import { onMount } from 'svelte'

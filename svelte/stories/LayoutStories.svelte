@@ -1,3 +1,7 @@
+<svelte:window bind:scrollY={scroll_y}/>
+
+<!-- <div class="scroll">scroll_y: {scroll_y} | story_scroll: {$story_scroll}</div> -->
+
 <slot name="pre-site"></slot>
 <div class="site">
 	<slot name="header"></slot>
@@ -15,6 +19,10 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
+	import { story_scroll } from '../../stores/app-store.js'
+	let scroll_y = 0
+	$: story_scroll.set(scroll_y)
+
 	// DOM ONLY STUFF ---------- >>>>
 	import { hyphenate } from '../../utils/basic-utils.js'
 	let html
@@ -26,6 +34,15 @@
 </script>
 
 <style type="text/scss">
+	// .scroll {
+	// 	position: fixed;
+	// 	top: 0;
+	// 	right: 0;
+	// 	padding: 10rem;
+	// 	background-color: red;
+	// 	color: white;
+	// 	z-index: 999999999999;
+	// }
 	.site {
 		display: grid;
 		grid-template-areas:

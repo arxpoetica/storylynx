@@ -1,5 +1,5 @@
 <div class="vid-wrap">
-	<video class:show use:lazy loop>
+	<video bind:this={video} class:show use:lazy loop>
 		<source bind:this={video_source} {src} type="video/mp4"/>
 	</video>
 </div>
@@ -7,8 +7,15 @@
 <script>
 	export let asset
 	// export let options
+	export let intersecting
 
-	let show = false
+	let loaded = false
+	let intersected; $: if (intersecting) { intersected = true }
+	$: show = loaded && intersected
+
+	// video.play()
+	let video
+	$: if (show) { video.play() }
 
 	let video_source
 	let src = ''
@@ -21,8 +28,7 @@
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			video.muted = true
-			// await video.play()
-			show = true
+			loaded = true
 		}
 		src = asset.url
 		return { destroy() {} } // noop
