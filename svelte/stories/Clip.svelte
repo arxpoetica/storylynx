@@ -2,34 +2,40 @@
 <!-- <div>{JSON.stringify(clip)}</div> -->
 <!-- <div>{clip.template}</div> -->
 <!-- <div>{clip.order}</div> -->
-<div bind:this={el} class="clip">
-	<svelte:component this={component[clip.template]} clip={vars}/>
+<div bind:this={elem} class="clip clip-{transition}">
+	<div class="clip-wrap" style={animation_style}>
+		<svelte:component this={component[clip.template]} clip={vars}/>
+	</div>
 </div>
 <!-- {/if} -->
 
 <script>
 	import { onMount } from 'svelte'
 	export let clip
-	let el
+	let elem
 
 	let component
 	// INSERT ROLLUP CODE HERE // DO NOT DELETE THIS LINE!!! Rollup relies on it to replace code
 
+	import { story_scroll, root, rootMargin, threshold } from '../../stores/app-store.js'
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
+	import { animate_clip } from '../../utils/transition-utils.js'
+
+	let intersecting = false
+
+	// $: scroll = intersecting ? $story_scroll : false
+	$: transition = clip.transition ? camel_to_hyphen(clip.transition) : 'default'
+	$: animation_style = animate_clip(elem, clip.transition, intersecting, $story_scroll/* , clip.order */)
+
 	$: vars = Object.assign({}, clip, {
 		template: clip.template ? camel_to_hyphen(clip.template) : 'default',
 		themes: clip.themes.length ? clip.themes.map(theme => `theme-${camel_to_hyphen(theme)}`) : ['theme-default'],
-		transition: clip.transition ? camel_to_hyphen(clip.transition) : 'default',
+		transition,
 		// FIXME: ????? CAN I EVEN???
 		// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
 		html: clip.html ? clip.html.replace(/<p><\/p>/gi, '') : '',
 		intersecting,
 	})
-
-	import { story_scroll, root, rootMargin, threshold } from '../../stores/app-store.js'
-
-	let intersecting = false
-	$: scroll = intersecting ? $story_scroll : false
 
 	onMount(() => {
 		const observer = new IntersectionObserver((entries, observer) => {
@@ -43,11 +49,18 @@
 			rootMargin: $rootMargin,
 			threshold:  $threshold,
 		})
-		observer.observe(el)
+		observer.observe(elem)
 	})
 </script>
 
 <style type="text/scss">
+	.clip {
+		position: relative;
+		font: 16rem/1.4 $font;
+	}
+	.clip-wrap {
+		position: relative;
+	}
 	// .detail {
 	// 	& :global {
 	// 		> p:first-child::first-letter {

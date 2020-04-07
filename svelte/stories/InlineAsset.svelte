@@ -24,13 +24,13 @@
 
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: group = clip.asset_groups.length ? clip.asset_groups[index] : undefined
-	$: assets = overrides.length && overrides || (group.assets.length ? group.assets : undefined)
+	$: assets = overrides.length && overrides || (group && group.assets.length ? group.assets : [])
 
 	let elem
-	import { animate } from '../../utils/transition-utils.js'
+	import { animate_asset } from '../../utils/transition-utils.js'
 	import { story_scroll } from '../../stores/app-store.js'
-	$: transition = group.transition ? camel_to_hyphen(group.transition) : ''
-	$: animation_style = animate(elem, group.transition, clip.intersecting, $story_scroll)
+	$: transition = group && group.transition ? camel_to_hyphen(group.transition) : ''
+	$: animation_style = group ? animate_asset(elem, group.transition, clip.intersecting, $story_scroll) : ''
 
 	import InlineVideo from './InlineVideo.svelte'
 	import InlineAudio from './InlineAudio.svelte'
