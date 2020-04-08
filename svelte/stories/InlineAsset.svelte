@@ -6,11 +6,11 @@
 				<InlineVideo intersecting={clip.intersecting} {asset}/>
 			{:else if type === 'audio'}
 				<InlineAudio intersecting={clip.intersecting} {asset} {image} {options}/>
-			{:else if type === 'text'}
+			{:else if type === 'image'}
+				<InlineImage intersecting={clip.intersecting} {asset} {text} {options}/>
+			{:else}
 				<!-- <InlineText {asset} {options}/> -->
 				<InlineText intersecting={clip.intersecting} {asset}/>
-			{:else}
-				<InlineImage intersecting={clip.intersecting} {asset} {options}/>
 			{/if}
 		</div>
 	</div>
@@ -34,27 +34,25 @@
 
 	import InlineVideo from './InlineVideo.svelte'
 	import InlineAudio from './InlineAudio.svelte'
-	import InlineText from './InlineText.svelte'
 	import InlineImage from './InlineImage.svelte'
+	import InlineText from './InlineText.svelte'
 
 	$: videos = assets.filter(asset => asset.mime_type.includes('video'))
 	$: audios = assets.filter(asset => asset.mime_type.includes('audio'))
-	$: texts = assets.filter(asset => asset.mime_type.includes('text'))
 	$: images = assets.filter(asset => asset.mime_type.includes('image'))
+	$: texts = assets.filter(asset => asset.mime_type.includes('text'))
 
 	let asset
 	$: if (videos.length) { asset = videos[0] }
 	else if (audios.length) { asset = audios[0] }
-	else if (texts.length) { asset = texts[0] }
 	else if (images.length) { asset = images[0] }
+	else if (texts.length) { asset = texts[0] }
 	else { asset = undefined }
 
 	$: type = asset && asset.mime_type ? asset.mime_type.split('/')[0] : undefined
 
-	$: image
-		= (type === 'video' || type === 'audio') && images.length
-		? images[0]
-		: undefined
+	$: image = (type === 'video' || type === 'audio') && images.length ? images[0] : undefined
+	$: text = type !== 'text' && texts.length ? texts[0] : undefined
 </script>
 
 <style type="text/scss">

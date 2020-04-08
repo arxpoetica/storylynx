@@ -5,7 +5,7 @@
 	<figcaption>...</figcaption>
 </figure> -->
 
-<div class:show class="text-wrap">
+<div class:show class:embedded class="text-wrap">
 	<div bind:this={content} class="content">
 		<!-- {@html asset.html} -->
 	</div>
@@ -16,7 +16,8 @@
 
 	export let asset
 	// export let options
-	export let intersecting
+	// export let intersecting
+	export let embedded = false
 
 	let content
 
@@ -65,6 +66,10 @@
 		transition: opacity 0.5s ease-in-out;
 		&.show {
 			opacity: 1;
+		}
+		&.embedded {
+			color: white;
+			text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 		}
 		& :global {
 			img {

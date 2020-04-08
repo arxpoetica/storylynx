@@ -1,12 +1,19 @@
 <div class:show class="bg-wrap">
 	<img {src} alt="n/a" use:lazy/>
-	<div class:show class="bg" style="background-image:url({src});{bg_pos}"></div>
+	<div class:show class="bg" style="background-image:url({src});{bg_pos}">
+		{#if text}
+			<InlineText asset={text} {intersecting} embedded={true}/>
+		{/if}
+	</div>
 </div>
 
 <script>
 	export let asset
+	export let text
 	export let options
 	export let intersecting
+
+	import InlineText from './InlineText.svelte'
 
 	let loaded = false
 	let intersected; $: if (intersecting) { intersected = true }
