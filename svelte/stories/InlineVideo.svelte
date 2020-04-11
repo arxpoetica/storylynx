@@ -1,8 +1,6 @@
-<div class="vid-wrap">
-	<video bind:this={video} class:show use:lazy loop>
-		<source bind:this={video_source} {src} type="video/mp4"/>
-	</video>
-</div>
+<video bind:this={video} class:show use:lazy loop>
+	<source bind:this={video_source} {src} type="video/mp4"/>
+</video>
 
 <script>
 	export let asset
@@ -36,15 +34,11 @@
 </script>
 
 <style type="text/scss">
-	.vid-wrap {
+	video {
 		position: relative;
 		width: 100%;
 		height: 100%;
-		background-color: #f7f7f7;
-	}
-	video {
-		width: 100%;
-		height: 100%;
+		background-color: black;
 		object-fit: cover;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;

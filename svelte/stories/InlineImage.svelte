@@ -1,10 +1,9 @@
-<div class:show class="bg-wrap">
+<div class:show class="image">
 	<img {src} alt="n/a" use:lazy/>
-	<div class:show class="bg" style="background-image:url({src});{bg_pos}">
-		{#if text}
-			<InlineText asset={text} {intersecting} embedded={true}/>
-		{/if}
-	</div>
+	<div class:show class="image" style="background-image:url({src});{bg_pos}"></div>
+	{#if text}
+		<InlineText asset={text} {intersecting} embedded={true}/>
+	{/if}
 </div>
 
 <script>
@@ -34,13 +33,10 @@
 </script>
 
 <style type="text/scss">
-	.bg-wrap {
-		position: relative;
-		width: 100%;
-		height: 100%;
-		// background-color: #f7f7f7;
-	}
-	.bg {
+	.image {
+		// position: relative;
+		// width: 100%;
+		// height: 100%;
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -58,7 +54,7 @@
 		opacity: 0;
 		position: absolute;
 		top: 0;
-		left: 0;
+		right: 0;
 		pointer-events: none;
 	}
 </style>

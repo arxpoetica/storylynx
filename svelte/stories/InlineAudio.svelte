@@ -1,9 +1,7 @@
-<div class="audio-wrap">
-	{#if image}
-		<InlineImage asset={image} {options}/>
-	{/if}
-	<audio bind:this={audio} use:lazy loop {src} type="audio/mp3"></audio>
-</div>
+{#if image}
+	<InlineImage asset={image} {options}/>
+{/if}
+<audio bind:this={audio} use:lazy loop {src} type="audio/mp3"></audio>
 
 <script>
 	export let asset
@@ -34,10 +32,7 @@
 </script>
 
 <style type="text/scss">
-	.audio-wrap {
-		position: relative;
-		width: 100%;
-		height: 100%;
-		background-color: #f7f7f7;
+	audio {
+		pointer-events: none;
 	}
 </style>
