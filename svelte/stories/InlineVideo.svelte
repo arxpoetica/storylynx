@@ -13,7 +13,7 @@
 
 	// video.play()
 	let video
-	$: if (show) { video.play() }
+	// $: if (show) { video.play() }
 
 	let video_source
 	let src = ''

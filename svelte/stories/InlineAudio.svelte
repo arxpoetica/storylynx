@@ -14,7 +14,7 @@
 	$: play = loaded && intersected
 
 	let audio
-	$: if (play) { audio.play() }
+	// $: if (play) { audio.play() }
 
 	import InlineImage from './InlineImage.svelte'
 
@@ -23,7 +23,7 @@
 		audio.oncanplaythrough = () => {
 			// FIXME: remove this
 			// audio.volume = 0.3
-			audio.volume = 0
+			// audio.volume = 0
 			loaded = true
 		}
 		src = asset.url
