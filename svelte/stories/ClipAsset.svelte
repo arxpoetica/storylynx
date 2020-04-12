@@ -2,15 +2,15 @@
 	<div bind:this={elem} class="asset {transition}">
 		<div class="asset-action" style={animation_style}>
 			{#if type === 'video'}
-				<!-- <InlineVideo {asset} {image} {options}/> -->
-				<InlineVideo intersecting={clip.intersecting} {asset}/>
+				<!-- <ClipVideo {asset} {image} {options}/> -->
+				<ClipVideo {intersecting} {asset}/>
 			{:else if type === 'audio'}
-				<InlineAudio intersecting={clip.intersecting} {asset} {image} {options}/>
+				<ClipAudio {intersecting} {asset} {image} {options}/>
 			{:else if type === 'image'}
-				<InlineImage intersecting={clip.intersecting} {asset} {text} {options}/>
+				<ClipImage {intersecting} {asset} {text} {options}/>
 			{:else}
-				<!-- <InlineText {asset} {options}/> -->
-				<InlineText intersecting={clip.intersecting} {asset}/>
+				<!-- <ClipText {asset} {options}/> -->
+				<ClipText {intersecting} {asset}/>
 			{/if}
 		</div>
 	</div>
@@ -19,6 +19,7 @@
 <script>
 	export let index = 0
 	export let clip
+	export let intersecting = false
 	export let options = {}
 	export let overrides = []
 
@@ -30,12 +31,12 @@
 	import { animate_asset } from '../../utils/transition-utils.js'
 	import { story_scroll } from '../../stores/app-store.js'
 	$: transition = group && group.transition ? camel_to_hyphen(group.transition) : ''
-	$: animation_style = group ? animate_asset(elem, group.transition, clip.intersecting, $story_scroll) : ''
+	$: animation_style = group ? animate_asset(elem, group.transition, intersecting, $story_scroll) : ''
 
-	import InlineVideo from './InlineVideo.svelte'
-	import InlineAudio from './InlineAudio.svelte'
-	import InlineImage from './InlineImage.svelte'
-	import InlineText from './InlineText.svelte'
+	import ClipVideo from './ClipVideo.svelte'
+	import ClipAudio from './ClipAudio.svelte'
+	import ClipImage from './ClipImage.svelte'
+	import ClipText from './ClipText.svelte'
 
 	$: videos = assets.filter(asset => asset.mime_type.includes('video'))
 	$: audios = assets.filter(asset => asset.mime_type.includes('audio'))

@@ -5,11 +5,11 @@
 	<figcaption>...</figcaption>
 </figure> -->
 
-<div class:show class:embedded class="text-wrap">
+<article class:show class:embedded>
 	<div bind:this={content} class="content">
 		<!-- {@html asset.html} -->
 	</div>
-</div>
+</article>
 
 <script>
 	// TODO: how to fix height on smaller windows??????? (SEE media left / media right)
@@ -55,7 +55,7 @@
 </script>
 
 <style type="text/scss">
-	.text-wrap {
+	article {
 		display: flex;
 		align-items: center;
 		position: relative;

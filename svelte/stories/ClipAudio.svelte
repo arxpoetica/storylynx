@@ -1,5 +1,5 @@
 {#if image}
-	<InlineImage asset={image} {options}/>
+	<ClipImage asset={image} {options}/>
 {/if}
 <audio bind:this={audio} use:lazy loop {src} type="audio/mp3"></audio>
 
@@ -16,7 +16,7 @@
 	let audio
 	// $: if (play) { audio.play() }
 
-	import InlineImage from './InlineImage.svelte'
+	import ClipImage from './ClipImage.svelte'
 
 	let src = ''
 	function lazy(audio) {
