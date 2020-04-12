@@ -6,7 +6,7 @@
 </figure> -->
 
 <article class:show class:embedded>
-	<div bind:this={content} class="content">
+	<div bind:this={content} class="content" {style}>
 		<!-- {@html asset.html} -->
 	</div>
 </article>
@@ -15,6 +15,7 @@
 	// TODO: how to fix height on smaller windows??????? (SEE media left / media right)
 
 	export let asset
+	export let style
 	// export let options
 	// export let intersecting
 	export let embedded = false
@@ -56,6 +57,7 @@
 
 <style type="text/scss">
 	article {
+		overflow: hidden;
 		display: flex;
 		align-items: center;
 		position: relative;

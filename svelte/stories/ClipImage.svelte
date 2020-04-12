@@ -1,14 +1,16 @@
 <div class:show class="image">
+	<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
 	<img {src} alt="n/a" use:lazy/>
-	<div class:show class="image" style="background-image:url({src});{bg_pos}"></div>
-	{#if text}
-		<ClipText asset={text} {intersecting} embedded={true}/>
-	{/if}
 </div>
+{#if text}
+	<!-- <ClipText asset={text} {intersecting} embedded={true}/> -->
+	<ClipText asset={text} embedded={true}/>
+{/if}
 
 <script>
 	export let asset
 	export let text
+	export let style
 	export let options
 	export let intersecting
 
@@ -34,9 +36,19 @@
 
 <style type="text/scss">
 	.image {
-		// position: relative;
-		// width: 100%;
-		// height: 100%;
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+		&.show {
+			opacity: 1;
+		}
+	}
+	.bg {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -44,11 +56,6 @@
 		left: 0;
 		background: none no-repeat center transparent;
 		background-size: cover;
-		opacity: 0;
-		transition: opacity 0.5s ease-in-out;
-		&.show {
-			opacity: 1;
-		}
 	}
 	img {
 		opacity: 0;

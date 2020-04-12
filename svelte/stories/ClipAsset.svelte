@@ -1,37 +1,29 @@
 {#if asset}
-	<div bind:this={elem} class="asset {transition}">
-		<div class="asset-action" style={animation_style}>
-			{#if type === 'video'}
-				<!-- <ClipVideo {asset} {image} {options}/> -->
-				<ClipVideo {intersecting} {asset}/>
-			{:else if type === 'audio'}
-				<ClipAudio {intersecting} {asset} {image} {options}/>
-			{:else if type === 'image'}
-				<ClipImage {intersecting} {asset} {text} {options}/>
-			{:else}
-				<!-- <ClipText {asset} {options}/> -->
-				<ClipText {intersecting} {asset}/>
-			{/if}
-		</div>
-	</div>
+	<!-- <div bind:this={elem} class="asset {transition}"> -->
+		<!-- <div class="asset-action" style={animation_style}> -->
+	{#if type === 'video'}
+		<!-- <ClipVideo {asset} {image} {style} {options}/> -->
+		<ClipVideo {intersecting} {asset} {text} {style}/>
+	{:else if type === 'audio'}
+		<ClipAudio {intersecting} {asset} {text} {image} {style} {options}/>
+	{:else if type === 'image'}
+		<ClipImage {intersecting} {asset} {text} {style} {options}/>
+	{:else}
+		<!-- <ClipText {intersecting} {asset} {style} {options}/> -->
+		<ClipText {asset} {style}/>
+	{/if}
 {/if}
 
 <script>
 	export let index = 0
 	export let clip
 	export let intersecting = false
+	export let style = ''
 	export let options = {}
 	export let overrides = []
 
-	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: group = clip.asset_groups.length ? clip.asset_groups[index] : undefined
 	$: assets = overrides.length && overrides || (group && group.assets.length ? group.assets : [])
-
-	let elem
-	import { animate_asset } from '../../utils/transition-utils.js'
-	import { story_scroll } from '../../stores/app-store.js'
-	$: transition = group && group.transition ? camel_to_hyphen(group.transition) : ''
-	$: animation_style = group ? animate_asset(elem, group.transition, intersecting, $story_scroll) : ''
 
 	import ClipVideo from './ClipVideo.svelte'
 	import ClipAudio from './ClipAudio.svelte'
@@ -56,19 +48,4 @@
 	$: text = type !== 'text' && texts.length ? texts[0] : undefined
 </script>
 
-<style type="text/scss">
-	.asset {
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 1;
-	}
-	.asset-action {
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<!-- <style type="text/scss"></style> -->
