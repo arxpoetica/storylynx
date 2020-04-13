@@ -1,6 +1,6 @@
 <audio bind:this={audio} use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
-	<ClipImage asset={image} {style} {options}/>
+	<ClipImage {intersecting} asset={image} {style} {options}/>
 {/if}
 {#if text}
 	<!-- <ClipText asset={text} {intersecting} embedded={true}/> -->
