@@ -26,7 +26,7 @@
 	import Navigation from './Navigation.svelte'
 	import InlineNavigation from './InlineNavigation.svelte'
 
-	$: sequence = story.rootclip.sequences.find(seq => seq.title.toLowerCase() === $page.params.sequence)
+	$: sequence = story.rootclip.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
 		|| story.rootclip.sequences[0]
 
 	import Clip from './Clip.svelte'

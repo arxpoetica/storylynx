@@ -5,13 +5,13 @@
 	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
 		{#each navigation.sequences as sequence, index}
 			<li class="sequence sequence-{index}">
-				<h2><a href={href(sequence)}>{sequence.title}</a></h2>
+				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
 				{#if sequence.clips.length}
 					<ul class="clips">
 						{#each sequence.clips as clip}
-							{#if clip.title}
+							{#if clip.slug}
 								<li class="clip">
-									<h3><span class="out"><span class="in">{clip.title}</span></span></h3>
+									<h3><span class="out"><span class="in">{clip.slug}</span></span></h3>
 								</li>
 							{/if}
 						{/each}
@@ -31,7 +31,7 @@
 	$: navigation = story.rootclip
 
 	function href(sequence) {
-		return `/stories/${$page.params.story}/${sequence.title.toLowerCase()}`
+		return `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
 	}
 
 	// scrolling helpers:

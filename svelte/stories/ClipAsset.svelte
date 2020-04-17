@@ -22,7 +22,7 @@
 	export let options = {}
 	export let overrides = []
 
-	$: group = clip.asset_groups.length ? clip.asset_groups[index] : undefined
+	$: group = clip.assets_bin.length ? clip.assets_bin[index] : undefined
 	$: assets = overrides.length && overrides || (group && group.assets.length ? group.assets : [])
 
 	import ClipVideo from './ClipVideo.svelte'
