@@ -6,6 +6,7 @@
 
 <div class="story-layout">
 	{#if story && sequence}
+		<Toolbar/>
 		<div class="sequence {sequence.classes ? sequence.classes : ''}">
 			<div class="clips">
 				{#each sequence.clips as clip}
@@ -30,6 +31,7 @@
 		|| story.rootclip.sequences[0]
 
 	import Clip from './Clip.svelte'
+	import Toolbar from './Toolbar.svelte'
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS

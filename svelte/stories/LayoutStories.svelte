@@ -19,7 +19,7 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
-	import { story_scroll } from '../../stores/app-store.js'
+	import { story_scroll } from '../../stores/story-store.js'
 	let scroll_y = 0
 	$: story_scroll.set(scroll_y)
 
