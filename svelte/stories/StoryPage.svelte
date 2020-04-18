@@ -1,3 +1,5 @@
+<svelte:window bind:innerHeight={$view_height}/>
+
 <Navigation {story}/>
 <!-- <p>{sequence}</p> -->
 <!-- <p>{JSON.stringify($page.params)}</p> -->
@@ -26,6 +28,7 @@
 	export let story
 	import Navigation from './Navigation.svelte'
 	import InlineNavigation from './InlineNavigation.svelte'
+	import { view_height } from '../../stores/story-store.js'
 
 	$: sequence = story.rootclip.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
 		|| story.rootclip.sequences[0]
