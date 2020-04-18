@@ -1,6 +1,6 @@
-<div class="video" class:show>
+<div class="video" class:play>
 	<video bind:this={video} use:lazy loop {style}>
-		<source bind:this={video_source} {src} type="video/mp4"/>
+		<source {src} type="video/mp4"/>
 	</video>
 </div>
 {#if text}
@@ -19,13 +19,24 @@
 
 	let loaded = false
 	let intersected; $: if (intersecting) { intersected = true }
-	$: show = loaded && intersected
+	$: play = loaded && intersected
 
-	// video.play()
 	let video
-	$: if (show) { video.play() }
+	$: if (play) { video.play() }
 
-	let video_source
+	import { volume } from '../../stores/story-store.js'
+	import { tweened } from 'svelte/motion'
+	import { cubicIn, cubicOut } from 'svelte/easing'
+
+	const progress_in = tweened(null, { duration: 1000, easing: cubicIn })
+	const progress_out = tweened(null, { duration: 1000, easing: cubicOut })
+	volume.subscribe(new_volume => {
+		progress_in.set(new_volume)
+		progress_out.set(new_volume)
+	})
+	progress_in.subscribe(change => { if (video && $volume === 1) { video.volume = change } })
+	progress_out.subscribe(change => { if (video && $volume === 0) { video.volume = change } })
+
 	let src = ''
 	function lazy(video) {
 		video.oncanplaythrough = async() => {
@@ -35,7 +46,8 @@
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			video.muted = true
+			// video.muted = true
+			video.volume = $volume
 			loaded = true
 		}
 		src = asset.url
@@ -53,7 +65,7 @@
 		left: 0;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
-		&.show {
+		&.play {
 			opacity: 1;
 		}
 	}

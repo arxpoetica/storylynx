@@ -35,16 +35,18 @@
 		progress_in.set(new_volume)
 		progress_out.set(new_volume)
 	})
-	progress_in.subscribe(change => {
-		if (loaded && $volume === 1) { audio.volume = change }
-	})
-	progress_out.subscribe(change => {
-		if (loaded && $volume === 0) { audio.volume = change }
-	})
+	progress_in.subscribe(change => { if (audio && $volume === 1) { audio.volume = change } })
+	progress_out.subscribe(change => { if (audio && $volume === 0) { audio.volume = change } })
 
 	let src = ''
 	function lazy(audio) {
 		audio.oncanplaythrough = () => {
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 			audio.volume = $volume
 			loaded = true
 		}
