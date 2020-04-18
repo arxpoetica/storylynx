@@ -1,13 +1,13 @@
 <div class="toolbar">
-	<div class="svg tool sound-{$volume}" on:click={() => volume.set($volume ? 0 : 1)}>
-		{#if $volume}<VolumeOn/>{:else}<VolumeOff/>{/if}
+	<div class="svg tool muted-{$muted}" on:click={() => $muted = !$muted}>
+		{#if $muted}<AudioMuted/>{:else}<AudioAudible/>{/if}
 	</div>
 </div>
 
 <script>
-	import { volume } from '../../stores/story-store.js'
-	import VolumeOn from '../svg/volume-on.svelte'
-	import VolumeOff from '../svg/volume-off.svelte'
+	import { muted } from '../../stores/story-store.js'
+	import AudioAudible from '../svg/audio-audible.svelte'
+	import AudioMuted from '../svg/audio-muted.svelte'
 </script>
 
 <style type="text/scss">
@@ -33,5 +33,5 @@
 			opacity: 1;
 		}
 	}
-	// .volume-on {}
+	// .muted-false {}
 </style>

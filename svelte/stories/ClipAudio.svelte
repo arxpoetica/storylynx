@@ -1,4 +1,4 @@
-<audio bind:this={audio} use:lazy loop {src} type="audio/mp3"></audio>
+<audio bind:this={audio} bind:volume={indirect_volume} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
 	<ClipImage {intersecting} asset={image} {style} {options}/>
 {/if}
@@ -17,39 +17,36 @@
 
 	import ClipImage from './ClipImage.svelte'
 	import ClipText from './ClipText.svelte'
-
-	let loaded = false
-	let intersected; $: if (intersecting) { intersected = true }
-	$: play = loaded && intersected
-
-	let audio
-	$: if (play) { audio.play() }
-
-	import { volume } from '../../stores/story-store.js'
+	import { muted } from '../../stores/story-store.js'
 	import { tweened } from 'svelte/motion'
 	import { cubicIn, cubicOut } from 'svelte/easing'
 
-	const progress_in = tweened(null, { duration: 1000, easing: cubicIn })
-	const progress_out = tweened(null, { duration: 1000, easing: cubicOut })
-	volume.subscribe(new_volume => {
-		progress_in.set(new_volume)
-		progress_out.set(new_volume)
-	})
-	progress_in.subscribe(change => { if (audio && $volume === 1) { audio.volume = change } })
-	progress_out.subscribe(change => { if (audio && $volume === 0) { audio.volume = change } })
+	let audio
+	let loaded = false
+
+	$: paused = !(loaded && intersecting) && $volume === 0
+
+	$: if (loaded) { audio.muted = $muted; }
+
+	let volume = tweened(0, { duration: 1000 })
+	// TODO: delete when bug fixed
+	$: indirect_volume = $volume
+	$: if (loaded) {
+		intersecting ? tween(1, cubicIn) : tween(0, cubicOut)
+	}
+	async function tween(to, easing) {
+		await volume.set(to, { easing })
+	}
 
 	let src = ''
 	function lazy(audio) {
-		audio.oncanplaythrough = () => {
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-			audio.volume = $volume
-			loaded = true
-		}
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
+		audio.oncanplaythrough = () => loaded = true
 		src = asset.url
 		return { destroy() {} } // noop
 	}
