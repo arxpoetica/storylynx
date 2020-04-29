@@ -24,14 +24,13 @@
 	let loaded = false
 
 	$: paused = !(loaded && intersecting) && $volume === 0
-
-	$: if (loaded) { video.muted = $muted; }
+	$: if (loaded) { video.muted = $muted }
 
 	let volume = tweened(0, { duration: 1000 })
 	// TODO: delete when bug fixed
 	$: indirect_volume = $volume
 	$: if (loaded) {
-		intersecting ? tween(1, cubicIn) : tween(0, cubicOut)
+		intersecting ? tween(asset.volume || 1, cubicIn) : tween(0, cubicOut)
 	}
 	async function tween(to, easing) {
 		await volume.set(to, { easing })
