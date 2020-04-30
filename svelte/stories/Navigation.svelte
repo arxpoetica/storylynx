@@ -3,7 +3,7 @@
 <nav bind:this={nav} on:wheel={faff} class:scrolling>
 	<!-- {JSON.stringify($page.params)} -->
 	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
-		{#each navigation.sequences as sequence, index}
+		{#each story.sequences as sequence, index}
 			<li class="sequence sequence-{index}">
 				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
 				{#if sequence.clips.length}
@@ -28,7 +28,6 @@
 	const { page } = get_sapper_stores()
 
 	export let story
-	$: navigation = story.rootclip
 
 	function href(sequence) {
 		return `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`

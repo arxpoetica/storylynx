@@ -1,6 +1,6 @@
 <nav class="inline-navigation">
 	<ul class="sequences">
-		{#each navigation.sequences as sequence, index}
+		{#each story.sequences as sequence, index}
 			<li class="sequence sequence-{index}">
 				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
 			</li>
@@ -14,7 +14,6 @@
 	const { page } = get_sapper_stores()
 
 	export let story
-	$: navigation = story.rootclip
 
 	function href(sequence) {
 		return `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`

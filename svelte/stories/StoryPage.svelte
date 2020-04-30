@@ -3,7 +3,7 @@
 <Navigation {story}/>
 <!-- <p>{sequence}</p> -->
 <!-- <p>{JSON.stringify($page.params)}</p> -->
-<!-- <p>{JSON.stringify(story.rootclip.sequences[0].clips[0])}</p> -->
+<!-- <p>{JSON.stringify(story.sequences[0].clips[0])}</p> -->
 <!-- <p>{JSON.stringify(story)}</p> -->
 
 <div class="story-layout">
@@ -30,8 +30,8 @@
 	import InlineNavigation from './InlineNavigation.svelte'
 	import { view_height } from '../../stores/story-store.js'
 
-	$: sequence = story.rootclip.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
-		|| story.rootclip.sequences[0]
+	$: sequence = story.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
+		|| story.sequences[0]
 
 	import Clip from './Clip.svelte'
 	import Toolbar from './Toolbar.svelte'
