@@ -1,10 +1,6 @@
 <svelte:window bind:innerHeight={$view_height}/>
 
 <Navigation {story}/>
-<!-- <p>{sequence}</p> -->
-<!-- <p>{JSON.stringify($page.params)}</p> -->
-<!-- <p>{JSON.stringify(story.sequences[0].clips[0])}</p> -->
-<!-- <p>{JSON.stringify(story)}</p> -->
 
 <div class="story-layout">
 	{#if story && sequence}
