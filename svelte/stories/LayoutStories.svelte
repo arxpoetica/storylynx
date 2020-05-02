@@ -19,9 +19,15 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
-	import { story_scroll } from '../../stores/story-store.js'
+	import { story_scroll, forward } from '../../stores/story-store.js'
 	let scroll_y = 0
 	$: story_scroll.set(scroll_y)
+
+	let old_scroll_y = 0
+	$: if (old_scroll_y !== scroll_y) {
+		forward.set(old_scroll_y < scroll_y)
+		old_scroll_y = scroll_y
+	}
 
 	// DOM ONLY STUFF ---------- >>>>
 	import { hyphenate } from '../../utils/basic-utils.js'
