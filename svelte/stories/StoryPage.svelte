@@ -5,12 +5,15 @@
 <div class="story-layout">
 	{#if story && sequence}
 		<Toolbar/>
+		<div class="audio">
+			{#each sequence.audio_clips as audio_clip}
+				<ClipAudio intersecting={$seq_audio[audio_clip.id].intersecting} asset={audio_clip.audio_asset}/>
+			{/each}
+		</div>
 		<div class="sequence {sequence.classes ? sequence.classes : ''}">
-			<div class="clips">
-				{#each sequence.clips as clip}
-					<Clip {clip}/>
-				{/each}
-			</div>
+			{#each sequence.clips as clip}
+				<Clip {clip}/>
+			{/each}
 		</div>
 		<InlineNavigation {story}/>
 	{/if}
@@ -24,13 +27,30 @@
 	export let story
 	import Navigation from './Navigation.svelte'
 	import InlineNavigation from './InlineNavigation.svelte'
-	import { view_height } from '../../stores/story-store.js'
+	import { view_height, seq_audio } from '../../stores/story-store.js'
 
 	$: sequence = story.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
 		|| story.sequences[0]
 
-	import Clip from './Clip.svelte'
+	$: seq_audio.set(
+		sequence.audio_clips.reduce((result, clip) => {
+			if (clip.audio_asset.mime_type.includes('audio')) {
+				result[clip.id] = {}
+				result[clip.id].intersecting = false
+				result[clip.id].asset = clip.audio_asset
+			}
+			return result
+		}, {})
+	)
+	// $: console.log(sequence.audio_clips)
+	// $: console.log($seq_audio)
+	// setTimeout(() => {
+	// 	$seq_audio['ck9nl7aj17mdj0963zvkiq5b2'].intersecting = true
+	// }, 5000)
+
 	import Toolbar from './Toolbar.svelte'
+	import ClipAudio from './ClipAudio.svelte'
+	import Clip from './Clip.svelte'
 
 	// FIXME: ????? CAN I EVEN???
 	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
@@ -42,5 +62,11 @@
 		margin: 50rem;
 		padding: 50rem;
 		border: 1px solid gray;
+	}
+	.audio {
+		overflow: hidden;
+		position: absolute;
+		width: 0;
+		height: 0;
 	}
 </style>

@@ -1,6 +1,6 @@
 <svelte:window bind:scrollY={scroll_y}/>
 
-<!-- <div class="scroll">scroll_y: {scroll_y} | story_scroll: {$story_scroll}</div> -->
+<!-- <div class="scroll">scroll_y: {scroll_y} | story_scroll: {$story_scroll} | forward: {$forward}</div> -->
 
 <slot name="pre-site"></slot>
 <div class="site">
