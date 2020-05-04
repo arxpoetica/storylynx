@@ -13,7 +13,7 @@ export default async function(req, res) {
 			tags = [],
 			// FIXME: will this ever be passed from a query? We need to do the same on ALL passed admin POST pages.
 			status = ['PUBLISHED', 'DRAFT'],
-			column = 'publishedDatetime',
+			column = 'published',
 			sort = 'DESC',
 		} = req.body
 

@@ -1,10 +1,6 @@
 <div class="admin-header">
-	<h1>Users</h1>
-	<!-- <div class="buttons">
-		<a href="/admin/posts/new" class="button success">
-			Create New User
-		</a>
-	</div> -->
+	<h1>Post</h1>
+	<Button href="/admin/posts/new" title="Create Post"/>
 </div>
 <div class="admin-full">
 	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
@@ -15,21 +11,29 @@
 </div>
 
 <script>
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { page: pageStore } = get_sapper_stores()
+
+	import Button from '../elements/Button.svelte'
 	import List from '../elements/List.svelte'
 	import ToolBar from '../elements/ToolBar.svelte'
 
 	let cols = [
-		// { type: 'asset', col: 'avatar', title: 'Avatar' }, // FIXME: use?
-		// { type: 'url', col: 'username', title: 'Username', url: '/admin/users/' },
-		{ type: 'text', col: 'username', title: 'Username' }, // FIXME: replace with above
-		{ type: 'text', col: 'role', title: 'Admin Role' },
-		{ type: 'text', col: 'first', title: 'First' },
-		{ type: 'text', col: 'last', title: 'Last' },
+		{ type: 'asset', col: 'assets', title: 'Cover' },
+		{ type: 'url', col: 'headline', title: 'Headline', url: '/admin/posts/', slug: 'id', sort: true },
+		{ type: 'array', col: 'tags', title: 'Tags', mapper: 'tag' },
+		{ type: 'datetime', col: 'published', title: 'Date', sort: true },
 	]
-	export let items
-	// export let items_count
 
-	let checkeditems
+	// export let page_size = 0
+	export let items = []
+	export let items_count = 0
+	// export let drafts_count = 0
+	// export let published_count = 0
+	// export let archived_count = 0
+	let checkeditems = []
+	$: page = parseInt($pageStore.query.page)
 
 	async function trash() {
 		if (window.confirm('Are you sure you want to move these items to the trash?')) {

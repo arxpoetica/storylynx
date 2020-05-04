@@ -12,7 +12,7 @@ export default async function(req, res) {
 		const { default: api } = await import(path)
 		const { answer } = await api({ changes })
 
-		return res.json(answer.error ? answer : answer.createArticle)
+		return res.json(answer.error ? answer : answer.createPost)
 	} catch (error) {
 		return handleError(error, res)
 	}

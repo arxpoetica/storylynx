@@ -1,11 +1,11 @@
 <table>
 	<thead>
-		<ListHead bind:checked bind:checkedItems {items} {cols}/>
+		<ListHead bind:checked bind:checkeditems {items} {cols}/>
 	</thead>
 	<tbody>
 		{#each items as item, index}
 			<tr>
-				<td><input bind:checked={checkedItems[index]} type="checkbox"></td>
+				<td><Checkbox bind:checked={checkeditems[index]}/></td>
 				{#each cols as col}
 					<td>
 						{#if col.type === 'asset'}
@@ -15,9 +15,9 @@
 								<div class="assets"></div>
 							{/if}
 						{:else if col.type === 'url'}
-							<a href="{col.url}{item[col.slug || col.col]}">
-								<h2>{item[col.col]}</h2>
-							</a>
+							<h2>
+								<a href="{col.url}{item[col.slug || col.col]}">{item[col.col]}</a>
+							</h2>
 						{:else if col.type === 'array'}
 							{#if item[col.col].length}
 								{item[col.col].map(obj => obj[col.mapper]).join(', ')}
@@ -42,7 +42,7 @@
 		{/each}
 	</tbody>
 	<tfoot>
-		<ListHead bind:checked bind:checkedItems {items} {cols}/>
+		<ListHead bind:checked bind:checkeditems {items} {cols}/>
 	</tfoot>
 </table>
 
@@ -51,18 +51,19 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
-	import { src } from '../../../../utils/basic-utils.js'
+	import { src } from '../../../utils/basic-utils.js'
 	import dayjs from 'dayjs'
 	import ListHead from './ListHead.svelte'
+	import Checkbox from './Checkbox.svelte'
 	export let cols
 	export let items = []
-	export let checkedItems = []
-	$: checked = items.length === checkedItems.filter(val => val).length
+	export let checkeditems = []
+	$: checked = items.length === checkeditems.filter(val => val).length
 
 	let priorQuery
 	$: if (JSON.stringify(priorQuery) !== JSON.stringify($page.query)) {
 		priorQuery = $page.query
-		checkedItems = []
+		checkeditems = []
 	}
 </script>
 
@@ -96,9 +97,6 @@
 		&:first-child {
 			vertical-align: middle;
 		}
-	}
-	[type="checkbox"] {
-		margin: 0;
 	}
 	.datetime strong {
 		font-size: 10rem;

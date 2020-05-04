@@ -1,5 +1,7 @@
 <tr>
-	<th class="col-checkbox"><input on:click={uncheck} bind:checked type="checkbox"></th>
+	<th class="col-checkbox">
+		<Checkbox clickhandler={uncheck} bind:checked/>
+	</th>
 
 	{#each cols as col}
 		{#if col.sort}
@@ -29,16 +31,17 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page, goto } = get_sapper_stores()
 
+	import Checkbox from './Checkbox.svelte'
 	// // import { createQuery }
 	// import CaretDown from '@johnny/svg/caret-down.svelte'
 	// import CaretUp from '@johnny/svg/caret-up.svelte'
 
 	export let checked
-	export let checkedItems
+	export let checkeditems
 	export let items
 	export let cols
 	function uncheck() {
-		checkedItems = checked ? [] : [...Array(items.length)].map(item => true)
+		checkeditems = checked ? [] : [...Array(items.length)].map(item => true)
 	}
 
 	$: column = $page.query.column
