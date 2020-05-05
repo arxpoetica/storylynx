@@ -13,7 +13,7 @@ export default async function(req, res) {
 		const { default: api } = await import(path)
 		const { answer } = await api({ ids })
 
-		return res.json(answer.error ? answer : answer.deleteManyArticles)
+		return res.json(answer.error ? answer : answer.deleteManyPosts)
 	} catch (error) {
 		return handleError(error, res)
 	}

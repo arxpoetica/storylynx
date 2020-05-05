@@ -15,7 +15,7 @@
 	// $: admin = $session.user
 
 	// DOM ONLY STUFF ---------- >>>>
-	import { hyphenate } from '../../utils/basic-utils.js'
+	import { hyphenate } from '../../../utils/basic-utils.js'
 	let html
 	// this delay removes the `preload` class from the `html` element
 	onMount(async () => setTimeout(() => html = document.querySelector('html'), 150))
@@ -44,13 +44,23 @@
 		--admin-black: #000;
 		--admin-gray-darker: #222;
 		--admin-gray-dark: #333;
+		--admin-gray: #666;
 		--admin-gray-med: #888;
 		--admin-gray-light: #bbb;
 		--admin-gray-lighter: #e3e3e3;
 		--admin-white: #fff;
 		--admin-offwhite: #f3f3f3;
-		--admin-blue: #1ac0ff;
-		// --admin-links: #9dcbdd;
+		--admin-green: #35ffd3;
+		--admin-green-light: #b0ffee;
+		--admin-green-dark: #03d4a7;
+		--admin-green-text: #006644;
+		--admin-blue: #43caff;
+		--admin-blue-light: #9ae2ff;
+		--admin-blue-text: #008dc3;
+		--admin-red: #ff50a2;
+		--admin-red-light: #ff88bf;
+		--admin-red-dark: #d11b70;
+		--admin-red-text: #ffeef5;
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	.admin-layout {
@@ -87,6 +97,11 @@
 		grid-template-rows: auto 1fr;
 		grid-template-columns: 1fr 300rem;
 		min-height: 100%;
+		:global {
+			a {
+				color: var(--admin-blue-text);
+			}
+		}
 		& :global(.admin-header) {
 			display: flex;
 			justify-content: space-between;

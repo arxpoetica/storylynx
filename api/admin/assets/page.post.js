@@ -9,30 +9,30 @@ export default async function(req, res) {
 
 		let {
 			page = 1,
-			pageSize = 10,
+			page_size = 10,
 			tags = [],
 			// FIXME: will this ever be passed from a query? We need to do the same on ALL passed admin POST pages.
 			status = ['PUBLISHED', 'DRAFT'],
-			column = 'publishedDatetime',
+			column = 'published',
 			sort = 'DESC',
 		} = req.body
 
 		page = parseInt(page)
-		pageSize = parseInt(pageSize)
+		page_size = parseInt(page_size)
 		tags = typeof tags === 'string' ? [tags] : tags
 
 		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/assets/page.post.js`
 		const { default: api } = await import(path)
-		const { items, itemsCount, draftsCount, publishedCount, archivedCount }
-			= await api({ page, pageSize, tags, status, column, sort })
+		const { items, items_count, drafts_count, published_count, archived_count }
+			= await api({ page, page_size, tags, status, column, sort })
 
 		res.json({
-			pageSize,
+			page_size,
 			items,
-			itemsCount,
-			draftsCount,
-			publishedCount,
-			archivedCount,
+			items_count,
+			drafts_count,
+			published_count,
+			archived_count,
 		})
 
 	} catch (error) {

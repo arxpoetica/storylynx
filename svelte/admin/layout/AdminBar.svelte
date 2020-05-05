@@ -2,15 +2,15 @@
 <nav class="admin-bar">
 	{#if $session.user}
 		<div class="first">
-			<h2 class:on={path.indexOf('/admin/articles') === 0}>
+			<h2 class:on={path.indexOf('/admin/posts') === 0}>
 				<div class="svg"><Post/></div>
 				Posts
 			</h2>
 			<div class="links">
-				<a href="/admin/articles" class:on={path === '/admin/articles'}>All Posts</a>
-				<a href="/admin/articles/new" class:on={path === '/admin/articles/new'}>Create Post</a>
-				<!-- <a href="/admin/articles/categories">Post Categories</a> -->
-				<!-- <a href="/admin/articles/tags">Post Tags</a> -->
+				<a href="/admin/posts" class:on={path === '/admin/posts'}>All Posts</a>
+				<a href="/admin/posts/new" class:on={path === '/admin/posts/new'}>Create Post</a>
+				<!-- <a href="/admin/posts/categories">Post Categories</a> -->
+				<!-- <a href="/admin/posts/tags">Post Tags</a> -->
 			</div>
 			<h2 class:on={path.indexOf('/admin/assets') === 0}>
 				<div class="svg"><Asset/></div>
@@ -60,11 +60,11 @@
 
 	$: path = $page.path
 
-	import { GET } from '../../utils/loaders.js'
-	import Settings from './svg/admin-settings.svelte'
-	import Post from './svg/admin-post.svelte'
-	import Asset from './svg/admin-asset.svelte'
-	import Media from './svg/admin-media.svelte'
+	import { GET } from '../../../utils/loaders.js'
+	import Settings from '../svg/admin-settings.svelte'
+	import Post from '../svg/admin-post.svelte'
+	import Asset from '../svg/admin-asset.svelte'
+	import Media from '../svg/admin-media.svelte'
 
 	async function logout(event) {
 		event.preventDefault()
