@@ -21,9 +21,10 @@
 		height: 36rem;
 		margin: 0;
 		padding: 0 15rem;
-		background-color: var(--admin-green);
-		border: 1rem solid var(--admin-green-dark);
-		color: var(--admin-green-text);
+		background-color: var(--admin-blue);
+		border: none;
+		border-radius: 4rem;
+		color: white;
 		font: bold 14rem/36rem var(--admin-font);
 		text-transform: none;
 		text-align: center;
@@ -35,7 +36,7 @@
 		-webkit-appearance: none;
 		&:hover,
 		&:focus {
-			background-color: var(--admin-green-light);
+			background-color: var(--admin-blue-light);
 			text-decoration: none;
 		}
 		// &.tiny {

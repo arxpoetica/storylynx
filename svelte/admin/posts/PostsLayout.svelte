@@ -1,20 +1,20 @@
-<div class="admin-header">
-	<h1>Post</h1>
-	<Button href="/admin/posts/new" title="Create Post"/>
-</div>
-<div class="admin-full">
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
+<ViewContent model="Posts">
+	<!-- <div slot="tools">
+		<Button href="/admin/posts/new" title="Create Post"/>
+	</div> -->
+
+	<!-- <ToolBar on:trash={trash} bind:checkeditems {...$$props}/> -->
 	<div class="list">
 		<List bind:checkeditems {items} {cols}/>
 	</div>
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
-</div>
+</ViewContent>
 
 <script>
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page: pageStore } = get_sapper_stores()
 
+	import ViewContent from '../layout/ViewContent.svelte'
 	import Button from '../elements/Button.svelte'
 	import List from '../elements/List.svelte'
 	import ToolBar from '../elements/ToolBar.svelte'

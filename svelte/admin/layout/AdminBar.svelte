@@ -1,56 +1,43 @@
 <!-- {#if $session.user.role}{/if} -->
 <nav class="admin-bar">
-	{#if $session.user}
-		<div class="first">
-			<h2 class:on={path.indexOf('/admin/posts') === 0}>
-				<div class="svg"><Post/></div>
+	<div class="top">
+		<h2>
+			<div class="icon"><ContentIcon/></div>
+			Content
+		</h2>
+		<nav class="links">
+			<a href="/admin/posts" class="link" class:on={path === '/admin/posts'}>
 				Posts
-			</h2>
-			<div class="links">
-				<a href="/admin/posts" class:on={path === '/admin/posts'}>All Posts</a>
-				<a href="/admin/posts/new" class:on={path === '/admin/posts/new'}>Create Post</a>
-				<!-- <a href="/admin/posts/categories">Post Categories</a> -->
-				<!-- <a href="/admin/posts/tags">Post Tags</a> -->
-			</div>
-			<h2 class:on={path.indexOf('/admin/assets') === 0}>
-				<div class="svg"><Asset/></div>
+				<div class="icon"><PostIcon/></div>
+			</a>
+			<a href="/admin/assets" class="link" class:on={path === '/admin/assets'}>
 				Archive Assets
-			</h2>
-			<div class="links">
-				<a href="/admin/assets" class:on={path === '/admin/assets'}>All Assets</a>
-				<a href="/admin/assets/new" class:on={path === '/admin/assets/new'}>Create Asset</a>
-				<!-- <a href="/admin/assets/categories">Asset Categories</a> -->
-				<!-- <a href="/admin/assets/tags">Asset Tags</a> -->
-			</div>
-			<!-- <h2 class:on={path.indexOf('/admin/media') === 0}>
-				<div class="svg"><Media/></div>
+				<div class="icon"><AssetIcon/></div>
+			</a>
+			<a href="/admin/media" class="link" class:on={path === '/admin/media'}>
 				Media
-			</h2>
-			<div class="links">
-				<a href="/admin/media" class:on={path === '/admin/media'}>All Media</a>
-				<a href="/admin/media/upload" class:on={path === '/admin/media/upload'}>Upload Media</a>
-			</div> -->
-		</div>
-		<div class="second">
-			<h2 class:on={path.indexOf('/admin/users') === 0}>
-				<div class="svg"><Settings/></div>
-				Settings
-			</h2>
-			<div class="links">
-				<a href="/admin/users" class:on={path === '/admin/users'}>Users</a>
-				<a href="/admin/users/{$session.user.username}">Your User</a>
-				<div class="div"></div>
-				<a href="/auth/logout" on:click={logout}>Log Out</a>
-			</div>
-		</div>
-	{:else}
-		<div class="first">
-			<h2>
-				<div class="svg"><Settings/></div>
-				<a href="/auth/login" class="auth">Log In</a>
-			</h2>
-		</div>
-	{/if}
+				<div class="icon"><MediaIcon/></div>
+			</a>
+		</nav>
+	</div>
+	<div class="bottom">
+		<h2>
+			<div class="icon"><Settings/></div>
+			Settings
+		</h2>
+		<nav class="links">
+			<a href="/admin/users" class="link" class:on={path === '/admin/users'}>
+				Users
+			</a>
+			<a href="/admin/users/{$session.user.username}" class="link">
+				Your Profile
+			</a>
+			<div class="divider"></div>
+			<a href="/auth/logout" class="link" on:click={logout}>
+				Log Out
+			</a>
+		</nav>
+	</div>
 </nav>
 
 <script>
@@ -61,10 +48,11 @@
 	$: path = $page.path
 
 	import { GET } from '../../../utils/loaders.js'
-	import Settings from '../svg/admin-settings.svelte'
-	import Post from '../svg/admin-post.svelte'
-	import Asset from '../svg/admin-asset.svelte'
-	import Media from '../svg/admin-media.svelte'
+	import ContentIcon from '../../svg/admin-content.svelte'
+	import Settings from '../../svg/admin-settings.svelte'
+	import PostIcon from '../../svg/admin-post.svelte'
+	import AssetIcon from '../../svg/admin-asset.svelte'
+	import MediaIcon from '../../svg/admin-media.svelte'
 
 	async function logout(event) {
 		event.preventDefault()
@@ -82,12 +70,13 @@
 		justify-content: space-between;
 		flex-basis: 250rem;
 		height: 100vh;
-		background-color: var(--admin-gray-dark);
-		color: var(--admin-gray-light);
+		border-right: 1rem solid var(--admin-gray-lighter);
+		color: var(--admin-text);
 		font: 15rem/1 var(--admin-font);
+		user-select: none;
 	}
-	.first,
-	.second {
+	.top,
+	.bottom {
 		display: flex;
 		flex-direction: column;
 	}
@@ -96,31 +85,26 @@
 		align-items: center;
 		margin: 0;
 		padding: 10rem;
-		font: 18rem/1 var(--admin-font);
-		background-color: var(--admin-gray-darker);
-		color: var(--admin-gray-lighter);
+		font: 20rem/1 var(--admin-font);
+		background-color: var(--admin-blue-faint);
+		color: var(--admin-blue-dusk);
 		cursor: default;
-		&.on {
-			background-color: var(--admin-blue);
-			color: var(--admin-black);
-		}
-	}
-	.svg {
-		flex-basis: 20rem;
-		margin: 0 8rem 0 0;
 	}
 	.links {
 		display: flex;
 		flex-direction: column;
 		padding: 8rem 6rem;
 	}
-	a {
+	.link {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		padding: 6rem;
-		color: var(--admin-gray-light);
+		color: var(--admin-text);
 		text-decoration: none;
 		transition: none;
 		&:hover {
-			background-color: var(--admin-gray-dark);
+			background-color: var(--admin-blue-lighter);
 			transition: background-color 0.15s ease-in-out;
 		}
 		&.on {
@@ -129,9 +113,13 @@
 			pointer-events: none;
 		}
 	}
-	.div {
+	.icon {
+		flex-basis: 18rem;
+		margin: 0 8rem 0 0;
+	}
+	.divider {
 		margin: 5rem 0;
 		height: 1px;
-		background-color: var(--admin-black);
+		background-color: var(--admin-gray-lighter);
 	}
 </style>

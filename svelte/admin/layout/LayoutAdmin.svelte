@@ -42,32 +42,42 @@
 <style type="text/scss">
 	:root {
 		--admin-black: #000;
+		--admin-white: #fff;
+		--admin-offwhite: #f3f3f3;
+
 		--admin-gray-darker: #222;
 		--admin-gray-dark: #333;
 		--admin-gray: #666;
 		--admin-gray-med: #888;
 		--admin-gray-light: #bbb;
 		--admin-gray-lighter: #e3e3e3;
-		--admin-white: #fff;
-		--admin-offwhite: #f3f3f3;
+
+		--admin-blue: #0995dd;
+		--admin-blue-faint: #e7f6fe;
+		--admin-blue-lighter: #c0e8fc;
+		--admin-blue-light: #20aef6;
+		--admin-blue-dark: #077bb5;
+		--admin-blue-dusk: #023955;
+		--admin-blue-text: var(--admin-blue-dark);
+
 		--admin-green: #35ffd3;
 		--admin-green-light: #b0ffee;
 		--admin-green-dark: #03d4a7;
 		--admin-green-text: #006644;
-		--admin-blue: #43caff;
-		--admin-blue-light: #9ae2ff;
-		--admin-blue-text: #008dc3;
+
 		--admin-red: #ff50a2;
 		--admin-red-light: #ff88bf;
 		--admin-red-dark: #d11b70;
 		--admin-red-text: #ffeef5;
+
+		--admin-text: var(--admin-gray-darker);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	.admin-layout {
 		display: grid;
 		grid-template-columns: 250rem 1fr;
 		flex: 1;
-		background-color: var(--admin-gray-lighter);
+		background-color: white;
 		// TODO: put these all in a global CSS file
 		:global {
 			table {

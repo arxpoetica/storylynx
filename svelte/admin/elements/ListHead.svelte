@@ -86,9 +86,6 @@
 			width: 1rem;
 		}
 	}
-	[type="checkbox"] {
-		margin: 0;
-	}
 	.sort {
 		display: flex;
 		align-items: center;
