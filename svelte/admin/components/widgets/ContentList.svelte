@@ -1,6 +1,6 @@
 <table>
 	<thead>
-		<ListHead bind:checked bind:checkeditems {items} {cols}/>
+		<ContentListHeader bind:checked bind:checkeditems {items} {cols}/>
 	</thead>
 	<tbody>
 		{#each items as item, index}
@@ -42,7 +42,7 @@
 		{/each}
 	</tbody>
 	<tfoot>
-		<ListHead bind:checked bind:checkeditems {items} {cols}/>
+		<ContentListHeader bind:checked bind:checkeditems {items} {cols}/>
 	</tfoot>
 </table>
 
@@ -51,10 +51,10 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
-	import { src } from '../../../utils/basic-utils.js'
+	import { src } from '../../../../utils/basic-utils.js'
 	import dayjs from 'dayjs'
-	import ListHead from './ListHead.svelte'
-	import Checkbox from './Checkbox.svelte'
+	import ContentListHeader from './ContentListHeader.svelte'
+	import Checkbox from '../elements/Checkbox.svelte'
 	export let cols
 	export let items = []
 	export let checkeditems = []

@@ -47,12 +47,12 @@
 
 	$: path = $page.path
 
-	import { GET } from '../../../utils/loaders.js'
-	import ContentIcon from '../../svg/admin-content.svelte'
-	import Settings from '../../svg/admin-settings.svelte'
-	import PostIcon from '../../svg/admin-post.svelte'
-	import AssetIcon from '../../svg/admin-asset.svelte'
-	import MediaIcon from '../../svg/admin-media.svelte'
+	import { GET } from '../../../../utils/loaders.js'
+	import ContentIcon from '../../../svg/admin-content.svelte'
+	import Settings from '../../../svg/admin-settings.svelte'
+	import PostIcon from '../../../svg/admin-post.svelte'
+	import AssetIcon from '../../../svg/admin-asset.svelte'
+	import MediaIcon from '../../../svg/admin-media.svelte'
 
 	async function logout(event) {
 		event.preventDefault()

@@ -5,7 +5,7 @@
 
 	<!-- <ToolBar on:trash={trash} bind:checkeditems {...$$props}/> -->
 	<div class="list">
-		<List bind:checkeditems {items} {cols}/>
+		<ContentList bind:checkeditems {items} {cols}/>
 	</div>
 </ViewContent>
 
@@ -14,10 +14,10 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page: pageStore } = get_sapper_stores()
 
-	import ViewContent from '../layout/ViewContent.svelte'
-	import Button from '../elements/Button.svelte'
-	import List from '../elements/List.svelte'
-	import ToolBar from '../elements/ToolBar.svelte'
+	import ViewContent from '../components/layout/ViewContent.svelte'
+	import Button from '../components/elements/Button.svelte'
+	import ToolBar from '../components/widgets/ToolBar.svelte'
+	import ContentList from '../components/widgets/ContentList.svelte'
 
 	let cols = [
 		{ type: 'asset', col: 'assets', title: 'Cover' },

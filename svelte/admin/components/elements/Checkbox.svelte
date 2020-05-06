@@ -9,7 +9,7 @@
 <script>
 	export let checked = false
 	export let clickhandler = () => {}
-	import Checkmark from '../../svg/checkmark.svelte'
+	import Checkmark from '../../../svg/checkmark.svelte'
 </script>
 
 <style type="text/scss">

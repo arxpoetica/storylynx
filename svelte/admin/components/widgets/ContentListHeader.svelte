@@ -31,7 +31,7 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page, goto } = get_sapper_stores()
 
-	import Checkbox from './Checkbox.svelte'
+	import Checkbox from '../elements/Checkbox.svelte'
 	// // import { createQuery }
 	// import CaretDown from '@johnny/svg/caret-down.svelte'
 	// import CaretUp from '@johnny/svg/caret-up.svelte'

@@ -9,14 +9,15 @@
 <div class="admin-full">
 	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
 	<div class="list">
-		<List bind:checkeditems {items} {cols}/>
+		<ContentList bind:checkeditems {items} {cols}/>
 	</div>
 	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
 </div>
 
 <script>
-	import List from '../elements/List.svelte'
-	import ToolBar from '../elements/ToolBar.svelte'
+	// import LayoutInner from '../layout/LayoutInner.svelte'
+	import ContentList from '../components/widgets/ContentList.svelte'
+	import ToolBar from '../components/widgets/ToolBar.svelte'
 
 	let cols = [
 		// { type: 'asset', col: 'avatar', title: 'Avatar' }, // FIXME: use?

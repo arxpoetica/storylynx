@@ -19,9 +19,9 @@
 
 	// FIXME: we need to do infinite scroll, NOT PAGINATION!!!! ????
 	// FIXME: AND GOOD FILTERS / SEARCH!!!
-	import Pagination from './Pagination.svelte'
-	import StatusSelect from './StatusSelect.svelte'
-	import Button from './Button.svelte'
+	import Pagination from '../elements/Pagination.svelte'
+	import StatusSelect from '../elements/StatusSelect.svelte'
+	import Button from '../elements/Button.svelte'
 	const { page, page_size, items, items_count, drafts_count, published_count, archived_count } = $$props
 	export let checkeditems
 
