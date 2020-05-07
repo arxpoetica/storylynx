@@ -1,64 +1,63 @@
-<table>
-	<thead>
-		<ContentListHeader bind:checked bind:checkeditems {items} {cols}/>
-	</thead>
-	<tbody>
-		{#each items as item, index}
-			<tr>
-				<td><Checkbox bind:checked={checkeditems[index]}/></td>
-				{#each cols as col}
-					<td>
-						{#if col.type === 'asset'}
-							{#if item[col.col] && item[col.col].length}
-								<div class="assets" style="background-image:url({src(item[col.col][0], { format: 'jpg', width: 59, height: 59, crop: true })});"></div>
-							{:else}
-								<div class="assets"></div>
-							{/if}
-						{:else if col.type === 'url'}
-							<h2>
-								<a href="{col.url}{item[col.slug || col.col]}">{item[col.col]}</a>
-							</h2>
-						{:else if col.type === 'array'}
-							{#if item[col.col].length}
-								{item[col.col].map(obj => obj[col.mapper]).join(', ')}
-							{:else}
-								No tags.
-							{/if}
-						{:else if col.type === 'datetime'}
-							<div class="datetime">
-								{#if item.status}
-									<strong>{item.status.toLowerCase()}</strong> <br>
-								{/if}
-								{dayjs(item[col.col]).format('M/D/YYYY')}
-							</div>
-						{:else if col.type === 'function'}
-							{col.col(item)}
+<div class="content-list">
+	<ContentListHeader bind:checked bind:checkeditems {cols}/>
+	{#each $vars.items as item, index}
+		<div class="row">
+			<div class="col"><Checkbox bind:checked={checkeditems[index]}/></div>
+			{#each cols as col}
+				<div class="col">
+					{#if col.type === 'link'}
+						<h2>
+							<a href="{col.url}{item[col.slug || col.col]}">{item[col.col]}</a>
+						</h2>
+					{:else if col.type === 'assets'}
+						{#if item[col.col] && item[col.col].length}
+							<div class="assets" style="background-image:url({src(item[col.col][0], { format: 'jpg', width: 59, height: 59, crop: true })});"></div>
 						{:else}
-							{item[col.col]}
+							<div class="assets"></div>
 						{/if}
-					</td>
-				{/each}
-			</tr>
-		{/each}
-	</tbody>
-	<tfoot>
-		<ContentListHeader bind:checked bind:checkeditems {items} {cols}/>
-	</tfoot>
-</table>
+					{:else if col.type === 'array'}
+						<div class="tags">
+							{#if item[col.col].length}
+									{#each item[col.col].map(obj => obj[col.mapper]) as tag}
+										<div class="tag">{tag}</div>
+									{/each}
+							{:else}
+								--
+							{/if}
+						</div>
+					{:else if col.type === 'datetime'}
+						<div class="datetime">
+							{#if item.status}
+								<strong>{item.status.toLowerCase()}</strong> <br>
+							{/if}
+							{dayjs(item[col.col]).format('M/D/YYYY')}
+						</div>
+					{:else if col.type === 'function'}
+						{col.col(item)}
+					{:else}
+						{item[col.col]}
+					{/if}
+				</div>
+			{/each}
+		</div>
+	{/each}
+</div>
 
 <script>
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
+	import { content_vars as vars } from '../../../../stores/admin-store.js'
 	import { src } from '../../../../utils/basic-utils.js'
 	import dayjs from 'dayjs'
+
 	import ContentListHeader from './ContentListHeader.svelte'
 	import Checkbox from '../elements/Checkbox.svelte'
+
 	export let cols
-	export let items = []
 	export let checkeditems = []
-	$: checked = items.length === checkeditems.filter(val => val).length
+	$: checked = $vars.items.length === checkeditems.filter(val => val).length
 
 	let priorQuery
 	$: if (JSON.stringify(priorQuery) !== JSON.stringify($page.query)) {
@@ -68,42 +67,47 @@
 </script>
 
 <style type="text/scss">
-	// table {
-	// 	// label {
-	// 	// }
-	// 	input {
-	// 		margin: 0;
-	// 	}
-	// }
-
-	// .list {
-	// 	overflow: auto;
-	// }
-	// a {
-	// 	&:hover {
-	// 	}
-	// }
+	.content-list {
+		display: table;
+		width: 100%;
+		background-color: var(--admin-white);
+		border-collapse: collapse;
+		border-spacing: 0;
+		font: 14rem/1.2 $font;
+	}
+	.row {
+		display: table-row;
+		border-bottom: 1rem solid var(--admin-gray-light);
+		cursor: default;
+		&:hover { background-color: var(--admin-blue-faint); }
+	}
+	.col {
+		display: table-cell;
+		padding: 0 8rem;
+		vertical-align: middle;
+	}
 	.assets {
 		width: 59rem;
 		height: 59rem;
-		// margin-right: 12rem;
-		// background-color: $gray-6;
 	}
 	h2 {
+		margin: 0;
 		font: inherit;
-		// font-weight: $bold;
 	}
-	td {
-		&:first-child {
-			vertical-align: middle;
-		}
+	.tags {
+		// display: grid;
+		// grid-template-rows: repeat(1fr, minmax(40rem, auto));
+		font: 12rem/1 $font;
+	}
+	.tag {
+		display: inline-block;
+		padding: 4rem 6rem;
+		margin: 2rem;
+		background-color: var(--admin-gray-lighter);
+		border-radius: 3rem;
 	}
 	.datetime strong {
 		font-size: 10rem;
 		text-transform: uppercase;
 	}
-	// h3,
-	// p {
-	// 	margin: 0;
-	// }
 </style>

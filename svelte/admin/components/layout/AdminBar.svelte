@@ -70,7 +70,7 @@
 		justify-content: space-between;
 		flex-basis: 250rem;
 		height: 100vh;
-		border-right: 1rem solid var(--admin-gray-lighter);
+		border-right: 1rem solid var(--admin-gray-light);
 		color: var(--admin-text);
 		font: 15rem/1 var(--admin-font);
 		user-select: none;
@@ -93,22 +93,25 @@
 	.links {
 		display: flex;
 		flex-direction: column;
-		padding: 8rem 6rem;
+		padding: 12rem;
 	}
 	.link {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 6rem;
+		margin: 1rem 0;
+		padding: 4rem 6rem;
+		border-radius: 4rem;
 		color: var(--admin-text);
 		text-decoration: none;
 		transition: none;
 		&:hover {
-			background-color: var(--admin-blue-lighter);
+			background-color: var(--admin-gray-lighter);
 			transition: background-color 0.15s ease-in-out;
 		}
 		&.on {
-			color: var(--admin-blue);
+			background-color: var(--admin-blue-faint);
+			color: var(--admin-blue-dark);
 			font-weight: bold;
 			pointer-events: none;
 		}
@@ -120,6 +123,6 @@
 	.divider {
 		margin: 5rem 0;
 		height: 1px;
-		background-color: var(--admin-gray-lighter);
+		background-color: var(--admin-gray-light);
 	}
 </style>

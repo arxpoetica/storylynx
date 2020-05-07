@@ -1,8 +1,6 @@
-<div class="admin-layout">
+<div class="lynx-admin-layout">
 	<AdminBar/>
-	<main>
-		<slot></slot>
-	</main>
+	<slot></slot>
 </div>
 <!-- {@html `<${'style'}>${QuillCss}</${'style'}>`} -->
 
@@ -45,12 +43,13 @@
 		--admin-white: #fff;
 		--admin-offwhite: #f3f3f3;
 
-		--admin-gray-darker: #222;
-		--admin-gray-dark: #333;
-		--admin-gray: #666;
-		--admin-gray-med: #888;
-		--admin-gray-light: #bbb;
-		--admin-gray-lighter: #e3e3e3;
+		--admin-gray-darker: #2e3539;
+		--admin-gray-dark: #485358;
+		--admin-gray: #74858d;
+		--admin-gray-med: #adb7bc;
+		--admin-gray-med-light: #c8cfd2;
+		--admin-gray-light: #dfe2e4;
+		--admin-gray-lighter: #f4f6f6;
 
 		--admin-blue: #0995dd;
 		--admin-blue-faint: #e7f6fe;
@@ -73,78 +72,41 @@
 		--admin-text: var(--admin-gray-darker);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
-	.admin-layout {
+	.lynx-admin-layout {
 		display: grid;
 		grid-template-columns: 250rem 1fr;
 		flex: 1;
 		background-color: white;
-		// TODO: put these all in a global CSS file
-		:global {
-			table {
-				width: 100%;
-				background-color: var(--admin-white);
-				border-collapse: collapse;
-				border-spacing: 0;
-				border: 1px solid var(--admin-gray-light);
-				font-family: inherit;
-				line-height: 1.2;
-			}
-			thead, tfoot { tr { border: 1px solid var(--admin-gray-light); } }
-			tbody tr:nth-child(odd) { background-color: var(--admin-offwhite); }
-			th, td {
-				padding: 8rem;
-				text-align: left;
-				vertical-align: middle;
-			}
+	}
+	// TODO: put these all in a global CSS file
+	// TODO: OR BETTER YET, break admin out into a second app WITHIN this app???
+	:global(.lynx-admin-layout) :global {
+		h1 {
+			margin: 0;
+			font: $light 24rem/1.2 $font;
+			text-transform: none;
+			letter-spacing: 0.05rem;
+			color: var(--admin-blue-light);
+		}
+		a {
+			color: var(--admin-blue-text);
 		}
 	}
-	main {
-		display: grid;
-		grid-template-areas:
-			"header header"
-			"main side"
-		;
-		grid-template-rows: auto 1fr;
-		grid-template-columns: 1fr 300rem;
-		min-height: 100%;
-		:global {
-			a {
-				color: var(--admin-blue-text);
-			}
-		}
-		& :global(.admin-header) {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			grid-row: header;
-			grid-column: header;
-			padding: 20rem;
-			// border-bottom: 1px solid $gray-6;
-			:global(h1) {
-				margin: 0;
-				// font: $bold 18rem/1.2 $font;
-			}
-		}
-		& :global(.admin-all) {
-			grid-row: header / main;
-			grid-column: main / side;
-			padding: 20rem;
-		}
-		& :global(.admin-full) {
-			grid-row: main;
-			grid-column: main / side;
-			padding: 20rem;
-		}
-		& :global(.admin-main) {
-			grid-row: main;
-			grid-column: main;
-			padding: 20rem;
-		}
-		& :global(.admin-side) {
-			// grid-row: header / side;
-			grid-row: side;
-			grid-column: side;
-			// border-left: 1px solid $gray-6;
-		}
-	}
+
+	// .admin-all {
+	// 	grid-row: header / main;
+	// 	grid-column: main / side;
+	// 	padding: 20rem;
+	// }
+	// .admin-main {
+	// 	grid-row: main;
+	// 	grid-column: main;
+	// 	padding: 20rem;
+	// }
+	// .admin-side {
+	// 	// grid-row: header / side;
+	// 	grid-row: side;
+	// 	grid-column: side;
+	// 	// border-left: 1px solid $gray-6;
+	// }
 </style>

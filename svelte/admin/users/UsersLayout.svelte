@@ -7,17 +7,14 @@
 	</div> -->
 </div>
 <div class="admin-full">
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
 	<div class="list">
 		<ContentList bind:checkeditems {items} {cols}/>
 	</div>
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
 </div>
 
 <script>
 	// import LayoutInner from '../layout/LayoutInner.svelte'
 	import ContentList from '../components/widgets/ContentList.svelte'
-	import ToolBar from '../components/widgets/ToolBar.svelte'
 
 	let cols = [
 		// { type: 'asset', col: 'avatar', title: 'Avatar' }, // FIXME: use?

@@ -17,31 +17,37 @@
 		display: block;
 		position: relative;
 		margin: 0;
+		padding: 8rem;
+		border-radius: 100%;
+		line-height: 0;
+		cursor: pointer;
+		transition: background-color 0.15s ease-in-out;
+		&:hover { background-color: var(--admin-gray-light); }
+		&.checked { background-color: var(--admin-blue-lighter); }
 	}
 	input {
 		margin: 0;
 		box-sizing: border-box;
 		padding: 0;
-		height: 18rem;
-		width: 18rem;
+		height: 16rem;
+		width: 16rem;
 		background: white;
 		border: 1rem solid var(--admin-green-dark);
 		// border-radius: 3rem;
 		box-shadow: 0 0 0 transparent;
-		transition: 0.15s border-color ease-in-out;
-		cursor: pointer;
 		outline: 0;
 		-webkit-appearance: none;
 		&:checked {
-			background-color: var(--admin-green-dark);
+			border-color: var(--admin-blue-dusk);
+			background-color: var(--admin-blue);
 		}
 	}
 	.svg {
 		position: absolute;
-		width: 15rem;
-		height: 15rem;
-		top: 2rem;
-		left: 2rem;
+		width: 12rem;
+		height: 12rem;
+		top: 10rem;
+		left: 10rem;
 		color: white;
 		pointer-events: none;
 	}
