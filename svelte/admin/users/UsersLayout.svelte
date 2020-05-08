@@ -1,56 +1,33 @@
-<div class="admin-header">
-	<h1>Users</h1>
-	<!-- <div class="buttons">
-		<a href="/admin/posts/new" class="button success">
-			Create New User
-		</a>
-	</div> -->
-</div>
-<div class="admin-full">
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
-	<div class="list">
-		<List bind:checkeditems {items} {cols}/>
-	</div>
-	<ToolBar on:trash={trash} bind:checkeditems {...$$props}/>
-</div>
+<ViewContent model="Users" {cols}/>
 
 <script>
-	import List from '../elements/List.svelte'
-	import ToolBar from '../elements/ToolBar.svelte'
+	import ViewContent from '../components/layout/ViewContent.svelte'
 
 	let cols = [
 		// { type: 'asset', col: 'avatar', title: 'Avatar' }, // FIXME: use?
 		// { type: 'url', col: 'username', title: 'Username', url: '/admin/users/' },
 		{ type: 'text', col: 'username', title: 'Username' }, // FIXME: replace with above
-		{ type: 'text', col: 'role', title: 'Admin Role' },
+		{ type: 'text', col: 'role', title: 'Role' },
 		{ type: 'text', col: 'first', title: 'First' },
 		{ type: 'text', col: 'last', title: 'Last' },
 	]
-	export let items
-	// export let items_count
 
-	let checkeditems
+	export let items = []
+	export let items_count = 0
+	// export let page_size = 0
+	// export let drafts_count = 0
+	// export let published_count = 0
+	// export let archived_count = 0
 
-	async function trash() {
-		if (window.confirm('Are you sure you want to move these items to the trash?')) {
-			const ids = checkeditems
-				.map((item, index) => item ? items[index].id : false)
-				.filter(id => id)
-			const answer = await POST(`/api/admin/posts/archive.json`, { ids })
-			if (answer.error) {
-				return errors = ['Something went wrong. Please try again or contact the site administrator if you continue to experience problems.']
-			} else {
-				items = items.filter(item => !ids.find(id => id === item.id))
-				items_count -= answer.count
-				checkeditems = []
-				// if (!items.length && ) {} ... TODO: goto prior page?
-			}
-		}
-	}
+	import { content_vars } from '../../../stores/admin-store.js'
+	$: content_vars.set({
+		items,
+		items_count,
+		// page_size,
+		// drafts_count,
+		// published_count,
+		// archived_count,
+	})
 </script>
 
-<style type="text/scss">
-	.list {
-		margin: 0 0 20rem;
-	}
-</style>
+<!-- <style type="text/scss"></style> -->

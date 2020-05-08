@@ -1,11 +1,10 @@
-<tr>
-	<th class="col-checkbox">
+<div class="row">
+	<div class="col col-checkbox">
 		<Checkbox clickhandler={uncheck} bind:checked/>
-	</th>
-
+	</div>
 	{#each cols as col}
 		{#if col.sort}
-			<th class="action col-{col.type}">
+			<div class="col col-{col.type} action">
 				<div on:click={() => resort(col.col)} class="sort">
 					{col.title}
 					<!-- {#if column === col.col}
@@ -16,14 +15,14 @@
 						{/if}
 					{/if} -->
 				</div>
-			</th>
+			</div>
 		{:else}
-			<th class="col-{col.type}">
+			<div class="col col-{col.type}">
 				{col.title}
-			</th>
+			</div>
 		{/if}
 	{/each}
-</tr>
+</div>
 
 <script>
 	// import { get } from 'svelte/store'
@@ -31,17 +30,18 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page, goto } = get_sapper_stores()
 
-	import Checkbox from './Checkbox.svelte'
+	import { content_vars as vars } from '../../../../stores/admin-store.js'
+
+	import Checkbox from '../elements/Checkbox.svelte'
 	// // import { createQuery }
 	// import CaretDown from '@johnny/svg/caret-down.svelte'
 	// import CaretUp from '@johnny/svg/caret-up.svelte'
 
 	export let checked
 	export let checkeditems
-	export let items
 	export let cols
 	function uncheck() {
-		checkeditems = checked ? [] : [...Array(items.length)].map(item => true)
+		checkeditems = checked ? [] : [...Array($vars.items.length)].map(item => true)
 	}
 
 	$: column = $page.query.column
@@ -69,25 +69,24 @@
 </script>
 
 <style type="text/scss">
-	th {
-		&:first-child {
-			vertical-align: middle;
-		}
-		&.action {
-			color: var(--admin-links);
-			cursor: pointer;
-			user-select: none;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-		&.col-checkbox,
-		&.col-asset {
-			width: 1rem;
-		}
+	.row {
+		display: table-row;
+		border-bottom: 1rem solid var(--admin-gray-light);
+		font: $bold 13rem/1 $font;
+		cursor: pointer;
 	}
-	[type="checkbox"] {
-		margin: 0;
+	.col {
+		display: table-cell;
+		padding: 3rem 8rem;
+		vertical-align: middle;
+		border-left: 1rem solid var(--admin-gray-light);
+		&:first-child { border: 0; }
+	}
+	.col-checkbox {
+		width: 48rem;
+	}
+	.col-assets {
+		width: calc(59rem + 16rem);
 	}
 	.sort {
 		display: flex;
