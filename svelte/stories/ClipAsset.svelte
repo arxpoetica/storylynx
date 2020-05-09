@@ -2,14 +2,14 @@
 	<!-- <div bind:this={elem} class="asset {transition}"> -->
 		<!-- <div class="asset-action" style={animation_style}> -->
 	{#if type === 'video'}
-		<!-- <ClipVideo {asset} {image} {style} {options}/> -->
+		<!-- <ClipVideo {asset} {image} {style}/> -->
 		<ClipVideo {intersecting} {asset} {text} {style}/>
 	{:else if type === 'audio'}
-		<ClipAudio {intersecting} {asset} {text} {image} {style} {options}/>
+		<ClipAudio {intersecting} {asset} {text} {image} {style}/>
 	{:else if type === 'image'}
-		<ClipImage {intersecting} {asset} {text} {style} {options}/>
+		<ClipImage {intersecting} {asset} {text} {style}/>
 	{:else}
-		<!-- <ClipText {intersecting} {asset} {style} {options}/> -->
+		<!-- <ClipText {intersecting} {asset} {style}/> -->
 		<ClipText {asset} {style}/>
 	{/if}
 {/if}
@@ -19,7 +19,6 @@
 	export let clip
 	export let intersecting = false
 	export let style = ''
-	export let options = {}
 	export let overrides = []
 
 	$: group = clip.assets_bin.length ? clip.assets_bin[index] : undefined

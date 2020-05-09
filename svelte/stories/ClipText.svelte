@@ -16,7 +16,6 @@
 
 	export let asset
 	export let style
-	// export let options
 	// export let intersecting
 	export let embedded = false
 
@@ -24,7 +23,7 @@
 
 	import { onMount } from 'svelte'
 	import { format_url } from './inline-helpers.js'
-	// $: src = format_url(asset.url, options)
+	// $: src = format_url(asset)
 
 	const loading = []
 	let loaded = 0
@@ -44,7 +43,7 @@
 			img.removeAttribute('height')
 			// TODO: remove later when we have a non-graphcms think...need to think through that all...
 			if (img.src.includes('graphcms')) {
-				loading.push({ img, src: format_url(img.src, { width: 600 }) })
+				loading.push({ img, src: format_url({ url: img.src, width: 600 }) })
 				img.removeAttribute('src')
 				img.onload = () => loaded++
 			}

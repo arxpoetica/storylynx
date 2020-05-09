@@ -12,7 +12,6 @@
 	export let asset
 	export let text
 	export let style
-	// export let options
 	export let intersecting
 
 	import ClipText from './ClipText.svelte'

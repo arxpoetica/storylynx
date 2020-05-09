@@ -1,6 +1,6 @@
 <audio bind:this={audio} bind:volume={indirect_volume} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
-	<ClipImage {intersecting} asset={image} {style} {options}/>
+	<ClipImage {intersecting} asset={image} {style}/>
 {/if}
 {#if text}
 	<!-- <ClipText asset={text} {intersecting} embedded={true}/> -->
@@ -12,7 +12,6 @@
 	export let image
 	export let text
 	export let style
-	export let options
 	export let intersecting
 
 	import ClipImage from './ClipImage.svelte'

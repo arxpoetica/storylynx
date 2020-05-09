@@ -1,5 +1,5 @@
 <div class:show class="image">
-	<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
+	<div class="bg" style="background-image:url({src});{bg_pos}{bg_size}{style}"></div>
 	<img {src} alt="n/a" use:lazy/>
 </div>
 {#if text}
@@ -11,7 +11,6 @@
 	export let asset
 	export let text
 	export let style
-	export let options
 	export let intersecting
 
 	import ClipText from './ClipText.svelte'
@@ -21,10 +20,11 @@
 	$: show = loaded && intersected
 
 	import { format_url } from './inline-helpers.js'
-	$: src = format_url(asset.url, options)
+	$: src = format_url(asset)
 
 	import { camel_to_hyphen } from '../../utils/basic-utils.js'
 	$: bg_pos = asset.bg_pos ? `background-position:${camel_to_hyphen(asset.bg_pos).replace('-', ' ')};` : ''
+	$: bg_size = asset.contain ? 'background-size:contain;' : ''
 
 	function lazy(node) {
 		const img = new Image()

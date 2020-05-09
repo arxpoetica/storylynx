@@ -1,19 +1,18 @@
-export const format_url = (original_url, options) => {
-	const url = new URL(original_url)
-	let path = url.origin
-	if (options.width || options.height) {
+export const format_url = asset => {
+	const { url, width, height } = asset
+
+	const url_interface = new URL(url)
+	let path = url_interface.origin
+
+	if (width || height) {
 		path += '/resize='
-		if (options.width && options.height) {
-			path += `w:${options.width},h:${options.height}`
-		} else if (options.width) {
-			path += `w:${options.width}`
+		if (width && height) {
+			path += `w:${width},h:${height},fit:crop`
+		} else if (width) {
+			path += `w:${width}`
 		} else {
-			path += `h:${options.height}`
+			path += `h:${height}`
 		}
-		path += options.crop ? ',fit:crop' : ''
-	} else if (options.crop) {
-		// just a default size if crop only
-		path += '/resize=w:600,h:600,fit:crop'
 	}
-	return path + url.pathname
+	return path + url_interface.pathname
 }
