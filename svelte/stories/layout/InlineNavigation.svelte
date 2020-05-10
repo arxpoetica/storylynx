@@ -1,7 +1,7 @@
 <nav class="inline-navigation">
 	<ul class="sequences">
 		{#each story.sequences as sequence, index}
-			<li class="sequence sequence-{index}">
+			<li class="sequence sequence-{index}" class:current={current(sequence)}>
 				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
 			</li>
 		{/each}
@@ -15,9 +15,8 @@
 
 	export let story
 
-	function href(sequence) {
-		return `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
-	}
+	const href = sequence => `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
+	const current = sequence => sequence.slug.toLowerCase() === $page.params.sequence
 </script>
 
 <style type="text/scss">

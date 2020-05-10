@@ -4,7 +4,7 @@
 	<!-- {JSON.stringify($page.params)} -->
 	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
 		{#each story.sequences as sequence, index}
-			<li class="sequence sequence-{index}">
+			<li class="sequence sequence-{index}" class:current={current(sequence)}>
 				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
 				{#if sequence.clips.length}
 					<ul class="clips">
@@ -29,9 +29,8 @@
 
 	export let story
 
-	function href(sequence) {
-		return `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
-	}
+	const href = sequence => `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
+	const current = sequence => sequence.slug.toLowerCase() === $page.params.sequence
 
 	// scrolling helpers:
 
@@ -110,6 +109,9 @@
 	.sequence {
 		display: flex;
 		align-items: center;
+		&.current .clips {
+			display: flex;
+		}
 	}
 	h2 {
 		display: flex;
@@ -127,7 +129,7 @@
 		}
 	}
 	.clips {
-		display: flex;
+		display: none;
 		align-items: center;
 	}
 	.clip {
