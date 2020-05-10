@@ -1,30 +1,29 @@
-<audio bind:this={audio} bind:volume={indirect_volume} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
-{#if image}
-	<ClipImage {intersecting} asset={image} {style}/>
-{/if}
+<div class="video" class:loaded>
+	<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
+		<source {src} type="video/mp4"/>
+	</video>
+</div>
 {#if text}
-	<!-- <ClipText asset={text} {intersecting} embedded={true}/> -->
+	<!-- <ClipText asset={text} {style} {intersecting} embedded={true}/> -->
 	<ClipText asset={text} {style} embedded={true}/>
 {/if}
 
 <script>
 	export let asset
-	export let image
 	export let text
 	export let style
 	export let intersecting
 
-	import ClipImage from './ClipImage.svelte'
 	import ClipText from './ClipText.svelte'
-	import { muted } from '../../stores/story-store.js'
+	import { muted } from '../../../stores/story-store.js'
 	import { tweened } from 'svelte/motion'
 	import { cubicIn, cubicOut } from 'svelte/easing'
 
-	let audio
+	let video
 	let loaded = false
 
 	$: paused = !(loaded && intersecting) && $volume === 0
-	$: if (loaded) { audio.muted = $muted }
+	$: if (loaded) { video.muted = $muted }
 
 	let volume = tweened(0, { duration: 1000 })
 	// TODO: delete when bug fixed
@@ -37,21 +36,40 @@
 	}
 
 	let src = ''
-	function lazy(audio) {
+	function lazy(video) {
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		audio.oncanplaythrough = () => loaded = true
+		video.oncanplaythrough = () => loaded = true
 		src = asset.url
 		return { destroy() {} } // noop
 	}
 </script>
 
 <style type="text/scss">
-	audio {
-		pointer-events: none;
+	.video {
+		overflow: hidden;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+		&.loaded {
+			opacity: 1;
+		}
+	}
+	video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		object-fit: cover;
 	}
 </style>

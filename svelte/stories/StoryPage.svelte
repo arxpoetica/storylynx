@@ -27,8 +27,8 @@
 	const { page } = get_sapper_stores()
 
 	export let story
-	import Navigation from './Navigation.svelte'
-	import InlineNavigation from './InlineNavigation.svelte'
+	import Navigation from './layout/Navigation.svelte'
+	import InlineNavigation from './layout/InlineNavigation.svelte'
 	import { view_height, seq_audio } from '../../stores/story-store.js'
 
 	$: sequence = story.sequences.find(seq => seq.slug.toLowerCase() === $page.params.sequence)
@@ -50,8 +50,8 @@
 	// 	$seq_audio['ck9nl7aj17mdj0963zvkiq5b2'].intersecting = true
 	// }, 5000)
 
-	import Toolbar from './Toolbar.svelte'
-	import ClipAudio from './ClipAudio.svelte'
+	import Toolbar from './layout/Toolbar.svelte'
+	import ClipAudio from './media/ClipAudio.svelte'
 	import Clip from './Clip.svelte'
 
 	// FIXME: ????? CAN I EVEN???

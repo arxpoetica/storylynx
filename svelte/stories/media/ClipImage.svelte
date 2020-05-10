@@ -22,7 +22,7 @@
 	import { format_url } from './inline-helpers.js'
 	$: src = format_url(asset)
 
-	import { camel_to_hyphen } from '../../utils/basic-utils.js'
+	import { camel_to_hyphen } from '../../../utils/basic-utils.js'
 	$: bg_pos = asset.bg_pos ? `background-position:${camel_to_hyphen(asset.bg_pos).replace('-', ' ')};` : ''
 	$: bg_size = asset.contain ? 'background-size:contain;' : ''
 

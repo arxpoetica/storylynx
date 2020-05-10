@@ -9,11 +9,11 @@
 
 <script>
 	import { onMount } from 'svelte'
-	import { muted } from '../../stores/story-store.js'
-	import AudioAudible from '../svg/audio-audible.svelte'
-	import AudioMuted from '../svg/audio-muted.svelte'
-	import FullscreenOpen from '../svg/fullscreen-open.svelte'
-	import FullscreenShut from '../svg/fullscreen-shut.svelte'
+	import { muted } from '../../../stores/story-store.js'
+	import AudioAudible from '../../svg/audio-audible.svelte'
+	import AudioMuted from '../../svg/audio-muted.svelte'
+	import FullscreenOpen from '../../svg/fullscreen-open.svelte'
+	import FullscreenShut from '../../svg/fullscreen-shut.svelte'
 
 	let fullscreen = false
 	onMount(() => {
