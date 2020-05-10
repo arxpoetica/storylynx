@@ -7,7 +7,9 @@
 		<Toolbar/>
 		<div class="audio">
 			{#each sequence.audio_clips as audio_clip}
-				<ClipAudio intersecting={$seq_audio[audio_clip.id].intersecting} asset={audio_clip.audio_asset}/>
+				{#if $seq_audio[audio_clip.id]}
+					<ClipAudio intersecting={$seq_audio[audio_clip.id].intersecting} asset={audio_clip.audio_asset}/>
+				{/if}
 			{/each}
 		</div>
 		<div class="sequence {sequence.classes ? sequence.classes : ''}">
