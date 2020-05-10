@@ -4,7 +4,7 @@
 
 <slot name="pre-site"></slot>
 <div class="site">
-	<slot name="header"></slot>
+	<slot name="header"><StoryHeader/></slot>
 	<main class="layout-{section} layout-all">
 		<slot name="pre-main"></slot>
 			<slot></slot>
@@ -19,7 +19,9 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
 
+	import StoryHeader from './StoryHeader.svelte'
 	import { story_scroll, forward } from '../../../stores/story-store.js'
+
 	let scroll_y = 0
 	$: story_scroll.set(scroll_y)
 

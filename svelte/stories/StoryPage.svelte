@@ -4,7 +4,6 @@
 
 <div class="story-layout">
 	{#if story && sequence}
-		<Toolbar/>
 		<div class="audio">
 			{#each sequence.audio_clips as audio_clip}
 				{#if $seq_audio[audio_clip.id]}
@@ -50,7 +49,6 @@
 	// 	$seq_audio['ck9nl7aj17mdj0963zvkiq5b2'].intersecting = true
 	// }, 5000)
 
-	import Toolbar from './layout/Toolbar.svelte'
 	import ClipAudio from './media/ClipAudio.svelte'
 	import Clip from './Clip.svelte'
 

@@ -32,11 +32,7 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		position: fixed;
-		top: 0;
-		right: 0;
-		padding: 12rem 12rem 0 0;
-		z-index: 999999999;
+		pointer-events: all;
 	}
 	.tool {
 		width: 34rem;
