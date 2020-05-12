@@ -1,4 +1,4 @@
-<main class="content-view">
+<div class="content-view">
 	<div class="header">
 		<h1>{model}</h1>
 		<Button {href} title="Create {singular}"/>
@@ -7,23 +7,43 @@
 		<ActionsBar on:trash={trash} bind:checkeditems/>
 	</div>
 	<div class="content">
-		<ContentList bind:checkeditems {cols}/>
+		<ContentList bind:checkeditems {cols} {segment}/>
 	</div>
-</main>
+</div>
+<slot></slot>
 
 <script>
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { page: pageStore } = get_sapper_stores()
+
 	export let model = ''
 	export let cols = []
+	export let items = []
+	export let items_count = 0
+	export let page_size = 0
+	export let drafts_count = 0
+	export let published_count = 0
+	export let archived_count = 0
 
 	import { content_vars as vars } from '../../../../stores/admin-store.js'
+
+	$: vars.set({
+		items,
+		items_count,
+		page_size,
+		drafts_count,
+		published_count,
+		archived_count,
+	})
 
 	import Button from '../elements/Button.svelte'
 	import ActionsBar from '../widgets/ActionsBar.svelte'
 	import ContentList from '../widgets/ContentList.svelte'
 
-
 	$: singular = model.replace(/(s|es)$/g, '')
-	$: href = `/admin/${model.toLowerCase()}/new`
+	$: segment = model.toLowerCase()
+	$: href = `/admin/${segment}/new`
 
 	let checkeditems = []
 	async function trash() {
@@ -45,7 +65,7 @@
 </script>
 
 <style type="text/scss">
-	main {
+	.content-view {
 		display: grid;
 		// grid-template-areas:
 		// 	"header header"

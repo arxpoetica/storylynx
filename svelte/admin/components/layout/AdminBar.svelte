@@ -2,36 +2,46 @@
 <nav class="admin-bar">
 	<div class="top">
 		<h2>
+			<div class="icon"><SettingsIcon/></div>
+			Account
+		</h2>
+		<nav class="links">
+			<a href="/" class="link">
+				{process.env.LYNX_SITE_NAME} Homepage
+				<div class="icon"><HomeIcon/></div>
+			</a>
+			<a href="/admin" class="link" class:on={on($page.path, 'dashboard')}>
+				StoryLynx Dashboard
+			</a>
+			<a href="/admin/users/{$session.user.username}" class="link">
+				My Profile
+			</a>
+		</nav>
+		<h2>
 			<div class="icon"><ContentIcon/></div>
 			Content
 		</h2>
 		<nav class="links">
-			<a href="/admin/posts" class="link" class:on={path === '/admin/posts'}>
+			<!-- <a href="/admin/media" class="link" class:on={on($page.path, 'media')}>
+				Media
+				<div class="icon"><MediaIcon/></div>
+			</a> -->
+			<a href="/admin/posts" class="link" class:on={on($page.path, 'posts')}>
 				Posts
 				<div class="icon"><PostIcon/></div>
 			</a>
-			<a href="/admin/assets" class="link" class:on={path === '/admin/assets'}>
+			<a href="/admin/assets" class="link" class:on={on($page.path, 'assets')}>
 				Archive Assets
-				<div class="icon"><AssetIcon/></div>
+				<div class="icon"><ArchiveIcon/></div>
 			</a>
-			<a href="/admin/media" class="link" class:on={path === '/admin/media'}>
-				Media
-				<div class="icon"><MediaIcon/></div>
+			<a href="/admin/users" class="link" class:on={on($page.path, 'users')}>
+				Users
+				<div class="icon"><UsersIcon/></div>
 			</a>
 		</nav>
 	</div>
 	<div class="bottom">
-		<h2>
-			<div class="icon"><Settings/></div>
-			Settings
-		</h2>
 		<nav class="links">
-			<a href="/admin/users" class="link" class:on={path === '/admin/users'}>
-				Users
-			</a>
-			<a href="/admin/users/{$session.user.username}" class="link">
-				Your Profile
-			</a>
 			<div class="divider"></div>
 			<a href="/auth/logout" class="link" on:click={logout}>
 				Log Out
@@ -45,14 +55,17 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session, page } = get_sapper_stores()
 
-	$: path = $page.path
+	const on = (path, segment) =>
+		(path === '/admin' && segment === 'dashboard') || path.includes(`/admin/${segment}`)
 
 	import { GET } from '../../../../utils/loaders.js'
+	import SettingsIcon from '../../../svg/admin-account.svelte'
+	import HomeIcon from '../../../svg/admin-home.svelte'
 	import ContentIcon from '../../../svg/admin-content.svelte'
-	import Settings from '../../../svg/admin-settings.svelte'
-	import PostIcon from '../../../svg/admin-post.svelte'
-	import AssetIcon from '../../../svg/admin-asset.svelte'
 	import MediaIcon from '../../../svg/admin-media.svelte'
+	import PostIcon from '../../../svg/admin-post.svelte'
+	import ArchiveIcon from '../../../svg/admin-archive.svelte'
+	import UsersIcon from '../../../svg/admin-users.svelte'
 
 	async function logout(event) {
 		event.preventDefault()
@@ -89,6 +102,11 @@
 		background-color: var(--admin-blue-faint);
 		color: var(--admin-blue-dusk);
 		cursor: default;
+		.icon {
+			max-width: 20rem;
+			height: auto;
+			margin: 0 8rem 0 0;
+		}
 	}
 	.links {
 		display: flex;
@@ -117,8 +135,10 @@
 		}
 	}
 	.icon {
-		flex-basis: 18rem;
-		margin: 0 8rem 0 0;
+		max-width: 18rem;
+		height: 18rem;
+		margin: 0 0 0 8rem;
+		// color: var(--admin-blue-dusk);
 	}
 	.divider {
 		margin: 5rem 0;

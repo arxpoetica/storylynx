@@ -11,9 +11,9 @@ export default async function(req, res) {
 
 		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/posts/single.post.js`
 		const { default: api } = await import(path)
-		const { post, post_tags } = await api({ id })
+		const { post, tags } = await api({ id })
 
-		return res.json({ post, post_tags })
+		return res.json({ post, tags })
 	} catch (error) {
 		return handleError(error, res)
 	}

@@ -59,10 +59,13 @@
 		--admin-blue-dusk: #023955;
 		--admin-blue-text: var(--admin-blue-dark);
 
-		--admin-green: #35ffd3;
-		--admin-green-light: #b0ffee;
-		--admin-green-dark: #03d4a7;
-		--admin-green-text: #006644;
+		--admin-green: #00ebc0;
+		--admin-green-faint: #f0fffc;
+		--admin-green-lighter: #99ffed;
+		--admin-green-light: #66ffe3;
+		--admin-green-dark: #00b292;
+		--admin-green-dusk: #004d3f;
+		--admin-green-text: var(--admin-green-dark);
 
 		--admin-red: #ff50a2;
 		--admin-red-light: #ff88bf;

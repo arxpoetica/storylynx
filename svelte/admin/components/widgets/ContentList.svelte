@@ -1,14 +1,12 @@
 <div class="content-list">
 	<ContentListHeader bind:checked bind:checkeditems {cols}/>
 	{#each $vars.items as item, index}
-		<div class="row">
+		<a href="/admin/{segment}/{item.id}" class="row">
 			<div class="col"><Checkbox bind:checked={checkeditems[index]}/></div>
 			{#each cols as col}
 				<div class="col">
-					{#if col.type === 'link'}
-						<h2>
-							<a href="{col.url}{item[col.slug || col.col]}">{item[col.col]}</a>
-						</h2>
+					{#if col.type === 'title'}
+						<h2>{item[col.col]}</h2>
 					{:else if col.type === 'assets'}
 						{#if item[col.col] && item[col.col].length}
 							<div class="assets" style="background-image:url({src(item[col.col][0], { format: 'jpg', width: 59, height: 59, crop: true })});"></div>
@@ -18,8 +16,8 @@
 					{:else if col.type === 'array'}
 						<div class="tags">
 							{#if item[col.col].length}
-									{#each item[col.col].map(obj => obj[col.mapper]) as tag}
-										<div class="tag">{tag}</div>
+									{#each item[col.col].map(obj => obj[col.mapper]) as name}
+										<div class="tag">{name}</div>
 									{/each}
 							{:else}
 								--
@@ -39,7 +37,7 @@
 					{/if}
 				</div>
 			{/each}
-		</div>
+		</a>
 	{/each}
 </div>
 
@@ -56,6 +54,7 @@
 	import Checkbox from '../elements/Checkbox.svelte'
 
 	export let cols
+	export let segment
 	export let checkeditems = []
 	$: checked = $vars.items.length === checkeditems.filter(val => val).length
 
@@ -78,7 +77,9 @@
 	.row {
 		display: table-row;
 		border-bottom: 1rem solid var(--admin-gray-light);
-		cursor: default;
+		color: inherit;
+		text-decoration: none;
+		cursor: pointer;
 		&:hover { background-color: var(--admin-blue-faint); }
 	}
 	.col {
