@@ -18,7 +18,7 @@ export async function preloader(page, session) {
 		published_count,
 		archived_count,
 	} = await POST(
-		'/api/admin/posts/page.post',
+		'/api/admin/assets/page.post',
 		Object.assign({ cookie: session.cookie }, query),
 	)
 	return {
@@ -29,10 +29,16 @@ export async function preloader(page, session) {
 		published_count,
 		archived_count,
 		cols: [
-			{ type: 'title', col: 'headline', title: 'Headline', sort: true },
-			{ type: 'assets', col: 'assets', title: 'Cover' },
-			{ type: 'array', col: 'tags', title: 'Tags', mapper: 'name' },
+			// { type: 'title', col: 'headline', title: 'Headline', sort: true },
+			// { type: 'assets', col: 'assets', title: 'Cover' },
+			// { type: 'array', col: 'tags', title: 'Tags', mapper: 'tag' },
+			// { type: 'datetime', col: 'published', title: 'Date', sort: true },
+			{ type: 'asset', col: 'assets', title: 'Assets' },
+			{ type: 'url', col: 'title', title: 'Title', sort: true },
+			{ type: 'function', col: item => item.assets ? item.assets.length : 0, title: 'Asset Count' },
+			{ type: 'array', col: 'tags', title: 'Tags', mapper: 'tag' },
 			{ type: 'datetime', col: 'published', title: 'Date', sort: true },
 		],
 	}
 }
+

@@ -1,4 +1,4 @@
-<label class:checked class:green={color === 'green'} on:click={clickhandler}>
+<label class:checked class:green={color === 'green'} on:click|stopPropagation={clickhandler}>
 	{#if checked}
 		<div class="svg"><Checkmark/></div>
 	{/if}
@@ -21,7 +21,7 @@
 		padding: 8rem;
 		border-radius: 100%;
 		line-height: 0;
-		cursor: pointer;
+		cursor: default;
 		transition: background-color 0.15s ease-in-out;
 		&:hover { background-color: var(--admin-gray-light); }
 		&.checked { background-color: var(--admin-blue-lighter); }
@@ -46,6 +46,7 @@
 		border: 1rem solid var(--admin-blue-light);
 		// border-radius: 3rem;
 		box-shadow: 0 0 0 transparent;
+		cursor: default;
 		outline: 0;
 		-webkit-appearance: none;
 		&:checked {

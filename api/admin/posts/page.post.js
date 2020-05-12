@@ -26,7 +26,14 @@ export default async function(req, res) {
 		const { items, items_count, drafts_count, published_count, archived_count }
 			= await api({ page, page_size, tags, status, column, sort })
 
-		res.json({ page_size, items, items_count, drafts_count, published_count, archived_count })
+		res.json({
+			page_size,
+			items,
+			items_count,
+			drafts_count,
+			published_count,
+			archived_count,
+		})
 
 	} catch (error) {
 		return handleError(error, res)

@@ -10,7 +10,7 @@
 				{process.env.LYNX_SITE_NAME} Homepage
 				<div class="icon"><HomeIcon/></div>
 			</a>
-			<a href="/admin" class="link" class:on={path === '/admin'}>
+			<a href="/admin" class="link" class:on={on($page.path, 'dashboard')}>
 				StoryLynx Dashboard
 			</a>
 			<a href="/admin/users/{$session.user.username}" class="link">
@@ -22,19 +22,19 @@
 			Content
 		</h2>
 		<nav class="links">
-			<a href="/admin/media" class="link" class:on={path === '/admin/media'}>
+			<!-- <a href="/admin/media" class="link" class:on={on($page.path, 'media')}>
 				Media
 				<div class="icon"><MediaIcon/></div>
-			</a>
-			<a href="/admin/posts" class="link" class:on={path === '/admin/posts'}>
+			</a> -->
+			<a href="/admin/posts" class="link" class:on={on($page.path, 'posts')}>
 				Posts
 				<div class="icon"><PostIcon/></div>
 			</a>
-			<a href="/admin/assets" class="link" class:on={path === '/admin/assets'}>
+			<a href="/admin/assets" class="link" class:on={on($page.path, 'assets')}>
 				Archive Assets
 				<div class="icon"><ArchiveIcon/></div>
 			</a>
-			<a href="/admin/users" class="link" class:on={path === '/admin/users'}>
+			<a href="/admin/users" class="link" class:on={on($page.path, 'users')}>
 				Users
 				<div class="icon"><UsersIcon/></div>
 			</a>
@@ -55,7 +55,8 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session, page } = get_sapper_stores()
 
-	$: path = $page.path
+	const on = (path, segment) =>
+		(path === '/admin' && segment === 'dashboard') || path.includes(`/admin/${segment}`)
 
 	import { GET } from '../../../../utils/loaders.js'
 	import SettingsIcon from '../../../svg/admin-account.svelte'
