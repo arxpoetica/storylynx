@@ -9,6 +9,7 @@ export async function preloader(page, session) {
 		url += `&sort=${query.sort ? query.sort : 'desc'}`
 		return this.redirect(302, url)
 	}
+
 	query.page = query.page || 1
 	const {
 		page_size,
