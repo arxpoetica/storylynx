@@ -13,6 +13,6 @@
 
 <script>
 	import LayoutContentItem from '../components/layout/LayoutContentItem.svelte'
-	export let post
-	export let tags
+	// export let post
+	// export let tags
 </script>
