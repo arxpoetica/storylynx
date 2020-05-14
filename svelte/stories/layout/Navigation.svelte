@@ -9,7 +9,7 @@
 				{#if sequence.clips.length}
 					<ul class="clips">
 						{#each sequence.clips as clip}
-							{#if clip.slug}
+							{#if clip.slug && !clip.hide_navigation}
 								<li class="clip">
 									<h3><span class="out"><span class="in">{clip.slug}</span></span></h3>
 								</li>
