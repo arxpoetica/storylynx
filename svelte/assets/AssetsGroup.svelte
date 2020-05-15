@@ -2,12 +2,12 @@
 
 <!-- FIXME: we might need to bring back external assets :( -->
 {#if first_asset}
-	<div class="asset">
-		<a href="/assets/{asset_group.slug}">
-			<div class="media" on:contextmenu={event => event.preventDefault()}>
-				<Asset asset={first_asset} thumb={true}/>
-			</div>
-			<div class="texts">
+	<a class="asset" href="/assets/{asset_group.slug}">
+		<div class="media" on:contextmenu={event => event.preventDefault()}>
+			<Asset asset={first_asset} thumb={true}/>
+		</div>
+		<div class="texts">
+			<div class="info">
 				<h2>
 					{asset_group.title || '[This Asset has no title.]'} 
 					{#if asset_group.year}
@@ -15,10 +15,10 @@
 					{/if}
 				</h2>
 				<h3 class="h6">{asset_group.content_type || 'Uncategorized'}</h3>
-				<h4 class="h6">Explore</h4>
 			</div>
-		</a>
-	</div>
+			<h4 class="h6">Explore</h4>
+		</div>
+	</a>
 {/if}
 
 <script>
@@ -30,40 +30,36 @@
 
 <style type="text/scss">
 	.asset {
+		display: grid;
+		grid-template-rows: auto 82rem;
+		grid-gap: 35rem;
 		padding: 35rem;
 		border: 1px solid transparent;
 		color: $black;
 		transition: border-color 0.15s ease-in-out;
 		&:hover {
 			border-color: #cdccd0;
-			a {
-				text-decoration: none;
-			}
+			text-decoration: none;
 			h4 {
 				color: $black;
 			}
 		}
 	}
-	a {
-		color: $black;
-	}
 	.media {
-		margin: 0 0 35rem;
+		margin: 0;
+		background-color: green;
 	}
 	.texts {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		justify-content: space-between;
 	}
-	h3 {
-		order: 1;
-		margin: 0 0 10rem;
-		font-weight: $heavy;
-		text-align: center;
+	.info {
+		display: flex;
+		flex-direction: column-reverse;
 	}
 	h2 {
-		order: 2;
-		margin: 0 0 30rem;
+		margin: 0;
 		font: 15rem/1.2 $font;
 		letter-spacing: 0.3rem;
 		text-align: center;
@@ -71,8 +67,12 @@
 			margin-left: 6rem;
 		}
 	}
+	h3 {
+		margin: 0 0 10rem;
+		font-weight: $heavy;
+		text-align: center;
+	}
 	h4 {
-		order: 2;
 		margin: 0;
 		color: transparent;
 		text-align: center;
