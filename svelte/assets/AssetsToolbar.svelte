@@ -37,8 +37,7 @@
 	import SearchBar from '../SearchBar.svelte'
 
 	export let content_types = []
-	// TODO: preload this from the backend
-	export let decades = ['1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s']
+	export let decades = []
 	export let subjects = []
 
 	export let contentValue

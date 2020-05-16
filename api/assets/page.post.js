@@ -8,10 +8,30 @@ export default async function(req, res) {
 
 		const path = `${process.env.LYNX_API_PLUGIN}/api/assets/page.post.js`
 		const { default: api } = await import(path)
-		const { items, items_count, content_types, subjects }
-			= await api({ page, page_size, tags, type, decade, subject, search_term })
+		const {
+			items,
+			items_count,
+			content_types,
+			decades,
+			subjects,
+		} = await api({
+			page,
+			page_size,
+			tags,
+			type,
+			decade,
+			subject,
+			search_term
+		})
 
-		return res.json({ page_size, items, items_count, content_types, subjects })
+		return res.json({
+			page_size,
+			items,
+			items_count,
+			content_types,
+			decades,
+			subjects
+		})
 	} catch (error) {
 		console.log(error)
 		return res.json({ error: 1, message: error.message })

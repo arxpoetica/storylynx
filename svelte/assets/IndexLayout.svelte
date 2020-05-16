@@ -5,6 +5,7 @@
 		bind:subjectValue
 		on:filter={filter}
 		{content_types}
+		{decades}
 		{subjects}
 	/>
 	<h1>Assets</h1>
@@ -43,6 +44,7 @@
 	export let items
 	export let items_count = 0
 	export let content_types = []
+	export let decades = []
 	export let subjects = []
 	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
