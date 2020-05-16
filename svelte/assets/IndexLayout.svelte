@@ -1,13 +1,5 @@
 <div class="layout-main">
-	<AssetsToolbar
-		bind:contentValue
-		bind:decadeValue
-		bind:subjectValue
-		on:filter={filter}
-		{content_types}
-		{decades}
-		{subjects}
-	/>
+	<AssetsToolbar {content_types} {decades} {subjects}/>
 	<h1>Assets</h1>
 	<slot name="pre-content"></slot>
 	{#if items}
@@ -34,8 +26,8 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page: pageStore, goto } = get_sapper_stores()
 
-	import { query_string_to_json } from '../../utils/api-utils'
-	import { search_term } from '../../stores/app-store'
+	import { POST } from '../../utils/loaders.js'
+	import { search_term, type, decade, subject } from '../../stores/app-store.js'
 
 	import Pagination from '../page-lists/Pagination.svelte'
 	import AssetsToolbar from './AssetsToolbar.svelte'
@@ -48,26 +40,40 @@
 	export let subjects = []
 	export let page_size = 0
 	$: page = parseInt($pageStore.query.page)
-	$: contentValue = $pageStore.query.type || ''
-	$: decadeValue = $pageStore.query.decade || ''
-	$: subjectValue = $pageStore.query.subject || ''
+
+	$: $search_term = $pageStore.query.search_term || ''
+	$: $type = $pageStore.query.type || ''
+	$: $decade = $pageStore.query.decade || ''
+	$: $subject = $pageStore.query.subject || ''
 
 	let initialized = false
-	const unsubscribe = search_term.subscribe(term => {
-		if (initialized) {
-			filter({ detail: { key: 'search_term', value: $search_term } }, true)
-		} else {
-			initialized = true
+	let prior_search_term = $search_term
+	let prior_type = $type
+	let prior_decade = $decade
+	let prior_subject = $subject
+	$: if (initialized) {
+		if ($search_term !== prior_search_term) {
+			prior_search_term = $search_term
+			filter('search_term', $search_term, true)
 		}
-	})
-	onDestroy(() => {
-		unsubscribe()
-		search_term.set('')
-	})
+		if ($type !== prior_type) {
+			prior_type = $type
+			filter('type', $type)
+		}
+		if ($decade !== prior_decade) {
+			prior_decade = $decade
+			filter('decade', $decade)
+		}
+		if ($subject !== prior_subject) {
+			prior_subject = $subject
+			filter('subject', $subject)
+		}
+	} else {
+		initialized = true
+	}
 
-	async function filter(event, is_search_term) {
+	async function filter(key, value, is_search_term) {
 		const params = new URLSearchParams((new URL(location)).search)
-		const { key, value } = event.detail
 		if (value) {
 			params.set(key, value)
 		} else {
@@ -79,18 +85,24 @@
 		// because `goto` forces input blue
 		// SEE: https://github.com/sveltejs/sapper/blob/a52bdb2f4e1a722f06134b4065da2a32969e12e2/runtime/src/app/app.ts#L191
 		if (is_search_term) {
-			const res = await POST('/api/assets/page.json', query_string_to_json(params.toString()))
+			const res = await POST('/api/assets/page.post', Object.fromEntries(params))
 			page_size = res.page_size
 			items = res.items
 			items_count = res.items_count
 			content_types = res.content_types
 			subjects = res.subjects
-			history.pushState({}, '', `${location.pathname}?${params.toString()}`)
+			history.replaceState({}, '', `${location.pathname}?${params.toString()}`)
 		} else {
-			goto(`${location.pathname}?${params.toString()}`)
+			goto(`${location.pathname}?${params.toString()}`, { replaceState: true })
 		}
-
 	}
+
+	onDestroy(() => {
+		$search_term =''
+		$type =''
+		$decade =''
+		$subject =''
+	})
 </script>
 
 <style type="text/scss">

@@ -4,25 +4,22 @@
 			<div class="box">
 				<SelectBox
 					title="Content Type"
-					on:change={() => changed('type', contentValue)}
+					store={type}
 					primary="All Content Types"
-					bind:value={contentValue}
 					options={content_types}/>
 			</div>
 			<div class="box">
 				<SelectBox
 					title="Decade"
-					on:change={() => changed('decade', decadeValue)}
+					store={decade}
 					primary="All Decades"
-					bind:value={decadeValue}
 					options={decades}/>
 			</div>
 			<div class="box">
 				<SelectBox
 					title="Subject"
-					on:change={() => changed('subject', subjectValue)}
+					store={subject}
 					primary="All Subjects"
-					bind:value={subjectValue}
 					options={subjects}/>
 			</div>
 		</div>
@@ -33,20 +30,14 @@
 </div>
 
 <script>
-	import SelectBox from '../SelectBox.svelte'
-	import SearchBar from '../SearchBar.svelte'
+	import { type, decade, subject } from '../../stores/app-store'
+
+	import SelectBox from './SelectBox.svelte'
+	import SearchBar from './SearchBar.svelte'
 
 	export let content_types = []
 	export let decades = []
 	export let subjects = []
-
-	export let contentValue
-	export let decadeValue
-	export let subjectValue
-
-	import { createEventDispatcher } from 'svelte'
-	const dispatch = createEventDispatcher()
-	const changed = (key, value) => dispatch('filter', { key, value })
 </script>
 
 <style type="text/scss">

@@ -3,7 +3,7 @@
 		<h2 class="h6">{title}</h2>
 	{/if}
 	<div class="inner">
-		<select bind:value on:change={changed}>
+		<select bind:value={$store}>
 			{#if primary}
 				<option value="">{primary}</option>
 			{/if}
@@ -18,15 +18,12 @@
 </div>
 
 <script>
-	import SelectCaret from './svg/select-caret.svelte'
+	import SelectCaret from '../svg/select-caret.svelte'
+
 	export let title
-	export let value = ''
+	export let store
 	export let primary
 	export let options = []
-
-	import { createEventDispatcher } from 'svelte'
-	const dispatch = createEventDispatcher()
-	const changed = () => dispatch('change', value)
 </script>
 
 <style type="text/scss">
