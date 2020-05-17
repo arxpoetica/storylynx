@@ -41,6 +41,10 @@
 				Archive Quick Entry
 				<div class="icon"><KeyboardIcon/></div>
 			</a>
+			<a href="/admin/quick-arrange" class="link" class:on={on($page.path, 'quick-arrange')}>
+				Archive Quick Arrange
+				<div class="icon"><ArrangeIcon/></div>
+			</a>
 		</nav>
 	</div>
 	<div class="bottom">
@@ -69,6 +73,7 @@
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import ArchiveIcon from '../../../svg/admin-archive.svelte'
 	import KeyboardIcon from '../../../svg/admin-keyboard.svelte'
+	import ArrangeIcon from '../../../svg/admin-arrange.svelte'
 	import UsersIcon from '../../../svg/admin-users.svelte'
 
 	async function logout(event) {
