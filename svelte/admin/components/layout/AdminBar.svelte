@@ -10,12 +10,14 @@
 				{process.env.LYNX_SITE_NAME} Homepage
 				<div class="icon"><HomeIcon/></div>
 			</a>
-			<a href="/admin" class="link" class:on={on($page.path, 'dashboard')}>
-				StoryLynx Dashboard
+			<div class="divider"></div>
+			<a href="/admin" class="link" class:on={on($page.path, 'dashboard')}>StoryLynx Dashboard</a>
+			<div class="divider"></div>
+			<a href="/admin/users" class="link" class:on={on($page.path, 'users')}>
+				Users
+				<div class="icon"><UsersIcon/></div>
 			</a>
-			<a href="/admin/users/{$session.user.username}" class="link">
-				My Profile
-			</a>
+			<a href="/admin/users/{$session.user.username}" class="link">My Profile</a>
 		</nav>
 		<h2>
 			<div class="icon"><ContentIcon/></div>
@@ -30,13 +32,14 @@
 				Posts
 				<div class="icon"><PostIcon/></div>
 			</a>
+			<div class="divider"></div>
 			<a href="/admin/assets" class="link" class:on={on($page.path, 'assets')}>
 				Archive Assets
 				<div class="icon"><ArchiveIcon/></div>
 			</a>
-			<a href="/admin/users" class="link" class:on={on($page.path, 'users')}>
-				Users
-				<div class="icon"><UsersIcon/></div>
+			<a href="/admin/quick-entry" class="link" class:on={on($page.path, 'quick-entry')}>
+				Archive Quick Entry
+				<div class="icon"><KeyboardIcon/></div>
 			</a>
 		</nav>
 	</div>
@@ -65,6 +68,7 @@
 	import MediaIcon from '../../../svg/admin-media.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import ArchiveIcon from '../../../svg/admin-archive.svelte'
+	import KeyboardIcon from '../../../svg/admin-keyboard.svelte'
 	import UsersIcon from '../../../svg/admin-users.svelte'
 
 	async function logout(event) {
