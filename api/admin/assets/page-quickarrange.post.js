@@ -9,10 +9,7 @@ export default async function(req, res) {
 
 		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/assets/page-quickarrange.post.js`
 		const { default: api } = await import(path)
-		const { items } = await api({})
-
-		res.json({ items })
-
+		res.json(await api())
 	} catch (error) {
 		return handleError(error, res)
 	}

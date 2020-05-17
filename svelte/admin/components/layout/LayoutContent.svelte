@@ -78,8 +78,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		// grid-row: header;
-		// grid-column: header;
+		height: 62rem;
 		padding: 12rem;
 		border-bottom: 1px solid var(--admin-gray-light);
 	}

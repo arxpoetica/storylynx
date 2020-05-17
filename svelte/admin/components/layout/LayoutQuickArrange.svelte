@@ -3,33 +3,45 @@
 		<h1>{model}</h1>
 		<!-- <Button {href} title="Create {singular}"/> -->
 	</div>
-	<div class="tools">
-		<!-- <ActionsBar on:trash={trash} bind:checkeditems/> -->
-	</div>
+	<!-- <div class="tools"></div> -->
 	<div class="content">
-		<!-- <p>{console.log(items)}</p> -->
-		<!-- <ContentList bind:checkeditems {cols} {segment}/> -->
+		<div class="col">
+			<NestBar items={assets} title="Ungrouped assets"/>
+			<Nest items={assets} col="assets"/>
+		</div>
+		<div class="col">
+			<NestBar items={playground} title="Playground assets"/>
+			<Nest items={playground} col="playground"/>
+		</div>
+		<div class="col">
+			<NestBar items={groups} title="Grouped assets"/>
+			<Nest items={groups} col="groups"/>
+		</div>
 	</div>
 </div>
 <slot></slot>
 
 <script>
 	export let model = ''
-	// export let cols = []
-	// export let items = []
+	export let ungrouped_assets = []
+	export let grouped_assets = []
 
+	import NestBar from '../../assets/NestBar.svelte'
+	import Nest from '../../assets/Nest.svelte'
 	// import Button from '../elements/Button.svelte'
-	// import ActionsBar from '../widgets/ActionsBar.svelte'
-	// import ContentList from '../widgets/ContentList.svelte'
+
+	import { assets, playground, groups } from '../../../../stores/admin-store.js'
+	import { onMount } from 'svelte'
+
+	onMount(() => {
+		assets.set(ungrouped_assets)
+		groups.set(grouped_assets)
+	})
 </script>
 
 <style type="text/scss">
 	.content-view {
 		display: grid;
-		// grid-template-areas:
-		// 	"header header"
-		// 	"main side"
-		// ;
 		grid-template-rows: auto auto 1fr;
 		grid-template-columns: 1fr;
 	}
@@ -37,16 +49,24 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		// grid-row: header;
-		// grid-column: header;
+		height: 62rem;
 		padding: 12rem;
-		border-bottom: 1px solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-gray-light);
 	}
 	// .tools {
 	// }
-	// .content {
-	// 	grid-row: main;
-	// 	grid-column: main / side;
-	// 	padding: 20rem;
-	// }
+	.content {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+	.col {
+		position: relative;
+		overflow: auto;
+		height: calc(100vh - 62rem);
+		padding: 40rem;
+		border-right: 1rem solid var(--admin-gray-light);
+		&:last-child {
+			border: 0;
+		}
+	}
 </style>
