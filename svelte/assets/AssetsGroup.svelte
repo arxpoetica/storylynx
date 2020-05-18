@@ -2,7 +2,7 @@
 
 <!-- FIXME: we might need to bring back external assets :( -->
 {#if first_asset}
-	<a class="asset" href="/assets/{asset_group.slug}">
+	<a class="asset" href="/assets/{asset_group.id}">
 		<div class="media" on:contextmenu={event => event.preventDefault()}>
 			<Asset asset={first_asset} thumb={true}/>
 		</div>
