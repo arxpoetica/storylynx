@@ -1,21 +1,17 @@
 <div class="content-view">
 	<div class="header">
 		<h1>{model}</h1>
-		<!-- <Button {href} title="Create {singular}"/> -->
+		<Button title="Save Asset Groups" disabled={$nest_saved} handler={save}/>
 	</div>
 	<!-- <div class="tools"></div> -->
 	<div class="content">
-		<div class="col">
-			<NestBar items={assets} title="Ungrouped assets"/>
-			<Nest items={assets} col="assets"/>
+		<div class="col col-assets">
+			<NestToolbar items={assets} title="Ungrouped assets"/>
+			<NestAssets/>
 		</div>
-		<div class="col">
-			<NestBar items={playground} title="Playground assets"/>
-			<Nest items={playground} col="playground"/>
-		</div>
-		<div class="col">
-			<NestBar items={groups} title="Grouped assets"/>
-			<Nest items={groups} col="groups"/>
+		<div class="col col-groups">
+			<NestToolbar items={groups} title="Grouped assets"/>
+			<NestGroups/>
 		</div>
 	</div>
 </div>
@@ -24,18 +20,31 @@
 <script>
 	export let model = ''
 	export let ungrouped_assets = []
-	export let grouped_assets = []
+	export let asset_groups = []
 
-	import NestBar from '../../assets/NestBar.svelte'
-	import Nest from '../../assets/Nest.svelte'
-	// import Button from '../elements/Button.svelte'
+	import Button from '../elements/Button.svelte'
+	import NestToolbar from '../../assets/NestToolbar.svelte'
+	import NestAssets from '../../assets/NestAssets.svelte'
+	import NestGroups from '../../assets/NestGroups.svelte'
 
-	import { assets, playground, groups } from '../../../../stores/admin-store.js'
-	import { onMount } from 'svelte'
+	import { assets, current_group, groups, nest_saved } from '../../../../stores/admin-store.js'
 
+	function save(event) {
+		$nest_saved = true
+	}
+
+	import { onMount, onDestroy } from 'svelte'
 	onMount(() => {
-		assets.set(ungrouped_assets)
-		groups.set(grouped_assets)
+		$assets = ungrouped_assets
+		$groups = asset_groups
+	})
+	onDestroy(() => {
+		if (!$nest_saved && window.confirm('You have unsaved items? Are you sure you want to leave?')) { 
+			$assets = []
+			$current_group = null
+			$groups = []
+			$nest_saved = true
+		}
 	})
 </script>
 
@@ -57,7 +66,7 @@
 	// }
 	.content {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 2fr;
 	}
 	.col {
 		position: relative;

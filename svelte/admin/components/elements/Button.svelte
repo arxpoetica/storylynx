@@ -1,9 +1,9 @@
 {#if href}
-	<a {href} class="button {classes}" on:click={clickhandler}>
+	<a {href} class="button {classes}" class:disabled on:click={event => handler(event)}>
 		{title}
 	</a>
 {:else}
-	<button class="button {classes}" on:click={clickhandler}>
+	<button class="button {classes}" {disabled} on:click={event => handler(event)}>
 		{title}
 	</button>
 {/if}
@@ -12,8 +12,9 @@
 <script>
 	export let href = false
 	export let classes = ''
-	export let clickhandler = () => {}
 	export let title = 'Click'
+	export let disabled = false
+	export let handler = () => {}
 </script>
 
 <style type="text/scss">
@@ -34,6 +35,7 @@
 		text-decoration: none;
 		cursor: pointer;
 		-webkit-appearance: none;
+		user-select: none;
 		&:hover,
 		&:focus {
 			background-color: var(--admin-blue-light);
@@ -113,16 +115,12 @@
 		// 		color: $button-black;
 		// 	}
 		// }
-		// &[disabled] {
-		// 	background-color: $gray-main;
-		// 	color: $white;
-		// 	cursor: default;
-		// 	pointer-events: none;
-		// 	&:hover,
-		// 	&:focus {
-		// 		background-color: $gray-main;
-		// 		color: $white;
-		// 	}
-		// }
+		&[disabled],
+		&.disabled {
+			background-color: var(--admin-gray-light);
+			color: var(--admin-white);
+			cursor: default;
+			pointer-events: none;
+		}
 	}
 </style>

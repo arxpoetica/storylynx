@@ -1,4 +1,4 @@
-<label class:checked class:green={color === 'green'} on:click|stopPropagation={clickhandler}>
+<label class:checked class:green={color === 'green'} on:click|stopPropagation={handler}>
 	{#if checked}
 		<div class="svg"><Checkmark/></div>
 	{/if}
@@ -8,7 +8,7 @@
 
 <script>
 	export let checked = false
-	export let clickhandler = () => {}
+	export let handler = () => {}
 	export let color = 'blue'
 	import Checkmark from '../../../svg/checkmark.svelte'
 </script>
