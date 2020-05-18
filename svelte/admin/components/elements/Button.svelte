@@ -1,13 +1,12 @@
 {#if href}
-	<a {href} class="button {classes}" class:disabled on:click={event => handler(event)}>
+	<a {href} class="button {classes}" class:disabled on:click|stopPropagation={event => handler(event)}>
 		{title}
 	</a>
 {:else}
-	<button class="button {classes}" {disabled} on:click={event => handler(event)}>
+	<button class="button {classes}" {disabled} on:click|stopPropagation={event => handler(event)}>
 		{title}
 	</button>
 {/if}
-
 
 <script>
 	export let href = false
@@ -46,11 +45,12 @@
 		// 	font-size: 9rem;
 		// 	text-transform: uppercase;
 		// }
-		// &.small {
-		// 	padding: 6rem 10rem;
-		// 	font-size: 11rem;
-		// 	text-transform: uppercase;
-		// }
+		&.small {
+			height: 30rem;
+			line-height: 30rem;
+			padding: 0 10rem;
+			font-size: 12rem;
+		}
 		// &.large {
 		// 	padding: 10rem 30rem;
 		// 	font-size: 22rem;
@@ -82,6 +82,16 @@
 			&:hover,
 			&:focus {
 				background-color: var(--admin-red-light);
+			}
+		}
+		&.inverse {
+			background-color: white;
+			color: var(--admin-blue);
+			border: 1rem solid var(--admin-blue);
+			&:hover,
+			&:focus {
+				color: var(--admin-blue-light);
+				border-color: var(--admin-blue-light);
 			}
 		}
 		// &.link {

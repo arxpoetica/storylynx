@@ -1,7 +1,7 @@
 <div class="content-view">
 	<div class="header">
 		<h1>{model}</h1>
-		<Button title="Save Asset Groups" disabled={$nest_saved} handler={save}/>
+		<Button title="Save Asset Groups" disabled={!saveable} handler={save}/>
 	</div>
 	<!-- <div class="tools"></div> -->
 	<div class="content">
@@ -36,13 +36,30 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { assets, current_group, groups, nest_saved, egg_preview } from '../../../../stores/admin-store.js'
+	import { assets, current_group, groups, egg_preview }
+		from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
-		$groups = [{ title: `Untitled Group "${uid()}"`, assets: [] }, ...$groups]
+		$groups = [{
+			id: 'group-' + uid(),
+			title: `Untitled Group`,
+			assets: [],
+			changes: {
+				// connect_ids: [],
+				// disconnect_ids: [],
+			},
+		}, ...$groups]
 		$current_group = 0
-		$nest_saved = false
 	}
+
+	$: saveable = $groups.filter(group => {
+		if (group.changes) {
+			return (group.changes.connect_ids && group.changes.connect_ids.length)
+				|| (group.changes.disconnect_ids && group.changes.disconnect_ids.length)
+		}
+		return false
+	}).length
+
 	function save(event) {
 		$nest_saved = true
 	}
@@ -53,12 +70,12 @@
 		$groups = asset_groups
 	})
 	onDestroy(() => {
-		if (!$nest_saved && window.confirm('You have unsaved items? Are you sure you want to leave?')) { 
-			$assets = []
-			$current_group = -1
-			$groups = []
-			$nest_saved = true
-		}
+		// FIXME:
+		// if (window.confirm('You have unsaved items? Are you sure you want to leave?')) { 
+		// 	$assets = []
+		// 	$current_group = -1
+		// 	$groups = []
+		// }
 	})
 </script>
 

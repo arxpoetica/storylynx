@@ -7,11 +7,9 @@ export default async function(req, res) {
 		const token = getToken(req)
 		if (token.unauthorized) { throw Error('Unauthorized') }
 
-		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/assets/page-quickentry.post.js`
+		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/assets/quickentry-page.post.js`
 		const { default: api } = await import(path)
-		const { items } = await api({})
-
-		res.json({ items })
+		res.json(await api())
 
 	} catch (error) {
 		return handleError(error, res)
