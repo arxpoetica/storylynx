@@ -74,6 +74,7 @@
 		--admin-red-text: #ffeef5;
 
 		--admin-text: var(--admin-gray-darker);
+		--admin-link: var(--admin-blue);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
 	.lynx-admin-layout {

@@ -9,6 +9,9 @@
 		{/if}
 		<h2>{item.filename}</h2>
 	</div>
+	<div class="preview">
+		<button on:click|stopPropagation={preview}>Preview</button>
+	</div>
 </div>
 
 <script>
@@ -22,6 +25,11 @@
 			return `https://media.graphcms.com/output=format:jpg/resize=,width:59,height:59,fit:crop/${handle}`
 		}
 		return `https://media.graphcms.com/output=format:jpg/resize=width:225/${handle}`
+	}
+
+	import { egg_preview } from '../../../stores/admin-store.js'
+	function preview() {
+		$egg_preview = item
 	}
 </script>
 
@@ -85,5 +93,25 @@
 		font: 12rem/1 var(--admin-font);
 		word-break: break-word;
 		opacity: 0;
+	}
+	.preview {
+		position: absolute;
+		right: 0;
+		bottom: 6rem;
+		left: 0;
+		text-align: center;
+		z-index: 3;
+		button {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			background-color: transparent;
+			color: var(--admin-link);
+			cursor: pointer;
+			&:hover {
+				color: white;
+				text-decoration: underline;
+			}
+		}
 	}
 </style>

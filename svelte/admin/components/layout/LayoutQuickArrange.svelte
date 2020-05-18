@@ -19,6 +19,9 @@
 		</div>
 	</div>
 </div>
+{#if $egg_preview}
+	<AssetPreview/>
+{/if}
 <slot></slot>
 
 <script>
@@ -30,9 +33,10 @@
 	import NestToolbar from '../../assets/NestToolbar.svelte'
 	import NestAssets from '../../assets/NestAssets.svelte'
 	import NestGroups from '../../assets/NestGroups.svelte'
+	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { assets, current_group, groups, nest_saved } from '../../../../stores/admin-store.js'
+	import { assets, current_group, groups, nest_saved, egg_preview } from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
 		$groups = [{ title: `Untitled Group "${uid()}"`, assets: [] }, ...$groups]
