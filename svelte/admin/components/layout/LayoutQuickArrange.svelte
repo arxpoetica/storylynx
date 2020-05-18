@@ -6,11 +6,15 @@
 	<!-- <div class="tools"></div> -->
 	<div class="content">
 		<div class="col col-assets">
-			<NestToolbar items={assets} title="Ungrouped assets"/>
+			<NestToolbar items={assets} title="Ungrouped Assets"/>
 			<NestAssets/>
 		</div>
 		<div class="col col-groups">
-			<NestToolbar items={groups} title="Grouped assets"/>
+			<NestToolbar items={groups} title="Grouped Assets" type="green">
+				<div class="bar">
+					<Button title="Add Group" handler={add_group} classes="good"/>
+				</div>
+			</NestToolbar>
 			<NestGroups/>
 		</div>
 	</div>
@@ -27,8 +31,14 @@
 	import NestAssets from '../../assets/NestAssets.svelte'
 	import NestGroups from '../../assets/NestGroups.svelte'
 
+	import uid from 'uid'
 	import { assets, current_group, groups, nest_saved } from '../../../../stores/admin-store.js'
 
+	function add_group(event) {
+		$groups = [{ title: `Untitled Group "${uid()}"`, assets: [] }, ...$groups]
+		$current_group = 0
+		$nest_saved = false
+	}
 	function save(event) {
 		$nest_saved = true
 	}
@@ -41,7 +51,7 @@
 	onDestroy(() => {
 		if (!$nest_saved && window.confirm('You have unsaved items? Are you sure you want to leave?')) { 
 			$assets = []
-			$current_group = null
+			$current_group = -1
 			$groups = []
 			$nest_saved = true
 		}
@@ -66,7 +76,7 @@
 	// }
 	.content {
 		display: grid;
-		grid-template-columns: 1fr 2fr;
+		grid-template-columns: 1fr 1fr;
 	}
 	.col {
 		position: relative;
@@ -77,5 +87,8 @@
 		&:last-child {
 			border: 0;
 		}
+	}
+	.bar {
+		margin: 20rem 0 0;
 	}
 </style>

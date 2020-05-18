@@ -23,7 +23,7 @@
 		margin: 0;
 		padding: 0 15rem;
 		background-color: var(--admin-blue);
-		border: none;
+		border: 0;
 		border-radius: 4rem;
 		color: white;
 		font: bold 14rem/36rem var(--admin-font);
@@ -59,15 +59,14 @@
 		// 	padding: 20rem 50rem;
 		// 	font-size: 34rem;
 		// }
-		// &.success {
-		// 	background-color: $success-1;
-		// 	color: $white;
-		// 	&:hover,
-		// 	&:focus {
-		// 		background-color: $success-2;
-		// 		color: $white;
-		// 	}
-		// }
+		&.good {
+			background-color: var(--admin-green-dark);
+			color: white;
+			&:hover,
+			&:focus {
+				background-color: var(--admin-green-darker);
+			}
+		}
 		// &.warning {
 		// 	background-color: $warning-1;
 		// 	color: $button-black;
@@ -79,7 +78,6 @@
 		// }
 		&.alert {
 			background-color: var(--admin-red);
-			border: 1rem solid var(--admin-red-dark);
 			color: var(--admin-red-text);
 			&:hover,
 			&:focus {

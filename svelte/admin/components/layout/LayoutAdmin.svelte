@@ -64,6 +64,7 @@
 		--admin-green-lighter: #99ffed;
 		--admin-green-light: #66ffe3;
 		--admin-green-dark: #00b292;
+		--admin-green-darker: #007a64;
 		--admin-green-dusk: #004d3f;
 		--admin-green-text: var(--admin-green-dark);
 

@@ -1,7 +1,7 @@
 {#if $assets}
 	<div class="nest">
 		{#each $assets as item, index}
-			{#if index < 50 && item.mime_type.includes('image')}
+			{#if item.mime_type.includes('image')}
 				<NestEgg {item} {index} handler={move_to_group}/>
 			{/if}
 		{/each}
@@ -13,15 +13,21 @@
 	import NestEgg from './NestEgg.svelte'
 
 	function move_to_group(item, index) {
-		$nest_saved = false
-		// groups.set([...$groups, item])
+		if ($current_group > -1) {
+			$assets.splice(index, 1)
+			$assets = $assets
+			$groups[$current_group].assets = [...$groups[$current_group].assets, item]
+			$nest_saved = false
+		} else {
+			alert('Please select a group on the right to add this asset to.')
+		}
 	}
 </script>
 
 <style type="text/scss">
 	.nest {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(120rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(200rem, 1fr));
 		grid-gap: 10rem;
 	}
 </style>

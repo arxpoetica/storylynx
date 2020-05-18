@@ -1,6 +1,7 @@
 {#if $items}
 	<div class="toolbar">
 		<h2>{title}: {$items.length}</h2>
+		<slot></slot>
 	</div>
 {/if}
 

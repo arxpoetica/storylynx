@@ -21,7 +21,8 @@
     "jsonwebtoken": "8.5.1",
     "sade": "1.7.3",
     "svelte": "3.21.0",
-    "totalist": "1.0.1"
+    "totalist": "1.0.1",
+    "uid": "1.0.0"
   },
   "devDependencies": {
     "@sapper-dragon/svgo": "0.1.0",
