@@ -73,6 +73,7 @@
 				})
 				const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
 				delete group.changes
+				group.id = asset_group.id
 			}
 		}
 		$groups = $groups
