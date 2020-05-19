@@ -2,6 +2,7 @@
 	<AdminBar/>
 	<slot></slot>
 </div>
+<SavePanel/>
 <!-- {@html `<${'style'}>${QuillCss}</${'style'}>`} -->
 
 <script>
@@ -10,6 +11,7 @@
 	const { session, page } = get_sapper_stores()
 
 	import AdminBar from './AdminBar.svelte'
+	import SavePanel from './SavePanel.svelte'
 	// $: admin = $session.user
 
 	// DOM ONLY STUFF ---------- >>>>

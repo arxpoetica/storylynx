@@ -36,7 +36,7 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { assets, current_group, groups, egg_preview }
+	import { saving, assets, current_group, groups, egg_preview }
 		from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
@@ -61,7 +61,7 @@
 	}).length
 
 	function save(event) {
-		$nest_saved = true
+		$saving = true
 	}
 
 	import { onMount, onDestroy } from 'svelte'
