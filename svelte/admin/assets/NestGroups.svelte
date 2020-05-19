@@ -9,6 +9,11 @@
 							<h4>No assets. Please select some from the left.</h4>
 						{/if}
 					</div>
+					{#if $current_group === g_index && !$saveable}
+						<div class="tools">
+							<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
+						</div>
+					{/if}
 				</div>
 				<div class="eggs">
 					{#if group.assets.length}
@@ -26,7 +31,8 @@
 {/if}
 
 <script>
-	import { assets, current_group, groups } from '../../../stores/admin-store.js'
+	import Button from '../components/elements/Button.svelte'
+	import { saving, saveable, assets, current_group, groups } from '../../../stores/admin-store.js'
 	import NestEgg from './NestEgg.svelte'
 
 	function select_group(index) {
@@ -39,6 +45,7 @@
 		if (group.changes && group.changes.connect_ids && group.changes.connect_ids.includes(item.id)) {
 			const id_index = group.changes.connect_ids.indexOf(item.id)
 			group.changes.connect_ids.splice(id_index, 1)
+			// just cleaning up
 			if (!group.changes.connect_ids.length) {
 				delete group.changes.connect_ids
 			}
@@ -55,12 +62,35 @@
 		$assets.sort((one, two) => one.filename.localeCompare(two.filename))
 		$assets = $assets
 	}
+
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { POST } from '../../../utils/loaders.js'
+
+	async function delete_group(group, index) {
+		$saving = true
+		// FIXME: PUT ALL THE ASSETS BACK IN THE LEFT COLUMN!!!
+		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
+			const payload = Object.assign({ cookie: $session.cookie }, { id: group.id })
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', payload)
+		}
+		$groups.splice(index, 1)
+		$groups = $groups
+		$saving = false
+	}
 </script>
 
 <style type="text/scss">
 	// .groups {}
 	.header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
 		margin: 0 0 20rem;
+	}
+	.tools {
+		margin: 0 0 0 20rem;
 	}
 	input {
 		margin: 0;

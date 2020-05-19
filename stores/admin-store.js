@@ -5,6 +5,7 @@ export const FileStackLoaded = writable(false)
 export const content_vars = writable()
 
 export const saving = writable(false)
+export const saveable = writable(false)
 
 export const assets = writable([])
 export const current_group = writable(-1)

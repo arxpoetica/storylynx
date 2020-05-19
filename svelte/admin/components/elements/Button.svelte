@@ -40,11 +40,13 @@
 			background-color: var(--admin-blue-light);
 			text-decoration: none;
 		}
-		// &.tiny {
-		// 	padding: 4rem 8rem;
-		// 	font-size: 9rem;
-		// 	text-transform: uppercase;
-		// }
+		&.tiny {
+			height: 24rem;
+			line-height: 24rem;
+			padding: 0 8rem;
+			font-size: 10rem;
+			text-transform: uppercase;
+		}
 		&.small {
 			height: 30rem;
 			line-height: 30rem;
@@ -78,10 +80,10 @@
 		// }
 		&.alert {
 			background-color: var(--admin-red);
-			color: var(--admin-red-text);
+			color: white;
 			&:hover,
 			&:focus {
-				background-color: var(--admin-red-light);
+				background-color: var(--admin-red-dark);
 			}
 		}
 		&.inverse {

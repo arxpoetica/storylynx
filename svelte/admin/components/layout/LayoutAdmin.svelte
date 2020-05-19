@@ -70,10 +70,14 @@
 		--admin-green-dusk: #004d3f;
 		--admin-green-text: var(--admin-green-dark);
 
-		--admin-red: #ff50a2;
-		--admin-red-light: #ff88bf;
-		--admin-red-dark: #d11b70;
-		--admin-red-text: #ffeef5;
+		--admin-red: #e7184a;
+		--admin-red-faint: #fef1f4;
+		--admin-red-light: #eb436b;
+		--admin-red-lighter: #f5a3b7;
+		--admin-red-dark: #bd143d;
+		--admin-red-darker: #941030;
+		--admin-red-dusk: #470011;
+		--admin-red-text: var(--admin-red);
 
 		--admin-text: var(--admin-gray-darker);
 		--admin-link: var(--admin-blue);

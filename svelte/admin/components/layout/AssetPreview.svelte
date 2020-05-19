@@ -69,6 +69,9 @@
 		margin: 0 0 20rem;
 		font: 30rem/1 var(--admin-font);
 	}
+	img, video {
+		max-height: calc(100vh - 200rem);
+	}
 	.close {
 		position: absolute;
 		top: 20rem;

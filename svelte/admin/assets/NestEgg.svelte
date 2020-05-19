@@ -59,6 +59,11 @@
 				left: 2rem;
 			}
 			h2 { font-size: 11rem; }
+			.preview {
+				top: calc(100% + 4rem);
+				bottom: auto;
+				button:hover { color: var(--admin-link); }
+			}
 		}
 	}
 	.evil-wrap {
@@ -100,7 +105,6 @@
 		bottom: 6rem;
 		left: 0;
 		text-align: center;
-		z-index: 3;
 		button {
 			margin: 0;
 			padding: 0;

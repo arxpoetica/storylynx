@@ -1,7 +1,7 @@
 <div class="content-view">
 	<div class="header">
 		<h1>{model}</h1>
-		<Button title="Save Asset Groups" disabled={!saveable} handler={save}/>
+		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
 	<!-- <div class="tools"></div> -->
 	<div class="content">
@@ -36,11 +36,11 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { saving, assets, current_group, groups, egg_preview } from '../../../../stores/admin-store.js'
+	import { saving, saveable, assets, current_group, groups, egg_preview } from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
 		$groups = [{
-			id: 'group-' + uid(),
+			id: 'NOID-' + uid(),
 			title: `Untitled Group`,
 			assets: [],
 			changes: {},
@@ -48,7 +48,7 @@
 		$current_group = 0
 	}
 
-	$: saveable = $groups.filter(group => {
+	$: $saveable = $groups.filter(group => {
 		if (group.changes) {
 			return (group.changes.connect_ids && group.changes.connect_ids.length)
 				|| (group.changes.disconnect_ids && group.changes.disconnect_ids.length)
