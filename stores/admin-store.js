@@ -7,6 +7,8 @@ export const content_vars = writable()
 export const saving = writable(false)
 export const saveable = writable(false)
 
+export const edit_table_loaded = writable(null)
+
 export const assets = writable([])
 export const current_group = writable(-1)
 export const groups = writable([])
