@@ -36,18 +36,14 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { saving, assets, current_group, groups, egg_preview }
-		from '../../../../stores/admin-store.js'
+	import { saving, assets, current_group, groups, egg_preview } from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
 		$groups = [{
 			id: 'group-' + uid(),
 			title: `Untitled Group`,
 			assets: [],
-			changes: {
-				// connect_ids: [],
-				// disconnect_ids: [],
-			},
+			changes: {},
 		}, ...$groups]
 		$current_group = 0
 	}
@@ -60,8 +56,27 @@
 		return false
 	}).length
 
-	function save(event) {
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { POST } from '../../../../utils/loaders.js'
+
+	async function save(event) {
 		$saving = true
+		for (let group of $groups) {
+			if (group.changes && (group.changes.connect_ids || group.changes.disconnect_ids)) {
+				const payload = Object.assign({ cookie: $session.cookie }, {
+					id: group.id,
+					title: group.title,
+					connect_ids: group.changes.connect_ids || [],
+					disconnect_ids: group.changes.disconnect_ids || [],
+				})
+				const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
+				delete group.changes
+			}
+		}
+		$groups = $groups
+		$saving = false
 	}
 
 	import { onMount, onDestroy } from 'svelte'
