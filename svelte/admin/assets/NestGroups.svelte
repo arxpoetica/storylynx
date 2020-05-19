@@ -70,13 +70,19 @@
 
 	async function delete_group(group, index) {
 		$saving = true
-		// FIXME: PUT ALL THE ASSETS BACK IN THE LEFT COLUMN!!!
+
 		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
 			const payload = Object.assign({ cookie: $session.cookie }, { id: group.id })
 			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', payload)
 		}
+
 		$groups.splice(index, 1)
 		$groups = $groups
+
+		$assets = [...$assets, ...group.assets]
+		$assets.sort((one, two) => one.filename.localeCompare(two.filename))
+		$assets = $assets
+
 		$saving = false
 	}
 </script>
