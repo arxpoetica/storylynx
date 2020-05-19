@@ -18,6 +18,7 @@
     "crypto-js": "4.0.0",
     "dayjs": "1.8.26",
     "fs-extra": "9.0.0",
+    "handsontable": "7.4.2",
     "jsonwebtoken": "8.5.1",
     "sade": "1.7.3",
     "svelte": "3.21.0",
