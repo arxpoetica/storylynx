@@ -21,6 +21,8 @@
 	export let asset_groups
 	export let content_types
 	export let subjects
+	$: valid_types = [null, ...content_types]
+	$: valid_subjects = [null, ...subjects]
 
 	import { saving, saveable, hot, hot_changes } from '../../../../stores/admin-store.js'
 
@@ -70,9 +72,9 @@
 			{ readOnly: true, colWidths: '188rem', wordWrap: false, renderer: html_renderer }, // Assets
 			{ colWidths: '300rem', wordWrap: false }, // Title
 			{ colWidths: '300rem', wordWrap: false }, // Summary
-			{ type: 'dropdown', source: ['', ...content_types] }, // Content Type
-			{}, // Year
-			{ type: 'dropdown', source: ['', ...subjects] }, // Subject
+			{ type: 'dropdown', source: valid_types, validator: (value, cb) => cb(valid_types.includes(value)) }, // Content Type
+			{ validator: 'numeric' }, // Year
+			{ type: 'dropdown', source: valid_subjects, validator: (value, cb) => cb(valid_subjects.includes(value)) }, // Subject
 			// FIXME: make this editable later.........
 			{ readOnly: true }, // Tags
 			{ colWidths: '300rem', wordWrap: false }, // Source
@@ -80,6 +82,23 @@
 		rowHeights: 60,
 		autoWrapRow: false,
 		autoWrapCol: false,
+		// doing some very crude validation:
+		beforeChange: changes => {
+			for (let change of changes) {
+				// const row_index = change[0]
+				const col_index = change[1]
+				let prior_value = change[2]
+				let value = change[3]
+				if (prior_value !== value) {
+					const column = options.colHeaders[col_index]
+					if (column === 'Content Type') {
+						return valid_types.includes(value)
+					} else if (column === 'Subject') {
+						return valid_subjects.includes(value)
+					}
+				}
+			}
+		},
 	}
 
 	function format_asset_data(assets) {
