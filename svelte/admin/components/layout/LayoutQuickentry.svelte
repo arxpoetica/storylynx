@@ -11,6 +11,7 @@
 <slot></slot>
 
 <script>
+	import { onDestroy } from 'svelte'
 	import EditTable from '../widgets/EditTable.svelte'
 	// import Button from '../elements/Button.svelte'
 
@@ -104,6 +105,11 @@
 		return td
 	}
 
+	onDestroy(() => {
+		// TODO: make this a generic function somewhere
+		$saveable = false
+		$saving = false
+	})
 </script>
 
 <style type="text/scss">

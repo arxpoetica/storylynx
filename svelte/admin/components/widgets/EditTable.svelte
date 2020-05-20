@@ -5,43 +5,38 @@
 <script>
 	export let options = {}
 
-	let hot
 	let table
-	let link_loaded = false
-	let script_loaded = false
 
-	import { edit_table_loaded } from '../../../../stores/admin-store.js'
+	import { saveable, hot, hot_loaded } from '../../../../stores/admin-store.js'
 	import { onMount, onDestroy } from 'svelte'
 
 	onMount(async() => {
-		if (!$edit_table_loaded) {
-			const script = document.createElement('script')
-			script.onload = () => script_loaded = true
-			script.src = '//cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js'
-			document.head.appendChild(script)
-
-			const link = document.createElement('link')
-			link.href = '//cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css'
-			link.rel = 'stylesheet'
-			link.onload = () => link_loaded = true
-			document.head.appendChild(link)
-		} else {
-		 	console.log('HANDSON ALREADY LOADED')
-			let link_loaded = true
-			let script_loaded = true
+		if (!$hot_loaded) {
+			await new Promise(resolve => {
+				const script = document.createElement('script')
+				script.onload = () => resolve()
+				script.src = '//cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js'
+				document.head.appendChild(script)
+			})
+			await new Promise(resolve => {
+				const link = document.createElement('link')
+				link.href = '//cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css'
+				link.rel = 'stylesheet'
+				link.onload = () => resolve()
+				document.head.appendChild(link)
+			})
+			$hot_loaded = true
 		}
 	})
 	onDestroy(() => {
-		if (hot) {
-			debugger
-			hot.destroy()
+		if ($hot) {
+			$hot.destroy()
+			$hot = null
 		}
 	})
 
-	$: $edit_table_loaded = link_loaded && script_loaded
-	$: if ($edit_table_loaded) {
-		// console.log('Handson loaded!')	
-		hot = new Handsontable(table, Object.assign({
+	$: if ($hot_loaded && table) {
+		$hot = new Handsontable(table, Object.assign({
 			data: [['no data']],
 			rowHeaders: true,
 			colHeaders: true,
