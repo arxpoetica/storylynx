@@ -1,6 +1,8 @@
 <div class="content-view">
 	<div class="header">
 		<h1>{model}</h1>
+		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
+
 		<!-- <Button {href} title="Create {singular}"/> -->
 	</div>
 	<!-- <div class="tools"></div> -->
@@ -13,12 +15,30 @@
 <script>
 	import { onDestroy } from 'svelte'
 	import EditTable from '../widgets/EditTable.svelte'
-	// import Button from '../elements/Button.svelte'
+	import Button from '../elements/Button.svelte'
 
 	export let model = ''
 	export let asset_groups
 	export let content_types
 	export let subjects
+
+	import { saving, saveable, hot, hot_changes } from '../../../../stores/admin-store.js'
+
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { POST } from '../../../../utils/loaders.js'
+
+	async function save(event) {
+		$saving = true
+		for (let change of $hot_changes) {
+			const payload = Object.assign({ cookie: $session.cookie }, change)
+			const { asset_group } = await POST('/api/admin/assets/quickentry-update.post', payload)
+		}
+		$hot_changes = []
+		$saveable = false
+		$saving = false
+	}
 
 	$: options = {
 		data: asset_groups.map(group => {
@@ -47,16 +67,19 @@
 		],
 		columns: [
 			{ readOnly: true }, // ID
-			{ readOnly: true, colWidths: '186rem', renderer: html_renderer }, // Assets
-			{ colWidths: '300rem' }, // Title
-			{ colWidths: '300rem' }, // Summary
-			{ type: 'dropdown', source: content_types }, // Content Type
+			{ readOnly: true, colWidths: '188rem', wordWrap: false, renderer: html_renderer }, // Assets
+			{ colWidths: '300rem', wordWrap: false }, // Title
+			{ colWidths: '300rem', wordWrap: false }, // Summary
+			{ type: 'dropdown', source: ['', ...content_types] }, // Content Type
 			{}, // Year
-			{ type: 'dropdown', source: subjects }, // Subject
+			{ type: 'dropdown', source: ['', ...subjects] }, // Subject
 			// FIXME: make this editable later.........
 			{ readOnly: true }, // Tags
-			{ colWidths: '300rem' }, // Source
+			{ colWidths: '300rem', wordWrap: false }, // Source
 		],
+		rowHeights: 60,
+		autoWrapRow: false,
+		autoWrapCol: false,
 	}
 
 	function format_asset_data(assets) {

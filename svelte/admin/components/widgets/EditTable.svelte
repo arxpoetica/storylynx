@@ -5,9 +5,7 @@
 <script>
 	export let options = {}
 
-	let table
-
-	import { saveable, hot, hot_loaded } from '../../../../stores/admin-store.js'
+	import { saveable, hot, hot_loaded, hot_changes } from '../../../../stores/admin-store.js'
 	import { onMount, onDestroy } from 'svelte'
 
 	onMount(async() => {
@@ -35,7 +33,10 @@
 		}
 	})
 
-	$: if ($hot_loaded && table) {
+	let table
+	let table_init
+	$: if ($hot_loaded && table && !table_init) {
+		table_init = true
 		$hot = new Handsontable(table, Object.assign({
 			data: [['no data']],
 			rowHeaders: true,
@@ -44,16 +45,28 @@
 			// dropdownMenu: true,
 			// preventOverflow: 'vertical',
 			licenseKey: 'non-commercial-and-evaluation',
-			// afterChange: changes => {
-			// 	if (changes) {
-			// 		const row_index = changes[0][0]
-			// 		const col_index = changes[0][1]
-			// 		const prior_value = changes[0][2]
-			// 		const value = changes[0][3]
-			// 		console.log(value)
-			// 		console.log(typeof value)
-			// 	}
-			// },
+			afterChange: (changes) => {
+				if (changes) {
+					const row_index = changes[0][0]
+					const col_index = changes[0][1]
+					let prior_value = changes[0][2]
+					let value = changes[0][3]
+					prior_value = prior_value === null ? '' : prior_value
+					value = value === null ? '' : value
+					if (prior_value !== value) {
+						const key = options.colHeaders[col_index].toLowerCase().replace(/\s+/g, '_')
+						const id = $hot.getDataAtCell(row_index, 0)
+						const index = $hot_changes.findIndex(row => row.id === id)
+						if (index > -1) {
+							$hot_changes[index] = Object.assign($hot_changes[index], { [key]: value })
+						} else {
+							$hot_changes.push({ id, [key]: value })
+							$hot_changes = $hot_changes
+						}
+						$saveable = true
+					}
+				}
+			},
 		}, options))
 	}
 </script>

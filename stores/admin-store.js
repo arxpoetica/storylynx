@@ -9,6 +9,7 @@ export const saveable = writable(false)
 
 export const hot = writable(null)
 export const hot_loaded = writable(null)
+export const hot_changes = writable([])
 
 export const assets = writable([])
 export const current_group = writable(-1)

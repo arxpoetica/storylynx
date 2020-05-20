@@ -25,7 +25,7 @@
 		padding: 100rem;
 		background-color: rgba(0, 0, 0, 0.8);
 		color: white;
-		z-index: 100;
+		z-index: 1000;
 	}
 	.group {
 		display: flex;
