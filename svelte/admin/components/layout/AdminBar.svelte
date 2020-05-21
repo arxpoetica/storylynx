@@ -46,6 +46,16 @@
 				<div class="icon"><ArrangeIcon/></div>
 			</a>
 		</nav>
+		<h2>
+			<div class="icon"><ContentIcon/></div>
+			Stories
+		</h2>
+		<nav class="links">
+			<a href="/admin/html-blocks" class="link" class:on={on($page.path, 'html-blocks')}>
+				HTML Blocks
+				<div class="icon"><HtmlIcon/></div>
+			</a>
+		</nav>
 	</div>
 	<div class="bottom">
 		<nav class="links">
@@ -68,13 +78,14 @@
 	import { GET } from '../../../../utils/loaders.js'
 	import SettingsIcon from '../../../svg/admin-account.svelte'
 	import HomeIcon from '../../../svg/admin-home.svelte'
+	import UsersIcon from '../../../svg/admin-users.svelte'
 	import ContentIcon from '../../../svg/admin-content.svelte'
 	import MediaIcon from '../../../svg/admin-media.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import ArchiveIcon from '../../../svg/admin-archive.svelte'
 	import KeyboardIcon from '../../../svg/admin-keyboard.svelte'
 	import ArrangeIcon from '../../../svg/admin-arrange.svelte'
-	import UsersIcon from '../../../svg/admin-users.svelte'
+	import HtmlIcon from '../../../svg/admin-html.svelte'
 
 	async function logout(event) {
 		event.preventDefault()
