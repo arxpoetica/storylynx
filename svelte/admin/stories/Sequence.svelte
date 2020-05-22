@@ -12,6 +12,7 @@
 				<!-- <p>{JSON.stringify(sequence.id)}</p> -->
 				<!-- <p>{JSON.stringify(sequence.slug)}</p> -->
 				<!-- <p>{JSON.stringify(sequence.order)}</p> -->
+				<PreviewClip {sequence}/>
 			</div>
 		</div>
 	</div>
@@ -20,7 +21,8 @@
 <script>
 	export let sequence = {}
 
-	import SequenceEditor from '../components/widgets/SequenceEditor.svelte'
+	import SequenceEditor from './widgets/SequenceEditor.svelte'
+	import PreviewClip from './widgets/PreviewClip.svelte'
 	// import Button from '../components/elements/Button.svelte'
 </script>
 

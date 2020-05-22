@@ -3,10 +3,9 @@
 	<slot></slot>
 </div>
 <SavePanel/>
-<!-- {@html `<${'style'}>${QuillCss}</${'style'}>`} -->
 
 <script>
-	import { beforeUpdate, onMount, getContext } from 'svelte'
+	import { onMount, getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session, page } = get_sapper_stores()
 
@@ -22,21 +21,6 @@
 	$: section = $page.path.split('/')[1]
 	$: section_page = Object.keys($page.params).length ? `${section}-${Object.keys($page.params).join('-')}` : section
 	$: if (process.browser && html) { html.setAttribute('class', `${section}-section ${section_page}-page`) }
-
-	// import { QuillCss } from './_components/QuillCss'
-	// import { Quill } from '@johnny/stores/admin-store'
-	beforeUpdate(async() => {
-		// if (!$Quill) {
-		// 	const ImportedQuill = (await import('quill/dist/quill.js')).default
-		// 	ImportedQuill.prototype.setHTML = function(html) {
-		// 		this.root.innerHTML = html
-		// 	}
-		// 	ImportedQuill.prototype.getHTML = function() {
-		// 		return this.root.innerHTML
-		// 	}
-		// 	Quill.set(ImportedQuill)
-		// }
-	})
 </script>
 
 <style type="text/scss">

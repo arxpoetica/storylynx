@@ -18,9 +18,9 @@
 							<!-- <p>html_block: {JSON.stringify(Object.keys(bin.html_block))}</p> -->
 							<!-- <p>id: {JSON.stringify(bin.html_block.id)}</p> -->
 							<p>Name: {JSON.stringify(bin.html_block.name)}</p>
-							<!-- <p>html_code: {JSON.stringify(bin.html_block.html_code)}</p> -->
+							<!-- <p>code: {JSON.stringify(bin.html_block.code)}</p> -->
 						</div>
-						<HtmlEditor data={bin.html_block.html_code}/>
+						<HtmlEditor data={bin.html_block.code}/>
 					{:else}
 						<div class="create-html">
 							<button>Create HTML</button>
@@ -37,7 +37,7 @@
 <script>
 	export let bins
 
-	import AssetThumb from './AssetThumb.svelte'
+	import AssetThumb from '../../components/widgets/AssetThumb.svelte'
 	import HtmlEditor from './HtmlEditor.svelte'
 </script>
 

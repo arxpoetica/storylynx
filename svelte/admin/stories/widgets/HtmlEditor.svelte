@@ -1,22 +1,20 @@
-<button on:click={show}>Show HTML</button>
-
+<!-- <button on:click={show}>Show HTML</button> -->
 <div id="editor-js" class="editor-js"></div>
-
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 
 <script>
 	export let data = {}
 	let editor
 	let components = []
 
-	import SimpleImageComponent from './simple-image/SimpleImageComponent.svelte'
+	import SimpleImageComponent from './SimpleImageComponent.svelte'
 
 	import { onMount, onDestroy } from 'svelte'
 	onMount(async() => {
 		const EditorJS = (await import('@editorjs/editorjs')).default
 		const Header = (await import('@editorjs/header')).default
 		const List = (await import('@editorjs/list')).default
-		const { ConstructSimpleImage } = await import('./simple-image/SimpleImage.js')
+		const { ConstructSimpleImage } = await import('./SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
 		window.editor = editor = new EditorJS({
@@ -39,6 +37,13 @@
 				},
 			},
 			autofocus: true,
+			onChange: async(api) => {
+				console.log('Now I know that Editor\'s content changed!')
+				console.log(api)
+				const data = await api.saver.save()
+				console.log(data)
+				debugger
+			},
 			logLevel: 'ERROR',
 
 		})
