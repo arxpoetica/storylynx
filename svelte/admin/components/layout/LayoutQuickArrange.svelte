@@ -19,9 +19,7 @@
 		</div>
 	</div>
 </div>
-{#if $egg_preview}
-	<AssetPreview/>
-{/if}
+<AssetPreview/>
 <slot></slot>
 
 <script>
@@ -36,7 +34,7 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
-	import { saving, saveable, assets, current_group, groups, egg_preview } from '../../../../stores/admin-store.js'
+	import { saving, saveable, assets, current_group, groups } from '../../../../stores/admin-store.js'
 
 	function add_group(event) {
 		$groups = [{

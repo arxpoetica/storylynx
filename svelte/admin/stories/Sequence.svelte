@@ -1,15 +1,17 @@
 <div class="dash">
 	<div class="tools">
-		<h2>Sequence: {sequence.slug}</h2>
-		<!-- Breadcrumb: -->
+		<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
 	</div>
 	<div class="wrap">
 		<div class="panes">
 			<div class="pane developer">
+				<SequenceEditor {sequence}/>
 			</div>
 			<div class="pane sequence">
-				{JSON.stringify(Object.keys(sequence))}
-				<!-- {JSON.stringify(sequence)} -->
+				<!-- <p>{JSON.stringify(Object.keys(sequence))}</p> -->
+				<!-- <p>{JSON.stringify(sequence.id)}</p> -->
+				<!-- <p>{JSON.stringify(sequence.slug)}</p> -->
+				<!-- <p>{JSON.stringify(sequence.order)}</p> -->
 			</div>
 		</div>
 	</div>
@@ -17,6 +19,8 @@
 
 <script>
 	export let sequence = {}
+
+	import SequenceEditor from '../components/widgets/SequenceEditor.svelte'
 	// import Button from '../components/elements/Button.svelte'
 </script>
 
@@ -54,7 +58,7 @@
 	}
 	.pane {
 		overflow: auto;
-		padding: 20rem;
+		// padding: 20rem;
 	}
 	// .developer-pane {}
 	.sequence {

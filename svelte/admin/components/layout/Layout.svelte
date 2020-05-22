@@ -9,9 +9,13 @@
 		<slot></slot>
 	</div>
 </div>
+<SavePanel/>
+<AssetPreview/>
 
 <script>
 	export let model = ''
+	import SavePanel from './SavePanel.svelte'
+	import AssetPreview from './AssetPreview.svelte'
 </script>
 
 <style type="text/scss">

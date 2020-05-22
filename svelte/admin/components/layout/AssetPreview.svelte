@@ -1,35 +1,37 @@
 <svelte:window on:keydown={event => escape(event)}/>
 
-<div class="asset-preview">
-	<div class="under" on:click={() => $egg_preview = null}></div>
-	<div class="over">
-		<h2>{$egg_preview.filename}</h2>
-		{#if $egg_preview.mime_type.includes('image')}
-			<img {src} alt={$egg_preview.filename}/>
-		{:else if $egg_preview.mime_type.includes('video')}
-			<video controls>
-				<source {src} type={$egg_preview.mime_type}/>
-			</video>
-		{:else if $egg_preview.mime_type.includes('audio')}
-			<audio controls>
-				<source {src} type={$egg_preview.mime_type}/>
-			</audio>
-		{:else}
-			<h2 class="description">
-				{$egg_preview.mime_type}
-			</h2>
-		{/if}
-		<div class="close" on:click={() => $egg_preview = null}><Close/></div>
+{#if $egg_preview}
+	<div class="asset-preview">
+		<div class="under" on:click={() => $egg_preview = null}></div>
+		<div class="over">
+			<h2>{$egg_preview.filename}</h2>
+			{#if $egg_preview.mime_type.includes('image')}
+				<img {src} alt={$egg_preview.filename}/>
+			{:else if $egg_preview.mime_type.includes('video')}
+				<video controls>
+					<source {src} type={$egg_preview.mime_type}/>
+				</video>
+			{:else if $egg_preview.mime_type.includes('audio')}
+				<audio controls>
+					<source {src} type={$egg_preview.mime_type}/>
+				</audio>
+			{:else}
+				<h2 class="description">
+					{$egg_preview.mime_type}
+				</h2>
+			{/if}
+			<div class="close" on:click={() => $egg_preview = null}><Close/></div>
+		</div>
 	</div>
-</div>
+{/if}
 
 <script>
 	import { egg_preview } from '../../../../stores/admin-store.js'
 	import Close from '../../../svg/admin-close.svelte'
-	$: src = `https://media.graphcms.com/${$egg_preview.handle}`
+	$: src = $egg_preview ? `https://media.graphcms.com/${$egg_preview.handle}` : ''
 
 	function escape(event) {
-		if (event.key === 'Escape') {
+		if ($egg_preview && event.key === 'Escape') {
 			$egg_preview = null
 		}
 	}
