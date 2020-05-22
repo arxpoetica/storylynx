@@ -1,15 +1,45 @@
-<!-- <button on:click={show}>Show HTML</button> -->
-<div id="editor-js" class="editor-js"></div>
-<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
+<div class="html-editor">
+	<!-- <button on:click={show}>Show HTML</button> -->
+	<div class="tools">
+		<div class="meta">
+			<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
+			<select bind:value>
+				<option value="">Select an HTML template</option>
+				{#each $html_templates as template}
+					<option value={template}>{template}</option>
+				{/each}
+			</select>
+		</div>
+		<Buttons>
+			<Button title="Cancel" classes="alert" handler={cancel}/>
+			<Button title="Save HTML" classes="good" handler={() => save(data)}/>
+		</Buttons>
+	</div>
+
+	<div id="editor-js" class="editor-js"></div>
+	<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
+</div>
 
 <script>
+	export let name = ''
 	export let data = {}
-	let editor
-	let components = []
+	export let save = () => {}
+	export let update = () => {}
 
-	import SimpleImageComponent from './SimpleImageComponent.svelte'
+	let value = ''
+	let cancel = () => {} // TODO:
 
 	import { onMount, onDestroy } from 'svelte'
+	import { html_templates} from '../../../../stores/admin-store.js'
+
+	import Button from '../../components/elements/Button.svelte'
+	import Buttons from '../../components/elements/Buttons.svelte'
+	import SimpleImageComponent from './SimpleImageComponent.svelte'
+
+	let editor
+	let components = []
+	// let backup
+
 	onMount(async() => {
 		const EditorJS = (await import('@editorjs/editorjs')).default
 		const Header = (await import('@editorjs/header')).default
@@ -17,6 +47,7 @@
 		const { ConstructSimpleImage } = await import('./SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
+		console.log('REGISTERED EDITOR')
 		window.editor = editor = new EditorJS({
 			data,
 			holderId: 'editor-js',
@@ -38,23 +69,12 @@
 			},
 			autofocus: true,
 			onChange: async(api) => {
-				console.log('Now I know that Editor\'s content changed!')
-				console.log(api)
-				const data = await api.saver.save()
-				console.log(data)
-				debugger
+				data = await api.saver.save()
+				update(data)
 			},
 			logLevel: 'ERROR',
-
 		})
 	})
-
-	async function show() {
-		const data = await editor.save()
-	}
-
-	// // import { saveable, hot, hot_loaded, hot_changes } from '../../../../stores/admin-store.js'
-	// import { onMount, onDestroy } from 'svelte'
 
 	onDestroy(() => {
 		// if ($hot) {
@@ -71,32 +91,39 @@
 </script>
 
 <style type="text/scss">
-	.editor-js {
+	.html-editor {
 		max-width: 850rem;
-		padding: 100rem;
+		padding: 75rem;
 		border: 1rem solid var(--admin-gray-light);
 		box-shadow: 0rem 2rem 8rem rgba(0, 0, 0, 0.15);
-		background-color: #fafafa;
+		background-color: white;
+	}
+	.tools {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin: 0 0 20rem;
+	}
+	.meta {
+		flex: 1;
+		margin-right: 20rem;
+	}
+	.editor-js {
 		:global {
 			.ce-block {
-				padding-left: 8rem;
-				padding-right: 8rem;
-				background-color: white;
-				border: 1rem solid var(--admin-gray-light);
-				border-bottom: 0;
-				&:last-child {
-					border-bottom: 1rem solid var(--admin-gray-light);
-				}
+				padding: 8rem;
+				border-bottom: 1rem dashed var(--admin-blue-lighter);
 			}
 			svg {
-				// flex: 1;
-				// vertical-align: middle;
 				height: auto;
 				width: auto;
 			}
-			// h1, h2, h3, h4 { margin: 0; }
 			.codex-editor__redactor {
+				margin: 0;
 				padding-bottom: 0 !important;
+			}
+			.codex-editor--narrow .ce-block--focused {
+				margin: 0;
 			}
 		}
 	}

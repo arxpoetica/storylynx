@@ -25,6 +25,8 @@ export const groups = writable([])
 // === >>> HTML EditorJS Editor
 
 export const preview_clip = writable(null)
+export const html_templates = writable([])
+
 
 
 

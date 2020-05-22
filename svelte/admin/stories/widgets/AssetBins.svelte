@@ -2,10 +2,10 @@
 
 {#if bins.length}
 	<div class="bins">
-		{#each bins as bin}
+		{#each bins as bin, bin_index}
 			<div class="bin-section">
 				{#if bin.assets.length}
-					<p>bin: {JSON.stringify(Object.keys(bin))}</p>
+					<!-- <p>bin: {JSON.stringify(Object.keys(bin))}</p> -->
 					<p>order: {JSON.stringify(bin.order)}</p>
 					<p>transition: {JSON.stringify(bin.transition)}</p>
 					<div class="bin">
@@ -13,17 +13,19 @@
 							<AssetThumb item={asset} {index}/>
 						{/each}
 					</div>
-					{#if bin.html_block}
-						<div class="html">
-							<!-- <p>html_block: {JSON.stringify(Object.keys(bin.html_block))}</p> -->
-							<!-- <p>id: {JSON.stringify(bin.html_block.id)}</p> -->
-							<p>Name: {JSON.stringify(bin.html_block.name)}</p>
-							<!-- <p>code: {JSON.stringify(bin.html_block.code)}</p> -->
-						</div>
-						<HtmlEditor data={bin.html_block.code}/>
+					{#if edit_html}
+						<HtmlEditor
+							bind:name={bin.html_block.name}
+							bind:data={bin.html_block.code}
+							update={data => $clip.asset_bins[bin_index].html_block.code = data}
+							save={data => save(data, bin_index)}
+						/>
 					{:else}
+						{#if Object.keys(bin.html_block.code).length}
+							<pre>HTML: {@html bin.html_block.html || ''}</pre>
+						{/if}
 						<div class="create-html">
-							<button>Create HTML</button>
+							<Button title="{html_edit_str(bin.html_block.code)} HTML" classes="good" handler={() => edit_html = true}/>
 						</div>
 					{/if}
 				{:else}
@@ -36,9 +38,24 @@
 
 <script>
 	export let bins
+	let edit_html = false
 
+	import { saving, saveable, html_templates, preview_clip as clip } from '../../../../stores/admin-store.js'
+
+	import Button from '../../components/elements/Button.svelte'
 	import AssetThumb from '../../components/widgets/AssetThumb.svelte'
 	import HtmlEditor from './HtmlEditor.svelte'
+
+	const html_edit_str = code => Object.keys(code).length ? 'Edit' : 'Add'
+
+	const save = async(data, bin_index) => {
+		$clip.asset_bins[bin_index].html_block.code = data
+		// console.group('-----')
+		// console.log(bin_index)
+		// console.log(data)
+		// console.groupEnd()
+		edit_html = false
+	}
 </script>
 
 <style type="text/scss">
@@ -65,5 +82,8 @@
 		&:last-child {
 			margin: 0;
 		}
+	}
+	pre {
+		margin: 0 0 10rem;
 	}
 </style>

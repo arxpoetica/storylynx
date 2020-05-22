@@ -20,6 +20,10 @@
 
 <script>
 	export let sequence = {}
+	export let html_templates = []
+
+	import { html_templates as templates } from '../../../stores/admin-store.js'
+	$: $templates = html_templates.length ? html_templates : $templates
 
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
 	import PreviewClip from './widgets/PreviewClip.svelte'

@@ -46,6 +46,7 @@
 			background-color: var(--admin-blue-faint);
 			.button-wrap { opacity: 1; }
 		}
+		&.on .button-wrap { display: none; }
 	}
 	.header {
 		display: flex;
