@@ -53,10 +53,7 @@
 				</a>
 				<!-- {#if on($page.path, 'stories')}
 					<div class="nested">
-						<a href="/admin/html-blocks" class="link" class:on={on($page.path, 'html-blocks')}>
-							HTML Blocks
-							<div class="icon"><HtmlIcon/></div>
-						</a>
+						...nested...
 					</div>
 				{/if} -->
 			<!-- </div> -->
