@@ -15,10 +15,15 @@
 					</div>
 					{#if bin.html_block}
 						<div class="html">
-							<p>html_block: {JSON.stringify(Object.keys(bin.html_block))}</p>
-							<p>id: {JSON.stringify(bin.html_block.id)}</p>
-							<p>name: {JSON.stringify(bin.html_block.name)}</p>
-							<p>html_code: {JSON.stringify(bin.html_block.html_code)}</p>
+							<!-- <p>html_block: {JSON.stringify(Object.keys(bin.html_block))}</p> -->
+							<!-- <p>id: {JSON.stringify(bin.html_block.id)}</p> -->
+							<p>Name: {JSON.stringify(bin.html_block.name)}</p>
+							<!-- <p>html_code: {JSON.stringify(bin.html_block.html_code)}</p> -->
+						</div>
+						<HtmlEditor data={bin.html_block.html_code}/>
+					{:else}
+						<div class="create-html">
+							<button>Create HTML</button>
 						</div>
 					{/if}
 				{:else}
@@ -33,6 +38,7 @@
 	export let bins
 
 	import AssetThumb from './AssetThumb.svelte'
+	import HtmlEditor from './HtmlEditor.svelte'
 </script>
 
 <style type="text/scss">

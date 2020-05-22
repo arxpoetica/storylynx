@@ -1,10 +1,10 @@
 <div class="temp">
-	<h1>Temp Editor</h1>
-	<Editor/>
+	<h1>Temp HTML Editor</h1>
+	<HtmlEditor/>
 </div>
 
 <script>
-	import Editor from '../widgets/Editor.svelte'
+	import HtmlEditor from '../widgets/HtmlEditor.svelte'
 </script>
 
 <style type="text/scss">

@@ -2,7 +2,10 @@
 
 <div id="editor-js" class="editor-js"></div>
 
+<pre>{JSON.stringify(data, null, 2)}</pre>
+
 <script>
+	export let data = {}
 	let editor
 	let components = []
 
@@ -17,34 +20,7 @@
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
 		window.editor = editor = new EditorJS({
-			data: {
-				time: 1590045282866,
-				blocks: [{
-					type: 'header',
-					data: {
-						text: 'Hello World',
-						level: 2
-					}
-				}, {
-					type: 'paragraph',
-					data: { text: 'this is a whole thing' }
-				}, {
-					type: 'list',
-					data: {
-						style: 'ordered',
-						items: ['asdfasf', 'dsa', 'fdsa', 'adfs', 'fdasfsdg']
-					}
-				}, {
-					type: 'paragraph',
-					data: { text: 'gfd' }
-				}, {
-					type: 'image',
-					data: {
-						url: 'https://media.graphcms.com/resize=w:650,h:500,fit:crop/FucZTm79RPyWd3RLry6L',
-					},
-				}],
-				version: '2.17.0'
-			},
+			data,
 			holderId: 'editor-js',
 			tools: {
 				// https://github.com/editor-js/header
@@ -56,7 +32,6 @@
 						defaultLevel: 2,
 					},
 				},
-
 				// https://github.com/editor-js/list
 				list: List,
 				image: {
