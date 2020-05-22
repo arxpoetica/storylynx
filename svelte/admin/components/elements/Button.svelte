@@ -40,6 +40,11 @@
 			background-color: var(--admin-blue-light);
 			text-decoration: none;
 		}
+		&.block {
+			display: block;
+			width: 100%;
+			margin: 0 0 8rem;
+		}
 		&.tiny {
 			height: 24rem;
 			line-height: 24rem;

@@ -45,16 +45,21 @@
 				Archive Quick Arrange
 				<div class="icon"><ArrangeIcon/></div>
 			</a>
-		</nav>
-		<h2>
-			<div class="icon"><ContentIcon/></div>
-			Stories
-		</h2>
-		<nav class="links">
-			<a href="/admin/html-blocks" class="link" class:on={on($page.path, 'html-blocks')}>
-				HTML Blocks
-				<div class="icon"><HtmlIcon/></div>
-			</a>
+			<div class="divider"></div>
+			<div class="group">
+				<a href="/admin/stories" class="link" class:on={on($page.path, 'stories')}>
+					Stories
+					<div class="icon"><StoriesIcon/></div>
+				</a>
+				{#if on($page.path, 'stories')}
+					<div class="nested">
+						<a href="/admin/html-blocks" class="link" class:on={on($page.path, 'html-blocks')}>
+							HTML Blocks
+							<div class="icon"><HtmlIcon/></div>
+						</a>
+					</div>
+				{/if}
+			</div>
 		</nav>
 	</div>
 	<div class="bottom">
@@ -85,6 +90,7 @@
 	import ArchiveIcon from '../../../svg/admin-archive.svelte'
 	import KeyboardIcon from '../../../svg/admin-keyboard.svelte'
 	import ArrangeIcon from '../../../svg/admin-arrange.svelte'
+	import StoriesIcon from '../../../svg/admin-stories.svelte'
 	import HtmlIcon from '../../../svg/admin-html.svelte'
 
 	async function logout(event) {
@@ -132,6 +138,10 @@
 		display: flex;
 		flex-direction: column;
 		padding: 12rem;
+	}
+	// .group {}
+	.nested {
+		padding-left: 20rem;
 	}
 	.link {
 		display: flex;

@@ -5,4 +5,8 @@
 
 <script>
 	export let src = ''
+
+	// import { onMount, onDestroy } from 'svelte'
+	// onMount(() => console.log('lo!'))
+	// onDestroy(() => console.log('oh good we good'))
 </script>
