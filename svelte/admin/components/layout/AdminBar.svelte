@@ -161,7 +161,7 @@
 			background-color: var(--admin-blue-faint);
 			color: var(--admin-blue-dark);
 			font-weight: bold;
-			pointer-events: none;
+			// pointer-events: none;
 		}
 	}
 	.icon {
