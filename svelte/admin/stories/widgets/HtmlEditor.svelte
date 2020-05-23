@@ -17,6 +17,7 @@
 	</div>
 
 	<div id="editor-js" class="editor-js"></div>
+	<Button title="Insert block" classes="small" handler={() => insert_block()}/>
 	<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 </div>
 
@@ -86,6 +87,10 @@
 		})
 	})
 
+	function insert_block() {
+		editor.blocks.insert('paragraph', null, null, editor.blocks.getBlocksCount(), true)
+	}
+
 	onDestroy(() => {
 		// if ($hot) {
 		// 	$hot.destroy()
@@ -119,6 +124,7 @@
 		margin-right: 20rem;
 	}
 	.editor-js {
+		margin: 0 0 10rem;
 		:global {
 			.ce-block {
 				padding: 8rem;
