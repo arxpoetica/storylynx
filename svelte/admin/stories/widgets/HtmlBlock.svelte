@@ -3,6 +3,7 @@
 		bind:name={block.name}
 		bind:data={block.code}
 		update={data => $clip.asset_bins[bin_index].html_block.code = data}
+		cancel={backup => cancel(backup, bin_index)}
 		save={data => save(data, bin_index)}
 	/>
 {:else}
@@ -35,6 +36,12 @@
 	const { session } = get_sapper_stores()
 	import { code_to_html } from './html-utils.js'
 	import { POST } from '../../../../utils/loaders.js'
+
+	const cancel = (backup, bin_index) => {
+		$clip.asset_bins[bin_index].html_block.code = backup
+		$clip.asset_bins[bin_index].html_block.html = code_to_html($clip.asset_bins[bin_index].html_block.code)
+		edit_html = false
+	}
 
 	const save = async(data, bin_index) => {
 		$saving = true

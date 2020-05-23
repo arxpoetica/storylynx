@@ -11,7 +11,7 @@
 			</select>
 		</div>
 		<Buttons>
-			<Button title="Cancel" classes="alert" handler={cancel}/>
+			<Button title="Cancel" classes="alert" handler={() => cancel(backup)}/>
 			<Button title="Save HTML" classes="good" handler={() => save(data)}/>
 		</Buttons>
 	</div>
@@ -25,9 +25,9 @@
 	export let data = {}
 	export let save = () => {}
 	export let update = () => {}
+	export let cancel = () => {}
 
 	let value = ''
-	let cancel = () => {} // TODO:
 
 	import { onMount, onDestroy } from 'svelte'
 	import { html_templates} from '../../../../stores/admin-store.js'
@@ -38,7 +38,7 @@
 
 	let editor
 	let components = []
-	// let backup
+	let backup
 
 	onMount(async() => {
 		const EditorJS = (await import('@editorjs/editorjs')).default
@@ -48,7 +48,7 @@
 		const { ConstructSimpleImage } = await import('./SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
-		console.log('REGISTERED EDITOR')
+		backup = JSON.parse(JSON.stringify(data))
 		window.editor = editor = new EditorJS({
 			data,
 			holderId: 'editor-js',
