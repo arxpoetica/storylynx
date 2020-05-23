@@ -19,9 +19,7 @@
 </div>
 
 <script>
-	export let sequence
 	import { preview_clip as clip } from '../../../../stores/admin-store.js'
-
 	import PreviewAssetBins from './PreviewAssetBins.svelte'
 </script>
 

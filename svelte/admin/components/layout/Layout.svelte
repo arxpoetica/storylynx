@@ -9,7 +9,8 @@
 		<slot></slot>
 	</div>
 </div>
-<SavePanel/>
+<!-- FIXME: bring this back when we've combined layouts... this is some complex problem -->
+<!-- <SavePanel/> -->
 <AssetPreview/>
 
 <script>

@@ -22,7 +22,8 @@
 						/>
 					{:else}
 						{#if Object.keys(bin.html_block.code).length}
-							<pre>HTML: {@html bin.html_block.html || ''}</pre>
+							<h3>HTML</h3>
+							<code>{bin.html_block.html || ''}</code>
 						{/if}
 						<div class="create-html">
 							<Button title="{html_edit_str(bin.html_block.code)} HTML" classes="good" handler={() => edit_html = true}/>
@@ -48,13 +49,26 @@
 
 	const html_edit_str = code => Object.keys(code).length ? 'Edit' : 'Add'
 
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { code_to_html } from './html-utils.js'
+	import { POST } from '../../../../utils/loaders.js'
+
 	const save = async(data, bin_index) => {
-		$clip.asset_bins[bin_index].html_block.code = data
-		// console.group('-----')
-		// console.log(bin_index)
-		// console.log(data)
-		// console.groupEnd()
+		$saving = true
+
+		const block = $clip.asset_bins[bin_index].html_block
+		block.html = code_to_html(block.code)
+
+		const { html_block } = await POST(
+			'/api/admin/stories/clip-update.post',
+			Object.assign({ cookie: $session.cookie }, block),
+		)
+		$clip.asset_bins[bin_index].html_block = html_block
+
 		edit_html = false
+		$saving = false
 	}
 </script>
 
@@ -83,7 +97,14 @@
 			margin: 0;
 		}
 	}
-	pre {
+	code {
+		overflow: auto;
+		display: block;
 		margin: 0 0 10rem;
+		padding: 6rem;
+		background-color: var(--admin-gray-lighter);
+		border: 1px solid var(--admin-gray-light);
+		font: 13rem monospace;
+		word-break: break-all;
 	}
 </style>
