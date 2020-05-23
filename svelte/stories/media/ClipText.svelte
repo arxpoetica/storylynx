@@ -1,13 +1,15 @@
 <!-- <svelte:window on:resize={set_template_height} bind:innerHeight/> -->
 
-<article bind:this={article} class:show class:embedded>
-	<div  class="content" {style}>
+<article class="article article-{template}" bind:this={article} class:show class:embedded>
+	<div class="content" {style}>
 		{@html asset.html}
 	</div>
 </article>
 
 <script>
 	// TODO: how to fix height on smaller windows??????? (SEE media left / media right)
+
+	import { camel_to_hyphen } from '../../../utils/basic-utils.js'
 
 	export let asset
 	export let style
@@ -17,6 +19,7 @@
 	let images
 	let loaded_count = 0
 	$: show = images && loaded_count === images.length
+	$: template = asset.template ? camel_to_hyphen(asset.template) : 'default'
 
 	import { onMount } from 'svelte'
 	onMount(() => {
@@ -31,7 +34,7 @@
 </script>
 
 <style type="text/scss">
-	article {
+	.article {
 		overflow: hidden;
 		display: flex;
 		align-items: center;
@@ -58,7 +61,8 @@
 			}
 		}
 	}
-	.article {
+	.content {
 		width: 100%;
+		margin: 0 auto;
 	}
 </style>

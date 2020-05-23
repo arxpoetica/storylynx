@@ -4,7 +4,7 @@
 		<div class="meta">
 			<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
 			<select bind:value>
-				<option value="">Select an HTML template</option>
+				<option value="">Select an HTML template (leave blank for default)</option>
 				{#each $html_templates as template}
 					<option value={template}>{template}</option>
 				{/each}
@@ -60,7 +60,7 @@
 					class: Header,
 					config: {
 						placeholder: 'Enter a header',
-						levels: [1, 2, 3],
+						levels: [1, 2, 3, 4, 5, 6],
 						defaultLevel: 2,
 					},
 				},
@@ -135,6 +135,7 @@
 			svg {
 				height: auto;
 				width: auto;
+				flex: unset;
 			}
 			.codex-editor__redactor {
 				margin: 0;
