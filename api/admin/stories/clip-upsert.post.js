@@ -7,7 +7,7 @@ export default async function(req, res) {
 		const token = getToken(req)
 		if (token.unauthorized) { throw Error('Unauthorized') }
 
-		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/stories/clip-update.post.js`
+		const path = `${process.env.LYNX_API_PLUGIN}/api/admin/stories/clip-upsert.post.js`
 		const { default: api } = await import(path)
 		res.json(await api(req.body))
 
