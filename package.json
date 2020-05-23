@@ -15,6 +15,7 @@
     "@editorjs/editorjs": "2.17.0",
     "@editorjs/header": "2.4.1",
     "@editorjs/list": "1.4.0",
+    "@editorjs/quote": "2.3.0",
     "ansi-colors": "4.1.1",
     "cheap-watch": "1.0.2",
     "cross-fetch": "3.0.4",

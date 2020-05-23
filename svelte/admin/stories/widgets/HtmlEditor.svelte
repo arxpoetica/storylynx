@@ -44,6 +44,7 @@
 		const EditorJS = (await import('@editorjs/editorjs')).default
 		const Header = (await import('@editorjs/header')).default
 		const List = (await import('@editorjs/list')).default
+		const Quote = (await import('@editorjs/quote')).default
 		const { ConstructSimpleImage } = await import('./SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
@@ -63,6 +64,15 @@
 				},
 				// https://github.com/editor-js/list
 				list: List,
+				quote: {
+					class: Quote,
+					inlineToolbar: true,
+					// shortcut: 'CMD+SHIFT+O',
+					config: {
+						quotePlaceholder: 'Enter a quote',
+						captionPlaceholder: 'Quote\'s author',
+					},
+				},
 				image: {
 					class: SimpleImage,
 				},
@@ -124,6 +134,17 @@
 			}
 			.codex-editor--narrow .ce-block--focused {
 				margin: 0;
+			}
+			.cdx-quote {
+				// margin: 50rem 0 0;
+				// padding: 0 50rem;
+				font: inherit;
+				letter-spacing: inherit;
+				text-transform: none;
+				text-align: left;
+				&:after {
+					display: none;
+				}
 			}
 		}
 	}
