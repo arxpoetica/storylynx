@@ -31,7 +31,10 @@ export const ConstructSimpleImage = (SimpleImageComponent, components) => {
 			this.component = new SimpleImageComponent({
 				target: wrapper,
 				props: {
-					src: this.data && this.data.url ? this.data.url : '',
+					loaded: this.data && this.data.valid === 'true',
+					src: this.data && this.data.src ? this.data.src : '',
+					caption: this.data && this.data.caption ? this.data.caption : '',
+					source: this.data && this.data.source ? this.data.source : '',
 				},
 			})
 			components.push(this.component)
@@ -40,10 +43,11 @@ export const ConstructSimpleImage = (SimpleImageComponent, components) => {
 		}
 
 		save(block_content) {
-			const input = block_content.querySelector('input')
-
 			return {
-				url: input.value,
+				valid: block_content.querySelector('input.valid').value,
+				src: block_content.querySelector('input.src').value,
+				caption: block_content.querySelector('input.caption').value,
+				source: block_content.querySelector('input.source').value,
 			}
 		}
 

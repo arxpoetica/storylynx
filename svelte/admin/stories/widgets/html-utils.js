@@ -25,10 +25,22 @@ export const code_to_html = code => {
 				}
 				html += '</p></blockquote>'
 			} else if (type === 'image') {
-				// FIXME: figure out the alt and caption stuff...
-				html += `<figure><img src="${data.url}" alt="No alt yet..."/>`
-				// html += `<figcaption>...to come...</figcaption>`
-				html += '</figure>'
+				if (data.valid === 'true') {
+					data.caption = data.caption || ''
+					data.source = data.source || ''
+					html += `<figure><img src="${data.src}" `
+					// FIXME: come up with a proper escaping function:
+					// SEE: https://stackoverflow.com/questions/5499078/fastest-method-to-escape-html-tags-as-html-entities
+					// OR: https://stackoverflow.com/questions/7753448/how-do-i-escape-quotes-in-html-attribute-values
+					html += `alt="${(data.caption + ' ' + data.source).replace(/"/g, '&quot;')}"/>`
+					if (data.caption || data.source) {
+						html += '<figcaption>'
+						html += data.caption ? `<span class="caption">${data.caption}</span>` : ''
+						html += data.source ? `<span class="source">${data.source}</span>` : ''
+						html += '</figcaption>'
+					}
+					html += '</figure>'
+				}
 			}
 		}
 	}
