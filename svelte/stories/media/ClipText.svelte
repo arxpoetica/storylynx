@@ -1,13 +1,8 @@
 <!-- <svelte:window on:resize={set_template_height} bind:innerHeight/> -->
 
-<!-- <figure>
-	<img...>
-	<figcaption>...</figcaption>
-</figure> -->
-
-<article class:show class:embedded>
-	<div bind:this={content} class="content" {style}>
-		<!-- {@html asset.html} -->
+<article bind:this={article} class:show class:embedded>
+	<div  class="content" {style}>
+		{@html asset.html}
 	</div>
 </article>
 
@@ -16,41 +11,22 @@
 
 	export let asset
 	export let style
-	// export let intersecting
 	export let embedded = false
 
-	let content
+	let article
+	let images
+	let loaded_count = 0
+	$: show = images && loaded_count === images.length
 
 	import { onMount } from 'svelte'
-	import { format_url } from './inline-helpers.js'
-	// $: src = format_url(asset)
-
-	const loading = []
-	let loaded = 0
-	let transpired = false
-	$: show = loading.length === loaded && transpired
-
 	onMount(() => {
-		const div = document.createElement('div');
-		div.innerHTML = asset.html
-		const images = div.querySelectorAll('img')
-
+		images = article.querySelectorAll('img')
 		for (let img of images) {
-			// just some basic cleanup:
-			// TODO: remove later when we have a non-graphcms think...need to think through that all...
-			img.removeAttribute('title')
-			img.removeAttribute('width')
-			img.removeAttribute('height')
-			// TODO: remove later when we have a non-graphcms think...need to think through that all...
-			if (img.src.includes('graphcms')) {
-				loading.push({ img, src: format_url({ url: img.src, width: 600 }) })
-				img.removeAttribute('src')
-				img.onload = () => loaded++
-			}
+			const src = img.src
+			img.src = ''
+			img.onload = () => loaded_count++
+			img.src = src
 		}
-		content.appendChild(div)
-		for (let load of loading) { load.img.src = load.src }
-		transpired = true
 	})
 </script>
 
@@ -82,7 +58,7 @@
 			}
 		}
 	}
-	.content {
+	.article {
 		width: 100%;
 	}
 </style>
