@@ -6,8 +6,8 @@
 			<div class="bin-section">
 				<!-- <p>bin: {JSON.stringify(Object.keys(bin))}</p> -->
 				<p>id: {JSON.stringify(bin.id)}</p>
-				<p>order: {JSON.stringify(bin.order)}</p>
-				<p>transition: {JSON.stringify(bin.transition)}</p>
+				<!-- <p>order: {JSON.stringify(bin.order)}</p> -->
+				<!-- <p>transition: {JSON.stringify(bin.transition)}</p> -->
 				{#if bin.assets.length}
 					<div class="bin">
 						{#each bin.assets as asset, index}

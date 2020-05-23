@@ -6,15 +6,17 @@
 				<Button title="Edit" handler={() => select(index)}/>
 			</div>
 		</div>
-		<!-- <p>{JSON.stringify(Object.keys(clip))}</p> -->
-		<p>id: {JSON.stringify(clip.id)}</p>
-		<p>slug: {JSON.stringify(clip.slug)}</p>
-		<p>hide_navigation: {JSON.stringify(clip.hide_navigation)}</p>
-		<p>order: {JSON.stringify(clip.order)}</p>
-		<p>template: {JSON.stringify(clip.template)}</p>
-		<p>theme_elements: {JSON.stringify(clip.theme_elements)}</p>
-		<p>transition: {JSON.stringify(clip.transition)}</p>
-		<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
+		<div class="content">
+			<!-- <p>{JSON.stringify(Object.keys(clip))}</p> -->
+			<p>id: {JSON.stringify(clip.id)}</p>
+			<!-- <p>slug: {JSON.stringify(clip.slug)}</p> -->
+			<!-- <p>hide_navigation: {JSON.stringify(clip.hide_navigation)}</p> -->
+			<!-- <p>order: {JSON.stringify(clip.order)}</p> -->
+			<!-- <p>template: {JSON.stringify(clip.template)}</p> -->
+			<!-- <p>theme_elements: {JSON.stringify(clip.theme_elements)}</p> -->
+			<!-- <p>transition: {JSON.stringify(clip.transition)}</p> -->
+			<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
+		</div>
 	</div>
 {/each}
 
@@ -36,22 +38,36 @@
 
 <style type="text/scss">
 	.clip {
-		padding: 20rem;
+		// position: relative;
 		border-bottom: 1rem solid var(--admin-gray-light);
 		&:last-child {
 			border: 0;
 		}
-		&:hover,
-		&.on {
-			background-color: var(--admin-blue-faint);
+		&:hover {
+			background-color: var(--admin-gray-lighter);
+			.header { background-color: rgba(244, 246, 246, 0.9); }
 			.button-wrap { opacity: 1; }
 		}
-		&.on .button-wrap { display: none; }
+		&.on {
+			background-color: var(--admin-blue-faint);
+			.header { background-color: rgba(231, 246, 254, 0.9); }
+			.button-wrap { display: none; }
+		}
 	}
 	.header {
+		position: sticky;
+		top: 0;
+		right: 0;
+		left: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		padding: 20rem;
+		background-color: rgba(255, 255, 255, 0.9);
+		z-index: 2;
+	}
+	.content {
+		padding: 20rem;
 	}
 	.button-wrap {
 		opacity: 0;
