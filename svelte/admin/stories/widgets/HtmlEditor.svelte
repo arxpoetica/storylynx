@@ -46,6 +46,7 @@
 		const Header = (await import('@editorjs/header')).default
 		const List = (await import('@editorjs/list')).default
 		const Quote = (await import('@editorjs/quote')).default
+		const Delimiter = (await import('@editorjs/delimiter')).default
 		const { ConstructSimpleImage } = await import('./SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
@@ -74,6 +75,7 @@
 						captionPlaceholder: 'Quote\'s author',
 					},
 				},
+				delimiter: Delimiter,
 				image: {
 					class: SimpleImage,
 				},

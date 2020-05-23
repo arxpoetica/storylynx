@@ -12,6 +12,7 @@
     "lynx": "./lynx"
   },
   "dependencies": {
+    "@editorjs/delimiter": "1.1.0",
     "@editorjs/editorjs": "2.17.0",
     "@editorjs/header": "2.4.1",
     "@editorjs/list": "1.4.0",

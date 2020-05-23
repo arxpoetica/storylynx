@@ -24,6 +24,8 @@ export const code_to_html = code => {
 					html += `<footer>${data.caption}</footer>`
 				}
 				html += '</p></blockquote>'
+			} else if (type === 'delimiter') {
+				html += '<div class="delimiter"></div>'
 			} else if (type === 'image') {
 				if (data.valid === 'true') {
 					data.caption = data.caption || ''
