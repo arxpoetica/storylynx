@@ -14,7 +14,7 @@
 		<p>template: {JSON.stringify(clip.template)}</p>
 		<p>theme_elements: {JSON.stringify(clip.theme_elements)}</p>
 		<p>transition: {JSON.stringify(clip.transition)}</p>
-		<AssetBins bins={clip.asset_bins}/>
+		<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
 	</div>
 {/each}
 
