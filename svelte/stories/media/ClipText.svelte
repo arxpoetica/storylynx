@@ -49,10 +49,6 @@
 		&.show {
 			opacity: 1;
 		}
-		&.embedded {
-			color: white;
-			text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
-		}
 		& :global {
 			img {
 				display: block;

@@ -44,11 +44,11 @@ export const code_to_html = code => {
 			} else if (type === 'quote') {
 
 
-				html += `<blockquote class="quote-${data.alignment}${data.caption ? ' has-caption' : ''}"><p>${data.text}`
+				html += `<blockquote class="quote-${data.alignment}${data.caption ? ' has-caption' : ''}"><p>${data.text}</p>`
 				if (data.caption) {
 					html += `<footer>${data.caption}</footer>`
 				}
-				html += '</p></blockquote>'
+				html += '</blockquote>'
 
 
 			} else if (type === 'delimiter') {
