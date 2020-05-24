@@ -94,15 +94,12 @@
 	}
 
 	onDestroy(() => {
-		// if ($hot) {
-		// 	$hot.destroy()
-		// 	$hot = null
-		// }
 		if ((editor && editor.destroy) || components.length) {
 			for (let comp of components) {
 				comp.$destroy()
 			}
 			editor.destroy()
+			editor = null
 		}
 	})
 </script>

@@ -1,12 +1,14 @@
-<div class="wrapper">
+<svelte:window on:keydown|capture={event => handle_events(event)}/>
+
+<div class="simple-image-wrapper">
 	<div class="search">
 		<input
 			type="search"
+			bind:this={input_search}
 			bind:value={search_term}
 			placeholder="Search for an image by filename..."
 		/>
-		<!-- on:keydown={event => enter(event)} -->
-		<Button title="Search" classes="small" handler={search}/>
+		<Button title="Search" classes="small" handler={search} bind:element={input_button}/>
 	</div>
 	<div class="preview" class:on={assets.length}>
 		{#if assets.length}
@@ -40,6 +42,10 @@
 	export let caption = ''
 	export let source = ''
 	export let loaded = false
+
+	let input_search
+	let input_button
+
 	let img
 	let search_term = ''
 	let assets = []
@@ -51,13 +57,8 @@
 	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
 
-	// function enter(event) {
-	// 	event.preventDefault()
-	// 	event.stopPropagation()
-	// 	if (event.key === 'Enter') {
-	// 		search()
-	// 	}
-	// }
+	function enter(event) {
+	}
 	async function search() {
 		const res = await POST(
 			'/api/admin/stories/image-search-page.post',
@@ -68,6 +69,20 @@
 
 	function set_src(asset) {
 		src = `https://media.graphcms.com/resize=w:1200/${asset.handle}`
+	}
+
+	function handle_events(event) {
+		// GROSS PREVENTION OF PROPAGATION!
+		if (event.target.closest('.simple-image-wrapper')) {
+			event.stopPropagation()
+			switch (event.target) {
+				case input_search:
+				case input_button:
+					if (event.key === 'Enter') {
+						search()
+					}
+			}
+		}
 	}
 </script>
 
