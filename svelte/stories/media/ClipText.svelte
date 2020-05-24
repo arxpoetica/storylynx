@@ -1,6 +1,6 @@
 <!-- <svelte:window on:resize={set_template_height} bind:innerHeight/> -->
 
-<article class="article article-{template}" bind:this={article} class:show class:embedded>
+<article class="article article-{template} highlight-{color}" bind:this={article} class:show class:embedded>
 	<div class="content" {style}>
 		{@html asset.html}
 	</div>
@@ -19,7 +19,9 @@
 	let images
 	let loaded_count = 0
 	$: show = images && loaded_count === images.length
+	// TODO: move this hyphenation all the way upstream to the API
 	$: template = asset.template ? camel_to_hyphen(asset.template) : 'default'
+	$: color = asset.color ? camel_to_hyphen(asset.color) : 'none'
 
 	import { onMount } from 'svelte'
 	onMount(() => {

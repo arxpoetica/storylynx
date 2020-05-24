@@ -26,6 +26,7 @@ export const groups = writable([])
 
 export const preview_clip = writable(null)
 export const html_templates = writable([])
+export const html_colors = writable([])
 
 
 

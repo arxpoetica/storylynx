@@ -1,37 +1,41 @@
 <div class="html-editor">
 	<!-- <button on:click={show}>Show HTML</button> -->
 	<div class="tools">
-		<div class="meta">
-			<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
-			<select bind:value>
-				<option value="">Select an HTML template (leave blank for default)</option>
-				{#each $html_templates as template}
-					<option value={template}>{template}</option>
-				{/each}
-			</select>
-		</div>
-		<Buttons>
-			<Button title="Cancel" classes="alert" handler={() => cancel(backup)}/>
-			<Button title="Save HTML" classes="good" handler={() => save(data)}/>
-		</Buttons>
+		<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
+		<select bind:value={template}>
+			<option value="">Select an HTML template (leave blank for default)</option>
+			{#each $html_templates as template}
+				<option value={template}>{template}</option>
+			{/each}
+		</select>
+		<select bind:value={color}>
+			<option value="">Select a highlight color (leave blank for no color)</option>
+			{#each $html_colors as color}
+				<option value={color}>{color}</option>
+			{/each}
+		</select>
 	</div>
 
 	<div id="editor-js" class="editor-js"></div>
 	<Button title="Insert block" classes="small" handler={() => insert_block()}/>
+	<div class="buttons">
+		<Button title="Cancel" classes="alert" handler={() => cancel(backup)}/>
+		<Button title="Save HTML" classes="good" handler={() => save(data)}/>
+	</div>
 	<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 </div>
 
 <script>
 	export let name = ''
+	export let template = ''
+	export let color = ''
 	export let data = {}
 	export let save = () => {}
 	export let update = () => {}
 	export let cancel = () => {}
 
-	let value = ''
-
 	import { onMount, onDestroy } from 'svelte'
-	import { html_templates} from '../../../../stores/admin-store.js'
+	import { html_templates, html_colors } from '../../../../stores/admin-store.js'
 
 	import Button from '../../components/elements/Button.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
@@ -113,14 +117,20 @@
 		background-color: white;
 	}
 	.tools {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
 		margin: 0 0 20rem;
 	}
+	input, select { margin: 0 0 10rem; }
 	.meta {
 		flex: 1;
 		margin-right: 20rem;
+	}
+	.buttons {
+		display: flex;
+		justify-content: flex-end;
+		margin: 75rem 0 0;
+		:global(.button) {
+			margin: 0 0 0 6rem;
+		}
 	}
 	.editor-js {
 		margin: 0 0 10rem;

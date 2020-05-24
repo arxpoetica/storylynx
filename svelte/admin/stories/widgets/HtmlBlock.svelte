@@ -1,6 +1,8 @@
 {#if edit_html}
 	<HtmlEditor
 		bind:name={block.name}
+		bind:template={block.template}
+		bind:color={block.color}
 		bind:data={block.code}
 		update={data => $clip.asset_bins[bin_index].html_block.code = data}
 		save={data => save(data, bin_index)}
@@ -24,7 +26,7 @@
 	export let selectedclip
 	let edit_html = false
 
-	import { saving, saveable, html_templates, preview_clip as clip } from '../../../../stores/admin-store.js'
+	import { saving, saveable, preview_clip as clip } from '../../../../stores/admin-store.js'
 
 	import Button from '../../components/elements/Button.svelte'
 	import HtmlEditor from './HtmlEditor.svelte'
@@ -45,7 +47,7 @@
 		block.asset_bin_id = $clip.asset_bins[bin_index].id
 
 		const { html_block } = await POST(
-			'/api/admin/stories/clip-update.post',
+			'/api/admin/stories/clip-upsert.post',
 			Object.assign({ cookie: $session.cookie }, block),
 		)
 		$clip.asset_bins[bin_index].html_block = html_block

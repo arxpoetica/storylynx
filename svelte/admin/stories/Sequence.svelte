@@ -21,9 +21,11 @@
 <script>
 	export let sequence = {}
 	export let html_templates = []
+	export let html_colors = []
 
-	import { html_templates as templates } from '../../../stores/admin-store.js'
+	import { html_templates as templates, html_colors as colors } from '../../../stores/admin-store.js'
 	$: $templates = html_templates.length ? html_templates : $templates
+	$: $colors = html_colors.length ? html_colors : $colors
 
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
 	import PreviewClip from './widgets/PreviewClip.svelte'
