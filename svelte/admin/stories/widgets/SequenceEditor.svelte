@@ -8,7 +8,7 @@
 		</div>
 		<div class="content">
 			<!-- <p>{JSON.stringify(Object.keys(clip))}</p> -->
-			<p>id: {JSON.stringify(clip.id)}</p>
+			<!-- <p>id: {JSON.stringify(clip.id)}</p> -->
 			<!-- <p>slug: {JSON.stringify(clip.slug)}</p> -->
 			<!-- <p>hide_navigation: {JSON.stringify(clip.hide_navigation)}</p> -->
 			<!-- <p>order: {JSON.stringify(clip.order)}</p> -->
