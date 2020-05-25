@@ -1,10 +1,9 @@
 {#if TemplateWrapper}
-	<TemplateWrapper {clip} cliporder={index + 1}/>
+	<TemplateWrapper {clip}/>
 {/if}
 
 <script>
 	export let clip
-	export let index
 
 	import { hyphenate } from '../../utils/basic-utils.js'
 	$: if (clip) {
