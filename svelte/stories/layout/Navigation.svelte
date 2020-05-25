@@ -1,25 +1,27 @@
 <svelte:window on:resize={set_widths}/>
 
-<nav bind:this={nav} on:wheel={faff} class:scrolling>
-	<!-- {JSON.stringify($page.params)} -->
-	<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
-		{#each story.sequences as sequence, index}
-			<li class="sequence sequence-{index}" class:current={current(sequence)}>
-				<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
-				{#if sequence.clips.length}
-					<ul class="clips">
-						{#each sequence.clips as clip}
-							{#if clip.slug && !clip.hide_navigation}
-								<li class="clip">
-									<h3><span class="out"><span class="in">{clip.slug}</span></span></h3>
-								</li>
-							{/if}
-						{/each}
-					</ul>
-				{/if}
-			</li>
-		{/each}
-	</ul>
+<nav bind:this={nav} on:wheel={faff} class:scrolling class:show>
+	<div class="evil-wrap">
+		<!-- {JSON.stringify($page.params)} -->
+		<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
+			{#each story.sequences as sequence, index}
+				<li class="sequence sequence-{index}" class:current={current(sequence)}>
+					<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
+					{#if sequence.clips.length}
+						<ul class="clips">
+							{#each sequence.clips as clip}
+								{#if clip.slug && !clip.hide_navigation}
+									<li class="clip">
+										<a href={url_hash(clip)}><h3><span class="out"><span class="in">{clip.slug}</span></span></h3></a>
+									</li>
+								{/if}
+							{/each}
+						</ul>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+	</div>
 </nav>
 
 <script>
@@ -28,6 +30,15 @@
 	const { page } = get_sapper_stores()
 
 	export let story
+
+	import { story_scroll } from '../../../stores/story-store.js'
+
+	import { hyphenate } from '../../../utils/basic-utils.js'
+	function url_hash (clip) {
+		let url = `${$page.path}#`
+		url += clip.slug ? `nav-${hyphenate(clip.slug.toLowerCase())}` : `nav-${clip.id}`
+		return url
+	}
 
 	const href = sequence => `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
 	const current = sequence => sequence.slug.toLowerCase() === $page.params.sequence
@@ -51,7 +62,13 @@
 	let body_width = 0
 	$: scrolling = body_width < seq_width
 
-	onMount(() => set_widths())
+	let timeout = false
+	$: show = $story_scroll < 100 && !timeout
+
+	onMount(() => {
+		set_widths()
+		setTimeout(() => timeout = true, 3000)
+	})
 
 	function set_widths() {
 		nav_width = nav.getBoundingClientRect().width
@@ -102,6 +119,7 @@
 			justify-content: flex-start;
 		}
 	}
+	// .evil-wrap {}
 	.sequences {
 		display: flex;
 		transform:translateX(0px);
@@ -133,12 +151,7 @@
 		align-items: center;
 	}
 	.clip {
-		display: flex;
-		align-items: center;
 		position: relative;
-		height: 80rem;
-		padding: 0 10rem;
-		// border-radius: 100%;
 		text-align: center;
 		cursor: pointer;
 		&:hover {
@@ -147,6 +160,13 @@
 				transition: opacity 0.25s ease-in-out;
 				opacity: 1;
 			}
+		}
+		> a {
+			display: flex;
+			align-items: center;
+			display: block;
+			height: 80rem;
+			padding: 0 10rem;
 		}
 	}
 	h3 {

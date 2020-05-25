@@ -41,7 +41,6 @@
 	export let brands = []
 
 	// DOM ONLY STUFF ---------- >>>>
-	import { hyphenate } from '../../utils/basic-utils.js'
 	let html
 	// this delay removes the `preload` class from the `html` element
 	onMount(async () => setTimeout(() => html = document.querySelector('html'), 150))
