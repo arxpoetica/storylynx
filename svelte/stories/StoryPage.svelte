@@ -12,8 +12,8 @@
 			{/each}
 		</div>
 		<div class="sequence {sequence.classes ? sequence.classes : ''}">
-			{#each sequence.clips as clip}
-				<Clip {clip}/>
+			{#each sequence.clips as clip, index}
+				<Clip {clip} {index}/>
 			{/each}
 		</div>
 		<InlineNavigation {story}/>
@@ -58,6 +58,10 @@
 </script>
 
 <style type="text/scss">
+	.story-layout {
+		position: relative;
+		z-index: 1;
+	}
 	.sequence {
 		margin: 50rem;
 		padding: 50rem;

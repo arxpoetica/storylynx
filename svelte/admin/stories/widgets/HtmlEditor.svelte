@@ -120,10 +120,6 @@
 		margin: 0 0 20rem;
 	}
 	input, select { margin: 0 0 10rem; }
-	.meta {
-		flex: 1;
-		margin-right: 20rem;
-	}
 	.buttons {
 		display: flex;
 		justify-content: flex-end;
