@@ -1,5 +1,5 @@
 {#if TemplateWrapper}
-	<TemplateWrapper {clip}/>
+	<TemplateWrapper bind:clip/>
 {/if}
 
 <script>

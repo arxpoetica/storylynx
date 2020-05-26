@@ -1,6 +1,6 @@
 <div bind:this={the_stack} class="the-stack">
-	{#each sequence.clips as clip (clip.id)}
-		<div bind:this={$stack[clip.id]} class="{clip.url_hash} stack"></div>
+	{#each sequence.clips as clip, index}
+		<div bind:this={clip.stack} class="{clip.url_hash} stack"></div>
 	{/each}
 </div>
 <div class="audio">
@@ -12,14 +12,14 @@
 </div>
 <div class="sequence {sequence.classes ? sequence.classes : ''}">
 	{#each sequence.clips as clip}
-		<Clip {clip}/>
+		<Clip bind:clip/>
 	{/each}
 </div>
 
 <script>
 	export let sequence
 
-	import { stack, seq_audio, view_height } from '../../stores/story-store.js'
+	import { seq_audio, view_height } from '../../stores/story-store.js'
 
 	let the_stack
 
@@ -59,21 +59,17 @@
 
 		// DEVELOPER HELPER ONLY
 		if (process.env.NODE_ENV === 'development') {
-			window.stacky = $stack
-
 			the_stack.style.width = '20rem'
 			the_stack.style.backgroundColor = 'red'
 			the_stack.style.zIndex = '30000000000000000'
-			Object.keys($stack).forEach((key, index) => {
-				if ($stack[key]) {
-					$stack[key].style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
+			for (let clip of sequence.clips) {
+				if (clip.stack) {
+					clip.stack.style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
 				}
-			})
+			}
 		}
 	})
 	onDestroy(() => {
-		$stack = {}
-
 		if (style) {
 			style.remove()
 		}
