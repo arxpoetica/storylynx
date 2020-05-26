@@ -5,9 +5,9 @@
 		<!-- <ClipVideo {asset} {image} {style}/> -->
 		<ClipVideo {intersecting} {asset} {text} {style}/>
 	{:else if type === 'audio'}
-		<ClipAudio {intersecting} {asset} {text} {image} {style}/>
+		<ClipAudio {intersecting} {asset} {text} {image} {style} forceload={clip.forceload}/>
 	{:else if type === 'image'}
-		<ClipImage {intersecting} {asset} {text} {style}/>
+		<ClipImage {intersecting} {asset} {text} {style} forceload={clip.forceload}/>
 	{:else}
 		<!-- <ClipText {intersecting} {asset} {style}/> -->
 		<ClipText {asset} {style}/>

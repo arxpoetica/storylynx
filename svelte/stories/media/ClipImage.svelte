@@ -12,12 +12,13 @@
 	export let text
 	export let style
 	export let intersecting
+	export let forceload
 
 	import ClipText from './ClipText.svelte'
 
 	let loaded = false
 	let intersected; $: if (intersecting) { intersected = true }
-	$: show = loaded && intersected
+	$: show = loaded && (intersected || forceload)
 
 	import { format_url } from './inline-helpers.js'
 	$: src = format_url(asset)
