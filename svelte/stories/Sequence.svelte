@@ -1,6 +1,6 @@
-<div class="the-stack">
-	{#each sequence.clips as clip}
-		<div bind:this={$stack[clip.id]} class="stack"></div>
+<div bind:this={the_stack} class="the-stack">
+	{#each sequence.clips as clip (clip.id)}
+		<div bind:this={$stack[clip.id]} class="{clip.url_hash} stack"></div>
 	{/each}
 </div>
 <div class="audio">
@@ -21,8 +21,15 @@
 
 	import { stack, seq_audio, view_height } from '../../stores/story-store.js'
 
+	let the_stack
+
 	import ClipAudio from './media/ClipAudio.svelte'
 	import Clip from './Clip.svelte'
+
+	import { hyphenate } from '../../utils/basic-utils.js'
+	function url_hash(clip) {
+		return clip.slug ? `nav-${hyphenate(clip.slug.toLowerCase())}` : `nav-${clip.id}`
+	}
 
 	$: seq_audio.set(
 		sequence.audio_clips.reduce((result, clip) => {
@@ -52,18 +59,21 @@
 
 		// DEVELOPER HELPER ONLY
 		if (process.env.NODE_ENV === 'development') {
+			window.stacky = $stack
+
+			the_stack.style.width = '20rem'
+			the_stack.style.backgroundColor = 'red'
+			the_stack.style.zIndex = '30000000000000000'
 			Object.keys($stack).forEach((key, index) => {
-				if (index === 0) {
-					const parent = $stack[key].parentElement
-					parent.style.width = '20rem'
-					parent.style.backgroundColor = 'red'
-					parent.style.zIndex = '30000000000000000'
+				if ($stack[key]) {
+					$stack[key].style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
 				}
-				$stack[key].style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
 			})
 		}
 	})
 	onDestroy(() => {
+		$stack = {}
+
 		if (style) {
 			style.remove()
 		}

@@ -34,7 +34,7 @@
 	import { story_scroll } from '../../../stores/story-store.js'
 
 	import { hyphenate } from '../../../utils/basic-utils.js'
-	function url_hash (clip) {
+	function url_hash(clip) {
 		let url = `${$page.path}#`
 		url += clip.slug ? `nav-${hyphenate(clip.slug.toLowerCase())}` : `nav-${clip.id}`
 		return url
