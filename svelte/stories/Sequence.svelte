@@ -60,6 +60,7 @@
 		// DEVELOPER HELPER ONLY
 		if (process.env.NODE_ENV === 'development') {
 			the_stack.style.width = '20rem'
+			the_stack.style.height = 'auto'
 			the_stack.style.backgroundColor = 'red'
 			the_stack.style.zIndex = '30000000000000000'
 			for (let clip of sequence.clips) {
@@ -99,5 +100,6 @@
 		overflow: hidden;
 		position: absolute;
 		width: 0;
+		height: auto;
 	}
 </style>
