@@ -1,5 +1,12 @@
 <div class="video" class:loaded>
-	<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
+	<video
+		bind:this={video}
+		bind:volume={indirect_volume}
+		bind:paused
+		use:lazy
+		loop
+		style="{bg_size}{style}"
+	>
 		<source {src} type="video/mp4"/>
 	</video>
 </div>
@@ -21,6 +28,8 @@
 
 	let video
 	let loaded = false
+
+	$: bg_size = asset.contain ? 'object-fit:contain;' : ''
 
 	$: paused = !(loaded && intersecting) && $volume === 0
 	$: if (loaded) { video.muted = $muted }
