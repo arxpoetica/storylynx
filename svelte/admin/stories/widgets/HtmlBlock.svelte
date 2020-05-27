@@ -4,9 +4,9 @@
 		bind:template={block.template}
 		bind:color={block.color}
 		bind:data={block.code}
-		update={data => $clip.asset_bins[bin_index].html_block.code = data}
-		save={data => save(data, bin_index)}
-		cancel={backup => cancel(backup, bin_index)}
+		update={data => $clip.asset_bins[bin_index].html_blocks[block_index].code = data}
+		save={data => save(data, bin_index, block_index)}
+		cancel={backup => cancel(backup, bin_index, block_index)}
 	/>
 {:else}
 	{#if Object.keys(block.code).length}
@@ -23,6 +23,7 @@
 <script>
 	export let block
 	export let bin_index
+	export let block_index
 	export let selectedclip
 	let edit_html = false
 
@@ -39,26 +40,29 @@
 	import { code_to_html } from './html-utils.js'
 	import { POST } from '../../../../utils/loaders.js'
 
-	const save = async(data, bin_index) => {
+	const save = async(data, bin_index, block_index) => {
 		$saving = true
 
-		const block = $clip.asset_bins[bin_index].html_block
+		const block = $clip.asset_bins[bin_index].html_blocks[block_index]
 		block.html = code_to_html(block.code)
 		block.asset_bin_id = $clip.asset_bins[bin_index].id
 
+
+		// for each
 		const { html_block } = await POST(
 			'/api/admin/stories/clip-upsert.post',
 			Object.assign({ cookie: $session.cookie }, block),
 		)
-		$clip.asset_bins[bin_index].html_block = html_block
+		$clip.asset_bins[bin_index].html_blocks[block_index] = html_block
 
 		edit_html = false
 		$saving = false
 	}
 
-	const cancel = (backup, bin_index) => {
-		$clip.asset_bins[bin_index].html_block.code = backup
-		$clip.asset_bins[bin_index].html_block.html = code_to_html($clip.asset_bins[bin_index].html_block.code)
+	const cancel = (backup, bin_index, block_index) => {
+		$clip.asset_bins[bin_index].html_blocks[block_index].code = backup
+		$clip.asset_bins[bin_index].html_blocks[block_index].html
+			= code_to_html($clip.asset_bins[bin_index].html_blocks[block_index].code)
 		edit_html = false
 	}
 </script>

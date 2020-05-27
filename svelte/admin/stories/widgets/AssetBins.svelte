@@ -17,7 +17,9 @@
 				{:else}
 					<p>[No assets]</p>
 				{/if}
-				<HtmlBlock bind:block={bin.html_block} {bin_index} {selectedclip}/>
+				{#each bin.html_blocks as block, block_index}
+					<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
+				{/each}
 			</div>
 		{/each}
 	</div>

@@ -5,15 +5,18 @@
 				<!-- {#if bin.assets.length} -->
 					<!-- <p>bin: {JSON.stringify(Object.keys(bin))}</p> -->
 				<!-- {/if} -->
-				{#if bin.html_block && bin.html_block.code && bin.html_block.code.blocks && bin.html_block.code.blocks.length}
-					<!-- <p>html_block: {JSON.stringify(Object.keys(bin.html_block))}</p> -->
-					<div class="html">
-						<!-- <p>id: {JSON.stringify(bin.html_block.id)}</p> -->
-						<!-- <p>Name: {JSON.stringify(bin.html_block.name)}</p> -->
-						<!-- <p>code: {JSON.stringify(bin.html_block.code)}</p> -->
-						{@html code_to_html(bin.html_block.code)}
-					</div>
-				{/if}
+				{#each bin.html_blocks as block}
+					
+					{#if block.code && block.code.blocks && block.code.blocks.length}
+						<!-- <p>html block: {JSON.stringify(Object.keys(block))}</p> -->
+						<div class="html">
+							<!-- <p>id: {JSON.stringify(block.id)}</p> -->
+							<!-- <p>Name: {JSON.stringify(block.name)}</p> -->
+							<!-- <p>code: {JSON.stringify(block.code)}</p> -->
+							{@html code_to_html(block.code)}
+						</div>
+					{/if}
+				{/each}
 			</div>
 		{/each}
 	</div>
