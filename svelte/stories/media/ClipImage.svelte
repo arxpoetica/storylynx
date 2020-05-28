@@ -1,5 +1,7 @@
-<div class:show class="image">
-	<div class="bg" style="background-image:url({src});{bg_pos}{bg_size}{style}"></div>
+<div class="image" class:show class:cover>
+	{#if cover}
+		<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
+	{/if}
 	<img {src} alt="n/a" use:lazy/>
 </div>
 {#if text}
@@ -24,7 +26,7 @@
 
 	import { camel_to_hyphen } from '../../../utils/basic-utils.js'
 	$: bg_pos = asset.bg_pos ? `background-position:${camel_to_hyphen(asset.bg_pos).replace('-', ' ')};` : ''
-	$: bg_size = asset.contain ? 'background-size:contain;' : ''
+	$: cover = !asset.contain
 
 	function lazy(node) {
 		const img = new Image()
@@ -36,16 +38,24 @@
 
 <style type="text/scss">
 	.image {
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		// position: relative;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
-		&.show {
-			opacity: 1;
+		&.show { opacity: 1; }
+		&.cover {
+			overflow: hidden;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			img {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				opacity: 0;
+				pointer-events: none;
+			}
 		}
 	}
 	.bg {
@@ -56,12 +66,5 @@
 		left: 0;
 		background: none no-repeat center transparent;
 		background-size: cover;
-	}
-	img {
-		opacity: 0;
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		pointer-events: none;
 	}
 </style>
