@@ -1,12 +1,6 @@
-<div class="video" class:loaded>
-	<video
-		bind:this={video}
-		bind:volume={indirect_volume}
-		bind:paused
-		use:lazy
-		loop
-		style="{bg_size}{style}"
-	>
+<!-- https://css-tricks.com/fluid-width-video/ -->
+<div class="video" class:loaded class:cover>
+	<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
 		<source {src} type="video/mp4"/>
 	</video>
 </div>
@@ -29,7 +23,7 @@
 	let video
 	let loaded = false
 
-	$: bg_size = asset.contain ? 'object-fit:contain;' : ''
+	$: cover = !asset.contain
 
 	$: paused = !(loaded && intersecting) && $volume === 0
 	$: if (loaded) { video.muted = $muted }
@@ -60,25 +54,28 @@
 
 <style type="text/scss">
 	.video {
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
 		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
-		&.loaded {
-			opacity: 1;
+		&.loaded { opacity: 1; }
+		&.cover {
+			overflow: hidden;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			video {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				background-color: black;
+			}
 		}
 	}
 	video {
-		position: absolute;
-		top: 0;
-		left: 0;
 		width: 100%;
-		height: 100%;
-		background-color: black;
+		height: auto;
 		object-fit: cover;
 	}
 </style>

@@ -38,9 +38,8 @@
 
 <style type="text/scss">
 	.image {
-		// position: relative;
-		opacity: 0;
 		transition: opacity 0.5s ease-in-out;
+		opacity: 0;
 		&.show { opacity: 1; }
 		&.cover {
 			overflow: hidden;
