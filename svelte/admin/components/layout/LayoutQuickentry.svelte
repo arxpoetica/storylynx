@@ -48,36 +48,39 @@
 				group.id,
 				format_asset_data(group.assets),
 				group.title,
-				group.summary,
+				group.caption,
 				group.content_type,
 				group.year,
 				group.subject,
 				group.tags.join(', '),
 				group.source,
+				group.summary,
 			]
 		}),
 		colHeaders: [
 			'ID',
 			'Assets',
 			'Title',
-			'Summary',
+			'Caption',
 			'Content Type',
 			'Year',
 			'Subject',
 			'Tags',
-			'Source'
+			'Source',
+			'Summary',
 		],
 		columns: [
 			{ readOnly: true }, // ID
 			{ readOnly: true, colWidths: '188rem', wordWrap: false, renderer: html_renderer }, // Assets
 			{ colWidths: '300rem', wordWrap: false }, // Title
-			{ colWidths: '300rem', wordWrap: false }, // Summary
+			{ colWidths: '300rem', wordWrap: false }, // Caption
 			{ type: 'dropdown', source: valid_types, validator: (value, cb) => cb(valid_types.includes(value)) }, // Content Type
 			{ validator: 'numeric' }, // Year
 			{ type: 'dropdown', source: valid_subjects, validator: (value, cb) => cb(valid_subjects.includes(value)) }, // Subject
 			// FIXME: make this editable later.........
 			{ readOnly: true }, // Tags
 			{ colWidths: '300rem', wordWrap: false }, // Source
+			{ colWidths: '300rem', wordWrap: false }, // Summary
 		],
 		rowHeights: 60,
 		autoWrapRow: false,
