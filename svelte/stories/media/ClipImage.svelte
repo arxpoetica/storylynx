@@ -66,4 +66,7 @@
 		background: none no-repeat center transparent;
 		background-size: cover;
 	}
+	img {
+		width: 100%;
+	}
 </style>
