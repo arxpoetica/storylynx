@@ -1,9 +1,10 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
-<div class="video" class:loaded class:cover>
+<figure class="video" class:loaded class:cover>
 	<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
 		<source {src} type="video/mp4"/>
 	</video>
-</div>
+	<ClipCaption {asset}/>
+</figure>
 {#if text}
 	<!-- <ClipText asset={text} {style} {intersecting} embedded={true}/> -->
 	<ClipText asset={text} {style} embedded={true}/>
@@ -16,6 +17,7 @@
 	export let intersecting
 
 	import ClipText from './ClipText.svelte'
+	import ClipCaption from './ClipCaption.svelte'
 	import { muted } from '../../../stores/story-store.js'
 	import { tweened } from 'svelte/motion'
 	import { cubicIn, cubicOut } from 'svelte/easing'
@@ -58,7 +60,7 @@
 		transition: opacity 0.5s ease-in-out;
 		&.loaded { opacity: 1; }
 		&.cover {
-			overflow: hidden;
+			// overflow: hidden;
 			position: absolute;
 			top: 0;
 			right: 0;

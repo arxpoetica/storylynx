@@ -1,9 +1,10 @@
-<div class="image" class:show class:cover>
+<figure class="image" class:show class:cover>
 	{#if cover}
 		<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
 	{/if}
 	<img {src} alt="n/a" use:lazy/>
-</div>
+	<ClipCaption {asset}/>
+</figure>
 {#if text}
 	<!-- <ClipText asset={text} {intersecting} embedded={true}/> -->
 	<ClipText asset={text} embedded={true}/>
@@ -16,6 +17,7 @@
 	export let intersecting
 
 	import ClipText from './ClipText.svelte'
+	import ClipCaption from './ClipCaption.svelte'
 
 	let loaded = false
 	let intersected; $: if (intersecting) { intersected = true }
@@ -42,7 +44,7 @@
 		opacity: 0;
 		&.show { opacity: 1; }
 		&.cover {
-			overflow: hidden;
+			// overflow: hidden;
 			position: absolute;
 			top: 0;
 			right: 0;
