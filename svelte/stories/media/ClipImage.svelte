@@ -52,8 +52,8 @@
 			left: 0;
 			img {
 				position: absolute;
-				right: 0;
-				bottom: 0;
+				right: 100%;
+				bottom: 100%;
 				opacity: 0;
 				pointer-events: none;
 			}
