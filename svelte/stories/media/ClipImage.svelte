@@ -1,8 +1,10 @@
 <figure class="image" class:show class:cover>
-	{#if cover}
-		<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
-	{/if}
-	<img {src} alt="n/a" use:lazy/>
+	<div class="view">
+		{#if cover}
+			<div class="bg" style="background-image:url({src});{bg_pos}{style}"></div>
+		{/if}
+		<img {src} alt="n/a" use:lazy/>
+	</div>
 	<ClipCaption {asset}/>
 </figure>
 {#if text}
@@ -44,12 +46,19 @@
 		opacity: 0;
 		&.show { opacity: 1; }
 		&.cover {
-			// overflow: hidden;
 			position: absolute;
 			top: 0;
 			right: 0;
 			bottom: 0;
 			left: 0;
+			.view {
+				overflow: hidden;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
 			img {
 				position: absolute;
 				right: 100%;

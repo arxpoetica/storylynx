@@ -1,8 +1,10 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
 <figure class="video" class:loaded class:cover>
-	<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
-		<source {src} type="video/mp4"/>
-	</video>
+	<div class="view">
+		<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
+			<source {src} type="video/mp4"/>
+		</video>
+	</div>
 	<ClipCaption {asset}/>
 </figure>
 {#if text}
@@ -60,12 +62,19 @@
 		transition: opacity 0.5s ease-in-out;
 		&.loaded { opacity: 1; }
 		&.cover {
-			// overflow: hidden;
 			position: absolute;
 			top: 0;
 			right: 0;
 			bottom: 0;
 			left: 0;
+			.view {
+				overflow: hidden;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
 			video {
 				position: absolute;
 				top: 0;
