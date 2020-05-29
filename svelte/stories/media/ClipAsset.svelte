@@ -21,7 +21,7 @@
 	export let style = ''
 	export let overrides = []
 
-	$: group = clip.assets_bin.length ? clip.assets_bin[index] : undefined
+	$: group = clip.asset_bins.length ? clip.asset_bins[index] : undefined
 	$: assets = overrides.length && overrides || (group && group.assets.length ? group.assets : [])
 
 	import ClipVideo from './ClipVideo.svelte'
