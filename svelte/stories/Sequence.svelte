@@ -1,6 +1,6 @@
 <div bind:this={the_stack} class="the-stack">
 	{#each sequence.clips as clip, index}
-		<div bind:this={clip.stack} class="{clip.url_hash} stack"></div>
+		<div bind:this={$seq_stack[clip.id]} class="{clip.url_hash} stack"></div>
 	{/each}
 </div>
 <div class="audio">
@@ -19,7 +19,7 @@
 <script>
 	export let sequence
 
-	import { seq_audio, view_height } from '../../stores/story-store.js'
+	import { seq_audio, seq_stack, view_height } from '../../stores/story-store.js'
 
 	let the_stack
 
@@ -63,9 +63,10 @@
 			the_stack.style.height = 'auto'
 			the_stack.style.backgroundColor = 'red'
 			the_stack.style.zIndex = '30000000000000000'
-			for (let clip of sequence.clips) {
-				if (clip.stack) {
-					clip.stack.style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
+			for (let key in $seq_stack) {
+				const stack = $seq_stack[key]
+				if (stack) {
+					stack.style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
 				}
 			}
 		}
