@@ -3,11 +3,11 @@
 		<!-- <div class="asset-action" style={animation_style}> -->
 	{#if type === 'video'}
 		<!-- <ClipVideo {asset} {image} {style}/> -->
-		<ClipVideo {intersecting} {asset} {text} {style}/>
+		<ClipVideo bind:loaded {intersecting} {asset} {text} {style}/>
 	{:else if type === 'audio'}
 		<ClipAudio {intersecting} {asset} {text} {image} {style}/>
 	{:else if type === 'image'}
-		<ClipImage {intersecting} {asset} {text} {style}/>
+		<ClipImage bind:loaded {intersecting} {asset} {text} {style}/>
 	{:else}
 		<!-- <ClipText {intersecting} {asset} {style}/> -->
 		<ClipText {asset} {style}/>
@@ -20,6 +20,7 @@
 	export let intersecting = false
 	export let style = ''
 	export let overrides = []
+	export let loaded = false
 
 	$: group = clip.asset_bins.length ? clip.asset_bins[index] : undefined
 	$: assets = overrides.length && overrides || (group && group.assets.length ? group.assets : [])

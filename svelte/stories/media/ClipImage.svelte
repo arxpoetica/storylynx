@@ -17,11 +17,11 @@
 	export let text
 	export let style
 	export let intersecting
+	export let loaded = false
 
 	import ClipText from './ClipText.svelte'
 	import ClipCaption from './ClipCaption.svelte'
 
-	let loaded = false
 	let intersected; $: if (intersecting) { intersected = true }
 	$: show = loaded && intersected
 

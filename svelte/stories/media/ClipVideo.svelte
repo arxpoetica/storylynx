@@ -17,6 +17,7 @@
 	export let text
 	export let style
 	export let intersecting
+	export let loaded = false
 
 	import ClipText from './ClipText.svelte'
 	import ClipCaption from './ClipCaption.svelte'
@@ -25,7 +26,6 @@
 	import { cubicIn, cubicOut } from 'svelte/easing'
 
 	let video
-	let loaded = false
 
 	$: cover = !asset.contain
 
