@@ -10,18 +10,16 @@ export async function preloader(page, session) {
 		return this.redirect(302, url)
 	}
 
-	query.page = query.page || 1
-	const {
-		page_size,
-		items,
-		items_count,
-		drafts_count,
-		published_count,
-		archived_count,
-	} = await POST(
-		'/api/admin/posts/page.post',
-		Object.assign({ cookie: session.cookie }, query),
-	)
+	const { page_size, items, items_count, drafts_count, published_count, archived_count }
+		= await POST('/api/admin/posts/page.post', Object.assign({ cookie: session.cookie }, {
+			page: parseInt(query.page) || 1,
+			page_size: parseInt(query.page_size) || 10,
+			tags: typeof query.tags === 'string' ? [query.tags] : query.tags,
+			status: ['PUBLISHED', 'DRAFT'],
+			column: query.column,
+			sort: query.sort,
+		}))
+
 	return {
 		items,
 		items_count,

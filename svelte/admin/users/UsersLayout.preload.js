@@ -1,8 +1,11 @@
 import { POST } from '../../../utils/loaders.js'
 export async function preloader(page, session) {
+
 	const { items, items_count } = await POST('/api/admin/users/page.post', {
 		cookie: session.cookie,
+		sort: 'DESC', // TODO: somehow allow different sorts?
 	})
+
 	return {
 		items,
 		items_count,
@@ -15,4 +18,5 @@ export async function preloader(page, session) {
 			{ type: 'text', col: 'last', title: 'Last' },
 		],
 	}
+
 }

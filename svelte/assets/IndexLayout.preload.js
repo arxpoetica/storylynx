@@ -7,21 +7,14 @@ export async function preloader(page) {
 		return this.redirect(302, url)
 	}
 
-	const {
-		page_size,
-		items,
-		items_count,
-		content_types,
-		decades,
-		subjects,
-	} = await POST('/api/assets/page.post', query)
+	return await POST('/api/public/assets/page.post', {
+		page: parseInt(query.page || 1),
+		page_size: parseInt(query.page_size || 12), // just hard coding for now
+		tags: typeof query.tags === 'string' ? [query.tags] : query.tags,
+		type: query.type,
+		decade: query.decade,
+		subject: query.subject,
+		search_term: query.search_term,
+	})
 
-	return {
-		page_size,
-		items,
-		items_count,
-		content_types,
-		decades,
-		subjects,
-	}
 }

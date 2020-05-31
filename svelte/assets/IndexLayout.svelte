@@ -85,7 +85,7 @@
 		// because `goto` forces input blue
 		// SEE: https://github.com/sveltejs/sapper/blob/a52bdb2f4e1a722f06134b4065da2a32969e12e2/runtime/src/app/app.ts#L191
 		if (is_search_term) {
-			const res = await POST('/api/assets/page.post', Object.fromEntries(params))
+			const res = await POST('/api/public/assets/page.post', Object.fromEntries(params))
 			page_size = res.page_size
 			items = res.items
 			items_count = res.items_count
