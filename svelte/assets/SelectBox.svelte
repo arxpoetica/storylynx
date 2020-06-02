@@ -55,6 +55,7 @@
 		border: 1px solid #afafb1;
 		border-radius: 0;
 		line-height: 34rem;
+		transition: all 0.25s ease-in-out;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		appearance: none;
@@ -63,7 +64,8 @@
 		}
 		&:hover,
 		&:focus {
-			border-color: $black;
+			background-color: white;
+			border-color: black;
 		}
 	}
 </style>

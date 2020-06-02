@@ -42,10 +42,12 @@
 		align-items: center;
 		border: 1px solid #afafb1;
 		box-shadow:  0 0 2px rgba(0, 0, 0, 0.1);
+		transition: all 0.25s ease-in-out;
+		.svg { transition: color 0.25s ease-in-out; }
 		&:hover,
 		&.highlighted {
-			background-color: $white;
-			border-color: $black;
+			background-color: white;
+			border-color: black;
 			box-shadow: 0 0 2px rgba(30, 140, 190, 0.8);
 			outline: 2px solid transparent;
 			.svg {

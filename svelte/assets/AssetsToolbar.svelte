@@ -42,9 +42,12 @@
 
 <style type="text/scss">
 	.toolbar {
+		position: sticky;
+		top: 0;
 		margin: -100rem -30rem 65rem;
 		padding: 25rem 30rem;
 		background-color: #d8d8da;
+		z-index: 2;
 	}
 	.spread {
 		display: flex;
