@@ -3,7 +3,7 @@
 		<h4>Tags:</h4>
 		<div class="tags">
 			{#each tags as tag}
-				<a href="{url}?page=1&tags={tag}">{tag}</a>
+				<a href="{url}?tags={tag}">{tag}</a>
 			{/each}
 		</div>
 	</div>

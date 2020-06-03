@@ -33,7 +33,6 @@
 	import { content_vars as vars } from '../../../../stores/admin-store.js'
 
 	import Checkbox from '../elements/Checkbox.svelte'
-	// // import { createQuery }
 	// import CaretDown from '@johnny/svg/caret-down.svelte'
 	// import CaretUp from '@johnny/svg/caret-up.svelte'
 

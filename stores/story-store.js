@@ -1,5 +1,5 @@
 import { writable/* , readable, derive */ } from 'svelte/store'
-import { storable } from './local-store.js'
+import { storable } from './special-store.js'
 
 export const seq_audio = writable({})
 export const seq_stack = writable({})

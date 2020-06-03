@@ -1,3 +1,4 @@
+/* global window */
 import { writable } from 'svelte/store'
 
 /**
@@ -8,18 +9,20 @@ import { writable } from 'svelte/store'
  * @param {Function} fn		- handed off to `writable`
  */
 
-/* global localStorage */
-const storage = typeof localStorage !== 'undefined' ? localStorage : { removeItem: () => {} }
 export const storable = (key, value, fn) => {
+
+	// quick guard against server
+	if (process.server) { return writable(value, fn) }
+
 	key = `lynx.store.${key}`
-	if (storage[key]) { value = JSON.parse(storage[key]) }
+	if (window.localStorage[key]) { value = JSON.parse(window.localStorage[key]) }
 
 	const store = writable(value, fn)
 	store.subscribe(value => {
 		if (value === undefined) {
-			storage.removeItem(key)
+			window.localStorage.removeItem(key)
 		} else {
-			storage[key] = JSON.stringify(value)
+			window.localStorage[key] = JSON.stringify(value)
 		}
 	})
 

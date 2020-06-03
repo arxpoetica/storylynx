@@ -7,9 +7,10 @@
 				<PostItem {item}/>
 			{/each}
 		</div>
-		{#if items_count > page_size}
-			<!-- FIXME: we have to figure out what to do about pagination now... -->
-			<Pagination href="/posts" {page} {page_size} {items_count}/>
+		{#if next_batch}
+			<div class="wrap">
+				<button class="button" on:click={() => load_content()}>Load More</button>
+			</div>
 		{/if}
 	{:else}
 		<h2>Loading . . .</h2>
@@ -18,17 +19,26 @@
 </div>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page: pageStore } = get_sapper_stores()
+	export let items
+	export let next_batch
+	export let batch_size
 
+	import { POST } from '../../utils/loaders.js'
 	import PostItem from './PostItem.svelte'
-	import Pagination from '../page-lists/Pagination.svelte'
 
-	export let items = []
-	export let items_count = 0
-	export let page_size = 0
-	$: page = parseInt($pageStore.query.page)
+	let batch = 1
+	async function load_content() {
+		batch += 1
+		const params = new URLSearchParams(window.location.search)
+
+		const res = await POST('/api/public/posts/batch.post', Object.assign({
+			batch,
+			batch_size,
+		}, Object.fromEntries(params)))
+
+		items = [...items, ...res.items]
+		next_batch = res.next_batch
+	}
 </script>
 
 <style type="text/scss">
@@ -46,5 +56,14 @@
 		.post-items {
 			display: block;
 		}
+	}
+	.wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 0 20rem;
+	}
+	.button {
+		margin: 0;
 	}
 </style>
