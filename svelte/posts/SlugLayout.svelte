@@ -70,7 +70,7 @@
 	import LazyImg from '../LazyImg.svelte'
 	$: asset = post.assets ? post.assets[0] : false
 	$: src = asset ? source(asset, { crop: true, height: Math.floor(asset.height / asset.width * 1000), width: 1000 }) : false
-	$: alt = asset ? asset.summary : 'No description for this image.'
+	$: alt = asset ? asset.caption : 'No description for this image.'
 
 	$: formatted_stamp = post.published ? dayjs(post.published).format('MMMM D, YYYY') : false
 

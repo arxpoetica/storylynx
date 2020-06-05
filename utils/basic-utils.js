@@ -64,4 +64,4 @@ export const src = (asset, options = {}) => {
 		return '/img/blank.jpg'
 	}
 }
-export const alt = asset => asset.summary ? asset.summary : 'No description for this asset.'
+export const alt = asset => asset.caption ? asset.caption : 'No description for this asset.'

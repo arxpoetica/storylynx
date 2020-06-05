@@ -12,9 +12,9 @@
 	{/if}
 {:else if asset.mime_type.indexOf('video') === 0}
 	{#if thumb}
-		<LazyImg src={src(asset.cover, { crop: true })} alt={alt(asset.summary)}/>
+		<LazyImg src={src(asset.cover, { crop: true })} alt={alt(asset.caption)}/>
 	{:else}
-		<LazyVid src={asset.url} alt={alt(asset.summary)}/>
+		<LazyVid src={asset.url} alt={alt(asset.caption)}/>
 	{/if}
 {/if}
 

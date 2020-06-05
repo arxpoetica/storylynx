@@ -24,7 +24,7 @@
 
 	$: asset = item.assets ? item.assets[0] : false
 	$: src = asset ? source(asset, { crop: true }) : false
-	$: alt = asset ? asset.summary : 'No description for this image.'
+	$: alt = asset ? asset.caption : 'No description for this image.'
 </script>
 
 <style type="text/scss">
