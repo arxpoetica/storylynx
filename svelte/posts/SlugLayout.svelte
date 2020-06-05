@@ -179,6 +179,7 @@
 		list-style: none;
 		li {
 			min-width: 22rem;
+			max-width: 22rem;
 			margin: 0 0 0 15rem;
 		}
 		a {
