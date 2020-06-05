@@ -54,7 +54,7 @@
 				group.subject,
 				group.tags.join(', '),
 				group.source,
-				group.summary,
+				group.detail,
 			]
 		}),
 		colHeaders: [
@@ -67,7 +67,7 @@
 			'Subject',
 			'Tags',
 			'Source',
-			'Summary',
+			'Detail',
 		],
 		columns: [
 			{ readOnly: true }, // ID
@@ -80,7 +80,7 @@
 			// FIXME: make this editable later.........
 			{ readOnly: true }, // Tags
 			{ colWidths: '300rem', wordWrap: false }, // Source
-			{ colWidths: '300rem', wordWrap: false }, // Summary
+			{ colWidths: '300rem', wordWrap: false }, // Detail
 		],
 		rowHeights: 60,
 		autoWrapRow: false,

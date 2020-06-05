@@ -24,9 +24,11 @@
 		</div>
 	</div>
 	<div class="post-texts">
-		<div class="detail">
-			{@html html}
-		</div>
+		{#if asset_group.detail}
+			<div class="detail">
+				{@html asset_group.detail}
+			</div>
+		{/if}
 		{#if asset_group.source}
 			<h3 class="source h6">Source: {asset_group.source}</h3>
 		{/if}
@@ -52,10 +54,6 @@
 	$: video = main_asset.mime_type.split('/')[0] === 'video'
 
 	const show_zoom = () => zoomshow = !video
-
-	// FIXME: ????? CAN I EVEN???
-	// THIS IS GROSS THAT I HAVE TO CLEAN IT UP ON BEHALF OF GRAPHCMS, BUT WHATEVS
-	$: html = asset_group.html ? asset_group.html.replace(/<p><\/p>/gi, '') : ''
 
 	import Tags from '../Tags.svelte'
 	$: decade = asset_group.year ? Math.floor(asset_group.year / 10) * 10 : undefined
