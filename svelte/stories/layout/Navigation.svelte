@@ -4,15 +4,17 @@
 	<div class="evil-wrap">
 		<!-- {JSON.stringify($page.params)} -->
 		<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
-			{#each story.sequences as sequence, index}
-				<li class="sequence sequence-{index}" class:current={current(sequence)}>
-					<h2><a href={href(sequence)}>{sequence.slug}</a></h2>
-					{#if sequence.clips.length}
+			{#each story.navigation as nav, index}
+				<li class="sequence sequence-{index}" class:current={current(nav)}>
+					<h2><a href={href(nav)}>{nav.slug}</a></h2>
+					{#if nav.subnavigation.length}
 						<ul class="clips">
-							{#each sequence.clips as clip}
-								{#if clip.slug && !clip.hide_navigation}
+							{#each nav.subnavigation as subnav}
+								{#if subnav.slug && !subnav.hide_navigation}
 									<li class="clip">
-										<a href={url_hash(clip)}><h3><span class="out"><span class="in">{clip.slug}</span></span></h3></a>
+										<a href={url_hash(subnav)}>
+											<h3><span class="out"><span class="in">{subnav.slug}</span></span></h3>
+										</a>
 									</li>
 								{/if}
 							{/each}
@@ -40,8 +42,8 @@
 		return url
 	}
 
-	const href = sequence => `/stories/${$page.params.story}/${sequence.slug.toLowerCase()}`
-	const current = sequence => sequence.slug.toLowerCase() === $page.params.sequence
+	const href = nav => `/stories/${$page.params.story}/${nav.slug.toLowerCase()}`
+	const current = nav => nav.slug.toLowerCase() === $page.params.sequence
 
 	// scrolling helpers:
 
