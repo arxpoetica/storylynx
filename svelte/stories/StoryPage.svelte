@@ -14,7 +14,7 @@
 <script>
 	export let story
 
-	import { view_height } from '../../stores/story-store.js'
+	import { navigation, view_height } from '../../stores/story-store.js'
 
 	import Sequence from './Sequence.svelte'
 	import Navigation from './layout/Navigation.svelte'
@@ -22,6 +22,8 @@
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
+
+	$: $navigation = story.navigation
 </script>
 
 <style type="text/scss">

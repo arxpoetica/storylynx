@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store'
 import { storable } from './special-store.js'
 
+export const navigation = writable([])
+
 export const seq_audio = writable({})
 export const seq_stack = writable({})
 export const view_height = writable(0)
