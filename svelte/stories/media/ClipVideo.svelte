@@ -1,7 +1,7 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
 <figure class="video" class:loaded class:cover>
 	<div class="view">
-		<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy loop {style}>
+		<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy {loop} {style}>
 			<source {src} type="video/mp4"/>
 		</video>
 	</div>
@@ -41,6 +41,8 @@
 	async function tween(to, easing) {
 		await volume.set(to, { easing })
 	}
+
+	$: loop = !asset.play_once
 
 	let src = ''
 	function lazy(video) {
