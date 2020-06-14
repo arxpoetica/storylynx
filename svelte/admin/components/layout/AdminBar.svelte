@@ -1,10 +1,7 @@
 <!-- {#if $session.user.role}{/if} -->
 <nav class="admin-bar">
 	<div class="top">
-		<h2>
-			<div class="icon"><SettingsIcon/></div>
-			Account
-		</h2>
+		<h2>Account</h2>
 		<nav class="links">
 			<a href="/" class="link">
 				{process.env.LYNX_SITE_NAME} Homepage
@@ -19,10 +16,7 @@
 			</a>
 			<a href="/admin/users/{$session.user.username}" class="link">My Profile</a>
 		</nav>
-		<h2>
-			<div class="icon"><ContentIcon/></div>
-			Content
-		</h2>
+		<h2>Content</h2>
 		<nav class="links">
 			<!-- <a href="/admin/media" class="link" class:on={on($page.path, 'media')}>
 				Media
@@ -60,7 +54,17 @@
 		</nav>
 	</div>
 	<div class="bottom">
+		<h2>
+			<!-- <div class="icon"><SettingsIcon/></div> -->
+			Settings
+		</h2>
 		<nav class="links">
+			<button class="link scheme-{$color_scheme}" on:click={toggle_color_scheme}>
+				<span class="scheme-text"></span>
+				<span class="icon scheme-sun"><SunIcon/></span>
+				<span class="icon scheme-moon"><MoonIcon/></span>
+				<span class="ghost">Toggle Color Mode</span>
+			</button>
 			<div class="divider"></div>
 			<a href="/auth/logout" class="link" on:click={logout}>
 				Log Out
@@ -78,17 +82,25 @@
 		(path === '/admin' && segment === 'dashboard') || path.includes(`/admin/${segment}`)
 
 	import { GET } from '../../../../utils/loaders.js'
-	import SettingsIcon from '../../../svg/admin-account.svelte'
 	import HomeIcon from '../../../svg/admin-home.svelte'
 	import UsersIcon from '../../../svg/admin-users.svelte'
-	import ContentIcon from '../../../svg/admin-content.svelte'
+	// import ContentIcon from '../../../svg/admin-content.svelte'
 	import MediaIcon from '../../../svg/admin-media.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import ArchiveIcon from '../../../svg/admin-archive.svelte'
 	import KeyboardIcon from '../../../svg/admin-keyboard.svelte'
 	import ArrangeIcon from '../../../svg/admin-arrange.svelte'
 	import StoriesIcon from '../../../svg/admin-stories.svelte'
+	// import SettingsIcon from '../../../svg/admin-account.svelte'
+	import SunIcon from '../../../svg/admin-sun.svelte'
+	import MoonIcon from '../../../svg/admin-moon.svelte'
 	// import HtmlIcon from '../../../svg/admin-html.svelte'
+
+	import { color_scheme } from '../../../../stores/app-store.js'
+	function toggle_color_scheme() {
+		$color_scheme = $color_scheme === 'auto' ? 'dark' : ($color_scheme === 'dark' ? 'light' : 'auto')
+	}
+
 
 	async function logout(event) {
 		event.preventDefault()
@@ -125,11 +137,11 @@
 		background-color: var(--admin-blue-faint);
 		color: var(--admin-blue-dusk);
 		cursor: default;
-		.icon {
-			max-width: 20rem;
-			height: auto;
-			margin: 0 8rem 0 0;
-		}
+		// .icon {
+		// 	max-width: 20rem;
+		// 	height: auto;
+		// 	margin: 0 8rem 0 0;
+		// }
 	}
 	.links {
 		display: flex;
@@ -146,9 +158,13 @@
 		align-items: center;
 		margin: 1rem 0;
 		padding: 4rem 6rem;
+		background-color: transparent;
+		border: none;
+		outline: none;
 		border-radius: 4rem;
 		color: var(--admin-text);
 		text-decoration: none;
+		cursor: pointer;
 		transition: none;
 		&:hover {
 			background-color: var(--admin-gray-lighter);
@@ -171,5 +187,25 @@
 		margin: 5rem 0;
 		height: 1px;
 		background-color: var(--admin-gray-light);
+	}
+
+	// DEFAULT IS DARK MODE
+	.scheme-sun { display: none; }
+	.scheme-moon { display: block; }
+	.scheme-text::after { content: 'Auto (Dark Mode)'; }
+	.scheme-dark {
+		.scheme-sun { display: none; }
+		.scheme-moon { display: block; }
+		.scheme-text::after { content: 'Dark Mode'; }
+	}
+	.scheme-light {
+		.scheme-sun { display: block; }
+		.scheme-moon { display: none; }
+		.scheme-text::after { content: 'Light Mode'; }
+	}
+	@media (prefers-color-scheme: light) {
+		.scheme-sun { display: block; }
+		.scheme-moon { display: none; }
+		.scheme-text::after { content: 'Auto (Light Mode)'; }
 	}
 </style>
