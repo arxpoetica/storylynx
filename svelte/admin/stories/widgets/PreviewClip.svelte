@@ -26,12 +26,12 @@
 <style type="text/scss">
 	.clip {
 		padding: 20rem;
-		border-bottom: 1rem solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-accent-2);
 		&:last-child {
 			border: 0;
 		}
 		// &:hover {
-		// 	background-color: var(--admin-blue-faint);
+		// 	background-color: var(--admin-color-1);
 		// }
 	}
 </style>

@@ -69,18 +69,18 @@
 	.content-list {
 		display: table;
 		width: 100%;
-		background-color: var(--admin-white);
+		background-color: var(--admin-bg);
 		border-collapse: collapse;
 		border-spacing: 0;
 		font: 14rem/1.2 $font;
 	}
 	.row {
 		display: table-row;
-		border-bottom: 1rem solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-accent-2);
 		color: inherit;
 		text-decoration: none;
 		cursor: pointer;
-		&:hover { background-color: var(--admin-blue-faint); }
+		&:hover { background-color: var(--admin-color-1); }
 	}
 	.col {
 		display: table-cell;
@@ -104,7 +104,7 @@
 		display: inline-block;
 		padding: 4rem 6rem;
 		margin: 2rem;
-		background-color: var(--admin-gray-lighter);
+		background-color: var(--admin-accent-1);
 		border-radius: 3rem;
 	}
 	.datetime strong {

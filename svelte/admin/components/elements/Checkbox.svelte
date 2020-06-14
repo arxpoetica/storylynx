@@ -23,15 +23,15 @@
 		line-height: 0;
 		cursor: default;
 		transition: background-color 0.15s ease-in-out;
-		&:hover { background-color: var(--admin-gray-light); }
-		&.checked { background-color: var(--admin-blue-lighter); }
+		&:hover { background-color: var(--admin-accent-2); }
+		&.checked { background-color: var(--admin-color-2); }
 		&.green {
-			&.checked { background-color: var(--admin-green-lighter); }
+			&.checked { background-color: var(--admin-good-lighter); }
 			input {
-				border: 1rem solid var(--admin-green-dark);
+				border: 1rem solid var(--admin-good-dark);
 				&:checked {
-					border-color: var(--admin-green-dusk);
-					background-color: var(--admin-green-dark);
+					border-color: var(--admin-good-dusk);
+					background-color: var(--admin-good-dark);
 				}
 			}
 		}
@@ -43,15 +43,15 @@
 		height: 16rem;
 		width: 16rem;
 		background: white;
-		border: 1rem solid var(--admin-blue-light);
+		border: 1rem solid var(--admin-color-4);
 		// border-radius: 3rem;
 		box-shadow: 0 0 0 transparent;
 		cursor: default;
 		outline: 0;
 		-webkit-appearance: none;
 		&:checked {
-			border-color: var(--admin-blue-dusk);
-			background-color: var(--admin-blue);
+			border-color: var(--admin-color-10);
+			background-color: var(--admin-color-6);
 		}
 	}
 	.svg {

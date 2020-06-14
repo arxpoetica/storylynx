@@ -50,8 +50,8 @@
 		// align-items: flex-end;
 		// margin: 0 0 10rem;
 		padding: 12rem 16rem;
-		border-bottom: 1rem solid var(--admin-gray-light);
-		background-color: var(--admin-gray-lighter);
+		border-bottom: 1rem solid var(--admin-accent-2);
+		background-color: var(--admin-accent-1);
 		font: $light 13rem/1 $font;
 	}
 	// .pagination {

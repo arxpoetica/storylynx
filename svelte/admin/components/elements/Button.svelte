@@ -22,7 +22,7 @@
 		height: 36rem;
 		margin: 0;
 		padding: 0 15rem;
-		background-color: var(--admin-blue);
+		background-color: var(--admin-color-6);
 		border: 0;
 		border-radius: 4rem;
 		color: white;
@@ -38,7 +38,7 @@
 		user-select: none;
 		&:hover,
 		&:focus {
-			background-color: var(--admin-blue-light);
+			background-color: var(--admin-color-4);
 			text-decoration: none;
 		}
 		&.block {
@@ -68,11 +68,11 @@
 		// 	font-size: 34rem;
 		// }
 		&.good {
-			background-color: var(--admin-green-dark);
+			background-color: var(--admin-good-dark);
 			color: white;
 			&:hover,
 			&:focus {
-				background-color: var(--admin-green-darker);
+				background-color: var(--admin-good-darker);
 			}
 		}
 		// &.warning {
@@ -85,21 +85,21 @@
 		// 	}
 		// }
 		&.alert {
-			background-color: var(--admin-red);
+			background-color: var(--admin-alert);
 			color: white;
 			&:hover,
 			&:focus {
-				background-color: var(--admin-red-dark);
+				background-color: var(--admin-alert-dark);
 			}
 		}
 		&.inverse {
 			background-color: white;
-			color: var(--admin-blue);
-			border: 1rem solid var(--admin-blue);
+			color: var(--admin-color-6);
+			border: 1rem solid var(--admin-color-6);
 			&:hover,
 			&:focus {
-				color: var(--admin-blue-light);
-				border-color: var(--admin-blue-light);
+				color: var(--admin-color-4);
+				border-color: var(--admin-color-4);
 			}
 		}
 		// &.link {
@@ -133,8 +133,8 @@
 		// }
 		&[disabled],
 		&.disabled {
-			background-color: var(--admin-gray-light);
-			color: var(--admin-white);
+			background-color: var(--admin-accent-2);
+			color: var(--admin-bg);
 			cursor: default;
 			pointer-events: none;
 		}

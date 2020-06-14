@@ -118,7 +118,7 @@
 		justify-content: space-between;
 		flex-basis: 250rem;
 		height: 100vh;
-		border-right: 1rem solid var(--admin-gray-light);
+		border-right: 1rem solid var(--admin-accent-2);
 		color: var(--admin-text);
 		font: 15rem/1 var(--admin-font);
 		user-select: none;
@@ -134,8 +134,8 @@
 		margin: 0;
 		padding: 10rem;
 		font: 20rem/1 var(--admin-font);
-		background-color: var(--admin-blue-faint);
-		color: var(--admin-blue-dusk);
+		background-color: var(--admin-color-1);
+		color: var(--admin-color-10);
 		cursor: default;
 		// .icon {
 		// 	max-width: 20rem;
@@ -167,12 +167,12 @@
 		cursor: pointer;
 		transition: none;
 		&:hover {
-			background-color: var(--admin-gray-lighter);
+			background-color: var(--admin-accent-1);
 			transition: background-color 0.15s ease-in-out;
 		}
 		&.on {
-			background-color: var(--admin-blue-faint);
-			color: var(--admin-blue-dark);
+			background-color: var(--admin-color-1);
+			color: var(--admin-color-8);
 			font-weight: bold;
 			// pointer-events: none;
 		}
@@ -181,12 +181,12 @@
 		max-width: 18rem;
 		height: 18rem;
 		margin: 0 0 0 8rem;
-		// color: var(--admin-blue-dusk);
+		// color: var(--admin-color-10);
 	}
 	.divider {
 		margin: 5rem 0;
 		height: 1px;
-		background-color: var(--admin-gray-light);
+		background-color: var(--admin-accent-2);
 	}
 
 	// DEFAULT IS DARK MODE

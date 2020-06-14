@@ -108,7 +108,7 @@
 		align-items: center;
 		height: 62rem;
 		padding: 12rem;
-		border-bottom: 1rem solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-accent-2);
 	}
 	// .tools {
 	// }
@@ -121,7 +121,7 @@
 		overflow: auto;
 		height: calc(100vh - 62rem);
 		padding: 40rem;
-		border-right: 1rem solid var(--admin-gray-light);
+		border-right: 1rem solid var(--admin-accent-2);
 		&:last-child {
 			border: 0;
 		}

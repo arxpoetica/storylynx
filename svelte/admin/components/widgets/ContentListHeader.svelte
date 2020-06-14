@@ -70,7 +70,7 @@
 <style type="text/scss">
 	.row {
 		display: table-row;
-		border-bottom: 1rem solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-accent-2);
 		font: $bold 13rem/1 $font;
 		cursor: pointer;
 	}
@@ -78,7 +78,7 @@
 		display: table-cell;
 		padding: 3rem 8rem;
 		vertical-align: middle;
-		border-left: 1rem solid var(--admin-gray-light);
+		border-left: 1rem solid var(--admin-accent-2);
 		&:first-child { border: 0; }
 	}
 	.col-checkbox {

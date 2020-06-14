@@ -17,7 +17,7 @@
 		margin: -40rem -40rem 20rem;
 		padding: 20rem 40rem;
 		z-index: 20;
-		background-color: rgba(255, 255, 255, 0.9);
+		background-color: rgba(var(--admin-bg-rgb), 0.9);
 	}
 	h2 {
 		margin: 0;

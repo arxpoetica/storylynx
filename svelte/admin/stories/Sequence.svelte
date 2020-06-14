@@ -44,8 +44,8 @@
 	}
 	.tools {
 		padding: 12rem 20rem;
-		border-bottom: 1rem solid var(--admin-gray-light);
-		background-color: var(--admin-gray-lighter);
+		border-bottom: 1rem solid var(--admin-accent-2);
+		background-color: var(--admin-accent-1);
 		font: 12rem/1 (--admin-font);
 		h2 {
 			margin: 0;
@@ -70,6 +70,6 @@
 	}
 	// .developer-pane {}
 	.sequence {
-		border-left: 1px solid var(--admin-gray-light);
+		border-left: 1px solid var(--admin-accent-2);
 	}
 </style>

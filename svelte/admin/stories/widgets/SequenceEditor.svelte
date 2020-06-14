@@ -39,18 +39,18 @@
 <style type="text/scss">
 	.clip {
 		// position: relative;
-		border-bottom: 1rem solid var(--admin-gray-light);
+		border-bottom: 1rem solid var(--admin-accent-2);
 		&:last-child {
 			border: 0;
 		}
 		&:hover {
-			background-color: var(--admin-gray-lighter);
-			.header { background-color: rgba(244, 246, 246, 0.9); }
+			background-color: var(--admin-accent-1);
+			.header { background-color: rgba(var(--admin-accent-1-rgb), 0.9); }
 			.button-wrap { opacity: 1; }
 		}
 		&.on {
-			background-color: var(--admin-blue-faint);
-			.header { background-color: rgba(231, 246, 254, 0.9); }
+			background-color: var(--admin-color-1);
+			.header { background-color: rgba(var(--admin-color-1-rgb), 0.9); }
 			.button-wrap { display: none; }
 		}
 	}
@@ -63,7 +63,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 20rem;
-		background-color: rgba(255, 255, 255, 0.9);
+		background-color: rgba(var(--admin-bg-rgb), 0.9);
 		z-index: 2;
 	}
 	.content {

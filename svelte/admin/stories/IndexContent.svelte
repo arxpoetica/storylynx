@@ -38,7 +38,7 @@
 		width: 300rem;
 		margin: 0 0 0 20rem;
 		padding: 0 0 0 20rem;
-		border-left: 1rem solid var(--admin-gray-light);
+		border-left: 1rem solid var(--admin-accent-2);
 		&:first-child {
 			margin: 0;
 			padding: 0;

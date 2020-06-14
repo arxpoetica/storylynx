@@ -30,7 +30,7 @@
 		align-items: center;
 		height: 62rem;
 		padding: 18rem 12rem;
-		border-bottom: 1px solid var(--admin-gray-light);
+		border-bottom: 1px solid var(--admin-accent-2);
 	}
 	.dashboard {
 		display: grid;
@@ -47,6 +47,6 @@
 	}
 	.card {
 		padding: 20rem;
-		border: 1rem solid var(--admin-gray-light);
+		border: 1rem solid var(--admin-accent-2);
 	}
 </style>

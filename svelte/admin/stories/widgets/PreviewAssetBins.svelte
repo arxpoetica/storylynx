@@ -35,7 +35,7 @@
 	// .bin {
 	// }
 	.html {
-		border: 1rem solid var(--admin-blue-lighter);
+		border: 1rem solid var(--admin-color-2);
 		padding: 20rem;
 	}
 </style>

@@ -36,8 +36,8 @@
 <style type="text/scss">
 	.thumb {
 		position: relative;
-		background-color: var(--admin-blue-faint);
-		border: 1rem solid var(--admin-blue-lighter);
+		background-color: var(--admin-color-1);
+		border: 1rem solid var(--admin-color-2);
 		cursor: pointer;
 		user-select: none;
 		&:hover {

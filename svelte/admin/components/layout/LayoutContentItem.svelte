@@ -11,7 +11,7 @@
 		width: calc(100vw - 500rem);
 		background-color: white;
 		box-shadow: -5rem 0 15rem rgba(0, 0, 0, 0.05);
-		border-left: 1rem solid var(--admin-gray-light);
+		border-left: 1rem solid var(--admin-accent-2);
 		z-index: 999;
 	}
 </style>

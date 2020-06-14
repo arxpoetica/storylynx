@@ -129,8 +129,8 @@
 		position: relative;
 		padding: 20rem;
 		margin: 0 0 10rem;
-		background-color: var(--admin-blue-faint);
-		border: 1rem solid var(--admin-blue-lighter);
+		background-color: var(--admin-color-1);
+		border: 1rem solid var(--admin-color-2);
 		&:after {
 			content: 'Click to select';
 			display: flex;
@@ -141,7 +141,7 @@
 			right: -1rem;
 			bottom: -1rem;
 			left: -1rem;
-			background-color: rgba(255, 255, 255, 0.5);
+			background-color: rgba(var(--admin-bg-rgb), 0.5);
 			opacity: 0;
 			pointer-events: none;
 		}
@@ -149,8 +149,8 @@
 			opacity: 1;
 		}
 		&.current {
-			background-color: var(--admin-blue-lighter);
-			border-color: var(--admin-blue-dark);
+			background-color: var(--admin-color-2);
+			border-color: var(--admin-color-8);
 			&:after { display: none; }
 		}
 	}

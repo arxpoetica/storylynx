@@ -73,8 +73,9 @@
 		display: block;
 		margin: 0 0 10rem;
 		padding: 6rem;
-		background-color: var(--admin-gray-lighter);
-		border: 1px solid var(--admin-gray-light);
+		background-color: var(--admin-accent-1);
+		border: 1px solid var(--admin-accent-2);
+		color: var(--admin-text);
 		font: 13rem monospace;
 		word-break: break-all;
 	}

@@ -37,14 +37,14 @@
 <style type="text/scss">
 	.bins {
 		padding: 2rem;
-		border: 1rem solid var(--admin-blue-lighter);
-		background-color: var(--admin-blue-faint);
+		border: 1rem solid var(--admin-color-2);
+		background-color: var(--admin-color-1);
 	}
 	.bin-section {
 		margin: 0 0 2rem;
 		padding: 20rem;
-		background-color: white;
-		border: 1rem solid var(--admin-blue-lighter);
+		background-color: var(--admin-bg);
+		border: 1rem solid var(--admin-color-2);
 		&:last-child {
 			margin: 0;
 		}

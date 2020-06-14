@@ -112,7 +112,7 @@
 	.html-editor {
 		max-width: 850rem;
 		padding: 75rem;
-		border: 1rem solid var(--admin-gray-light);
+		border: 1rem solid var(--admin-accent-2);
 		box-shadow: 0rem 2rem 8rem rgba(0, 0, 0, 0.15);
 		background-color: white;
 	}
@@ -133,7 +133,7 @@
 		:global {
 			.ce-block {
 				padding: 8rem;
-				border-bottom: 1rem dashed var(--admin-blue-lighter);
+				border-bottom: 1rem dashed var(--admin-color-2);
 			}
 			svg {
 				height: auto;

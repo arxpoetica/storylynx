@@ -80,7 +80,7 @@
 		align-items: center;
 		height: 62rem;
 		padding: 12rem;
-		border-bottom: 1px solid var(--admin-gray-light);
+		border-bottom: 1px solid var(--admin-accent-2);
 	}
 	// .tools {
 	// }

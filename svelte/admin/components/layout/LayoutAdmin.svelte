@@ -1,4 +1,4 @@
-<div class="lynx-admin-layout">
+<div class="lynx-admin-layout scheme-{$color_scheme}">
 	<AdminBar/>
 	<slot></slot>
 </div>
@@ -13,6 +13,8 @@
 	import SavePanel from './SavePanel.svelte'
 	// $: admin = $session.user
 
+	import { color_scheme } from '../../../../stores/app-store.js'
+
 	// DOM ONLY STUFF ---------- >>>>
 	let html
 	// this delay removes the `preload` class from the `html` element
@@ -24,53 +26,107 @@
 
 <style type="text/scss">
 	:root {
-		--admin-black: #000;
-		--admin-white: #fff;
-		--admin-offwhite: #f3f3f3;
 
-		--admin-gray-darker: #2e3539;
-		--admin-gray-dark: #485358;
-		--admin-gray: #74858d;
-		--admin-gray-med: #adb7bc;
-		--admin-gray-med-light: #c8cfd2;
-		--admin-gray-light: #dfe2e4;
-		--admin-gray-lighter: #f4f6f6;
+		// ============ >>>>> DARK MODE (DEFAULT)
 
-		--admin-blue: #0995dd;
-		--admin-blue-faint: #e7f6fe;
-		--admin-blue-lighter: #c0e8fc;
-		--admin-blue-light: #20aef6;
-		--admin-blue-dark: #077bb5;
-		--admin-blue-dusk: #023955;
-		--admin-blue-text: var(--admin-blue-dark);
+		--admin-bg: #38444c;
+		--admin-bg-rgb: 56, 68, 76;
 
-		--admin-green: #00ebc0;
-		--admin-green-faint: #f0fffc;
-		--admin-green-lighter: #99ffed;
-		--admin-green-light: #66ffe3;
-		--admin-green-dark: #00b292;
-		--admin-green-darker: #007a64;
-		--admin-green-dusk: #004d3f;
-		--admin-green-text: var(--admin-green-dark);
+		--admin-accent-1: #242c31;
+		--admin-accent-1-rgb: 36, 44, 49;
+		--admin-accent-2: #4a5a64;
+		--admin-accent-10: #f6f9fc;
 
-		--admin-red: #e7184a;
-		--admin-red-faint: #fef1f4;
-		--admin-red-light: #eb436b;
-		--admin-red-lighter: #f5a3b7;
-		--admin-red-dark: #bd143d;
-		--admin-red-darker: #941030;
-		--admin-red-dusk: #470011;
-		--admin-red-text: var(--admin-red);
+		--admin-color-1: #21333d;
+		--admin-color-1-rgb: 33, 51, 61;
+		--admin-color-2: #2c698a;
+		--admin-color-4: #4996c0;
+		--admin-color-6: #6bb4db;
+		--admin-color-8: #a1d3ee;
+		--admin-color-10: #e2f0f7;
+		--admin-color-text: var(--admin-color-8);
 
-		--admin-text: var(--admin-gray-darker);
-		--admin-link: var(--admin-blue);
+		--admin-text: #f0f2f3;
+
+		// ============ >>>>> SHARED (BOTH LIGHT AND DARK)
+
+		--admin-good: #00ebc0;
+		--admin-good-faint: #f0fffc;
+		--admin-good-lighter: #99ffed;
+		--admin-good-light: #66ffe3;
+		--admin-good-dark: #00b292;
+		--admin-good-darker: #007a64;
+		--admin-good-dusk: #004d3f;
+		--admin-good-text: var(--admin-good-dark);
+
+		--admin-alert: #e7184a;
+		--admin-alert-faint: #fef1f4;
+		--admin-alert-light: #eb436b;
+		--admin-alert-lighter: #f5a3b7;
+		--admin-alert-dark: #bd143d;
+		--admin-alert-darker: #941030;
+		--admin-alert-dusk: #470011;
+		--admin-alert-text: var(--admin-alert);
+
+		--admin-link: var(--admin-color-6);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
+	@media (prefers-color-scheme: light) {
+		:root {
+			--admin-bg: #fff;
+			--admin-bg-rgb: 255, 255, 255;
+
+			--admin-accent-1: #f4f6f6;
+			--admin-accent-1-rgb: 244, 246, 246;
+			--admin-accent-2: #dfe2e4;
+			// --admin-accent-3: #c8cfd2;
+			// --admin-accent-4: #adb7bc;
+			// --admin-accent-8: #74858d;
+			// --admin-accent-9: #485358;
+			--admin-accent-10: #2e3539;
+
+			--admin-color-1: #e7f6fe;
+			--admin-color-1-rgb: 231, 246, 254;
+			--admin-color-2: #c0e8fc;
+			--admin-color-4: #20aef6;
+			--admin-color-6: #0995dd;
+			--admin-color-8: #077bb5;
+			--admin-color-10: #023955;
+			--admin-color-text: var(--admin-color-8);
+
+			--admin-text: var(--admin-accent-10);
+		}
+	}
+		.scheme-light {
+			--admin-bg: #fff;
+			--admin-bg-rgb: 255, 255, 255;
+
+			--admin-accent-1: #f4f6f6;
+			--admin-accent-1-rgb: 244, 246, 246;
+			--admin-accent-2: #dfe2e4;
+			// --admin-accent-3: #c8cfd2;
+			// --admin-accent-4: #adb7bc;
+			// --admin-accent-8: #74858d;
+			// --admin-accent-9: #485358;
+			--admin-accent-10: #2e3539;
+
+			--admin-color-1: #e7f6fe;
+			--admin-color-1-rgb: 231, 246, 254;
+			--admin-color-2: #c0e8fc;
+			--admin-color-4: #20aef6;
+			--admin-color-6: #0995dd;
+			--admin-color-8: #077bb5;
+			--admin-color-10: #023955;
+			--admin-color-text: var(--admin-color-8);
+
+			--admin-text: var(--admin-accent-10);
+		}
 	.lynx-admin-layout {
 		display: grid;
 		grid-template-columns: 250rem 1fr;
 		flex: 1;
-		background-color: white;
+		background-color: var(--admin-bg);
+		color: var(--admin-text);
 	}
 	// TODO: put these all in a global CSS file
 	// TODO: OR BETTER YET, break admin out into a second app WITHIN this app???
@@ -80,10 +136,10 @@
 			font: $light 24rem/1.2 $font;
 			text-transform: none;
 			letter-spacing: 0.05rem;
-			color: var(--admin-blue-light);
+			color: var(--admin-color-4);
 		}
 		a {
-			color: var(--admin-blue-text);
+			color: var(--admin-color-text);
 		}
 	}
 

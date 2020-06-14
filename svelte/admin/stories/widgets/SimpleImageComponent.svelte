@@ -102,7 +102,7 @@
 		&.on {
 			grid-gap: 10rem;
 			padding: 10rem;
-			background-color: var(--admin-blue-faint);
+			background-color: var(--admin-color-1);
 		}
 	}
 	.img {
