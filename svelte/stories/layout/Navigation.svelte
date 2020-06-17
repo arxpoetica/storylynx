@@ -5,22 +5,24 @@
 		<!-- {JSON.stringify($page.params)} -->
 		<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
 			{#each story.navigation as nav, index}
-				<li class="sequence sequence-{index}" class:current={current(nav)}>
-					<h2><a href={href(nav)}>{nav.slug}</a></h2>
-					{#if nav.subnavigation.length}
-						<ul class="clips">
-							{#each nav.subnavigation as subnav}
-								{#if subnav.slug && !subnav.hide_navigation}
-									<li class="clip">
-										<a href={url_hash(subnav)}>
-											<h3><span class="out"><span class="in">{subnav.slug}</span></span></h3>
-										</a>
-									</li>
-								{/if}
-							{/each}
-						</ul>
-					{/if}
-				</li>
+				{#if !nav.hide_navigation}
+					<li class="sequence sequence-{index}" class:current={current(nav)}>
+						<h2><a href={href(nav)}>{nav.slug}</a></h2>
+						{#if nav.subnavigation.length}
+							<ul class="clips">
+								{#each nav.subnavigation as subnav}
+									{#if subnav.slug && !subnav.hide_navigation}
+										<li class="clip">
+											<a href={url_hash(subnav)}>
+												<h3><span class="out"><span class="in">{subnav.slug}</span></span></h3>
+											</a>
+										</li>
+									{/if}
+								{/each}
+							</ul>
+						{/if}
+					</li>
+				{/if}
 			{/each}
 		</ul>
 	</div>
@@ -194,3 +196,4 @@
 	}
 	// .in {}
 </style>
+ 
