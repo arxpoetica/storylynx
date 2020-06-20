@@ -1,4 +1,4 @@
-<audio bind:this={audio} bind:volume={indirect_volume} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
+<audio bind:this={audio} bind:volume={indirect_volume} bind:muted={$muted} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
 	<ClipImage {intersecting} asset={image} {style}/>
 {/if}
@@ -24,7 +24,6 @@
 	let loaded = false
 
 	$: paused = !(loaded && intersecting) && $volume === 0
-	$: if (loaded) { audio.muted = $muted }
 
 	let volume = tweened(0, { duration: 1000 })
 	// TODO: delete when bug fixed

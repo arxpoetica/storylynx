@@ -1,7 +1,7 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
 <figure class="video" class:loaded class:cover>
 	<div class="view">
-		<video bind:this={video} bind:volume={indirect_volume} bind:paused use:lazy {loop} {style}>
+		<video bind:this={video} bind:volume={indirect_volume} bind:muted={$muted} bind:paused use:lazy {loop} {style}>
 			<source {src} type="video/mp4"/>
 		</video>
 	</div>
@@ -30,7 +30,6 @@
 	$: cover = !asset.contain
 
 	$: paused = !(loaded && intersecting) && $volume === 0
-	$: if (loaded) { video.muted = $muted }
 
 	let volume = tweened(0, { duration: 1000 })
 	// TODO: delete when bug fixed
