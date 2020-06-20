@@ -8,4 +8,6 @@ export const seq_stack = writable({})
 export const view_height = writable(0)
 export const story_scroll = writable(0)
 export const forward = writable(true)
+
+export const can_autoplay = writable(false)
 export const muted = storable('story.muted', false)

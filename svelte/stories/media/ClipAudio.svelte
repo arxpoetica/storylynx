@@ -1,4 +1,4 @@
-<audio bind:this={audio} bind:volume={indirect_volume} bind:muted={$muted} bind:paused use:lazy loop {src} type="audio/mp3"></audio>
+<audio bind:this={audio} bind:paused bind:volume={indirect_volume} bind:muted={$muted} use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
 	<ClipImage {intersecting} asset={image} {style}/>
 {/if}
@@ -16,33 +16,26 @@
 
 	import ClipImage from './ClipImage.svelte'
 	import ClipText from './ClipText.svelte'
-	import { muted } from '../../../stores/story-store.js'
+	import { muted, can_autoplay } from '../../../stores/story-store.js'
 	import { tweened } from 'svelte/motion'
 	import { cubicIn, cubicOut } from 'svelte/easing'
 
 	let audio
 	let loaded = false
-
-	$: paused = !(loaded && intersecting) && $volume === 0
-
 	let volume = tweened(0, { duration: 1000 })
-	// TODO: delete when bug fixed
-	$: indirect_volume = $volume
-	$: if (loaded) {
-		intersecting ? tween(asset.volume || 1, cubicIn) : tween(0, cubicOut)
-	}
-	async function tween(to, easing) {
-		await volume.set(to, { easing })
-	}
 
+	// ----->>>>> PLAYING / PAUSED
+	$: paused = !(loaded && $can_autoplay && intersecting) && $volume === 0
+
+	// ----->>>>> VOLUME
+	// TODO: see: https://github.com/sveltejs/svelte/issues/5043
+	$: indirect_volume = $volume
+	$: if (loaded && $can_autoplay) { intersecting ? tween(asset.volume || 1, cubicIn) : tween(0, cubicOut) }
+	async function tween(to, easing) { await volume.set(to, { easing }) }
+
+	// ----->>>>> LOADING
 	let src = ''
 	function lazy(audio) {
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		audio.oncanplaythrough = () => loaded = true
 		src = asset.url
 		return { destroy() {} } // noop

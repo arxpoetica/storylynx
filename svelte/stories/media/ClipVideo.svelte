@@ -1,7 +1,7 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
 <figure class="video" class:loaded class:cover>
 	<div class="view">
-		<video bind:this={video} bind:volume={indirect_volume} bind:muted={$muted} bind:paused use:lazy {loop} {style}>
+		<video bind:this={video} bind:paused bind:volume={indirect_volume} bind:muted={$muted} use:lazy {loop} {style}>
 			<source {src} type="video/mp4"/>
 		</video>
 	</div>
@@ -21,36 +21,27 @@
 
 	import ClipText from './ClipText.svelte'
 	import ClipCaption from './ClipCaption.svelte'
-	import { muted } from '../../../stores/story-store.js'
+	import { muted, can_autoplay } from '../../../stores/story-store.js'
 	import { tweened } from 'svelte/motion'
 	import { cubicIn, cubicOut } from 'svelte/easing'
 
-	let video
-
 	$: cover = !asset.contain
-
-	$: paused = !(loaded && intersecting) && $volume === 0
-
-	let volume = tweened(0, { duration: 1000 })
-	// TODO: delete when bug fixed
-	$: indirect_volume = $volume
-	$: if (loaded) {
-		intersecting ? tween(asset.volume || 1, cubicIn) : tween(0, cubicOut)
-	}
-	async function tween(to, easing) {
-		await volume.set(to, { easing })
-	}
-
 	$: loop = !asset.play_once
+
+	let video
+	let volume = tweened(0, { duration: 1000 })
+
+	// ----->>>>> PLAYING / PAUSED
+	$: paused = !(loaded && $can_autoplay && intersecting) && $volume === 0
+
+	// ----->>>>> VOLUME
+	// TODO: see: https://github.com/sveltejs/svelte/issues/5043
+	$: indirect_volume = $volume
+	$: if (loaded && $can_autoplay) { intersecting ? tween(asset.volume || 1, cubicIn) : tween(0, cubicOut) }
+	async function tween(to, easing) { await volume.set(to, { easing }) }
 
 	let src = ''
 	function lazy(video) {
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
-		// https://developers.google.com/web/updates/2017/09/autoplay-policy-changes FIXME:
 		video.oncanplaythrough = () => loaded = true
 		src = asset.url
 		return { destroy() {} } // noop

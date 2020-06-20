@@ -13,6 +13,7 @@
 	<slot name="footer"></slot>
 </div>
 <slot name="post-site"></slot>
+<AutoplayPolicy/>
 
 <script>
 	import { onMount, getContext } from 'svelte'
@@ -20,7 +21,8 @@
 	const { page } = get_sapper_stores()
 
 	import StoryHeader from './StoryHeader.svelte'
-	import { story_scroll, forward } from '../../../stores/story-store.js'
+	import AutoplayPolicy from './AutoplayPolicy.svelte'
+	import { story_scroll, forward, can_autoplay } from '../../../stores/story-store.js'
 
 	let scroll_y = 0
 	$: story_scroll.set(scroll_y)
