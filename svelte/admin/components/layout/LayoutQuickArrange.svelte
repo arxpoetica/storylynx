@@ -122,8 +122,17 @@
 		height: calc(100vh - 62rem);
 		padding: 40rem;
 		border-right: 1rem solid var(--admin-accent-2);
-		&:last-child {
-			border: 0;
+		&:last-child { border: 0; }
+
+		// TODO: make this a reusable container component
+		&::-webkit-scrollbar { width: 12rem;}
+		&::-webkit-scrollbar-track {
+			background-color: var(--admin-accent-2);
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--admin-accent-4);
+			border-left: 1rem solid var(--admin-accent-2);
+			border-radius: 12rem;
 		}
 	}
 	.bar {

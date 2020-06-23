@@ -93,7 +93,10 @@
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
-		margin: 0 0 20rem;
+		margin: 0 0 4rem;
+	}
+	.texts {
+		flex: 1;
 	}
 	.tools {
 		margin: 0 0 0 20rem;
@@ -101,7 +104,6 @@
 	input {
 		margin: 0;
 		padding: 0;
-		color: var(--admin-text);
 		border: 0;
 		background-color: transparent;
 		box-shadow: none;
@@ -127,10 +129,11 @@
 	}
 	.group {
 		position: relative;
-		padding: 20rem;
-		margin: 0 0 10rem;
-		background-color: var(--admin-color-1);
-		border: 1rem solid var(--admin-color-2);
+		padding: 25rem;
+		margin: 0 0 40rem;
+		background-color: var(--admin-accent-1);
+		border-radius: 15rem;
+		box-shadow: 0 0 4rem var(--admin-boxshadow);
 		&:after {
 			content: 'Click to select';
 			display: flex;
@@ -141,7 +144,8 @@
 			right: -1rem;
 			bottom: -1rem;
 			left: -1rem;
-			background-color: rgba(var(--admin-bg-rgb), 0.5);
+			background-color: rgba(var(--admin-accent-0-rgb), 0.9);
+			border-radius: 15rem;
 			opacity: 0;
 			pointer-events: none;
 		}
@@ -149,14 +153,18 @@
 			opacity: 1;
 		}
 		&.current {
-			background-color: var(--admin-color-2);
-			border-color: var(--admin-color-8);
+			background-color: var(--admin-accent-0);
+			box-shadow: 0 0 0 transparent;
 			&:after { display: none; }
+			:global(.scheme-light) & { background-color: var(--admin-accent-2); }
 		}
+	}
+	@media (prefers-color-scheme: light) {
+		.group.current { background-color: var(--admin-accent-2); }
 	}
 	.eggs {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 75rem);
+		grid-template-columns: repeat(auto-fit, 59rem);
 		grid-gap: 10rem;
 	}
 </style>

@@ -45,6 +45,6 @@
 	.nest {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(200rem, 1fr));
-		grid-gap: 10rem;
+		grid-gap: 15rem;
 	}
 </style>
