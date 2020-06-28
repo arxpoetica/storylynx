@@ -50,6 +50,7 @@
 		if (group.changes) {
 			return (group.changes.connect_ids && group.changes.connect_ids.length)
 				|| (group.changes.disconnect_ids && group.changes.disconnect_ids.length)
+				|| group.changes.order
 		}
 		return false
 	}).length
@@ -62,12 +63,15 @@
 	async function save(event) {
 		$saving = true
 		for (let group of $groups) {
-			if (group.changes && (group.changes.connect_ids || group.changes.disconnect_ids)) {
+			if (group.changes && (
+				group.changes.connect_ids || group.changes.disconnect_ids || group.changes.order
+			)) {
 				const payload = Object.assign({ cookie: $session.cookie }, {
 					id: group.id,
 					title: group.title,
 					connect_ids: group.changes.connect_ids || [],
 					disconnect_ids: group.changes.disconnect_ids || [],
+					order: group.changes.order || [],
 				})
 				const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
 				delete group.changes

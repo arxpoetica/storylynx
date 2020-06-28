@@ -15,13 +15,18 @@
 						</div>
 					{/if}
 				</div>
-				<div class="eggs">
-					{#if group.assets.length}
-						{#each group.assets as item, index}
+				{#if group.assets.length}
+					<div
+						class="eggs"
+						use:dndzone={ { items: group.assets, dropTargetStyle: false } }
+						on:consider={sort_group}
+						on:finalize={sort_group}
+					>
+						{#each group.assets as item, index (item.id)}
 							<NestEgg {item} {index} handler={remove_from_group} size="small"/>
 						{/each}
-					{/if}
-				</div>
+					</div>
+				{/if}
 				{#if $current_group !== g_index}
 					<div class="shield"></div>
 				{/if}
@@ -31,12 +36,23 @@
 {/if}
 
 <script>
+	import { dndzone } from 'svelte-dnd-action'
 	import Button from '../components/elements/Button.svelte'
 	import { saving, saveable, assets, current_group, groups } from '../../../stores/admin-store.js'
 	import NestEgg from './NestEgg.svelte'
 
 	function select_group(index) {
 		$current_group = index
+	}
+
+	function sort_group(event) {
+		const group = $groups[$current_group]
+		group.assets = [...event.detail.items]
+		if (event.type === 'finalize') {
+			group.changes = group.changes || {}
+			group.changes.order = group.assets.map(asset => asset.id)
+		}
+		$groups = $groups
 	}
 
 	function remove_from_group(item, index) {
@@ -112,6 +128,7 @@
 		&:focus {
 			padding: 5rem;
 			color: var(--admin-text);
+			background-color: transparent;
 		}
 	}
 	h4 {
