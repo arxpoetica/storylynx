@@ -11,9 +11,13 @@
 				<h4>No assets. Please select some from the left.</h4>
 			{/if}
 		</div>
-		{#if $current_group === g_index && !$saveable}
+		{#if group.changes || $current_group === g_index}
 			<div class="tools">
-				<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
+				{#if group.changes}
+					<Button title="Save" classes="button-save tiny" handler={() => save_group(group, g_index)}/>
+				{:else if $current_group === g_index}
+					<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
+				{/if}
 			</div>
 		{/if}
 	</div>
@@ -40,7 +44,7 @@
 
 	import { dndzone } from 'svelte-dnd-action'
 	import Button from '../components/elements/Button.svelte'
-	import { saving, saveable, assets, current_group, groups } from '../../../stores/admin-store.js'
+	import { saving, assets, current_group, groups } from '../../../stores/admin-store.js'
 	import NestEgg from './NestEgg.svelte'
 
 	function select_group(index) {
@@ -95,6 +99,24 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session } = get_sapper_stores()
 	import { POST } from '../../../utils/loaders.js'
+
+	async function save_group(group, index) {
+		$saving = true
+		if (group.changes) {
+			const payload = Object.assign({ cookie: $session.cookie }, {
+				id: group.id,
+				title: group.title,
+				connect_ids: group.changes.connect_ids || [],
+				disconnect_ids: group.changes.disconnect_ids || [],
+				order: group.changes.order || [],
+			})
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
+			delete group.changes
+			// replace `NOID-` with real id:
+			group.id = asset_group.id
+		}
+		$saving = false
+	}
 
 	async function delete_group(group, index) {
 		$saving = true
@@ -186,7 +208,7 @@
 			:global(.scheme-light) & { background-color: var(--admin-accent-2); }
 		}
 		&.changes {
-			box-shadow: 0 0 0 4rem var(--admin-warn);
+			box-shadow: 0 0 0 4rem var(--admin-color-6);
 		}
 	}
 	@media (prefers-color-scheme: light) {

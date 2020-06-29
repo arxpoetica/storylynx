@@ -59,29 +59,11 @@
 
 	$: $saveable = $groups.filter(group => group.changes).length
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
-	import { POST } from '../../../../utils/loaders.js'
-
 	async function save(event) {
-		$saving = true
-		for (let group of $groups) {
-			if (group.changes) {
-				const payload = Object.assign({ cookie: $session.cookie }, {
-					id: group.id,
-					title: group.title,
-					connect_ids: group.changes.connect_ids || [],
-					disconnect_ids: group.changes.disconnect_ids || [],
-					order: group.changes.order || [],
-				})
-				const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
-				delete group.changes
-				group.id = asset_group.id
-			}
+		const buttons = groups_col.querySelectorAll('.button-save')
+		for (let button of buttons) {
+			button.click()
 		}
-		$groups = $groups
-		$saving = false
 	}
 
 	import { onMount, onDestroy } from 'svelte'
