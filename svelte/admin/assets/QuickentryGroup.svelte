@@ -1,41 +1,43 @@
-{#if $groups}
-	<div class="groups">
-		{#each $groups as group, g_index}
-			<div class="group" class:current={$current_group === g_index} on:click={() => select_group(g_index)}>
-				<div class="header">
-					<div class="texts">
-						<input type="text" bind:value={group.title}/>
-						{#if $current_group === g_index && !group.assets.length}
-							<h4>No assets. Please select some from the left.</h4>
-						{/if}
-					</div>
-					{#if $current_group === g_index && !$saveable}
-						<div class="tools">
-							<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
-						</div>
-					{/if}
-				</div>
-				{#if group.assets.length}
-					<div
-						class="eggs"
-						use:dndzone={ { items: group.assets, dropTargetStyle: false } }
-						on:consider={sort_group}
-						on:finalize={sort_group}
-					>
-						{#each group.assets as item, index (item.id)}
-							<NestEgg {item} {index} handler={remove_from_group} size="small"/>
-						{/each}
-					</div>
-				{/if}
-				{#if $current_group !== g_index}
-					<div class="shield"></div>
-				{/if}
+<div
+	class="group"
+	class:current={$current_group === g_index}
+	class:changes={group.changes}
+	on:click={() => select_group(g_index)}
+>
+	<div class="header">
+		<div class="texts">
+			<input type="text" bind:value={group.title} placeholder="Give this group a title..."/>
+			{#if $current_group === g_index && !group.assets.length}
+				<h4>No assets. Please select some from the left.</h4>
+			{/if}
+		</div>
+		{#if $current_group === g_index && !$saveable}
+			<div class="tools">
+				<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
 			</div>
-		{/each}
+		{/if}
 	</div>
-{/if}
+	{#if group.assets.length}
+		<div
+			class="eggs"
+			use:dndzone={ { items: group.assets, dropTargetStyle: false } }
+			on:consider={sort_group}
+			on:finalize={sort_group}
+		>
+			{#each group.assets as item, index (item.id)}
+				<NestEgg {item} {index} handler={remove_from_group} size="small"/>
+			{/each}
+		</div>
+	{/if}
+	{#if $current_group !== g_index}
+		<div class="shield"></div>
+	{/if}
+</div>
 
 <script>
+	export let group
+	export let g_index
+
 	import { dndzone } from 'svelte-dnd-action'
 	import Button from '../components/elements/Button.svelte'
 	import { saving, saveable, assets, current_group, groups } from '../../../stores/admin-store.js'
@@ -45,8 +47,18 @@
 		$current_group = index
 	}
 
+	let original_title = group.title
+	$: if (original_title === group.title && group.changes && !Object.keys(group.changes).length) {
+		$groups[g_index].changes = undefined
+	} else if (original_title !== group.title && !group.changes) {
+		$groups[g_index].changes = {} // all we have to do is track there are changes
+	} else if ($saving && original_title !== group.title && group.changes) {
+		original_title = group.title
+		$groups[g_index].changes = undefined
+	}
+
 	function sort_group(event) {
-		const group = $groups[$current_group]
+		const group = $groups[g_index]
 		group.assets = [...event.detail.items]
 		if (event.type === 'finalize') {
 			group.changes = group.changes || {}
@@ -56,7 +68,7 @@
 	}
 
 	function remove_from_group(item, index) {
-		const group = $groups[$current_group]
+		const group = $groups[g_index]
 
 		if (group.changes && group.changes.connect_ids && group.changes.connect_ids.includes(item.id)) {
 			const id_index = group.changes.connect_ids.indexOf(item.id)
@@ -90,21 +102,19 @@
 		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
 			const payload = Object.assign({ cookie: $session.cookie }, { id: group.id })
 			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', payload)
+			$groups.splice(index, 1)
+			$groups = $groups
+
+			$assets = [...$assets, ...group.assets]
+			$assets.sort((one, two) => one.filename.localeCompare(two.filename))
+			$assets = $assets
 		}
-
-		$groups.splice(index, 1)
-		$groups = $groups
-
-		$assets = [...$assets, ...group.assets]
-		$assets.sort((one, two) => one.filename.localeCompare(two.filename))
-		$assets = $assets
 
 		$saving = false
 	}
 </script>
 
 <style type="text/scss">
-	// .groups {}
 	.header {
 		display: flex;
 		align-items: flex-start;
@@ -174,6 +184,9 @@
 			box-shadow: 0 0 0 transparent;
 			&:after { display: none; }
 			:global(.scheme-light) & { background-color: var(--admin-accent-2); }
+		}
+		&.changes {
+			box-shadow: 0 0 0 4rem var(--admin-warn);
 		}
 	}
 	@media (prefers-color-scheme: light) {

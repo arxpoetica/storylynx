@@ -67,6 +67,8 @@
 		--admin-good-dusk: #004d3f;
 		--admin-good-text: var(--admin-good-dark);
 
+		--admin-warn: #fcf08d;
+
 		--admin-alert: #e7184a;
 		--admin-alert-faint: #fef1f4;
 		--admin-alert-light: #eb436b;

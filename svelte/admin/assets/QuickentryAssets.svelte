@@ -1,5 +1,5 @@
 {#if $assets}
-	<div class="nest">
+	<div class="assets">
 		{#each $assets as item, index}
 			{#if item.mime_type.includes('image')}
 				<NestEgg {item} {index} handler={move_to_group}/>
@@ -42,7 +42,7 @@
 </script>
 
 <style type="text/scss">
-	.nest {
+	.assets {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(200rem, 1fr));
 		grid-gap: 15rem;

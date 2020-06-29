@@ -6,16 +6,22 @@
 	<!-- <div class="tools"></div> -->
 	<div class="content">
 		<div class="col col-assets">
-			<NestToolbar items={assets} title="Ungrouped Assets"/>
-			<NestAssets/>
+			<QuickentryToolbar items={assets} title="Ungrouped Assets"/>
+			<QuickentryAssets/>
 		</div>
-		<div class="col col-groups">
-			<NestToolbar items={groups} title="Grouped Assets" type="green">
+		<div bind:this={groups_col} class="col col-groups">
+			<QuickentryToolbar items={groups} title="Grouped Assets" type="green">
 				<div class="bar">
 					<Button title="Add Group" handler={add_group} classes="good"/>
 				</div>
-			</NestToolbar>
-			<NestGroups/>
+			</QuickentryToolbar>
+			{#if $groups}
+				<div class="groups">
+					{#each $groups as group, g_index (group.id)}
+						<QuickentryGroup {group} {g_index}/>
+					{/each}
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -28,15 +34,17 @@
 	export let asset_groups = []
 
 	import Button from '../elements/Button.svelte'
-	import NestToolbar from '../../assets/NestToolbar.svelte'
-	import NestAssets from '../../assets/NestAssets.svelte'
-	import NestGroups from '../../assets/NestGroups.svelte'
+	import QuickentryToolbar from '../../assets/QuickentryToolbar.svelte'
+	import QuickentryAssets from '../../assets/QuickentryAssets.svelte'
+	import QuickentryGroup from '../../assets/QuickentryGroup.svelte'
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'
 	import { saving, saveable, assets, current_group, groups } from '../../../../stores/admin-store.js'
 
+	let groups_col
 	function add_group(event) {
+		groups_col.scrollTop = 0
 		$groups = [{
 			id: 'NOID-' + uid(),
 			title: `Untitled Group`,
@@ -44,16 +52,12 @@
 			changes: {},
 		}, ...$groups]
 		$current_group = 0
+		const input = groups_col.querySelector('input:first-child')
+		input.focus()
+		setTimeout(() => input.select(), 0)
 	}
 
-	$: $saveable = $groups.filter(group => {
-		if (group.changes) {
-			return (group.changes.connect_ids && group.changes.connect_ids.length)
-				|| (group.changes.disconnect_ids && group.changes.disconnect_ids.length)
-				|| group.changes.order
-		}
-		return false
-	}).length
+	$: $saveable = $groups.filter(group => group.changes).length
 
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
@@ -63,9 +67,7 @@
 	async function save(event) {
 		$saving = true
 		for (let group of $groups) {
-			if (group.changes && (
-				group.changes.connect_ids || group.changes.disconnect_ids || group.changes.order
-			)) {
+			if (group.changes) {
 				const payload = Object.assign({ cookie: $session.cookie }, {
 					id: group.id,
 					title: group.title,
