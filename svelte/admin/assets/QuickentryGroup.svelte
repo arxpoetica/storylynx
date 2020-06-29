@@ -111,9 +111,10 @@
 				order: group.changes.order || [],
 			})
 			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
-			delete group.changes
+			group.changes = undefined
 			// replace `NOID-` with real id:
 			group.id = asset_group.id
+			$groups[g_index] = $groups[g_index]
 		}
 		$saving = false
 	}
