@@ -6,19 +6,19 @@
 	<!-- <div class="tools"></div> -->
 	<div class="content">
 		<div class="col col-assets">
-			<QuickentryToolbar items={assets} title="Ungrouped Assets"/>
-			<QuickentryAssets/>
+			<QuickarrangeToolbar items={assets} title="Ungrouped Assets"/>
+			<QuickarrangeAssets/>
 		</div>
 		<div bind:this={groups_col} class="col col-groups">
-			<QuickentryToolbar items={groups} title="Grouped Assets" type="green">
+			<QuickarrangeToolbar items={groups} title="Grouped Assets" type="green">
 				<div class="bar">
 					<Button title="Add Group" handler={add_group} classes="good"/>
 				</div>
-			</QuickentryToolbar>
+			</QuickarrangeToolbar>
 			{#if $groups}
 				<div class="groups">
 					{#each $groups as group, g_index (group.id)}
-						<QuickentryGroup {group} {g_index}/>
+						<QuickarrangeGroup {group} {g_index}/>
 					{/each}
 				</div>
 			{/if}
@@ -34,9 +34,9 @@
 	export let asset_groups = []
 
 	import Button from '../elements/Button.svelte'
-	import QuickentryToolbar from '../../assets/QuickentryToolbar.svelte'
-	import QuickentryAssets from '../../assets/QuickentryAssets.svelte'
-	import QuickentryGroup from '../../assets/QuickentryGroup.svelte'
+	import QuickarrangeToolbar from '../../assets/QuickarrangeToolbar.svelte'
+	import QuickarrangeAssets from '../../assets/QuickarrangeAssets.svelte'
+	import QuickarrangeGroup from '../../assets/QuickarrangeGroup.svelte'
 	import AssetPreview from './AssetPreview.svelte'
 
 	import uid from 'uid'

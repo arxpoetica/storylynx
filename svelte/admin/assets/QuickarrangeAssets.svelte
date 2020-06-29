@@ -2,7 +2,7 @@
 	<div class="assets">
 		{#each $assets as item, index}
 			{#if item.mime_type.includes('image')}
-				<NestEgg {item} {index} handler={move_to_group}/>
+				<QuickarrangeThumb {item} {index} handler={move_to_group}/>
 			{/if}
 		{/each}
 	</div>
@@ -12,7 +12,7 @@
 	import { assets, current_group, groups }
 		from '../../../stores/admin-store.js'
 
-	import NestEgg from './NestEgg.svelte'
+	import QuickarrangeThumb from './QuickarrangeThumb.svelte'
 
 	function move_to_group(item, index) {
 		if ($current_group > -1) {

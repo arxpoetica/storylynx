@@ -29,7 +29,7 @@
 			on:finalize={sort_group}
 		>
 			{#each group.assets as item, index (item.id)}
-				<NestEgg {item} {index} handler={remove_from_group} size="small"/>
+				<QuickarrangeThumb {item} {index} handler={remove_from_group} size="small"/>
 			{/each}
 		</div>
 	{/if}
@@ -45,7 +45,7 @@
 	import { dndzone } from 'svelte-dnd-action'
 	import Button from '../components/elements/Button.svelte'
 	import { saving, assets, current_group, groups } from '../../../stores/admin-store.js'
-	import NestEgg from './NestEgg.svelte'
+	import QuickarrangeThumb from './QuickarrangeThumb.svelte'
 
 	function select_group(index) {
 		$current_group = index
