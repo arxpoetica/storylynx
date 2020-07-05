@@ -25,10 +25,10 @@
 </script>
 
 <style type="text/scss">
-	:root {
 
-		// ============ >>>>> DARK MODE (DEFAULT)
+	// ============ >>>>> DARK MODE
 
+	@define-mixin darkmode {
 		--admin-bg: #38444c;
 		--admin-bg-rgb: 56, 68, 76;
 
@@ -55,6 +55,42 @@
 		--admin-color-text: var(--admin-color-8);
 
 		--admin-text: #f0f2f3;
+	}
+
+	// ============ >>>>> LIGHT MODE
+
+	@define-mixin lightmode {
+		--admin-bg: #fff;
+		--admin-bg-rgb: 255, 255, 255;
+
+		--admin-accent-0: white;
+		--admin-accent-0-rgb: var(--admin-bg-rgb);
+		--admin-accent-1: #f4f6f6;
+		--admin-accent-1-rgb: 244, 246, 246;
+		--admin-accent-2: #dfe2e4;
+		--admin-accent-3: #c8cfd2;
+		--admin-accent-4: #adb7bc;
+		--admin-accent-6: #97a7ad;
+		--admin-accent-8: #74858d;
+		--admin-accent-9: #485358;
+		--admin-accent-10: #2e3539;
+		--admin-boxshadow: var(--admin-accent-2);
+
+		--admin-color-1: #e7f6fe;
+		--admin-color-1-rgb: 231, 246, 254;
+		--admin-color-2: #c0e8fc;
+		--admin-color-4: #20aef6;
+		--admin-color-6: #0995dd;
+		--admin-color-8: #077bb5;
+		--admin-color-10: #023955;
+		--admin-color-text: var(--admin-color-8);
+
+		--admin-text: var(--admin-accent-10);
+	}
+
+	:root {
+
+		@mixin darkmode {} // default
 
 		// ============ >>>>> SHARED (BOTH LIGHT AND DARK)
 
@@ -81,64 +117,13 @@
 		--admin-link: var(--admin-color-6);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	}
-	@media (prefers-color-scheme: light) {
-		:root {
-			--admin-bg: #fff;
-			--admin-bg-rgb: 255, 255, 255;
 
-			--admin-accent-0: white;
-			--admin-accent-0-rgb: var(--admin-bg-rgb);
-			--admin-accent-1: #f4f6f6;
-			--admin-accent-1-rgb: 244, 246, 246;
-			--admin-accent-2: #dfe2e4;
-			--admin-accent-3: #c8cfd2;
-			--admin-accent-4: #adb7bc;
-			--admin-accent-6: #97a7ad;
-			--admin-accent-8: #74858d;
-			--admin-accent-9: #485358;
-			--admin-accent-10: #2e3539;
-			--admin-boxshadow: var(--admin-accent-2);
+	@media (prefers-color-scheme: light) { :root { @mixin lightmode {} } }
+	.scheme-light { @mixin lightmode {} }
 
-			--admin-color-1: #e7f6fe;
-			--admin-color-1-rgb: 231, 246, 254;
-			--admin-color-2: #c0e8fc;
-			--admin-color-4: #20aef6;
-			--admin-color-6: #0995dd;
-			--admin-color-8: #077bb5;
-			--admin-color-10: #023955;
-			--admin-color-text: var(--admin-color-8);
+	// @media (prefers-color-scheme: dark) { :root { @mixin darkmode {} } }
+	.scheme-dark { @mixin darkmode {} }
 
-			--admin-text: var(--admin-accent-10);
-		}
-	}
-		.scheme-light {
-			--admin-bg: #fff;
-			--admin-bg-rgb: 255, 255, 255;
-
-			--admin-accent-0: white;
-			--admin-accent-0-rgb: var(--admin-bg-rgb);
-			--admin-accent-1: #f4f6f6;
-			--admin-accent-1-rgb: 244, 246, 246;
-			--admin-accent-2: #dfe2e4;
-			--admin-accent-3: #c8cfd2;
-			--admin-accent-4: #adb7bc;
-			--admin-accent-6: #97a7ad;
-			--admin-accent-8: #74858d;
-			--admin-accent-9: #485358;
-			--admin-accent-10: #2e3539;
-			--admin-boxshadow: var(--admin-accent-2);
-
-			--admin-color-1: #e7f6fe;
-			--admin-color-1-rgb: 231, 246, 254;
-			--admin-color-2: #c0e8fc;
-			--admin-color-4: #20aef6;
-			--admin-color-6: #0995dd;
-			--admin-color-8: #077bb5;
-			--admin-color-10: #023955;
-			--admin-color-text: var(--admin-color-8);
-
-			--admin-text: var(--admin-accent-10);
-		}
 	.lynx-admin-layout {
 		display: grid;
 		grid-template-columns: 250rem 1fr;
