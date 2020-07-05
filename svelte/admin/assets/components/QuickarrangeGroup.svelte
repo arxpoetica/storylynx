@@ -183,7 +183,7 @@
 		margin: 0 0 40rem;
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
-		box-shadow: 0 0 4rem var(--admin-boxshadow);
+		// box-shadow: var(--admin-shadow);
 		&:after {
 			content: 'Click to select';
 			display: flex;

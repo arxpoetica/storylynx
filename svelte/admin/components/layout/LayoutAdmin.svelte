@@ -1,7 +1,10 @@
 <div class="lynx-admin-layout scheme-{$color_scheme}">
-	<AdminBar/>
-	<div class="content-view">
-		<slot></slot>
+	<AdminHeader/>
+	<div class="body">
+		<AdminBar/>
+		<div class="content-view">
+			<slot></slot>
+		</div>
 	</div>
 </div>
 <AssetPreview/>
@@ -12,6 +15,7 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session, page } = get_sapper_stores()
 
+	import AdminHeader from './AdminHeader.svelte'
 	import AdminBar from './AdminBar.svelte'
 	import SavePanel from './SavePanel.svelte'
 	import AssetPreview from './AssetPreview.svelte'
@@ -47,7 +51,7 @@
 		--admin-accent-8: #adb7bc;
 		--admin-accent-9: #c8cfd2;
 		--admin-accent-10: #f6f9fc;
-		--admin-boxshadow: black;
+		--admin-shadow: 0 4rem 20rem rgba(0, 0, 0, 0.8);
 
 		--admin-color-1: #21333d;
 		--admin-color-1-rgb: 33, 51, 61;
@@ -78,7 +82,7 @@
 		--admin-accent-8: #74858d;
 		--admin-accent-9: #485358;
 		--admin-accent-10: #2e3539;
-		--admin-boxshadow: var(--admin-accent-2);
+		--admin-shadow: 0 4rem 20rem rgba(0, 0, 0, 0.2);
 
 		--admin-color-1: #e7f6fe;
 		--admin-color-1-rgb: 231, 246, 254;
@@ -120,6 +124,10 @@
 
 		--admin-link: var(--admin-color-6);
 		--admin-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+		--admin-layout-width: 1280rem;
+
+		--admin-z-index-top: 100;
 	}
 
 	@media (prefers-color-scheme: light) { :root { @mixin lightmode {} } }
@@ -129,16 +137,23 @@
 	.scheme-dark { @mixin darkmode {} }
 
 	.lynx-admin-layout {
-		display: grid;
-		grid-template-columns: 250rem 1fr;
 		flex: 1;
 		background-color: var(--admin-bg);
 		color: var(--admin-text);
 	}
-
+	.body {
+		display: grid;
+		grid-template-columns: auto 275rem;
+		grid-template-areas: "body nav";
+		grid-gap: 20rem;
+		width: 100%;
+		max-width: var(--admin-layout-width);
+		margin: 0 auto;
+	}
 	.content-view {
 		display: grid;
 		grid-template-rows: auto 1fr;
+		grid-area: body;
 	}
 
 	// TODO: put these all in a global CSS file
