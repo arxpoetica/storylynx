@@ -1,22 +1,24 @@
-<div class="dash">
-	<div class="tools">
-		<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
-	</div>
-	<div class="wrap">
-		<div class="panes">
-			<div class="pane developer">
-				<SequenceEditor {sequence}/>
-			</div>
-			<div class="pane sequence">
-				<!-- <p>{JSON.stringify(Object.keys(sequence))}</p> -->
-				<!-- <p>{JSON.stringify(sequence.id)}</p> -->
-				<!-- <p>{JSON.stringify(sequence.slug)}</p> -->
-				<!-- <p>{JSON.stringify(sequence.order)}</p> -->
-				<PreviewClip {sequence}/>
+<Scaffolding title="Stories">
+	<div class="dash">
+		<div class="tools">
+			<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
+		</div>
+		<div class="wrap">
+			<div class="panes">
+				<div class="pane developer">
+					<SequenceEditor {sequence}/>
+				</div>
+				<div class="pane sequence">
+					<!-- <p>{JSON.stringify(Object.keys(sequence))}</p> -->
+					<!-- <p>{JSON.stringify(sequence.id)}</p> -->
+					<!-- <p>{JSON.stringify(sequence.slug)}</p> -->
+					<!-- <p>{JSON.stringify(sequence.order)}</p> -->
+					<PreviewClip {sequence}/>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</Scaffolding>
 
 <script>
 	export let sequence = {}
@@ -27,6 +29,7 @@
 	$: $templates = html_templates.length ? html_templates : $templates
 	$: $colors = html_colors.length ? html_colors : $colors
 
+	import Scaffolding from '../components/layout/Scaffolding.svelte'
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
 	import PreviewClip from './widgets/PreviewClip.svelte'
 	// import Button from '../components/elements/Button.svelte'

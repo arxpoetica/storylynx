@@ -10,7 +10,7 @@
 
 <script>
 	import { assets, current_group, groups }
-		from '../../../stores/admin-store.js'
+		from '../../../../stores/admin-store.js'
 
 	import QuickarrangeThumb from './QuickarrangeThumb.svelte'
 

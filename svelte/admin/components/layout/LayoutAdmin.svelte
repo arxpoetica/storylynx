@@ -1,7 +1,10 @@
 <div class="lynx-admin-layout scheme-{$color_scheme}">
 	<AdminBar/>
-	<slot></slot>
+	<div class="content-view">
+		<slot></slot>
+	</div>
 </div>
+<AssetPreview/>
 <SavePanel/>
 
 <script>
@@ -11,6 +14,7 @@
 
 	import AdminBar from './AdminBar.svelte'
 	import SavePanel from './SavePanel.svelte'
+	import AssetPreview from './AssetPreview.svelte'
 	// $: admin = $session.user
 
 	import { color_scheme } from '../../../../stores/app-store.js'
@@ -131,6 +135,12 @@
 		background-color: var(--admin-bg);
 		color: var(--admin-text);
 	}
+
+	.content-view {
+		display: grid;
+		grid-template-rows: auto 1fr;
+	}
+
 	// TODO: put these all in a global CSS file
 	// TODO: OR BETTER YET, break admin out into a second app WITHIN this app???
 	:global(.lynx-admin-layout) :global {
@@ -145,21 +155,4 @@
 			color: var(--admin-color-text);
 		}
 	}
-
-	// .admin-all {
-	// 	grid-row: header / main;
-	// 	grid-column: main / side;
-	// 	padding: 20rem;
-	// }
-	// .admin-main {
-	// 	grid-row: main;
-	// 	grid-column: main;
-	// 	padding: 20rem;
-	// }
-	// .admin-side {
-	// 	// grid-row: header / side;
-	// 	grid-row: side;
-	// 	grid-column: side;
-	// 	// border-left: 1px solid $gray-6;
-	// }
 </style>

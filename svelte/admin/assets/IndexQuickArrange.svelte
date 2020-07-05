@@ -1,10 +1,10 @@
-<div class="content-view">
-	<div class="header">
-		<h1>{model}</h1>
+<Scaffolding title="Assets Quick Arrange">
+
+	<div slot="actions">
 		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
-	<!-- <div class="tools"></div> -->
-	<div class="content">
+
+	<div class="columns">
 		<div class="col col-assets">
 			<QuickarrangeToolbar items={assets} title="Ungrouped Assets"/>
 			<QuickarrangeAssets/>
@@ -24,23 +24,21 @@
 			{/if}
 		</div>
 	</div>
-</div>
-<AssetPreview/>
-<slot></slot>
+
+</Scaffolding>
 
 <script>
-	export let model = ''
 	export let ungrouped_assets = []
 	export let asset_groups = []
 
-	import Button from '../elements/Button.svelte'
-	import QuickarrangeToolbar from '../../assets/QuickarrangeToolbar.svelte'
-	import QuickarrangeAssets from '../../assets/QuickarrangeAssets.svelte'
-	import QuickarrangeGroup from '../../assets/QuickarrangeGroup.svelte'
-	import AssetPreview from './AssetPreview.svelte'
+	import Scaffolding from '../components/layout/Scaffolding.svelte'
+	import Button from '../components/elements/Button.svelte'
+	import QuickarrangeToolbar from './components/QuickarrangeToolbar.svelte'
+	import QuickarrangeAssets from './components/QuickarrangeAssets.svelte'
+	import QuickarrangeGroup from './components/QuickarrangeGroup.svelte'
 
 	import uid from 'uid'
-	import { saving, saveable, assets, current_group, groups } from '../../../../stores/admin-store.js'
+	import { saving, saveable, assets, current_group, groups } from '../../../stores/admin-store.js'
 
 	let groups_col
 	function add_group(event) {
@@ -85,24 +83,14 @@
 </script>
 
 <style type="text/scss">
-	.content-view {
-		display: grid;
-		grid-template-rows: auto auto 1fr;
-		grid-template-columns: 1fr;
-	}
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 62rem;
-		padding: 12rem;
-		border-bottom: 1rem solid var(--admin-accent-2);
-	}
-	// .tools {
-	// }
-	.content {
+	.columns {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 	}
 	.col {
 		position: relative;

@@ -43,8 +43,8 @@
 	export let g_index
 
 	import { dndzone } from 'svelte-dnd-action'
-	import Button from '../components/elements/Button.svelte'
-	import { saving, assets, current_group, groups } from '../../../stores/admin-store.js'
+	import Button from '../../components/elements/Button.svelte'
+	import { saving, assets, current_group, groups } from '../../../../stores/admin-store.js'
 	import QuickarrangeThumb from './QuickarrangeThumb.svelte'
 
 	function select_group(index) {
@@ -98,7 +98,7 @@
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session } = get_sapper_stores()
-	import { POST } from '../../../utils/loaders.js'
+	import { POST } from '../../../../utils/loaders.js'
 
 	async function save_group(group, index) {
 		$saving = true

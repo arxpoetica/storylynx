@@ -25,7 +25,7 @@
 		return `https://media.graphcms.com/output=format:jpg/resize=width:225/${handle}`
 	}
 
-	import { egg_preview } from '../../../stores/admin-store.js'
+	import { egg_preview } from '../../../../stores/admin-store.js'
 	function preview() {
 		$egg_preview = item
 	}

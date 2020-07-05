@@ -1,35 +1,33 @@
-<div class="content-view">
-	<div class="header">
-		<h1>{model}</h1>
-		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
+<Scaffolding title="Assets Quick Entry">
 
-		<!-- <Button {href} title="Create {singular}"/> -->
+	<div slot="actions">
+		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
-	<!-- <div class="tools"></div> -->
-	<div class="content">
+
+	<div class="quick-entry">
 		<EditTable {options}/>
 	</div>
-</div>
-<slot></slot>
+
+</Scaffolding>
 
 <script>
 	import { onDestroy } from 'svelte'
-	import EditTable from '../widgets/EditTable.svelte'
-	import Button from '../elements/Button.svelte'
+	import Scaffolding from '../components/layout/Scaffolding.svelte'
+	import EditTable from '../components/widgets/EditTable.svelte'
+	import Button from '../components/elements/Button.svelte'
 
-	export let model = ''
 	export let asset_groups
 	export let content_types
 	export let subjects
 	$: valid_types = [null, ...content_types]
 	$: valid_subjects = [null, ...subjects]
 
-	import { saving, saveable, hot, hot_changes } from '../../../../stores/admin-store.js'
+	import { saving, saveable, hot, hot_changes } from '../../../stores/admin-store.js'
 
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session } = get_sapper_stores()
-	import { POST } from '../../../../utils/loaders.js'
+	import { POST } from '../../../utils/loaders.js'
 
 	async function save(event) {
 		$saving = true
@@ -158,23 +156,12 @@
 </script>
 
 <style type="text/scss">
-	.content-view {
-		display: grid;
-		// grid-template-rows: auto auto 1fr;
-		grid-template-rows: auto 1fr;
-		grid-template-columns: 1fr;
-	}
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 62rem;
-		padding: 12rem;
-		border-bottom: 1px solid var(--admin-accent-2);
-	}
-	// .tools {}
-	.content {
-		position: relative;
+	.quick-entry {
 		overflow: hidden;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 	}
 </style>

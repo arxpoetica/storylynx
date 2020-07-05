@@ -1,21 +1,20 @@
-<div class="content-view">
-	<div class="header">
-		<h1>{model}</h1>
+<Scaffolding title={model}>
+
+	<div slot="actions">
 		<Button {href} title="Create {singular}"/>
 	</div>
-	<div class="tools">
+
+	<div class="tools" slot="tools">
 		<ActionsBar on:trash={trash} bind:checkeditems/>
 	</div>
-	<div class="content">
-		<ContentList bind:checkeditems {cols} {segment}/>
-	</div>
-</div>
-<slot></slot>
+
+	<ContentList bind:checkeditems {cols} {segment}/>
+
+	<!-- <slot></slot> -->
+</Scaffolding>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page: pageStore } = get_sapper_stores()
+	import Scaffolding from './Scaffolding.svelte'
 
 	export let model = ''
 	export let cols = []
@@ -64,29 +63,4 @@
 	}
 </script>
 
-<style type="text/scss">
-	.content-view {
-		display: grid;
-		// grid-template-areas:
-		// 	"header header"
-		// 	"main side"
-		// ;
-		grid-template-rows: auto auto 1fr;
-		grid-template-columns: 1fr;
-	}
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 62rem;
-		padding: 12rem;
-		border-bottom: 1px solid var(--admin-accent-2);
-	}
-	// .tools {
-	// }
-	// .content {
-	// 	grid-row: main;
-	// 	grid-column: main / side;
-	// 	padding: 20rem;
-	// }
-</style>
+<!-- <style type="text/scss"></style> -->
