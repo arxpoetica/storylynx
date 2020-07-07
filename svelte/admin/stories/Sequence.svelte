@@ -1,4 +1,4 @@
-<Scaffolding title="Stories">
+<Scaffolding title="Stories" fullwidth={true}>
 	<div class="dash">
 		<div class="toolbar">
 			<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
@@ -39,11 +39,8 @@
 	.dash {
 		display: grid;
 		grid-template-rows: auto 1fr;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		height: calc(100vh - 99rem);
+		margin: -40rem -40rem -60rem;
 	}
 	.toolbar {
 		padding: 12rem 20rem;
