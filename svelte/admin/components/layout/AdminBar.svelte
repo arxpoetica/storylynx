@@ -36,7 +36,7 @@
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { page } = get_sapper_stores()
-	const on = (path, segment) => path === '/admin' || path.includes(`/admin/${segment}`)
+	const on = (path, segment) => path.includes(`/admin/${segment}`)
 
 	import { GET } from '../../../../utils/loaders.js'
 	import UsersIcon from '../../../svg/admin-users.svelte'
@@ -52,10 +52,7 @@
 
 <style type="text/scss">
 	.admin-bar {
-		overflow-x: hidden;
-		overflow-y: auto;
 		grid-area: nav;
-		padding: 20rem 0 0;
 		color: var(--admin-text);
 		font: 15rem/1 var(--admin-font);
 		user-select: none;
@@ -68,31 +65,32 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 1rem 0;
+		margin: 2rem 0;
 		padding: 12rem 15rem;
 		background-color: transparent;
 		border: none;
 		outline: none;
-		border-radius: 4rem;
-		color: var(--admin-text);
+		border-radius: 2rem;
+		color: var(--admin-accent-4);
 		text-decoration: none;
 		cursor: pointer;
 		transition: none;
 		&:hover {
-			background-color: var(--admin-accent-1);
-			transition: background-color 0.15s ease-in-out;
+			background-color: var(--admin-color-1);
+			color: var(--admin-text);
+			transition: all 0.15s ease-in-out;
 		}
 		&.on {
-			background-color: var(--admin-color-1);
+			background-color: var(--admin-accent-2);
 			color: var(--admin-color-8);
 			font-weight: bold;
-			// pointer-events: none;
+			pointer-events: none;
+			.icon { color: inherit; }
 		}
 	}
 	.icon {
 		max-width: 18rem;
 		height: 18rem;
 		margin: 0 0 0 8rem;
-		// color: var(--admin-color-10);
 	}
 </style>

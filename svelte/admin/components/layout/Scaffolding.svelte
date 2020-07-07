@@ -1,11 +1,11 @@
 <div class="header">
+	<slot name="toolbar"></slot>
 	<div class="row">
-		<h1>{title}</h1>
+		<h1 class="ghost">{title}</h1>
 		<div class="actions">
 			<slot name="actions"></slot>
 		</div>
 	</div>
-	<slot name="tools"></slot>
 </div>
 <div class="content">
 	<slot></slot>

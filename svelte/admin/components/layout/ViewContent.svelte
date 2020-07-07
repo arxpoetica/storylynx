@@ -4,7 +4,7 @@
 		<Button {href} title="Create {singular}"/>
 	</div>
 
-	<div class="tools" slot="tools">
+	<div class="toolbar" slot="toolbar">
 		<ActionsBar on:trash={trash} bind:checkeditems/>
 	</div>
 

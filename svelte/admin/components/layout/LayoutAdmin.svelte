@@ -147,6 +147,7 @@
 		grid-template-areas: "body nav";
 		grid-gap: 20rem;
 		width: 100%;
+		padding: 20rem 0;
 		max-width: var(--admin-layout-width);
 		margin: 0 auto;
 	}

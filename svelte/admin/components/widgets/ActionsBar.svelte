@@ -1,6 +1,6 @@
 <div class="toolbar">
 	<div class="info">{checkeditems.filter(val => val).length} items selected</div>
-	<!-- <div class="tools">
+	<!-- <div class="toolbar">
 		{#if $vars.drafts_count || $vars.archived_count}
 			<button class="button {off === 'all' ? 'off' : 'link'}">All</button> ({$vars.items_count})
 		{/if}

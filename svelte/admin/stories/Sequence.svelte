@@ -1,6 +1,6 @@
 <Scaffolding title="Stories">
 	<div class="dash">
-		<div class="tools">
+		<div class="toolbar">
 			<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
 		</div>
 		<div class="wrap">
@@ -45,7 +45,7 @@
 		bottom: 0;
 		left: 0;
 	}
-	.tools {
+	.toolbar {
 		padding: 12rem 20rem;
 		border-bottom: 1rem solid var(--admin-accent-2);
 		background-color: var(--admin-accent-1);

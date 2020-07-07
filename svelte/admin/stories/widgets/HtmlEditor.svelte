@@ -1,6 +1,6 @@
 <div class="html-editor">
 	<!-- <button on:click={show}>Show HTML</button> -->
-	<div class="tools">
+	<div class="toolbar">
 		<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
 		<select bind:value={template}>
 			<option value="">Select an HTML template (leave blank for default)</option>
@@ -116,7 +116,7 @@
 		box-shadow: 0rem 2rem 8rem rgba(0, 0, 0, 0.15);
 		background-color: white;
 	}
-	.tools {
+	.toolbar {
 		margin: 0 0 20rem;
 	}
 	input, select { margin: 0 0 10rem; }
