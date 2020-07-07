@@ -1,5 +1,5 @@
 <header class="header">
-	<div class="band">
+	<div class="band" class:fullwidth={$fullwidth}>
 		<a href="/admin" class="icon">
 			<div class="ghost">StoryLynx Dashboard</div>
 			<HomeIcon/>
@@ -11,6 +11,7 @@
 <script>
 	import AdminMenu from './AdminMenu.svelte'
 	import HomeIcon from '../../../svg/admin-home.svelte'
+	import { fullwidth } from '../../../../stores/admin-store.js'
 </script>
 
 <style type="text/scss">
@@ -30,8 +31,9 @@
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
-		max-width: var(--admin-layout-width);
+		// max-width: var(--admin-layout-width);
 		margin: 0 auto;
 		padding: 0 9rem;
+		&.fullwidth { max-width: none; }
 	}
 </style>

@@ -1,6 +1,6 @@
 <div class="lynx-admin-layout scheme-{$color_scheme}">
 	<AdminHeader/>
-	<div class="body">
+	<div class="body" class:fullwidth={$fullwidth}>
 		<AdminBar/>
 		<div class="content-view">
 			<slot></slot>
@@ -22,6 +22,7 @@
 	// $: admin = $session.user
 
 	import { color_scheme } from '../../../../stores/app-store.js'
+	import { fullwidth } from '../../../../stores/admin-store.js'
 
 	// DOM ONLY STUFF ---------- >>>>
 	let html
@@ -147,9 +148,10 @@
 		grid-template-areas: "body nav";
 		grid-gap: 20rem;
 		width: 100%;
-		padding: 20rem 0;
 		max-width: var(--admin-layout-width);
+		padding: 20rem 0;
 		margin: 0 auto;
+		&.fullwidth { max-width: none; }
 	}
 	.content-view {
 		display: grid;

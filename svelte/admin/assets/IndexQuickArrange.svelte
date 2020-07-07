@@ -1,4 +1,4 @@
-<Scaffolding title="Assets Quick Arrange">
+<Scaffolding title="Assets Quick Arrange" fullwidth={true}>
 
 	<div slot="actions">
 		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
@@ -86,16 +86,12 @@
 	.columns {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		margin: -40rem -40rem -60rem;
 	}
 	.col {
 		position: relative;
 		overflow: auto;
-		height: calc(100vh - 62rem);
+		height: calc(100vh - 135rem);
 		padding: 40rem;
 		border-right: 1rem solid var(--admin-accent-2);
 		&:last-child { border: 0; }

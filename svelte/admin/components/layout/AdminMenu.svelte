@@ -5,7 +5,7 @@
 		<SettingsIcon/>
 	</div>
 	<div class="dropdown" class:open>
-		<a href="/" class="link">
+		<a href="/" class="link" target="_blank">
 			{process.env.LYNX_SITE_NAME} Homepage
 			<!-- <div class="icon"><HomeIcon/></div> -->
 		</a>

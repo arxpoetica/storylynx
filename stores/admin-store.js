@@ -2,6 +2,7 @@ import { writable } from 'svelte/store'
 
 // === >>> General Helpers
 
+export const fullwidth = writable(false)
 export const saving = writable(false)
 export const saveable = writable(false)
 export const egg_preview = writable(null)

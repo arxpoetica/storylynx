@@ -13,6 +13,9 @@
 
 <script>
 	export let title = 'StoryLynx'
+	export let fullwidth = false
+	import { fullwidth as fullwidth_store } from '../../../../stores/admin-store.js'
+	$: $fullwidth_store = fullwidth
 </script>
 
 <style type="text/scss">
