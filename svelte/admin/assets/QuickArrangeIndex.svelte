@@ -1,6 +1,6 @@
-<Scaffolding title="Assets Quick Arrange" fullwidth={true}>
+<Scaffolding title="Assets Quick Arrange" fullwidth={true} actions={true}>
 
-	<div slot="actions">
+	<div class="actions" slot="actions">
 		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
 
@@ -83,15 +83,18 @@
 </script>
 
 <style type="text/scss">
+	// .actions[slot="actions"] {
+	// 	justify-content: flex-end !important;
+	// }
 	.columns {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		margin: -40rem -40rem -60rem;
+		margin: 0 0 -40rem;
 	}
 	.col {
 		position: relative;
 		overflow: auto;
-		height: calc(100vh - 135rem);
+		height: calc(100vh - 150rem);
 		padding: 40rem;
 		border-right: 1rem solid var(--admin-accent-2);
 		&:last-child { border: 0; }

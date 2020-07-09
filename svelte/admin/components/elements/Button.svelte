@@ -25,7 +25,7 @@
 		background-color: var(--admin-color-6);
 		border: 0;
 		border-radius: 4rem;
-		color: white;
+		color: var(--admin-bg);
 		font: bold 14rem/36rem var(--admin-font);
 		text-transform: none;
 		text-align: center;

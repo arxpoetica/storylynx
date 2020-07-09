@@ -1,4 +1,4 @@
-<Scaffolding>
+<Scaffolding title="StoryLynx Dashboard">
 	<div class="dashboard">
 		<h2 class="full">Project Information</h2>
 		<div class="card">
@@ -8,9 +8,6 @@
 		</div>
 	</div>
 </Scaffolding>
-
-<!-- <h1 slot="title">StoryLynx Dashboard</h1> -->
-
 
 <script>
 	import Scaffolding from './components/layout/Scaffolding.svelte'

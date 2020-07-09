@@ -1,6 +1,6 @@
-<Scaffolding title="Assets Quick Entry" fullwidth={true}>
+<Scaffolding title="Assets Quick Entry" fullwidth={true} actions={true}>
 
-	<div slot="actions">
+	<div class="actions" slot="actions">
 		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
 
@@ -156,9 +156,13 @@
 </script>
 
 <style type="text/scss">
+	// .actions[slot="actions"] {
+	// 	justify-content: flex-end !important;
+	// }
 	.quick-entry {
 		overflow: hidden;
-		height: calc(100vh - 135rem);
-		margin: -40rem;
+		position: relative;
+		height: calc(100vh - 150rem);
+		margin: 0 0 -40rem;
 	}
 </style>

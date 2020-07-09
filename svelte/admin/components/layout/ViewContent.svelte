@@ -1,6 +1,6 @@
-<Scaffolding title={model}>
+<Scaffolding title={model} actions={true} toolbar={true}>
 
-	<div slot="actions">
+	<div class="actions" slot="actions">
 		<Button {href} title="Create {singular}"/>
 	</div>
 
@@ -63,4 +63,9 @@
 	}
 </script>
 
-<!-- <style type="text/scss"></style> -->
+<style type="text/scss">
+	// .actions[slot="actions"] {
+	// 	justify-content: flex-end;
+	// }
+	// .toolbar
+</style>

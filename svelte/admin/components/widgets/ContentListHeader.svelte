@@ -70,16 +70,14 @@
 <style type="text/scss">
 	.row {
 		display: table-row;
-		border-bottom: 1rem solid var(--admin-accent-2);
-		font: $bold 13rem/1 $font;
+		font: $bold 11rem/1 $font;
+		text-transform: uppercase;
 		cursor: pointer;
 	}
 	.col {
 		display: table-cell;
-		padding: 3rem 8rem;
+		padding: 2rem 8rem;
 		vertical-align: middle;
-		border-left: 1rem solid var(--admin-accent-2);
-		&:first-child { border: 0; }
 	}
 	.col-checkbox {
 		width: 48rem;

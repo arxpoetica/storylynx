@@ -69,14 +69,14 @@
 	.content-list {
 		display: table;
 		width: 100%;
-		background-color: var(--admin-bg);
 		border-collapse: collapse;
 		border-spacing: 0;
 		font: 14rem/1.2 $font;
 	}
 	.row {
 		display: table-row;
-		border-bottom: 1rem solid var(--admin-accent-2);
+		background-color: var(--admin-accent-1);
+		border: 1rem solid var(--admin-accent-0);
 		color: inherit;
 		text-decoration: none;
 		cursor: pointer;
@@ -84,7 +84,7 @@
 	}
 	.col {
 		display: table-cell;
-		padding: 0 8rem;
+		padding: 12rem 8rem;
 		vertical-align: middle;
 	}
 	.assets {

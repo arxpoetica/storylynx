@@ -38,8 +38,8 @@
 	// ============ >>>>> DARK MODE
 
 	@define-mixin darkmode {
-		--admin-bg: #38444c;
-		--admin-bg-rgb: 56, 68, 76;
+		--admin-bg: #1e2124;
+		--admin-bg-rgb: 30, 33, 36;
 
 		--admin-accent-0: black;
 		--admin-accent-0-rgb: 0, 0, 0;
@@ -149,7 +149,7 @@
 		grid-gap: 20rem;
 		width: 100%;
 		max-width: var(--admin-layout-width);
-		padding: 20rem 0;
+		padding: 40rem 0;
 		margin: 0 auto;
 		&.fullwidth { max-width: none; }
 	}

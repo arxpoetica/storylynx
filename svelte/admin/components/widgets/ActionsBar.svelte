@@ -45,12 +45,9 @@
 
 <style type="text/scss">
 	.toolbar {
-		// display: flex;
-		// justify-content: space-between;
-		// align-items: flex-end;
-		// margin: 0 0 10rem;
+		margin: 0 0 10rem;
 		padding: 12rem 16rem;
-		border-bottom: 1rem solid var(--admin-accent-2);
+		border-bottom: 1rem solid var(--admin-accent-0);
 		background-color: var(--admin-accent-1);
 		font: $light 13rem/1 $font;
 	}
