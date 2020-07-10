@@ -39,8 +39,8 @@
 	.dash {
 		display: grid;
 		grid-template-rows: auto 1fr;
-		height: calc(100vh - 99rem);
-		margin: -40rem -40rem -60rem;
+		height: calc(100vh - 94rem);
+		margin: 0 0 -40rem;
 	}
 	.toolbar {
 		padding: 12rem 20rem;

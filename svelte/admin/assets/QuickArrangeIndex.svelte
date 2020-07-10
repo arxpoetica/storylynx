@@ -90,11 +90,12 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		margin: 0 0 -40rem;
+		border-top: 1rem solid var(--admin-accent-2)
 	}
 	.col {
 		position: relative;
 		overflow: auto;
-		height: calc(100vh - 150rem);
+		height: calc(100vh - 151rem);
 		padding: 40rem;
 		border-right: 1rem solid var(--admin-accent-2);
 		&:last-child { border: 0; }

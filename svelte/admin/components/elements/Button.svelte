@@ -1,9 +1,22 @@
 {#if href}
-	<a bind:this={element} {href} class="button {classes}" class:disabled on:click|stopPropagation={event => handler(event)}>
+	<a
+		bind:this={element}
+		{href}
+		class="button {classes}"
+		{style}
+		class:disabled
+		on:click|stopPropagation={event => handler(event)}
+	>
 		{title}
 	</a>
 {:else}
-	<button bind:this={element} class="button {classes}" {disabled} on:click|stopPropagation={event => handler(event)}>
+	<button
+		bind:this={element}
+		class="button {classes}"
+		{style}
+		{disabled}
+		on:click|stopPropagation={event => handler(event)}
+	>
 		{title}
 	</button>
 {/if}
@@ -11,6 +24,7 @@
 <script>
 	export let href = false
 	export let classes = ''
+	export let style = false
 	export let title = 'Click'
 	export let disabled = false
 	export let element

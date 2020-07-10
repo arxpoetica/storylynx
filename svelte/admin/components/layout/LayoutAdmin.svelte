@@ -53,6 +53,7 @@
 		--admin-accent-9: #c8cfd2;
 		--admin-accent-10: #f6f9fc;
 		--admin-shadow: 0 4rem 20rem rgba(0, 0, 0, 0.8);
+		--admin-text-shadow: 0 1rem 4rem black;
 
 		--admin-color-1: #21333d;
 		--admin-color-1-rgb: 33, 51, 61;
@@ -84,6 +85,7 @@
 		--admin-accent-9: #485358;
 		--admin-accent-10: #2e3539;
 		--admin-shadow: 0 4rem 20rem rgba(0, 0, 0, 0.2);
+		--admin-text-shadow: 0 1rem 4rem white;
 
 		--admin-color-1: #e7f6fe;
 		--admin-color-1-rgb: 231, 246, 254;
