@@ -67,6 +67,7 @@
 	.pane {
 		overflow: auto;
 		// padding: 20rem;
+		@mixin scrollbar {}
 	}
 	// .developer-pane {}
 	.sequence {
