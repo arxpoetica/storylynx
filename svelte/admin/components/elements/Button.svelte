@@ -125,14 +125,14 @@
 		// 		text-decoration: underline;
 		// 	}
 		// }
-		// &.blank {
-		// 	background-color: transparent;
-		// 	color: $links;
-		// 	&:hover,
-		// 	&:focus {
-		// 		text-decoration: underline;
-		// 	}
-		// }
+		&.blank {
+			background-color: transparent;
+			color: rgba(var(--admin-text-rgb), 0.75);
+			&:hover,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
 		// &.off {
 		// 	padding: 0;
 		// 	background-color: transparent;

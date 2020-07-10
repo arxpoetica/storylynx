@@ -34,7 +34,6 @@
 </script>
 
 <style type="text/scss">
-
 	@mixin sharedvars {}
 	@media (prefers-color-scheme: light) { :root { @mixin lightmode {} } }
 	.scheme-light { @mixin lightmode {} }

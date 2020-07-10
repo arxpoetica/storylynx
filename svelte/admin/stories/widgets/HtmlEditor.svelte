@@ -1,6 +1,7 @@
 <div class="html-editor">
 	<!-- <button on:click={show}>Show HTML</button> -->
 	<div class="toolbar">
+		<!-- FIXME: make these components -->
 		<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
 		<select bind:value={template}>
 			<option value="">Select an HTML template (leave blank for default)</option>
@@ -19,7 +20,7 @@
 	<div id="editor-js" class="editor-js"></div>
 	<Button title="Insert block" classes="small" handler={() => insert_block()}/>
 	<div class="buttons">
-		<Button title="Cancel" classes="alert" handler={() => cancel(backup)}/>
+		<Button title="Cancel" classes="blank" handler={() => cancel(backup)}/>
 		<Button title="Save HTML" classes="good" handler={() => save(data)}/>
 	</div>
 	<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
@@ -110,16 +111,22 @@
 
 <style type="text/scss">
 	.html-editor {
-		max-width: 850rem;
 		padding: 75rem;
-		border: 1rem solid var(--admin-accent-2);
-		box-shadow: 0rem 2rem 8rem rgba(0, 0, 0, 0.15);
-		background-color: white;
+		border: 1rem solid var(--admin-accent-0);
+		box-shadow: var(--admin-shadow);
+		background-color: var(--admin-bg);
 	}
 	.toolbar {
 		margin: 0 0 20rem;
 	}
-	input, select { margin: 0 0 10rem; }
+	input,
+	select {
+		margin: 0 0 10rem;
+		background-color: var(--admin-bg);
+		border: 1rem solid var(--admin-accent-3);
+		color: var(--admin-text);
+		font: 14rem var(--admin-font);
+	}
 	.buttons {
 		display: flex;
 		justify-content: flex-end;

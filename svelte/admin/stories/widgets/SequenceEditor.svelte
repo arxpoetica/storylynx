@@ -38,37 +38,26 @@
 
 <style type="text/scss">
 	.clip {
-		// position: relative;
-		border-bottom: 1rem solid var(--admin-accent-2);
-		&:last-child {
-			border: 0;
-		}
-		&:hover {
-			background-color: var(--admin-accent-1);
-			.header { background-color: rgba(var(--admin-accent-1-rgb), 0.9); }
-			.button-wrap { opacity: 1; }
-		}
-		&.on {
-			background-color: var(--admin-color-1);
-			.header { background-color: rgba(var(--admin-color-1-rgb), 0.9); }
-			.button-wrap { display: none; }
-		}
+		margin: 0 0 40rem;
+		padding: 20rem;
+		background-color: var(--admin-accent-1);
+		border-radius: 15rem;
+		&:last-child { margin: 0; }
+		&:hover .button-wrap { opacity: 1; }
+		&.on .button-wrap { display: none; }
 	}
 	.header {
-		position: sticky;
-		top: 0;
-		right: 0;
-		left: 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 20rem;
-		background-color: rgba(var(--admin-bg-rgb), 0.9);
 		z-index: 2;
 	}
-	.content {
-		padding: 20rem;
+	h2 {
+		margin: 0 0 20rem;
+		font: bold 15rem var(--admin-font);
 	}
+	// .content {
+	// }
 	.button-wrap {
 		opacity: 0;
 	}

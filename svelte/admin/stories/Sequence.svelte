@@ -69,7 +69,9 @@
 		// padding: 20rem;
 		@mixin scrollbar {}
 	}
-	// .developer-pane {}
+	.developer {
+		padding: 40rem;
+	}
 	.sequence {
 		border-left: 1px solid var(--admin-accent-2);
 	}

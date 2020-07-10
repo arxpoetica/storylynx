@@ -15,7 +15,9 @@
 						{/each}
 					</div>
 				{:else}
-					<p>[No assets]</p>
+					<div class="bin">
+						<p>[No assets]</p>
+					</div>
 				{/if}
 				{#each bin.html_blocks as block, block_index}
 					<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
@@ -35,28 +37,27 @@
 </script>
 
 <style type="text/scss">
-	.bins {
-		padding: 2rem;
-		border: 1rem solid var(--admin-color-2);
-		background-color: var(--admin-color-1);
-	}
+	// .bins {}
 	.bin-section {
-		margin: 0 0 2rem;
-		padding: 20rem;
-		background-color: var(--admin-bg);
-		border: 1rem solid var(--admin-color-2);
+		margin: 0 0 20rem;
+		padding: 0 0 20rem;
+		border-bottom: 1rem solid var(--admin-accent-2);
 		&:last-child {
 			margin: 0;
+			padding: 0;
+			border: 0;
 		}
+	}
+	h3 {
+		margin: 0 0 20rem;
+		color: rgba(var(--admin-text-rgb), 0.75);
+		font: 15rem var(--admin-font);
 	}
 	.bin {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 100rem);
-		grid-gap: 10rem;
-		margin-bottom: 10rem;
-		margin: 0 0 10rem;
-		&:last-child {
-			margin: 0;
-		}
+		grid-template-columns: repeat(auto-fill, minmax(min(120rem, 100%), 1fr));
+		grid-gap: 20rem;
+		margin: 0 0 20rem;
+		&:last-child { margin: 0; }
 	}
 </style>
