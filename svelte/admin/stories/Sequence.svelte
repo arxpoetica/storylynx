@@ -9,11 +9,7 @@
 					<SequenceEditor {sequence}/>
 				</div>
 				<div class="pane sequence">
-					<!-- <p>{JSON.stringify(Object.keys(sequence))}</p> -->
-					<!-- <p>{JSON.stringify(sequence.id)}</p> -->
-					<!-- <p>{JSON.stringify(sequence.slug)}</p> -->
-					<!-- <p>{JSON.stringify(sequence.order)}</p> -->
-					<PreviewClip {sequence}/>
+					<PreviewPane {sequence}/>
 				</div>
 			</div>
 		</div>
@@ -31,7 +27,7 @@
 
 	import Scaffolding from '../components/layout/Scaffolding.svelte'
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
-	import PreviewClip from './widgets/PreviewClip.svelte'
+	import PreviewPane from './widgets/PreviewPane.svelte'
 	// import Button from '../components/elements/Button.svelte'
 </script>
 
@@ -65,6 +61,7 @@
 		grid-template-columns: 1fr 1fr;
 	}
 	.pane {
+		position: relative;
 		overflow: auto;
 		// padding: 20rem;
 		@mixin scrollbar {}
