@@ -1,8 +1,8 @@
 <svelte:window bind:innerHeight={$view_height}/>
 
 <!-- FIXME: break up some of these parts into shared components -->
-{#if sequence}
-	<div class="story-layout">
+<div class="story-layout" bind:this={layout}>
+	{#if sequence}
 		<div bind:this={the_stack} class="the-stack">
 			{@html style_tag}
 			{#each sequence.clips as clip, index}
@@ -21,19 +21,21 @@
 				<Clip bind:clip/>
 			{/each}
 		</div>
-	</div>
-{/if}
-
+	{/if}
+</div>
 
 <script>
 	let the_stack
 
-	import { seq_audio, seq_stack, view_height, preview } from '../../../stores/story-store.js'
+	import { seq_audio, seq_stack, view_height, preview, preview_clip_id } from '../../../stores/story-store.js'
 	import { hyphenate } from '../../../utils/basic-utils.js'
 	import ClipAudio from '../../stories/media/ClipAudio.svelte'
 	import Clip from '../../stories/Clip.svelte'
 
-	$: if (process.browser) { window.preview = preview }
+	$: if (process.browser) {
+		window.preview = preview
+		window.preview_clip_id = preview_clip_id
+	}
 	$: sequence = $preview
 
 	let style_tag = ''
@@ -65,6 +67,20 @@
 	// 		stack.style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
 	// 	}
 	// }
+
+	let layout
+	import { onMount } from 'svelte'
+	onMount(() => {
+		const html = document.querySelector('html')
+		var observer = new MutationObserver(list => {
+			if ($seq_stack[$preview_clip_id]) {
+				setTimeout(() => html.scrollTop = $seq_stack[$preview_clip_id].offsetTop, 0)
+			} else {
+				html.scrollTop = 0 // weird edge cases
+			}
+		})
+		observer.observe(layout, { childList: true, subtree: true })
+	})
 </script>
 
 <style type="text/scss">

@@ -28,6 +28,7 @@
 			clip_id: $preview_clip.id,
 		})
 		iframe.contentWindow.preview.set(story.sequence)
+		iframe.contentWindow.preview_clip_id.set($preview_clip.id)
 	}
 </script>
 
