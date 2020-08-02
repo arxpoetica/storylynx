@@ -27,7 +27,8 @@
 <script>
 	let the_stack
 
-	import { seq_audio, seq_stack, view_height, preview, preview_clip_id } from '../../../stores/story-store.js'
+	import { seq_audio, seq_stack, view_height } from '../../../stores/story-store.js'
+	import { preview, preview_clip_id } from '../../../stores/admin-store.js'
 	import { hyphenate } from '../../../utils/basic-utils.js'
 	import ClipAudio from '../../stories/media/ClipAudio.svelte'
 	import Clip from '../../stories/Clip.svelte'

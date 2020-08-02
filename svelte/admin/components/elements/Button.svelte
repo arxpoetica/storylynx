@@ -24,9 +24,9 @@
 <script>
 	export let href = false
 	export let classes = ''
-	export let style = false
+	export let style
 	export let title = 'Click'
-	export let disabled = false
+	export let disabled
 	export let element
 	export let handler = () => {}
 </script>
@@ -54,6 +54,7 @@
 		&:focus {
 			background-color: var(--admin-color-4);
 			text-decoration: none;
+			outline-offset: 3rem;
 		}
 		&.block {
 			display: block;
@@ -83,21 +84,20 @@
 		// }
 		&.good {
 			background-color: var(--admin-good-dark);
-			color: white;
+			color: #2e3539;
 			&:hover,
 			&:focus {
-				background-color: var(--admin-good-darker);
+				background-color: var(--admin-good);
 			}
 		}
-		// &.warning {
-		// 	background-color: $warning-1;
-		// 	color: $button-black;
-		// 	&:hover,
-		// 	&:focus {
-		// 		background-color: $warning-2;
-		// 		color: $button-black;
-		// 	}
-		// }
+		&.warning {
+			background-color: var(--admin-warn);
+			color: #2e3539;
+			&:hover,
+			&:focus {
+				background-color: var(--admin-warn-dark);
+			}
+		}
 		&.alert {
 			background-color: var(--admin-alert);
 			color: white;
@@ -126,12 +126,18 @@
 		// 	}
 		// }
 		&.blank {
+			padding: 0;
+			height: auto;
 			background-color: transparent;
-			color: rgba(var(--admin-text-rgb), 0.75);
-			&:hover,
-			&:focus {
+			color: var(--admin-color-6);
+			line-height: 1;
+			&:hover, &:focus {
+				background-color: transparent;
 				text-decoration: underline;
 			}
+			&.good { color: var(--admin-good-dark); }
+			&.warning { color: var(--admin-warn); }
+			&.alert { color: var(--admin-alert); }
 		}
 		// &.off {
 		// 	padding: 0;
@@ -145,12 +151,15 @@
 		// 		color: $button-black;
 		// 	}
 		// }
-		&[disabled],
-		&.disabled {
+		&[disabled] {
 			background-color: var(--admin-accent-2);
 			color: var(--admin-bg);
 			cursor: default;
 			pointer-events: none;
+		}
+		&[class*="blank"][disabled] {
+			background-color: transparent;
+			color: var(--admin-accent-2);
 		}
 	}
 </style>

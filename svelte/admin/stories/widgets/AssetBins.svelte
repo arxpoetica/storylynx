@@ -19,9 +19,14 @@
 						<p>[No assets]</p>
 					</div>
 				{/if}
-				{#each bin.html_blocks as block, block_index}
-					<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
-				{/each}
+				{#if bin.html_blocks.length}
+					<div class="html-blocks">
+						<h3>HTML Blocks</h3>
+						{#each bin.html_blocks as block, block_index}
+							<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
+						{/each}
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -43,13 +48,13 @@
 		padding: 0 0 20rem;
 		border-bottom: 1rem solid var(--admin-accent-2);
 		&:last-child {
-			margin: 0;
+			// margin: 0;
 			padding: 0;
 			border: 0;
 		}
 	}
 	h3 {
-		margin: 0 0 20rem;
+		margin: 0 0 6rem;
 		color: rgba(var(--admin-text-rgb), 0.75);
 		font: 15rem var(--admin-font);
 	}
@@ -57,7 +62,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(120rem, 100%), 1fr));
 		grid-gap: 20rem;
-		margin: 0 0 20rem;
+		margin: 0 0 40rem;
 		&:last-child { margin: 0; }
 	}
 </style>

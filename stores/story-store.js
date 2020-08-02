@@ -11,6 +11,3 @@ export const forward = writable(true)
 
 export const can_autoplay = writable(false)
 export const muted = storable('story.muted', false)
-
-export const preview = writable(false)
-export const preview_clip_id = writable(false)

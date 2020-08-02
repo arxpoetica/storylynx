@@ -111,10 +111,17 @@
 
 <style type="text/scss">
 	.html-editor {
+		overflow: auto;
+		position: fixed;
+		top: 136rem;
+		bottom: 0;
+		left: 0;
 		padding: 75rem;
+		width: calc(50% - 147rem);
 		border: 1rem solid var(--admin-accent-0);
 		box-shadow: var(--admin-shadow);
 		background-color: var(--admin-bg);
+		@mixin scrollbar {}
 	}
 	.toolbar {
 		margin: 0 0 20rem;
@@ -132,7 +139,7 @@
 		justify-content: flex-end;
 		margin: 75rem 0 0;
 		:global(.button) {
-			margin: 0 0 0 6rem;
+			margin: 0 0 0 20rem;
 		}
 	}
 	.editor-js {

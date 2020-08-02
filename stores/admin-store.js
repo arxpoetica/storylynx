@@ -29,7 +29,10 @@ export const preview_clip = writable(null)
 export const html_templates = writable([])
 export const html_colors = writable([])
 
+// === >>> Clip Preview
 
+export const preview = writable(false)
+export const preview_clip_id = writable(false)
 
 
 

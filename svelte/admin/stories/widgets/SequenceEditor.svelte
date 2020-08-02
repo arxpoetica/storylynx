@@ -1,24 +1,30 @@
 {#each sequence.clips as clip, index}
-	<div class="clip" class:on={index === selected_index}>
-		<div class="header">
-			<h2>{clip.slug}</h2>
-			<div class="button-wrap">
-				<Button title="Edit" handler={() => select(index)}/>
-			</div>
-		</div>
+	<div class="clip">
+		<h2>{clip.slug}</h2>
 		<div class="content">
-			<!-- <p>{JSON.stringify(Object.keys(clip))}</p> -->
-			<!-- <p>id: {JSON.stringify(clip.id)}</p> -->
-			<!-- <p>slug: {JSON.stringify(clip.slug)}</p> -->
-			<!-- <p>hide_navigation: {JSON.stringify(clip.hide_navigation)}</p> -->
-			<!-- <p>order: {JSON.stringify(clip.order)}</p> -->
-			<!-- <p>template: {JSON.stringify(clip.template)}</p> -->
-			<!-- <p>theme_elements: {JSON.stringify(clip.theme_elements)}</p> -->
-			<!-- <p>transition: {JSON.stringify(clip.transition)}</p> -->
 			<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
+		</div>
+		<div class="button-wrap">
+			<Button title="Delete" classes="alert blank" handler={() => delete_clip(index)}/>
+			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
+			<!-- disabled={index === selected_index ? 'disabled' : undefined} -->
+			<Button
+				title="Duplicate"
+				classes="blank"
+				handler={() => duplicate(index)}
+			/>
+			<Button
+				title="Edit"
+				classes="good"
+				disabled={index === selected_index ? 'disabled' : undefined}
+				handler={() => select(index)}
+			/>
 		</div>
 	</div>
 {/each}
+{#if duplicate_open}
+	<ModalDuplicateClip clip={duplicate_clip} bind:open={duplicate_open}/>
+{/if}
 
 <script>
 	export let sequence
@@ -28,11 +34,23 @@
 
 	import AssetBins from './AssetBins.svelte'
 	import Button from '../../components/elements/Button.svelte'
-
+	import ModalDuplicateClip from './ModalDuplicateClip.svelte'
 
 	function select(index) {
 		selected_index = index
 		$preview_clip = sequence.clips[index]
+	}
+
+	let duplicate_clip
+	let duplicate_open = false
+	async function duplicate(index) {
+		duplicate_open = true
+		console.log(sequence.clips[index])
+		duplicate_clip = sequence.clips[index]
+	}
+
+	async function delete_clip(index) {
+		console.log('oh no!')
 	}
 </script>
 
@@ -43,22 +61,17 @@
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
 		&:last-child { margin: 0; }
-		&:hover .button-wrap { opacity: 1; }
-		&.on .button-wrap { display: none; }
-	}
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		z-index: 2;
 	}
 	h2 {
 		margin: 0 0 20rem;
 		font: bold 15rem var(--admin-font);
 	}
-	// .content {
-	// }
 	.button-wrap {
-		opacity: 0;
+		display: flex;
+		justify-content: flex-end;
+		:global(.button) {
+			margin: 0 0 0 20rem;
+			&:first-child { margin: 0; }
+		}
 	}
 </style>

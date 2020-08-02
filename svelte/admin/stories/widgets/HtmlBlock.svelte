@@ -10,13 +10,10 @@
 			cancel={backup => cancel(backup, bin_index, block_index)}
 		/>
 	{:else}
-		{#if Object.keys(block.code).length}
-			<h3>HTML</h3>
-			<code>{block.html || ''}</code>
-		{/if}
+		<HtmlCode {block}/>
 		{#if selectedclip}
 			<div class="create-html">
-				<Button title="{html_edit_str(block.code)} HTML" classes="good" handler={() => edit_html = true}/>
+				<Button title="{html_edit_str(block.code)} HTML" classes="good blank" handler={() => edit_html = true}/>
 			</div>
 		{/if}
 	{/if}
@@ -33,6 +30,7 @@
 
 	import Button from '../../components/elements/Button.svelte'
 	import HtmlEditor from './HtmlEditor.svelte'
+	import HtmlCode from './HtmlCode.svelte'
 
 	const html_edit_str = code => Object.keys(code).length ? 'Edit' : 'Add'
 
@@ -70,21 +68,6 @@
 </script>
 
 <style type="text/scss">
-	.html-block {
-		margin: 40rem 0 0;
-	}
-	code {
-		overflow: auto;
-		display: block;
-		margin: 0;
-		padding: 6rem;
-		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
-		border-radius: 4rem;
-		color: rgba(var(--admin-text-rgb), 0.5);
-		font: 13rem monospace;
-		word-break: break-all;
-	}
-	.create-html {
-		margin: 12rem 0 0;
-	}
+	.html-block { margin: 6rem 0 0; }
+	.create-html { margin: 6rem 0 0 6rem; }
 </style>
