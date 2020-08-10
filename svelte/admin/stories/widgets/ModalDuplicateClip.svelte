@@ -7,10 +7,10 @@
 				<div class="col one">{sequence.order}-</div>
 				<div class="col">
 					<Input type="number" label="Order" sublabel="(number)" bind:value={order} required={true}/>
-					<!-- <input type="number" bind:value={order} placeholder="Give the duplicate clip an order..."/> -->
 				</div>
 			</div>
 		{/if}
+		<Errors {errors}/>
 		<Button title="Save" classes="good" handler={save}/>
 	{/if}
 </Modal>
@@ -25,26 +25,47 @@
 	$: sequence = typeof index === 'number' ? sequences[index] : undefined
 	let order = 0
 
+	import Input from '../../components/elements/Input.svelte'
+	import Select from '../../components/elements/Select.svelte'
+	import Button from '../../components/elements/Button.svelte'
+	import Modal from '../../components/widgets/Modal.svelte'
+	import Errors from '../../components/widgets/Errors.svelte'
+
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
 
+	let validator
 	(async() => {
 		const res = await POST('/api/admin/stories/sequences-list.post', {
 			cookie: $session.cookie,
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
 		})
 		sequences = res.sequences
+
+		const { default: FastestValidator } = await import('fastest-validator/dist/index.min.js')
+		validator = (new FastestValidator()).compile({
+			slug: {
+				type: 'string',
+				pattern: /^\b[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\b$/,
+			},
+			parent: 'string',
+			order: 'number|integer|min:0|max:9999',
+			$$strict: true,
+		})
 	})()
 
-	import Input from '../../components/elements/Input.svelte'
-	import Select from '../../components/elements/Select.svelte'
-	import Button from '../../components/elements/Button.svelte'
-	import Modal from '../../components/widgets/Modal.svelte'
-
+	let errors = []
 	async function save(index) {
 		// $saving = true
+
+		const valid = validator({ slug, parent: sequence ? sequence.id : false, order })
+		if (valid !== true) {
+			errors = valid
+			return
+		}
+		errors = []
 
 		// <!-- slug, order, parent_id -->
 

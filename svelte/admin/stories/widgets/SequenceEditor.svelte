@@ -1,6 +1,6 @@
 {#each sequence.clips as clip, index}
 	<div class="clip">
-		<h2>{clip.slug}</h2>
+		<h2>{clip.slug} <span>({clip.order})</span></h2>
 		<div class="content">
 			<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
 		</div>
@@ -45,7 +45,7 @@
 	let duplicate_open = false
 	async function duplicate(index) {
 		duplicate_open = true
-		console.log(sequence.clips[index])
+		// console.log(sequence.clips[index])
 		duplicate_clip = sequence.clips[index]
 	}
 
@@ -64,7 +64,12 @@
 	}
 	h2 {
 		margin: 0 0 20rem;
-		font: bold 15rem var(--admin-font);
+		font: bold 15rem/1.2 var(--admin-font);
+		span {
+			font: 12rem/1.2 var(--admin-font);
+			white-space: nowrap;
+			opacity: 0.5;
+		}
 	}
 	.button-wrap {
 		display: flex;

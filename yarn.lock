@@ -299,6 +299,11 @@ estree-walker@^0.6.1:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.6.1.tgz#53049143f40c6eb918b23671d1fe3219f3a1b362"
   integrity sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==
 
+fastest-validator@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.6.0.tgz#6ecb4e16be5b213cf2f3e5902ce666561cdd1f1b"
+  integrity sha512-Hj3Sf02Q1PVnFDgTaB/q0iF5BokJclLm5Q0uc04WaGoPciQE7UMfAB5gC8Mp9lto9OIgfjhQlBG0BxhW6LmVHQ==
+
 fs-extra@9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
