@@ -1,4 +1,4 @@
-<Modal title="Duplicate Clip" subtitle="&quot;{clip.slug}&quot;" bind:open>
+<Modal title="Duplicate Clip" subtitle="&quot;{clip.slug}&quot;" bind:open loaded={!!sequences.length}>
 	{#if sequences.length}
 		<Input label="Slug" sublabel="(alphanumberic-kebab-case)" bind:value={slug} required={true} autofocus={true}/>
 		<Select label="Parent Sequence" bind:value={index} primary="Select One" required={true} {options}/>

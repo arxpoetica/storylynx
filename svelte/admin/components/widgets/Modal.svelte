@@ -14,7 +14,16 @@
 				<div class="close" on:click={() => open = false}><Close/></div>
 			</div>
 			<div class="body">
-				<slot></slot>
+				{#if loaded}
+					<slot></slot>
+				{:else}
+					<div class="loading">
+						<div class="svg">
+							<Hourglass/>
+						</div>
+						<p>...loading...</p>
+					</div>
+				{/if}
 			</div>
 		</div>
 		<div class="space"></div>
@@ -23,9 +32,11 @@
 
 <script>
 	export let open = false
+	export let loaded = false
 	export let title = 'Alert!'
 	export let subtitle
 	import Close from '../../../svg/admin-close.svelte'
+	import Hourglass from '../../../svg/hourglass.svelte'
 	function escape(event) {
 		if (open && event.key === 'Escape') {
 			open = false
@@ -86,5 +97,27 @@
 		height: 30rem;
 		margin: -20rem -20rem 0 20rem;
 		cursor: pointer;
+	}
+	.body {
+		position: relative;
+	}
+	.loading {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 150rem;
+		color: var(--admin-accent-0);
+		animation: rotate-color 2.5s linear infinite;
+	}
+	.svg {
+		width: 30rem;
+		height: 47rem;
+		margin: 0 0 10rem;
+	}
+	@keyframes rotate-color {
+		0% { color: var(--admin-accent-0); }
+		50% { color: var(--admin-bg); }
+		100% { color: var(--admin-accent-0); }
 	}
 </style>
