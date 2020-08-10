@@ -1,18 +1,15 @@
-<Modal title="Duplicating clip: &quot;{clip.slug}&quot;" bind:open>
-
-	<!-- slug, order, parent_id -->
-
-	{#if sequences && sequences.length}
-		<input type="text" bind:value={slug} placeholder="Give the duplicate clip a slug..."/>
-		<select bind:value={sequence}>
-			<option value="">Select an parent sequence for the clip</option>
-			{#each sequences as sequence, index (sequence.order)}
-				<option value={sequences[index]}>{sequence.slug}</option>
-			{/each}
-		</select>
+<Modal title="Duplicate Clip" subtitle="&quot;{clip.slug}&quot;" bind:open>
+	{#if sequences.length}
+		<Input label="Slug" sublabel="(alphanumberic-kebab-case)" bind:value={slug} required={true} autofocus={true}/>
+		<Select label="Parent Sequence" bind:value={index} primary="Select One" required={true} {options}/>
 		{#if sequence}
-			{sequence.order}-
-			<input type="number" bind:value={order} placeholder="Give the duplicate clip an order..."/>
+			<div class="order">
+				<div class="col one">{sequence.order}-</div>
+				<div class="col">
+					<Input type="number" label="Order" sublabel="(number)" bind:value={order} required={true}/>
+					<!-- <input type="number" bind:value={order} placeholder="Give the duplicate clip an order..."/> -->
+				</div>
+			</div>
 		{/if}
 		<Button title="Save" classes="good" handler={save}/>
 	{/if}
@@ -21,9 +18,11 @@
 <script>
 	export let clip
 	export let open
-	let sequences
+	let sequences = []
+	$: options = sequences.map(seq => ({ id: seq.id, text: seq.slug }))
 	let slug = ''
-	let sequence = ''
+	let index = ''
+	$: sequence = typeof index === 'number' ? sequences[index] : undefined
 	let order = 0
 
 	import { getContext } from 'svelte'
@@ -32,20 +31,22 @@
 	import { POST } from '../../../../utils/loaders.js'
 
 	(async() => {
-		console.log('how many times is this happening???')
 		const res = await POST('/api/admin/stories/sequences-list.post', {
 			cookie: $session.cookie,
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
 		})
-		console.log(res.sequences)
 		sequences = res.sequences
 	})()
 
+	import Input from '../../components/elements/Input.svelte'
+	import Select from '../../components/elements/Select.svelte'
 	import Button from '../../components/elements/Button.svelte'
 	import Modal from '../../components/widgets/Modal.svelte'
 
 	async function save(index) {
 		// $saving = true
+
+		// <!-- slug, order, parent_id -->
 
 		// const res = await POST('/api/admin/stories/clip-duplicate.post', {
 		// 	cookie: $session.cookie,
@@ -61,8 +62,11 @@
 </script>
 
 <style type="text/scss">
-	input,
-	select {
-		color: black;
+	.order {
+		display: flex;
+	}
+	.one {
+		padding-top: 29rem;
+		font: 14rem/20rem var(--admin-font);
 	}
 </style>

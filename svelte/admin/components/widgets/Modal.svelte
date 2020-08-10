@@ -5,9 +5,12 @@
 		<div class="back" on:click={() => open = false}></div>
 		<div class="box">
 			<div class="header">
-				{#if title}
+				<div class="titles">
 					<h2>{title}</h2>
-				{/if}
+					{#if subtitle}
+						<h3>{subtitle}</h3>
+					{/if}
+				</div>
 				<div class="close" on:click={() => open = false}><Close/></div>
 			</div>
 			<div class="body">
@@ -20,7 +23,8 @@
 
 <script>
 	export let open = false
-	export let title
+	export let title = 'Alert!'
+	export let subtitle
 	import Close from '../../../svg/admin-close.svelte'
 	function escape(event) {
 		if (open && event.key === 'Escape') {
@@ -53,7 +57,9 @@
 	}
 	.box {
 		position: relative;
-		max-width: 50%;
+		// TODO: specify different sizes by variable?
+		max-width: 750rem;
+		min-width: 450rem;
 		padding: 40rem;
 		background-color: var(--admin-bg);
 		border-radius: 20rem;
@@ -63,10 +69,16 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-		margin: 0 0 20rem;
+		margin: 0 0 40rem;
 	}
 	h2 {
+		margin: 0 0 6rem;
+		font: bold 22rem/1.2 var(--admin-font);
+	}
+	h3 {
 		margin: 0;
+		font: 15rem/1.2 var(--admin-font);
+		color: rgba(var(--admin-text-rgb), 0.6);
 	}
 	.close {
 		width: 30rem;

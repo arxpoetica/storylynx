@@ -7,7 +7,7 @@
 	import Button from '../../components/elements/Button.svelte'
 
 	let expanded = false
-	$: html = expanded ? block.html.trim() || '' : block.html.slice(0, 45).trim()
+	$: html = expanded ? block.html.trim() || '' : block.html.slice(0, 43).trim()
 	$: expandable = block.html.length > html.length || expanded
 </script>
 

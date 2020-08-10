@@ -50,11 +50,15 @@
 		cursor: pointer;
 		-webkit-appearance: none;
 		user-select: none;
-		&:hover,
-		&:focus {
+		&:hover {
 			background-color: var(--admin-color-4);
 			text-decoration: none;
 			outline-offset: 3rem;
+		}
+		&:focus {
+			border-color: var(--admin-form-border);
+			outline: none;
+			box-shadow: var(--admin-form-shadow);
 		}
 		&.block {
 			display: block;
@@ -85,33 +89,23 @@
 		&.good {
 			background-color: var(--admin-good-dark);
 			color: #2e3539;
-			&:hover,
-			&:focus {
-				background-color: var(--admin-good);
-			}
+			&:hover { background-color: var(--admin-good); }
 		}
 		&.warning {
 			background-color: var(--admin-warn);
 			color: #2e3539;
-			&:hover,
-			&:focus {
-				background-color: var(--admin-warn-dark);
-			}
+			&:hover { background-color: var(--admin-warn-dark); }
 		}
 		&.alert {
 			background-color: var(--admin-alert);
 			color: white;
-			&:hover,
-			&:focus {
-				background-color: var(--admin-alert-dark);
-			}
+			&:hover { background-color: var(--admin-alert-dark); }
 		}
 		&.inverse {
 			background-color: white;
 			color: var(--admin-color-6);
 			border: 1rem solid var(--admin-color-6);
-			&:hover,
-			&:focus {
+			&:hover {
 				color: var(--admin-color-4);
 				border-color: var(--admin-color-4);
 			}
@@ -126,12 +120,12 @@
 		// 	}
 		// }
 		&.blank {
-			padding: 0;
+			padding: 0 5rem;
 			height: auto;
 			background-color: transparent;
 			color: var(--admin-color-6);
 			line-height: 1;
-			&:hover, &:focus {
+			&:hover {
 				background-color: transparent;
 				text-decoration: underline;
 			}
@@ -145,8 +139,7 @@
 		// 	color: $button-black;
 		// 	cursor: default;
 		// 	pointer-events: none;
-		// 	&:hover,
-		// 	&:focus {
+		// 	&:hover {
 		// 		background-color: transparent;
 		// 		color: $button-black;
 		// 	}

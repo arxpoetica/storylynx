@@ -70,7 +70,7 @@
 		display: flex;
 		justify-content: flex-end;
 		:global(.button) {
-			margin: 0 0 0 20rem;
+			margin: 0 0 0 15rem;
 			&:first-child { margin: 0; }
 		}
 	}
