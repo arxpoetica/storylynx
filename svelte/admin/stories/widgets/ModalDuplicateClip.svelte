@@ -51,7 +51,6 @@
 	let errors = []
 	async function save(index) {
 		// $saving = true
-
 		const valid = validator({ slug, parent: sequence ? sequence.id : false, order })
 		if (valid !== true) {
 			errors = valid
@@ -59,18 +58,16 @@
 		}
 		errors = []
 
-		// <!-- slug, order, parent_id -->
-
-		// const res = await POST('/api/admin/stories/clip-duplicate.post', {
-		// 	cookie: $session.cookie,
-		// 	clip: sequence.clips[index],
-		// })
-		// // console.log(res.mutation)
-		// // console.log(res.variables)
+		const res = await POST('/api/admin/stories/clip-duplicate.post', {
+			cookie: $session.cookie,
+			clip,
+			slug,
+			parent_id: sequence.id,
+			order: `${sequence.order}-${order}`,
+		})
 		// console.log(res)
-
-		// $saving = false
 		open = false
+		// $saving = false
 	}
 </script>
 
