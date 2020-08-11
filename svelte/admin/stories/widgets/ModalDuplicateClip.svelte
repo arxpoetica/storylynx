@@ -1,14 +1,9 @@
-<Modal title="Duplicate Clip" subtitle="&quot;{clip.slug}&quot;" bind:open loaded={!!sequences.length}>
+<Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loaded={!!sequences.length}>
 	{#if sequences.length}
-		<Input label="Slug" sublabel="(alphanumberic-kebab-case)" bind:value={slug} required={true} autofocus={true}/>
+		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
 		<Select label="Parent Sequence" bind:value={index} primary="Select One" required={true} {options}/>
 		{#if sequence}
-			<div class="order">
-				<div class="col one">{sequence.order}-</div>
-				<div class="col">
-					<Input type="number" label="Order" sublabel="(number)" bind:value={order} required={true}/>
-				</div>
-			</div>
+			<Input type="number" label="Order" prelabel="{sequence.order}-" bind:value={order} required={true}/>
 		{/if}
 		<Errors {errors}/>
 		<Button title="Save" classes="good" handler={save}/>
@@ -46,10 +41,7 @@
 
 		const { default: FastestValidator } = await import('fastest-validator/dist/index.min.js')
 		validator = (new FastestValidator()).compile({
-			slug: {
-				type: 'string',
-				pattern: /^\b[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\b$/,
-			},
+			slug: 'string|empty:false|min:3|max:250',
 			parent: 'string',
 			order: 'number|integer|min:0|max:9999',
 			$$strict: true,
@@ -82,12 +74,4 @@
 	}
 </script>
 
-<style type="text/scss">
-	.order {
-		display: flex;
-	}
-	.one {
-		padding-top: 29rem;
-		font: 14rem/20rem var(--admin-font);
-	}
-</style>
+<!-- <style type="text/scss"></style> -->

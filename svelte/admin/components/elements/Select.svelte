@@ -1,9 +1,7 @@
 <label>
 	<span class="label">
 		{label}
-		{#if sublabel}
-			<span class="sublabel">{sublabel}</span>
-		{/if}
+		{#if required}<span class="required"> *</span>{/if}
 	</span>
 	<span class="select">
 		<select bind:value>
@@ -18,6 +16,9 @@
 			<SelectCaret/>
 		</span>
 	</span>
+	{#if sublabel}
+		<span class="sublabel">{sublabel}</span>
+	{/if}
 </label>
 
 <script>
@@ -26,6 +27,7 @@
 	export let label = 'Label'
 	export let sublabel
 	export let value = ''
+	export let required
 	export let primary
 	export let options = []
 </script>
@@ -34,6 +36,15 @@
 	label {
 		display: block;
 		margin: 0 0 20rem;
+	}
+	.label {
+		display: block;
+		margin: 0 0 8rem;
+		font: bold 15rem/1 var(--admin-font);
+	}
+	.select {
+		display: block;
+		position: relative;
 		select {
 			display: block;
 			width: 100%;
@@ -65,18 +76,7 @@
 			// }
 		}
 	}
-	.label {
-		display: block;
-		margin: 0 0 8rem;
-		font: bold 15rem/1 var(--admin-font);
-	}
-	.sublabel {
-		font-weight: normal;
-	}
-	.select {
-		display: block;
-		position: relative;
-	}
+	.required { color: var(--admin-alert) }
 	.svg {
 		display: block;
 		position: absolute;
@@ -88,5 +88,8 @@
 		color: var(--admin-accent-4);
 		line-height: 0;
 		pointer-events: none;
+	}
+	.sublabel {
+		font-weight: normal;
 	}
 </style>

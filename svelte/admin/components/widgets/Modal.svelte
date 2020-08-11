@@ -89,7 +89,7 @@
 	h3 {
 		margin: 0;
 		font: 15rem/1.2 var(--admin-font);
-		color: rgba(var(--admin-text-rgb), 0.6);
+		opacity: 0.6;
 	}
 	.close {
 		width: 30rem;
