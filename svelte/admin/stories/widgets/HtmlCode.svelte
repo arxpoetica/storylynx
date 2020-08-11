@@ -28,10 +28,4 @@
 			font-size: inherit;
 		}
 	}
-	expandable {
-		display: inline;
-		color: var(--admin-text);
-		cursor: pointer;
-		&:hover { text-decoration: underline; }
-	}
 </style>

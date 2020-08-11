@@ -49,8 +49,27 @@
 		duplicate_clip = sequence.clips[index]
 	}
 
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { POST } from '../../../../utils/loaders.js'
 	async function delete_clip(index) {
-		console.log('oh no!')
+
+		// FIXME: !!!!
+		// FIXME: !!!!
+		// FIXME: !!!!
+		// FIXME: !!!!
+		console.log('THIS HAS NO SAFE GUARD YET!')
+
+		const clip = sequence.clips[index]
+		const res = await POST('/api/admin/stories/clip-delete.post', {
+			cookie: $session.cookie,
+			clip_id: sequence.clips[index].id,
+			style_id: clip.style ? clip.style.id : false,
+			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
+			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
+		})
+		console.log(res)
 	}
 </script>
 
