@@ -23,7 +23,7 @@
 	</div>
 {/each}
 {#if duplicate_open}
-	<ModalDuplicateClip clip={duplicate_clip} bind:open={duplicate_open}/>
+	<ModalDuplicateClip {sequence} clip={duplicate_clip} bind:open={duplicate_open}/>
 {/if}
 
 <script>

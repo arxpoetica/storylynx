@@ -1,9 +1,9 @@
 <Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loaded={!!sequences.length}>
 	{#if sequences.length}
 		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
-		<Select label="Parent Sequence" bind:value={index} primary="Select One" required={true} {options}/>
-		{#if sequence}
-			<Input type="number" label="Order" prelabel="{sequence.order}-" bind:value={order} required={true}/>
+		<Select label="Parent Sequence" bind:value={parent_index} primary="Select One" required={true} {options}/>
+		{#if parent}
+			<Input type="number" label="Order" prelabel="{parent.order}-" bind:value={order} required={true}/>
 		{/if}
 		<Errors {errors}/>
 		<Button title="Save" classes="good" handler={save}/>
@@ -11,13 +11,14 @@
 </Modal>
 
 <script>
+	export let sequence
 	export let clip
 	export let open
 	let sequences = []
 	$: options = sequences.map(seq => ({ id: seq.id, text: seq.slug }))
 	let slug = ''
-	let index = ''
-	$: sequence = typeof index === 'number' ? sequences[index] : undefined
+	let parent_index = ''
+	$: parent = typeof parent_index === 'number' ? sequences[parent_index] : undefined
 	let order = 0
 
 	import Input from '../../components/elements/Input.svelte'
@@ -38,6 +39,7 @@
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
 		})
 		sequences = res.sequences
+		parent_index = sequences.findIndex(seq => sequence.id === seq.id)
 
 		const { default: FastestValidator } = await import('fastest-validator/dist/index.min.js')
 		validator = (new FastestValidator()).compile({
@@ -51,7 +53,7 @@
 	let errors = []
 	async function save(index) {
 		// $saving = true
-		const valid = validator({ slug, parent: sequence ? sequence.id : false, order })
+		const valid = validator({ slug, parent: parent ? parent.id : false, order })
 		if (valid !== true) {
 			errors = valid
 			return
@@ -62,8 +64,8 @@
 			cookie: $session.cookie,
 			clip,
 			slug,
-			parent_id: sequence.id,
-			order: `${sequence.order}-${order}`,
+			parent_id: parent.id,
+			order: `${parent.order}-${order}`,
 		})
 		// console.log(res)
 		open = false
