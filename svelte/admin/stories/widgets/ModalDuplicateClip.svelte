@@ -1,4 +1,4 @@
-<Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loaded={!!sequences.length}>
+<Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loading={!sequences.length} {saving}>
 	{#if sequences.length}
 		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
 		<Select label="Parent Sequence" bind:value={parent_index} primary="Select One" required={true} {options}/>
@@ -51,8 +51,9 @@
 	})()
 
 	let errors = []
-	async function save(index) {
-		// $saving = true
+	let saving = false
+	async function save() {
+		saving = true
 		const valid = validator({ slug, parent: parent ? parent.id : false, order })
 		if (valid !== true) {
 			errors = valid
@@ -68,8 +69,10 @@
 			order: `${parent.order}-${order}`,
 		})
 		// console.log(res)
+		sequence.clips = [...sequence.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
+
+		saving = false
 		open = false
-		// $saving = false
 	}
 </script>
 

@@ -14,15 +14,15 @@
 				<div class="close" on:click={() => open = false}><Close/></div>
 			</div>
 			<div class="body">
-				{#if loaded}
-					<slot></slot>
-				{:else}
-					<div class="loading">
+				{#if loading || saving}
+					<div class="hourglass">
 						<div class="svg">
 							<Hourglass/>
 						</div>
-						<p>...loading...</p>
+						<p>...{loading ? 'loading' : saving_text}...</p>
 					</div>
+				{:else}
+					<slot></slot>
 				{/if}
 			</div>
 		</div>
@@ -32,7 +32,9 @@
 
 <script>
 	export let open = false
-	export let loaded = false
+	export let loading = false
+	export let saving = false
+	export let saving_text = 'saving'
 	export let title = 'Alert!'
 	export let subtitle
 	import Close from '../../../svg/admin-close.svelte'
@@ -101,7 +103,7 @@
 	.body {
 		position: relative;
 	}
-	.loading {
+	.hourglass {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

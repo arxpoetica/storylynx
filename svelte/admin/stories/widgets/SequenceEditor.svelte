@@ -5,7 +5,7 @@
 			<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
 		</div>
 		<div class="button-wrap">
-			<Button title="Delete" classes="alert blank" handler={() => delete_clip(index)}/>
+			<Button title="Delete" classes="alert blank" handler={() => handle_delete(index)}/>
 			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
 			<!-- disabled={index === selected_index ? 'disabled' : undefined} -->
 			<Button
@@ -23,7 +23,10 @@
 	</div>
 {/each}
 {#if duplicate_open}
-	<ModalDuplicateClip {sequence} clip={duplicate_clip} bind:open={duplicate_open}/>
+	<ModalDuplicateClip bind:sequence clip={duplicate_clip} bind:open={duplicate_open}/>
+{/if}
+{#if delete_open}
+	<ModalDeleteClip bind:sequence clip={delete_clip} bind:open={delete_open}/>
 {/if}
 
 <script>
@@ -35,6 +38,7 @@
 	import AssetBins from './AssetBins.svelte'
 	import Button from '../../components/elements/Button.svelte'
 	import ModalDuplicateClip from './ModalDuplicateClip.svelte'
+	import ModalDeleteClip from './ModalDeleteClip.svelte'
 
 	function select(index) {
 		selected_index = index
@@ -44,32 +48,15 @@
 	let duplicate_clip
 	let duplicate_open = false
 	async function duplicate(index) {
-		duplicate_open = true
-		// console.log(sequence.clips[index])
 		duplicate_clip = sequence.clips[index]
+		duplicate_open = true
 	}
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
-	import { POST } from '../../../../utils/loaders.js'
-	async function delete_clip(index) {
-
-		// FIXME: !!!!
-		// FIXME: !!!!
-		// FIXME: !!!!
-		// FIXME: !!!!
-		console.log('THIS HAS NO SAFE GUARD YET!')
-
-		const clip = sequence.clips[index]
-		const res = await POST('/api/admin/stories/clip-delete.post', {
-			cookie: $session.cookie,
-			clip_id: sequence.clips[index].id,
-			style_id: clip.style ? clip.style.id : false,
-			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
-			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
-		})
-		console.log(res)
+	let delete_clip
+	let delete_open = false
+	async function handle_delete(index) {
+		delete_clip = sequence.clips[index]
+		delete_open = true
 	}
 </script>
 
