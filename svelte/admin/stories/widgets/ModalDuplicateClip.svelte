@@ -41,7 +41,7 @@
 		sequences = res.sequences
 		parent_index = sequences.findIndex(seq => sequence.id === seq.id)
 
-		const { default: FastestValidator } = await import('fastest-validator/dist/index.min.js')
+		const { default: FastestValidator } = await import('fastest-validator')
 		validator = (new FastestValidator()).compile({
 			slug: 'string|empty:false|min:3|max:250',
 			parent: 'string',
