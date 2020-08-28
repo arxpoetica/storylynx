@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store'
+import { storable } from './special-store.js'
 
 // === >>> General Helpers
 
@@ -22,6 +23,10 @@ export const hot_changes = writable([])
 export const assets = writable([])
 export const current_group = writable(-1)
 export const groups = writable([])
+
+// === >>> Sequence Editor
+
+export const visible_bins = storable('story.visible-bins', new Set(), 'Set')
 
 // === >>> HTML EditorJS Editor
 

@@ -1,9 +1,15 @@
+<SequenceTools {sequence}/>
 {#each sequence.clips as clip, index}
-	<div class="clip">
-		<h2>{clip.slug} <span>({clip.order})</span></h2>
-		<div class="content">
-			<AssetBins bins={clip.asset_bins} selectedclip={index === selected_index}/>
-		</div>
+	<div class="clip" class:open={$visible_bins.has(clip.id)} class:selected={index === selected_index}>
+		<!-- FIXME: make this a component -->
+		<h2 on:click={() => toggle(clip.id)}>
+			<span class="texts">
+				{clip.slug}
+				<span class="order">({clip.order})</span>
+			</span>
+			<span class="svg"><Caret/></span>
+		</h2>
+		<AssetBins {sequence} {clip} selectedclip={index === selected_index}/>
 		<div class="button-wrap">
 			<Button title="Delete" classes="alert blank" handler={() => handle_delete(index)}/>
 			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
@@ -33,13 +39,24 @@
 	export let sequence
 	let selected_index
 
-	import { preview_clip } from '../../../../stores/admin-store.js'
-
+	import SequenceTools from './SequenceTools.svelte'
 	import AssetBins from './AssetBins.svelte'
 	import Button from '../../components/elements/Button.svelte'
 	import ModalDuplicateClip from './ModalDuplicateClip.svelte'
 	import ModalDeleteClip from './ModalDeleteClip.svelte'
+	import Caret from '../../../svg/select-caret.svelte'
 
+	import { visible_bins } from '../../../../stores/admin-store.js'
+	function toggle(id) {
+		if ($visible_bins.has(id)) {
+			$visible_bins.delete(id)
+		} else {
+			$visible_bins.add(id)
+		}
+		$visible_bins = $visible_bins
+	}
+
+	import { preview_clip } from '../../../../stores/admin-store.js'
 	function select(index) {
 		selected_index = index
 		$preview_clip = sequence.clips[index]
@@ -67,14 +84,38 @@
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
 		&:last-child { margin: 0; }
+		&.open h2 .svg { transform: rotate(360deg); }
+		&.selected {
+			box-shadow: var(--admin-form-shadow);
+			h2 {
+				pointer-events: none;
+				.text { margin: 0; }
+				.svg { display: none; }
+			}
+		}
 	}
 	h2 {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
 		margin: 0 0 20rem;
 		font: bold 15rem/1.2 var(--admin-font);
-		span {
+		cursor: pointer;
+		user-select: none;
+		.text {
+			margin: 0 15rem 0 0;
+		}
+		.order {
 			font: 12rem/1.2 var(--admin-font);
 			white-space: nowrap;
 			opacity: 0.5;
+		}
+		.svg {
+			width: 12rem;
+			height: 6rem;
+			margin: 7rem 0 0;
+			transform: rotate(270deg);
+			line-height: 0;
 		}
 	}
 	.button-wrap {

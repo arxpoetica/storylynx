@@ -7,7 +7,7 @@
 		class:disabled
 		on:click|stopPropagation={event => handler(event)}
 	>
-		{title}
+		<slot>{title}</slot>
 	</a>
 {:else}
 	<button
@@ -17,7 +17,7 @@
 		{disabled}
 		on:click|stopPropagation={event => handler(event)}
 	>
-		{title}
+		<slot>{title}</slot>
 	</button>
 {/if}
 

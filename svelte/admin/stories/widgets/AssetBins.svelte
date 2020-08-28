@@ -1,8 +1,6 @@
-<!-- <p>bins: {JSON.stringify(bins)}</p> -->
-
-{#if bins.length}
-	<div class="bins">
-		{#each bins as bin, bin_index}
+{#if clip.asset_bins.length && ($visible_bins.has(clip.id) || selectedclip)}
+	<div class="bins" transition:slide>
+		{#each clip.asset_bins as bin, bin_index}
 			<div class="bin-section">
 				<!-- <p>bin: {JSON.stringify(Object.keys(bin))}</p> -->
 				<!-- <p>id: {JSON.stringify(bin.id)}</p> -->
@@ -33,16 +31,18 @@
 {/if}
 
 <script>
-	export let bins
+	export let sequence
+	export let clip
 	export let selectedclip
 	let edit_html = false
 
 	import AssetThumb from '../../components/widgets/AssetThumb.svelte'
 	import HtmlBlock from './HtmlBlock.svelte'
+	import { visible_bins } from '../../../../stores/admin-store.js'
+	import { slide } from 'svelte/transition'
 </script>
 
 <style type="text/scss">
-	// .bins {}
 	.bin-section {
 		margin: 0 0 20rem;
 		padding: 0 0 20rem;
