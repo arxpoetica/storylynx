@@ -13,7 +13,7 @@
 								{#each nav.subnavigation as subnav}
 									{#if subnav.slug && !subnav.hide_navigation}
 										<li class="clip">
-											<a href={url_hash(subnav)}>
+											<a href="{$page.path}#{url_hash(subnav)}">
 												<h3><span class="out"><span class="in">{subnav.slug}</span></span></h3>
 											</a>
 										</li>
@@ -35,14 +35,8 @@
 
 	export let story
 
+	import { url_hash } from '../../../utils/story-utils.js'
 	import { story_scroll } from '../../../stores/story-store.js'
-
-	import { hyphenate } from '../../../utils/basic-utils.js'
-	function url_hash(clip) {
-		let url = `${$page.path}#`
-		url += clip.slug ? `nav-${hyphenate(clip.slug.toLowerCase())}` : `nav-${clip.id}`
-		return url
-	}
 
 	const href = nav => `/stories/${$page.params.story}/${nav.slug.toLowerCase()}`
 	const current = nav => nav.slug.toLowerCase() === $page.params.sequence

@@ -1,6 +1,6 @@
 <div bind:this={the_stack} class="the-stack">
 	{#each sequence.clips as clip, index}
-		<div bind:this={$seq_stack[clip.id]} class="{clip.url_hash} stack"></div>
+		<div bind:this={$seq_stack[clip.id]} class="{url_hash(clip)} stack"></div>
 	{/each}
 </div>
 <div class="audio">
@@ -12,24 +12,19 @@
 </div>
 <div class="sequence {sequence.classes ? sequence.classes : ''}">
 	{#each sequence.clips as clip}
-		<Clip bind:clip/>
+		<Clip {clip}/>
 	{/each}
 </div>
 
 <script>
 	export let sequence
 
-	import { seq_audio, seq_stack, view_height } from '../../stores/story-store.js'
-
 	let the_stack
 
+	import { seq_audio, seq_stack, view_height } from '../../stores/story-store.js'
+	import { url_hash } from '../../utils/story-utils.js'
 	import ClipAudio from './media/ClipAudio.svelte'
 	import Clip from './Clip.svelte'
-
-	import { hyphenate } from '../../utils/basic-utils.js'
-	function url_hash(clip) {
-		return clip.slug ? `nav-${hyphenate(clip.slug.toLowerCase())}` : `nav-${clip.id}`
-	}
 
 	$: seq_audio.set(
 		sequence.audio_clips.reduce((result, clip) => {
@@ -53,7 +48,7 @@
 	onMount(() => {
 		style = document.createElement('style')
 		style.innerText = sequence.clips.map((clip, index) => {
-			return `#${clip.url_hash}{z-index:${9999 - index};}`
+			return `#${url_hash(clip)}{z-index:${9999 - index};}`
 		}).join('')
 		document.head.appendChild(style)
 
