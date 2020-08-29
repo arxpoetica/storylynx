@@ -2,7 +2,7 @@ const path = require('path')
 const { EOL } = require('os')
 const { yellow, red } = require('ansi-colors')
 const { exists, readFile, writeFile } = require('fs-extra')
-const totalist = require('totalist')
+const { totalist } = require('totalist')
 const CheapWatch = require('cheap-watch')
 
 let overrides_path

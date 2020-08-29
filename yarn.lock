@@ -199,10 +199,10 @@ csso@^4.0.2:
   dependencies:
     css-tree "1.0.0-alpha.39"
 
-dayjs@1.8.29:
-  version "1.8.29"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.29.tgz#5d23e341de6bfbd206c01136d2fb0f01877820f5"
-  integrity sha512-Vm6teig8ZWK7rH/lxzVGxZJCljPdmUr6q/3f4fr5F0VWNGVkZEjZOQJsAN8hUHUqn+NK4XHNEpJZS1MwLyDcLw==
+dayjs@1.8.34:
+  version "1.8.34"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.34.tgz#d3ad33cc43d6b0f24cb8686b90aad2c653708069"
+  integrity sha512-Olb+E6EoMvdPmAMq2QoucuyZycKHjTlBXmRx8Ada+wGtq4SIXuDCdtoaX4KkK0yjf1fJLnwXQURr8gQKWKaybw==
 
 define-properties@^1.1.2, define-properties@^1.1.3:
   version "1.1.3"
@@ -299,10 +299,10 @@ estree-walker@^0.6.1:
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.6.1.tgz#53049143f40c6eb918b23671d1fe3219f3a1b362"
   integrity sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==
 
-fastest-validator@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.6.0.tgz#6ecb4e16be5b213cf2f3e5902ce666561cdd1f1b"
-  integrity sha512-Hj3Sf02Q1PVnFDgTaB/q0iF5BokJclLm5Q0uc04WaGoPciQE7UMfAB5gC8Mp9lto9OIgfjhQlBG0BxhW6LmVHQ==
+fastest-validator@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.6.1.tgz#3ec0098dac23c5d3276402d3a951c60b64947c85"
+  integrity sha512-ZERqtib8U+wWyCeu+JfrxwLe4W1iZLYqMzeguNmNQ10oobkgI2/1UiDBp/64es8q51speTE4JeUNUemKkjY7Yg==
 
 fs-extra@9.0.1:
   version "9.0.1"
@@ -621,10 +621,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-svelte-dnd-action@0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.2.5.tgz#af2925c1845206e84b5c41265d74b2c9f2a4b5aa"
-  integrity sha512-0wYuTpZPc9x3c7MepNU0JFUtl4NlQWg523f8hLwSOHApISBDu1bbKzK1Cf+AVWo1foou/ZdRoP/kwy6/Iwe5dQ==
+svelte-dnd-action@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/svelte-dnd-action/-/svelte-dnd-action-0.3.0.tgz#f4a39b90520753651fad9f8de94da9a51d4ca281"
+  integrity sha512-O0epENe/yaPQ1kUrcrEY1/Z92bMt5Zcf67REbkGXcVFb97W9cNWXEo+/hB0G4hf2GAhkKQiH9xjzj6yTb4l6hw==
   dependencies:
     acorn "^7.1.1"
     builtin-modules "^3.1.0"
@@ -636,10 +636,10 @@ svelte-dnd-action@0.2.5:
     rollup-pluginutils "^2.8.2"
     sourcemap-codec "^1.4.8"
 
-svelte@3.23.2:
-  version "3.23.2"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.23.2.tgz#f3e500384261a2e77b29681ee744c3c790fbcdc3"
-  integrity sha512-hE8GeTM83YVR4GY6/6PeDEcGct4JS5aCi+IYbCAa76oaPSfuF7L85DQYULQxlTK/KPWzw3L1GRGmC3oPG/PQoA==
+svelte@3.24.1:
+  version "3.24.1"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.24.1.tgz#aca364937dd1df27fe131e2a4c234acb6061db4b"
+  integrity sha512-OX/IBVUJSFo1rnznXdwf9rv6LReJ3qQ0PwRjj76vfUWyTfbHbR9OXqJBnUrpjyis2dwYcbT2Zm1DFjOOF1ZbbQ==
 
 svgo@1.3.2:
   version "1.3.2"
@@ -660,10 +660,10 @@ svgo@1.3.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-totalist@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/totalist/-/totalist-1.1.0.tgz#a4d65a3e546517701e3e5c37a47a70ac97fe56df"
-  integrity sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==
+totalist@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/totalist/-/totalist-2.0.0.tgz#db6f1e19c0fa63e71339bbb8fba89653c18c7eec"
+  integrity sha512-+Y17F0YzxfACxTyjfhnJQEe7afPA0GSpYlFkl2VFMxYP7jshQf9gXV7cH47EfToBumFThfKBvfAcoUn6fdNeRQ==
 
 uid@1.0.0:
   version "1.0.0"
