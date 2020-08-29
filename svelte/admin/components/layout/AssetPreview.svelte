@@ -8,10 +8,12 @@
 			{#if $egg_preview.mime_type.includes('image')}
 				<img {src} alt={$egg_preview.filename}/>
 			{:else if $egg_preview.mime_type.includes('video')}
+				<!-- svelte-ignore a11y-media-has-caption -->
 				<video controls>
 					<source {src} type={$egg_preview.mime_type}/>
 				</video>
 			{:else if $egg_preview.mime_type.includes('audio')}
+				<!-- svelte-ignore a11y-media-has-caption -->
 				<audio controls>
 					<source {src} type={$egg_preview.mime_type}/>
 				</audio>

@@ -5,6 +5,7 @@
 				<iframe src="https://player.vimeo.com/video/{src.split('vimeo.com/')[1]}?color=ffffff&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="Video asset"></iframe>
 			</div>
 		{:else}
+			<!-- svelte-ignore a11y-media-has-caption -->
 			<video bind:this={video} controls use:lazy>
 				<source src={loading_src} type="video/mp4"/>
 				<p>This browser does not support the video element.</p>

@@ -31,7 +31,7 @@
 {/if}
 
 <script>
-	export let sequence
+	// export let sequence
 	export let clip
 	export let selectedclip
 	let edit_html = false

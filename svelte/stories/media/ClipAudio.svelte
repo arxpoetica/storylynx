@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-media-has-caption -->
 <audio bind:this={audio} bind:paused bind:volume={indirect_volume} bind:muted={$muted} use:lazy loop {src} type="audio/mp3"></audio>
 {#if image}
 	<ClipImage {intersecting} asset={image} {style}/>

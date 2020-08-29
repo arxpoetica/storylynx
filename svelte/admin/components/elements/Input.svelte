@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <label>
 	<span class="label">
 		{label}

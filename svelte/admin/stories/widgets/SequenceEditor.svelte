@@ -89,7 +89,7 @@
 			box-shadow: var(--admin-form-shadow);
 			h2 {
 				pointer-events: none;
-				.text { margin: 0; }
+				.texts { margin: 0; }
 				.svg { display: none; }
 			}
 		}
@@ -102,7 +102,7 @@
 		font: bold 15rem/1.2 var(--admin-font);
 		cursor: pointer;
 		user-select: none;
-		.text {
+		.texts {
 			margin: 0 15rem 0 0;
 		}
 		.order {

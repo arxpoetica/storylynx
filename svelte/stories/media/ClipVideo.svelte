@@ -1,6 +1,7 @@
 <!-- https://css-tricks.com/fluid-width-video/ -->
 <figure class="video" class:loaded class:cover>
 	<div class="view">
+		<!-- svelte-ignore a11y-media-has-caption -->
 		<video bind:this={video} bind:paused bind:volume={indirect_volume} bind:muted={$muted} use:lazy {loop} {style}>
 			<source {src} type="video/mp4"/>
 		</video>
