@@ -121,6 +121,7 @@
 		border: 1rem solid var(--admin-accent-0);
 		box-shadow: var(--admin-shadow);
 		background-color: var(--admin-bg);
+		z-index: 1;
 		@mixin scrollbar {}
 	}
 	.toolbar {
