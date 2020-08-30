@@ -5,8 +5,10 @@
 	{#if sequence}
 		<div bind:this={the_stack} class="the-stack">
 			{@html style_tag}
-			{#each sequence.clips as clip, index}
-				<div bind:this={$seq_stack[clip.id]} class="{url_hash(clip)} stack"></div>
+			<!-- SEE: https://discordapp.com/channels/457912077277855764/571775594002513921/749445541724815360 -->
+			{#each sequence.clips as { id, slug }, index}
+				<!-- <div style="display:none;">{console.log(index, id, $seq_stack)}</div> -->
+				<div bind:this={$seq_stack[id]} class="{url_hash({ id, slug })} stack"></div>
 			{/each}
 		</div>
 		<div class="audio">
