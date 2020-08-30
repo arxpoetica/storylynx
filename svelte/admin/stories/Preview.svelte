@@ -71,19 +71,27 @@
 	// 	}
 	// }
 
-	let layout
-	import { onMount } from 'svelte'
+	let layout, html, mutation_observer, resize_observer
+	import { onMount, onDestroy } from 'svelte'
 	onMount(() => {
-		const html = document.querySelector('html')
-		var observer = new MutationObserver(list => {
-			if ($seq_stack[$preview_clip_id]) {
-				setTimeout(() => html.scrollTop = $seq_stack[$preview_clip_id].offsetTop, 0)
-			} else {
-				html.scrollTop = 0 // weird edge cases
-			}
-		})
-		observer.observe(layout, { childList: true, subtree: true })
+		html = document.querySelector('html')
+		mutation_observer = new MutationObserver(() => jump())
+		mutation_observer.observe(layout, { childList: true, subtree: true })
+		resize_observer = new ResizeObserver(() => jump())
+		resize_observer.observe(layout)
 	})
+	onDestroy(() => {
+		if (mutation_observer) { mutation_observer.disconnect() }
+		if (resize_observer) { resize_observer.disconnect() }
+	})
+
+	function jump() {
+		if ($seq_stack[$preview_clip_id]) {
+			setTimeout(() => html.scrollTop = $seq_stack[$preview_clip_id].offsetTop, 0)
+		} else {
+			html.scrollTop = 0 // weird edge cases
+		}
+	}
 </script>
 
 <style type="text/scss">
