@@ -27,8 +27,8 @@
 			slug: sequence.slug.toLowerCase(),
 			clip_id: $preview_clip.id,
 		})
-		iframe.contentWindow.preview.set(story.sequence)
-		iframe.contentWindow.preview_clip_id.set($preview_clip.id)
+		iframe.contentWindow.i_sequence.set(story.sequence)
+		iframe.contentWindow.i_clip_id.set($preview_clip.id)
 	}
 </script>
 

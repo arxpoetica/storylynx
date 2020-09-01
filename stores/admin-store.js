@@ -34,10 +34,10 @@ export const preview_clip = writable(null)
 export const html_templates = writable([])
 export const html_colors = writable([])
 
-// === >>> Clip Preview
+// === >>> Iframe Clip Preview
 
-export const preview = writable(false)
-export const preview_clip_id = writable(false)
+export const i_sequence = writable(false)
+export const i_clip_id = writable(false)
 
 
 
