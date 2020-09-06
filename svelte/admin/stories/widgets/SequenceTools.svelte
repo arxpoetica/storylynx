@@ -12,9 +12,9 @@
 	import Caret from '../../../svg/select-caret.svelte'
 
 	import { visible_bins } from '../../../../stores/admin-store.js'
-	$: expanded = $visible_bins.size
+	$: expanded = $visible_bins[sequence.id].size
 	function toggle_all() {
-		sequence.clips.map(clip => $visible_bins[expanded ? 'delete' : 'add'](clip.id))
+		sequence.clips.map(clip => $visible_bins[sequence.id][expanded ? 'delete' : 'add'](clip.id))
 		$visible_bins = $visible_bins
 	}
 </script>

@@ -1,4 +1,4 @@
-{#if clip.asset_bins.length && ($visible_bins.has(clip.id) || selectedclip)}
+{#if clip.asset_bins.length && ($visible_bins[sequence.id].has(clip.id) || selectedclip)}
 	<div class="bins" transition:slide>
 		{#each clip.asset_bins as bin, bin_index}
 			<div class="bin-section">
@@ -31,7 +31,7 @@
 {/if}
 
 <script>
-	// export let sequence
+	export let sequence
 	export let clip
 	export let selectedclip
 	let edit_html = false

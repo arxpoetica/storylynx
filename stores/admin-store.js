@@ -26,7 +26,7 @@ export const groups = writable([])
 
 // === >>> Sequence Editor
 
-export const visible_bins = storable('story.visible-bins', new Set(), 'Set')
+export const visible_bins = storable('story.visible-bins', {})
 
 // === >>> HTML EditorJS Editor
 

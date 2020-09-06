@@ -1,6 +1,6 @@
 <SequenceTools {sequence}/>
 {#each sequence.clips as clip, index}
-	<div class="clip" class:open={$visible_bins.has(clip.id)} class:selected={index === selected_index}>
+	<div class="clip" class:open={$visible_bins[sequence.id].has(clip.id)} class:selected={index === selected_index}>
 		<!-- FIXME: make this a component -->
 		<h2 on:click={() => toggle(clip.id)}>
 			<span class="texts">
@@ -47,11 +47,12 @@
 	import Caret from '../../../svg/select-caret.svelte'
 
 	import { visible_bins } from '../../../../stores/admin-store.js'
+	if (!$visible_bins[sequence.id]) { $visible_bins[sequence.id] = new Set() }
 	function toggle(id) {
-		if ($visible_bins.has(id)) {
-			$visible_bins.delete(id)
+		if ($visible_bins[sequence.id].has(id)) {
+			$visible_bins[sequence.id].delete(id)
 		} else {
-			$visible_bins.add(id)
+			$visible_bins[sequence.id].add(id)
 		}
 		$visible_bins = $visible_bins
 	}
