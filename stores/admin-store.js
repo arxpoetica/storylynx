@@ -36,8 +36,7 @@ export const html_colors = writable([])
 
 // === >>> Iframe Clip Preview
 
-export const i_sequence = writable(false)
-export const i_clip_id = writable(false)
+export const messenger = writable()
 
 
 

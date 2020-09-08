@@ -13,7 +13,8 @@
 	export let sequence
 	let iframe
 
-	import { preview_clip } from '../../../../stores/admin-store.js'
+	import { preview_clip, messenger } from '../../../../stores/admin-store.js'
+	$: $messenger = iframe ? iframe.contentWindow.postMessage : () => {}
 
 	import { getContext } from 'svelte'
 	const { get_sapper_stores } = getContext('@sapper/app')
@@ -27,8 +28,7 @@
 			slug: sequence.slug.toLowerCase(),
 			clip_id: $preview_clip.id,
 		})
-		iframe.contentWindow.i_sequence.set(story.sequence)
-		iframe.contentWindow.i_clip_id.set($preview_clip.id)
+		$messenger({ sequence: story.sequence, clip_id: $preview_clip.id })
 	}
 </script>
 
