@@ -1,12 +1,22 @@
-<label class:checked class:green={color === 'green'} on:click|stopPropagation={handler}>
-	{#if checked}
-		<div class="svg"><Checkmark/></div>
+<label class={color} class:checked on:click|stopPropagation={handler}>
+	<span class="box">
+		{#if checked}
+			<span class="svg"><Checkmark/></span>
+		{/if}
+		<input bind:checked type="checkbox">
+	</span>
+	{#if label}
+		<span class="label">
+			{label}
+			{#if required}<span class="required"> *</span>{/if}
+		</span>
 	{/if}
-	<input bind:checked type="checkbox">
-	<span>{checked}</span>
 </label>
 
 <script>
+	export let label
+	// export let sublabel
+	export let required
 	export let checked = false
 	export let handler = () => {}
 	export let color = 'blue'
@@ -15,18 +25,12 @@
 
 <style type="text/scss">
 	label {
-		display: block;
-		position: relative;
-		margin: 0;
-		padding: 8rem;
-		border-radius: 100%;
-		line-height: 0;
-		cursor: default;
-		transition: background-color 0.15s ease-in-out;
-		&:hover { background-color: var(--admin-accent-2); }
-		&.checked { background-color: var(--admin-color-2); }
-		&.green {
-			&.checked { background-color: var(--admin-good-lighter); }
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
+		&.checked .box { background-color: var(--admin-color-2); }
+		&.good {
+			&.checked .box { background-color: var(--admin-good-lighter); }
 			input {
 				border: 1rem solid var(--admin-good-dark);
 				&:checked {
@@ -35,6 +39,28 @@
 				}
 			}
 		}
+		&.warn {
+			&.checked .box { background-color: var(--admin-warn-light); }
+			input {
+				border-color: var(--admin-warn-dusk);
+				&:checked {
+					border-color: var(--admin-warn-dusk);
+					background-color: var(--admin-warn-dark);
+				}
+			}
+		}
+	}
+	.box {
+		display: block;
+		position: relative;
+		max-width: 32rem;
+		margin: 0;
+		padding: 8rem;
+		border-radius: 100%;
+		line-height: 0;
+		cursor: default;
+		transition: background-color 0.15s ease-in-out;
+		&:hover { background-color: var(--admin-accent-2); }
 	}
 	input {
 		margin: 0;
@@ -63,12 +89,7 @@
 		color: white;
 		pointer-events: none;
 	}
-	span {
-		overflow: hidden;
-		position: absolute !important;
-		width: 0;
-		height: 0;
-		clip: rect(1px, 1px, 1px, 1px);
-		clip-path: inset(0 100% 100% 0);
+	.label {
+		margin: 0 0 0 10rem;
 	}
 </style>

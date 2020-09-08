@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col col-checkbox">
-		<Checkbox handler={uncheck} bind:checked color="green"/>
+		<Checkbox handler={uncheck} bind:checked color="good"/>
 	</div>
 	{#each cols as col}
 		{#if col.sort}

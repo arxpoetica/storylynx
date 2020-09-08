@@ -1,14 +1,18 @@
 <SequenceTools {sequence}/>
 {#each sequence.clips as clip, index}
 	<div class="clip" class:open={$visible_bins[sequence.id].has(clip.id)} class:selected={index === selected_index}>
-		<!-- FIXME: make this a component -->
-		<h2 on:click={() => toggle(clip.id)}>
-			<span class="texts">
-				{clip.slug}
-				<span class="order">({clip.order})</span>
-			</span>
-			<span class="svg"><Caret/></span>
-		</h2>
+		{#if index === selected_index}
+			<SequenceForm {sequence} {clip}/>
+		{:else}
+			<!-- FIXME: make this a component -->
+			<h2 on:click={() => toggle(clip.id)}>
+				<span class="texts">
+					{clip.slug}
+					<span class="order">({clip.order})</span>
+				</span>
+				<span class="svg"><Caret/></span>
+			</h2>
+		{/if}
 		<AssetBins {sequence} {clip} selectedclip={index === selected_index}/>
 		<div class="button-wrap">
 			<Button title="Delete" classes="alert blank" handler={() => handle_delete(index)}/>
@@ -42,6 +46,7 @@
 	import SequenceTools from './SequenceTools.svelte'
 	import AssetBins from './AssetBins.svelte'
 	import Button from '../../components/elements/Button.svelte'
+	import SequenceForm from './SequenceForm.svelte'
 	import ModalDuplicateClip from './ModalDuplicateClip.svelte'
 	import ModalDeleteClip from './ModalDeleteClip.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
@@ -88,11 +93,6 @@
 		&.open h2 .svg { transform: rotate(360deg); }
 		&.selected {
 			box-shadow: var(--admin-form-shadow);
-			h2 {
-				pointer-events: none;
-				.texts { margin: 0; }
-				.svg { display: none; }
-			}
 		}
 	}
 	h2 {
