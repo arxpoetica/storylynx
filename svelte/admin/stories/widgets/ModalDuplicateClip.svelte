@@ -1,7 +1,7 @@
 <Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loading={!sequences.length} {saving}>
 	{#if sequences.length}
 		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
-		<Select label="Parent Sequence" bind:value={parent_index} required={true} {options}/>
+		<Select label="Parent Sequence" bind:value={parent_id} required={true} {options}/>
 		{#if parent}
 			<Input type="number" label="Order" prelabel="{parent.order}-" bind:value={order} required={true}/>
 		{/if}
@@ -17,8 +17,8 @@
 	let sequences = []
 	$: options = sequences.map(seq => ({ id: seq.id, text: seq.slug }))
 	let slug = ''
-	let parent_index = ''
-	$: parent = typeof parent_index === 'number' ? sequences[parent_index] : undefined
+	let parent_id = ''
+	$: parent = parent_id ? sequences.find(seq => seq.id === parent_id) : undefined
 	let order = 0
 
 	import Input from '../../components/elements/Input.svelte'
@@ -39,7 +39,7 @@
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
 		})
 		sequences = res.sequences
-		parent_index = sequences.findIndex(seq => sequence.id === seq.id)
+		parent_id = sequence.id
 
 		const { default: FastestValidator } = await import('fastest-validator')
 		validator = (new FastestValidator()).compile({

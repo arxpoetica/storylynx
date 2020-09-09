@@ -5,15 +5,16 @@
 	<!-- Asset Bins =>>>>>> -->
 	<!-- Styles =>>>>> -->
 	<!-- [Parent Sequence] -->
+	<!-- <Checkbox handler={uncheck} bind:checked classes="good"/> -->
 
 	<div class="row">
 		<Input
 			label="Title"
 			sublabel="Displays in sequence navigation, unless &quot;Hide Navigation&quot; checked."
-			bind:value={clip.slug}
+			prelabel={$preview_clip.order}
+			bind:value={$preview_clip.slug}
 			required={true}
 		/>
-		<!-- <Checkbox handler={uncheck} bind:checked classes="good"/> -->
 		<div class="nav-checkbox">
 			<Checkbox label="Hide navigation"/>
 		</div>
@@ -21,6 +22,7 @@
 	<div class="row">
 		<Select
 			label="Template"
+			bind:value={template_id}
 			required={true}
 			options={$templates}
 		/>
@@ -28,33 +30,37 @@
 	<div class="row full">
 		<MultiSelect
 			label="Theme Elements"
-			bind:values={clip.theme_elements}
+			bind:values={$preview_clip.theme_elements}
 			options={$theme_elements}
 		/>
 	</div>
 	<div class="row full">
 		<MultiSelect
 			label="Transitions"
-			bind:values={clip.template_transitions}
+			bind:values={$preview_clip.transitions}
 			options={$template_transitions}
 		/>
 	</div>
-		<!-- bind:value={parent_index} -->
-	<!-- <Input type="number" label="Order" prelabel="{true}-" required={true}/> -->
 </div>
 
 <script>
-	export let sequence
-	export let clip
+	// export let sequence
 
-	import { templates, theme_elements, template_transitions }
-		from '../../../../stores/admin-store.js'
+	import { preview_clip, templates, theme_elements, template_transitions } from '../../../../stores/admin-store.js'
+
+	let template_id
+	let init
+	import { onMount } from 'svelte'
+	onMount(() => {
+		init = true
+		template_id = $preview_clip.template
+	})
+	$: if (init) { $preview_clip.template = template_id }
 
 	import Input from '../../components/elements/Input.svelte'
 	import Checkbox from '../../components/elements/Checkbox.svelte'
 	import Select from '../../components/elements/Select.svelte'
 	import MultiSelect from '../../components/elements/MultiSelect.svelte'
-	// import Button from '../../components/elements/Button.svelte'
 </script>
 
 <style type="text/scss">

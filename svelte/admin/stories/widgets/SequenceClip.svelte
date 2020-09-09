@@ -1,4 +1,4 @@
-<div class="clip" class:open={$visible_bins[sequence.id].has(clip.id)} class:selected>
+<div class="clip" class:open={$visible_bins[sequence.id].has(clip.id)} class:selected class:saveable>
 
 	<div class="header">
 		{#if !selected}
@@ -14,26 +14,18 @@
 		<div class="button-wrap">
 			<Button title="Delete" classes="alert blank" handler={() => handle_delete(index)}/>
 			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
-			<Button title="Duplicate" classes="blank" handler={() => duplicate(index)}/>
+			<Button title="Duplicate" classes="blank plain" handler={() => duplicate(index)}/>
 			{#if selected}
-				<Button
-					title="Cancel"
-					classes="warn"
-					handler={() => $preview_clip = undefined}
-				/>
+				<Button title="Cancel" classes="warn" handler={cancel}/>
+				<Button title="Save" classes="good" handler={save} disabled={!saveable}/>
 			{:else}
-				<Button
-					title="Edit"
-					classes="good"
-					handler={() => $preview_clip = sequence.clips[index]}
-				/>
+				<Button title="Edit" handler={edit}/>
 			{/if}
-
 		</div>
 	</div>
 
 	{#if selected}
-		<SequenceForm {sequence} {clip}/>
+		<SequenceForm {sequence}/>
 	{/if}
 
 	<AssetBins {sequence} {clip} selectedclip={selected}/>
@@ -51,10 +43,14 @@
 	import SequenceForm from './SequenceForm.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 
-	import { preview_clip } from '../../../../stores/admin-store.js'
-	import { visible_bins } from '../../../../stores/admin-store.js'
-
+	import { preview_clip, messenger, visible_bins } from '../../../../stores/admin-store.js'
 	$: selected = $preview_clip && $preview_clip.id === clip.id
+	$: clip_string = selected && JSON.stringify(clip)
+	$: preview_string = selected && JSON.stringify($preview_clip)
+	$: saveable = selected && clip_string !== preview_string
+	$: if (preview_string) {
+		$messenger({ clip: $preview_clip })
+	}
 
 	function toggle(id) {
 		if ($visible_bins[sequence.id].has(id)) {
@@ -63,6 +59,30 @@
 			$visible_bins[sequence.id].add(id)
 		}
 		$visible_bins = $visible_bins
+	}
+
+	async function edit() {
+		// MORE TODO: !!!!!
+		cancel()
+		setTimeout(() => $preview_clip = JSON.parse(JSON.stringify(sequence.clips[index])), 0)
+	}
+
+	import { getContext } from 'svelte'
+	const { get_sapper_stores } = getContext('@sapper/app')
+	const { session } = get_sapper_stores()
+	import { POST } from '../../../../utils/loaders.js'
+
+	async function save() {
+		const res = await POST('/api/admin/stories/clip-update.post', {
+			cookie: $session.cookie,
+			clip: $preview_clip,
+		})
+		sequence.clips[index] = $preview_clip
+	}
+	async function cancel() {
+		// MORE TODO: !!!!!
+		$preview_clip = undefined
+		preview_string = ''
 	}
 </script>
 
@@ -79,6 +99,7 @@
 			box-shadow: var(--admin-form-shadow);
 			.header::before { content: ''; } // this forces the buttons to the right
 		}
+		&.saveable { box-shadow: 0 0 0 3rem var(--admin-warn); }
 	}
 	.header {
 		display: flex;

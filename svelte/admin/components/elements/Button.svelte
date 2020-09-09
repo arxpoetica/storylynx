@@ -98,8 +98,13 @@
 		}
 		&.alert {
 			background-color: var(--admin-alert);
-			color: white;
+			color: var(--admin-text);
 			&:hover { background-color: var(--admin-alert-dark); }
+		}
+		&.plain {
+			background-color: var(--admin-text);
+			color: var(--admin-accent-1);
+			&:hover { background-color: rgba(var(--admin-text-rgb), 0.75); }
 		}
 		&.inverse {
 			background-color: white;
@@ -110,15 +115,6 @@
 				border-color: var(--admin-color-4);
 			}
 		}
-		// &.link {
-		// 	padding: 0;
-		// 	border: 0;
-		// 	color: $links;
-		// 	background-color: transparent;
-		// 	&:hover {
-		// 		text-decoration: underline;
-		// 	}
-		// }
 		&.blank {
 			padding: 0 5rem;
 			height: auto;
@@ -132,6 +128,7 @@
 			&.good { color: var(--admin-good-dark); }
 			&.warn { color: var(--admin-warn); }
 			&.alert { color: var(--admin-alert); }
+			&.plain { color: var(--admin-text); }
 		}
 		// &.off {
 		// 	padding: 0;

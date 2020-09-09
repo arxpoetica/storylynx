@@ -4,8 +4,8 @@
 		{#if required}<div class="required"> *</div>{/if}
 	</div>
 	<div class="selectors">
-		{#each options as option, index (option.id)}
-			<button class="select" class:on={values.includes(option.text)} on:click={() => toggle(option.text)}>
+		{#each options as option (option.id)}
+			<button class="select" class:on={values.includes(option.id)} on:click={() => toggle(option.id)}>
 				{option.text}
 			</button>
 		{/each}
@@ -19,11 +19,11 @@
 	export let required
 	export let options = []
 
-	function toggle(toggle_value) {
-		if (values.includes(toggle_value)) {
-			values = values.filter(value => value !== toggle_value)
+	function toggle(id) {
+		if (values.includes(id)) {
+			values = values.filter(value => value !== id)
 		} else {
-			values.push(toggle_value)
+			values.push(id)
 			values = values
 		}
 	}

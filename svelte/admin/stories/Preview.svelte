@@ -20,8 +20,12 @@
 			{/each}
 		</div>
 		<div class="sequence {sequence.classes ? sequence.classes : ''}">
-			{#each sequence.clips as clip}
-				<Clip {clip}/>
+			{#each sequence.clips as seq_clip}
+				{#if seq_clip.id === clip.id}
+					<Clip clip={prep_clip_for_preview(clip)}/>
+				{:else}
+					<Clip clip={seq_clip}/>
+				{/if}
 			{/each}
 		</div>
 	{/if}
@@ -30,10 +34,10 @@
 <script>
 	let the_stack
 	let sequence
-	let clip_id
+	let clip
 
 	import { seq_audio, seq_stack, view_height } from '../../../stores/story-store.js'
-	import { url_hash } from '../../../utils/story-utils.js'
+	import { url_hash, prep_clip_for_preview } from '../../../utils/story-utils.js'
 	import ClipAudio from '../../stories/media/ClipAudio.svelte'
 	import Clip from '../../stories/Clip.svelte'
 
@@ -84,13 +88,13 @@
 	})
 
 	function receiveMessage(event) {
-		clip_id = event.data.clip_id
-		sequence = event.data.sequence
+		if (event.data.clip) { clip = event.data.clip }
+		if (event.data.sequence) { sequence = event.data.sequence }
 	}
 
 	function jump() {
-		if ($seq_stack[clip_id]) {
-			setTimeout(() => html.scrollTop = $seq_stack[clip_id].offsetTop, 0)
+		if (clip && $seq_stack[clip.id]) {
+			setTimeout(() => html.scrollTop = $seq_stack[clip.id].offsetTop, 0)
 		} else {
 			html.scrollTop = 0 // weird edge cases
 		}

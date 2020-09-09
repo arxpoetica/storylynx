@@ -20,15 +20,20 @@
 	const { get_sapper_stores } = getContext('@sapper/app')
 	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
-	$: if ($preview_clip) { load() }
+
+	// NOTE: this little dance is so that it doesn't `load()` every time `$preview_clip` is changed
+	let loaded = false
+	$: if (!loaded && $preview_clip) { load() }
+	$: if (!$preview_clip) { loaded = false }
 	async function load() {
+		loaded = true
 		const { story } = await POST('/api/admin/stories/sequence-preview.post', {
 			cookie: $session.cookie,
 			title: sequence.story.slug.toLowerCase(),
 			slug: sequence.slug.toLowerCase(),
 			clip_id: $preview_clip.id,
 		})
-		$messenger({ sequence: story.sequence, clip_id: $preview_clip.id })
+		$messenger({ sequence: story.sequence, clip: $preview_clip })
 	}
 </script>
 

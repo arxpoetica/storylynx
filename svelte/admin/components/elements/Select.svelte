@@ -9,8 +9,8 @@
 			{#if primary}
 				<option value="">{primary}</option>
 			{/if}
-			{#each options as option, index (option.id)}
-				<option value={index}>{option.text}</option>
+			{#each options as option (option.id)}
+				<option value={option.id}>{option.text}</option>
 			{/each}
 		</select>
 		<span class="svg">

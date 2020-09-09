@@ -6,7 +6,7 @@
 		<div class="wrap">
 			<div class="panes">
 				<div class="pane developer">
-					<SequenceEditor {sequence}/>
+					<SequenceEditor bind:sequence/>
 				</div>
 				<div class="pane sequence">
 					<PreviewPane {sequence}/>
@@ -32,7 +32,6 @@
 	$: $template_transitions = enum_template_transitions
 	$: $html_templates = enum_html_templates
 	$: $html_colors = enum_html_colors
-
 
 	import Scaffolding from '../components/layout/Scaffolding.svelte'
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
@@ -66,7 +65,7 @@
 		bottom: 0;
 		left: 0;
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: auto 1fr;
 	}
 	.pane {
 		position: relative;
@@ -75,6 +74,7 @@
 		@mixin scrollbar {}
 	}
 	.developer {
+		max-width: 772rem;
 		padding: 40rem;
 	}
 	.sequence {

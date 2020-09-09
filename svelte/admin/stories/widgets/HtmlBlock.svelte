@@ -50,7 +50,7 @@
 
 		// for each
 		const { html_block } = await POST(
-			'/api/admin/stories/clip-upsert.post',
+			'/api/admin/stories/html-upsert.post',
 			Object.assign({ cookie: $session.cookie }, block),
 		)
 		$clip.asset_bins[bin_index].html_blocks[block_index] = html_block

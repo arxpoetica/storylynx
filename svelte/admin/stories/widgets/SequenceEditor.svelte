@@ -1,6 +1,6 @@
 <SequenceTools {sequence}/>
 {#each sequence.clips as clip, index (clip.id)}
-	<SequenceClip {sequence} {clip} {index} {duplicate} {handle_delete}/>
+	<SequenceClip bind:sequence {clip} {index} {duplicate} {handle_delete}/>
 {/each}
 {#if duplicate_open}
 	<ModalDuplicateClip bind:sequence clip={duplicate_clip} bind:open={duplicate_open}/>

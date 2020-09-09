@@ -94,6 +94,7 @@
 		border-radius: 5rem 0 0 5rem;
 		font: 14rem/20rem var(--admin-font);
 		color: rgba(var(--admin-text-rgb), 0.4);
+		white-space: nowrap;
 	}
 	.required { color: var(--admin-alert) }
 	.sublabel {
