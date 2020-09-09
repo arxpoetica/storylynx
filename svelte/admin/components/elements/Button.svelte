@@ -91,7 +91,7 @@
 			color: #2e3539;
 			&:hover { background-color: var(--admin-good); }
 		}
-		&.warning {
+		&.warn {
 			background-color: var(--admin-warn);
 			color: #2e3539;
 			&:hover { background-color: var(--admin-warn-dark); }
@@ -130,7 +130,7 @@
 				text-decoration: underline;
 			}
 			&.good { color: var(--admin-good-dark); }
-			&.warning { color: var(--admin-warn); }
+			&.warn { color: var(--admin-warn); }
 			&.alert { color: var(--admin-alert); }
 		}
 		// &.off {
