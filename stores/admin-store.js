@@ -31,6 +31,9 @@ export const visible_bins = storable('story.visible-bins', {})
 // === >>> HTML EditorJS Editor
 
 export const preview_clip = writable(null)
+export const templates = writable([])
+export const theme_elements = writable([])
+export const template_transitions = writable([])
 export const html_templates = writable([])
 export const html_colors = writable([])
 

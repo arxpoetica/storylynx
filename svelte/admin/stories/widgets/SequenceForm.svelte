@@ -21,25 +21,22 @@
 	<div class="row">
 		<Select
 			label="Template"
-			primary="Select One"
 			required={true}
-			options={[]}
+			options={$templates}
 		/>
 	</div>
 	<div class="row">
 		<Select
 			label="Theme Elements"
-			primary="Select One"
 			required={true}
-			options={[]}
+			options={$theme_elements}
 		/>
 	</div>
 	<div class="row">
 		<Select
 			label="Transitions"
-			primary="Select One"
 			required={true}
-			options={[]}
+			options={$template_transitions}
 		/>
 	</div>
 		<!-- bind:value={parent_index} -->
@@ -49,6 +46,9 @@
 <script>
 	export let sequence
 	export let clip
+
+	import { templates, theme_elements, template_transitions, html_templates, html_colors }
+		from '../../../../stores/admin-store.js'
 
 	import Input from '../../components/elements/Input.svelte'
 	import Checkbox from '../../components/elements/Checkbox.svelte'

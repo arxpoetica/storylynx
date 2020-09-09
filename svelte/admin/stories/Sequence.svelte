@@ -18,17 +18,25 @@
 
 <script>
 	export let sequence = {}
-	export let html_templates = []
-	export let html_colors = []
 
-	import { html_templates as templates, html_colors as colors } from '../../../stores/admin-store.js'
-	$: $templates = html_templates.length ? html_templates : $templates
-	$: $colors = html_colors.length ? html_colors : $colors
+	// passing variables to the template wrapper of the layout theme
+	import { templates, theme_elements, template_transitions, html_templates, html_colors }
+		from '../../../stores/admin-store.js'
+	export let enum_templates = []
+	export let enum_theme_elements = []
+	export let enum_template_transitions = []
+	export let enum_html_templates = []
+	export let enum_html_colors = []
+	$: $templates = enum_templates
+	$: $theme_elements = enum_theme_elements
+	$: $template_transitions = enum_template_transitions
+	$: $html_templates = enum_html_templates
+	$: $html_colors = enum_html_colors
+
 
 	import Scaffolding from '../components/layout/Scaffolding.svelte'
 	import SequenceEditor from './widgets/SequenceEditor.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
-	// import Button from '../components/elements/Button.svelte'
 </script>
 
 <style type="text/scss">
