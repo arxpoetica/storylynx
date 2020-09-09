@@ -13,9 +13,9 @@
 			bind:value={clip.slug}
 			required={true}
 		/>
-		<!-- <Checkbox handler={uncheck} bind:checked color="good"/> -->
+		<!-- <Checkbox handler={uncheck} bind:checked classes="good"/> -->
 		<div class="nav-checkbox">
-			<Checkbox label="Hide navigation" color="warn"/>
+			<Checkbox label="Hide navigation" classes="warn"/>
 		</div>
 	</div>
 	<div class="row">

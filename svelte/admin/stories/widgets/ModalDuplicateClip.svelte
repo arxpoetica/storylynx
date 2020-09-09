@@ -1,7 +1,7 @@
 <Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loading={!sequences.length} {saving}>
 	{#if sequences.length}
 		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
-		<Select label="Parent Sequence" bind:value={parent_index} primary="Select One" required={true} {options}/>
+		<Select label="Parent Sequence" bind:value={parent_index} required={true} {options}/>
 		{#if parent}
 			<Input type="number" label="Order" prelabel="{parent.order}-" bind:value={order} required={true}/>
 		{/if}

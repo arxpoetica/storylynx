@@ -1,4 +1,4 @@
-<label class={color} class:checked on:click|stopPropagation={handler}>
+<label class={classes} class:checked on:click|stopPropagation={handler}>
 	<span class="box">
 		{#if checked}
 			<span class="svg"><Checkmark/></span>
@@ -19,7 +19,7 @@
 	export let required
 	export let checked = false
 	export let handler = () => {}
-	export let color = 'blue'
+	export let classes = 'blue'
 	import Checkmark from '../../../svg/checkmark.svelte'
 </script>
 
@@ -32,7 +32,6 @@
 		&.good {
 			&.checked .box { background-color: var(--admin-good-lighter); }
 			input {
-				border: 1rem solid var(--admin-good-dark);
 				&:checked {
 					border-color: var(--admin-good-dusk);
 					background-color: var(--admin-good-dark);
@@ -41,8 +40,8 @@
 		}
 		&.warn {
 			&.checked .box { background-color: var(--admin-warn-light); }
+			&.checked .svg { color: var(--admin-warn-dusk); }
 			input {
-				border-color: var(--admin-warn-dusk);
 				&:checked {
 					border-color: var(--admin-warn-dusk);
 					background-color: var(--admin-warn-dark);
@@ -56,6 +55,7 @@
 		max-width: 32rem;
 		margin: 0;
 		padding: 8rem;
+		background-color: var(--admin-accent-1);
 		border-radius: 100%;
 		line-height: 0;
 		cursor: default;
@@ -68,9 +68,9 @@
 		padding: 0;
 		height: 16rem;
 		width: 16rem;
-		background: white;
-		border: 1rem solid var(--admin-color-4);
-		// border-radius: 3rem;
+		background: var(--admin-accent-1);
+		border: 1rem solid var(--admin-accent-4);
+		border-radius: 1rem;
 		box-shadow: 0 0 0 transparent;
 		cursor: default;
 		outline: 0;

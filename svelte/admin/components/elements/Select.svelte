@@ -29,7 +29,7 @@
 	export let sublabel
 	export let value = ''
 	export let required
-	export let primary
+	export let primary = '-- select --'
 	export let options = []
 </script>
 
