@@ -9,13 +9,13 @@
 	<div class="row">
 		<Input
 			label="Title"
-			sublabel="Displays in sequence navigation, unless &quot;Hide Navigation&quot; checked below."
+			sublabel="Displays in sequence navigation, unless &quot;Hide Navigation&quot; checked."
 			bind:value={clip.slug}
 			required={true}
 		/>
 		<!-- <Checkbox handler={uncheck} bind:checked classes="good"/> -->
 		<div class="nav-checkbox">
-			<Checkbox label="Hide navigation" classes="warn"/>
+			<Checkbox label="Hide navigation"/>
 		</div>
 	</div>
 	<div class="row">
@@ -25,17 +25,17 @@
 			options={$templates}
 		/>
 	</div>
-	<div class="row">
-		<Select
+	<div class="row full">
+		<MultiSelect
 			label="Theme Elements"
-			required={true}
+			bind:values={clip.theme_elements}
 			options={$theme_elements}
 		/>
 	</div>
-	<div class="row">
-		<Select
+	<div class="row full">
+		<MultiSelect
 			label="Transitions"
-			required={true}
+			bind:values={clip.template_transitions}
 			options={$template_transitions}
 		/>
 	</div>
@@ -47,12 +47,13 @@
 	export let sequence
 	export let clip
 
-	import { templates, theme_elements, template_transitions, html_templates, html_colors }
+	import { templates, theme_elements, template_transitions }
 		from '../../../../stores/admin-store.js'
 
 	import Input from '../../components/elements/Input.svelte'
 	import Checkbox from '../../components/elements/Checkbox.svelte'
 	import Select from '../../components/elements/Select.svelte'
+	import MultiSelect from '../../components/elements/MultiSelect.svelte'
 	// import Button from '../../components/elements/Button.svelte'
 </script>
 
@@ -69,6 +70,9 @@
 		grid-template-columns: 2fr 1fr;
 		grid-column-gap: 20rem;
 		max-width: 600rem;
+		&.full {
+			grid-template-columns: 1fr;
+		}
 	}
 	.nav-checkbox {
 		margin-top: 22rem;

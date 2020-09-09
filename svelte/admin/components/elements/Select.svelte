@@ -54,7 +54,7 @@
 			padding: 5rem 35rem 5rem 12rem;
 			background-color: var(--admin-accent-1);
 			border: 1rem solid var(--admin-accent-2);
-			border-radius: 5px;
+			border-radius: 5rem;
 			box-shadow: none;
 			font: 14rem/20rem var(--admin-font);
 			color: var(--admin-text);
