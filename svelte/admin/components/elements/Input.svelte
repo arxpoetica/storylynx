@@ -1,9 +1,11 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label>
-	<span class="label">
-		{label}
-		{#if required}<span class="required"> *</span>{/if}
-	</span>
+	{#if label}
+		<span class="label">
+			{label}
+			{#if required}<span class="required"> *</span>{/if}
+		</span>
+	{/if}
 	<span class="input" class:has-prelabel={prelabel}>
 		{#if prelabel}
 			<span class="prelabel">{prelabel}</span>
@@ -23,7 +25,7 @@
 	import { onMount, createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher()
 
-	export let label = 'Label'
+	export let label
 	export let prelabel
 	export let sublabel
 	export let type = 'text'
