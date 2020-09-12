@@ -28,7 +28,7 @@
 	async function save(event) {
 		$saving = true
 		for (let change of $hot_changes) {
-			const { asset_group } = await POST('/api/admin/assets/quickentry-update.post', change, true)
+			const { asset_group } = await POST('/api/admin/assets/quickentry-update.post', change)
 		}
 		$hot_changes = []
 		$saveable = false

@@ -24,10 +24,10 @@ export const GET = async function(url) {
 	}
 }
 
-export const POST = async function(url, body, add_auth) {
+export const POST = async function(url, body) {
 	try {
 		body = body || {}
-		if (add_auth) { body.cookie = get(session).cookie }
+		body.cookie = get(session).cookie
 
 		const res = await fetch(process.env.LYNX_HOST + url, {
 			method: 'POST',

@@ -16,7 +16,7 @@
 			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
 			<Button title="Duplicate" classes="blank plain" handler={() => duplicate(index)}/>
 			{#if selected}
-				<Button title="Cancel" classes="warn" handler={cancel}/>
+				<Button title={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
 				<Button title="Save" classes="good" handler={save} disabled={!saveable}/>
 			{:else}
 				<Button title="Edit" handler={edit}/>
@@ -69,7 +69,7 @@
 
 	import { POST } from '../../../../utils/loaders.js'
 	async function save() {
-		const res = await POST('/api/admin/stories/clip-update.post', { clip: $preview_clip }, true)
+		await POST('/api/admin/stories/clip-update.post', { clip: $preview_clip })
 		sequence.clips[index] = $preview_clip
 	}
 

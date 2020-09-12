@@ -47,7 +47,7 @@
 
 		// for each
 		$clip.asset_bins[bin_index].html_blocks[block_index] = html_block
-		const { html_block } = await POST('/api/admin/stories/html-upsert.post', block, true)
+		const { html_block } = await POST('/api/admin/stories/html-upsert.post', block)
 
 		edit_html = false
 		$saving = false

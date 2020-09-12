@@ -28,7 +28,7 @@
 			title: sequence.story.slug.toLowerCase(),
 			slug: sequence.slug.toLowerCase(),
 			clip_id: $preview_clip.id,
-		}, true)
+		})
 		$messenger({ sequence: story.sequence, clip: $preview_clip })
 	}
 </script>

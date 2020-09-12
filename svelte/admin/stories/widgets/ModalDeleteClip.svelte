@@ -28,7 +28,7 @@
 			style_id: clip.style ? clip.style.id : false,
 			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
 			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
-		}, true)
+		})
 		sequence.clips = sequence.clips.filter(clip => clip.id !== res.deleted_clip.id)
 
 		saving = false

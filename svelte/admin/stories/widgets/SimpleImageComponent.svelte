@@ -57,7 +57,7 @@
 
 	import { POST } from '../../../../utils/loaders.js'
 	async function search() {
-		const res = await POST('/api/admin/stories/image-search-page.post', { search_term }, true)
+		const res = await POST('/api/admin/stories/image-search-page.post', { search_term })
 		assets = res.assets
 	}
 

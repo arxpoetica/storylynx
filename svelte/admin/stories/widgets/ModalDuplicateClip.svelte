@@ -33,7 +33,7 @@
 	(async() => {
 		const res = await POST('/api/admin/stories/sequences-list.post', {
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
-		}, true)
+		})
 		sequences = res.sequences
 		parent_id = sequence.id
 
@@ -62,7 +62,7 @@
 			slug,
 			parent_id: parent.id,
 			order: `${parent.order}-${order}`,
-		}, true)
+		})
 		// console.log(res)
 		sequence.clips = [...sequence.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
 

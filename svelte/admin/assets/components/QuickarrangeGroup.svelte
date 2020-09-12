@@ -106,7 +106,7 @@
 				disconnect_ids: group.changes.disconnect_ids || [],
 				order: group.changes.order || [],
 			}
-			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload, true)
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
 			group.changes = undefined
 			// replace `NOID-` with real id:
 			group.id = asset_group.id
@@ -119,7 +119,7 @@
 		$saving = true
 
 		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
-			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', { id: group.id }, true)
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', { id: group.id })
 			$groups.splice(index, 1)
 			$groups = $groups
 
