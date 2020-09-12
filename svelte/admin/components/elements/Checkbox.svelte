@@ -20,7 +20,7 @@
 	export let required
 	export let checked = false
 	export let handler = () => {}
-	export let classes = 'blue'
+	export let classes = ''
 	import Checkmark from '../../../svg/checkmark.svelte'
 </script>
 
@@ -29,7 +29,16 @@
 		display: flex;
 		align-items: center;
 		white-space: nowrap;
-		&.checked .box { background-color: var(--admin-color-2); }
+		&.checked .box { background-color: var(--admin-accent-2); }
+		&.blue {
+			&.checked .box { background-color: var(--admin-color-2); }
+			input {
+				&:checked {
+					border-color: var(--admin-color-10);
+					background-color: var(--admin-color-6);
+				}
+			}
+		}
 		&.good {
 			&.checked .box { background-color: var(--admin-good-lighter); }
 			input {
@@ -77,8 +86,8 @@
 		outline: 0;
 		-webkit-appearance: none;
 		&:checked {
-			border-color: var(--admin-color-10);
-			background-color: var(--admin-color-6);
+			border-color: var(--admin-color-9);
+			background-color: var(--admin-accent-6);
 		}
 	}
 	.svg {

@@ -16,7 +16,7 @@
 			required={true}
 		/>
 		<div class="nav-checkbox">
-			<Checkbox label="Hide navigation"/>
+			<Checkbox label="Hide navigation" bind:checked={$preview_clip.hide_navigation}/>
 		</div>
 	</div>
 	<div class="row">
