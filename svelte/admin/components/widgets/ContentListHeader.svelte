@@ -25,11 +25,7 @@
 </div>
 
 <script>
-	// import { get } from 'svelte/store'
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page, goto } = get_sapper_stores()
-
+	import { page, goto } from '../../../../stores/app-store.js'
 	import { content_vars as vars } from '../../../../stores/admin-store.js'
 
 	import Checkbox from '../elements/Checkbox.svelte'

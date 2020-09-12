@@ -16,13 +16,12 @@
 <AutoplayPolicy/>
 
 <script>
-	import { onMount, getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
+	import { onMount } from 'svelte'
+	import { page } from '../../../stores/app-store.js'
+	import { story_scroll, forward, can_autoplay } from '../../../stores/story-store.js'
 
 	import StoryHeader from './StoryHeader.svelte'
 	import AutoplayPolicy from './AutoplayPolicy.svelte'
-	import { story_scroll, forward, can_autoplay } from '../../../stores/story-store.js'
 
 	let scroll_y = 0
 	$: story_scroll.set(scroll_y)

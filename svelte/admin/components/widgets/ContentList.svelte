@@ -42,10 +42,7 @@
 </div>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
-
+	import { page } from '../../../../stores/app-store.js'
 	import { content_vars as vars } from '../../../../stores/admin-store.js'
 	import { src } from '../../../../utils/basic-utils.js'
 	import dayjs from 'dayjs'

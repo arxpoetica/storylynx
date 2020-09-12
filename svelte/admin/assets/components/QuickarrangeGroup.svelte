@@ -95,22 +95,18 @@
 		$assets = $assets
 	}
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
-
 	async function save_group(group, index) {
 		$saving = true
 		if (group.changes) {
-			const payload = Object.assign({ cookie: $session.cookie }, {
+			const payload = {
 				id: group.id,
 				title: group.title,
 				connect_ids: group.changes.connect_ids || [],
 				disconnect_ids: group.changes.disconnect_ids || [],
 				order: group.changes.order || [],
-			})
-			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload)
+			}
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-upsert.post', payload, true)
 			group.changes = undefined
 			// replace `NOID-` with real id:
 			group.id = asset_group.id
@@ -123,8 +119,7 @@
 		$saving = true
 
 		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
-			const payload = Object.assign({ cookie: $session.cookie }, { id: group.id })
-			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', payload)
+			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', { id: group.id }, true)
 			$groups.splice(index, 1)
 			$groups = $groups
 

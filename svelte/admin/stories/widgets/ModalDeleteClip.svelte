@@ -15,11 +15,7 @@
 	import Modal from '../../components/widgets/Modal.svelte'
 	import Errors from '../../components/widgets/Errors.svelte'
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
-
 
 	let errors = []
 	let saving = false
@@ -28,12 +24,11 @@
 		errors = []
 
 		const res = await POST('/api/admin/stories/clip-delete.post', {
-			cookie: $session.cookie,
 			clip_id: clip.id,
 			style_id: clip.style ? clip.style.id : false,
 			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
 			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
-		})
+		}, true)
 		sequence.clips = sequence.clips.filter(clip => clip.id !== res.deleted_clip.id)
 
 		saving = false

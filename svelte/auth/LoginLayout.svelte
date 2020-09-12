@@ -19,10 +19,6 @@
 </div>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
-
 	import { POST } from '../../utils/loaders.js'
 
 	let message
@@ -36,7 +32,6 @@
 		if (user.message) {
 			message = user.message
 		} else {
-			session.set(Object.assign({}, $session, { user }))
 			// FIXME: let's get rid of reload if possible
 			window.location = '/admin'
 		}

@@ -30,9 +30,7 @@
 </div>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page: pageStore } = get_sapper_stores()
+	import { page as page_store } from '../../stores/app-store.js'
 	import { createPaginationRange, createQuery } from '../../utils/page-helpers'
 	import Prev from '../svg/prev.svelte'
 	import Next from '../svg/next.svelte'
@@ -47,7 +45,7 @@
 	// ALSO: `page` is the current number
 	$: pagesCount = Math.ceil(items_count / page_size)
 	$: range = createPaginationRange(page, pagesCount)
-	$: query = $pageStore.query
+	$: query = $page_store.query
 </script>
 
 <style type="text/scss">

@@ -23,17 +23,12 @@
 	$: valid_subjects = [null, ...subjects]
 
 	import { saving, saveable, hot, hot_changes } from '../../../stores/admin-store.js'
-
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../utils/loaders.js'
 
 	async function save(event) {
 		$saving = true
 		for (let change of $hot_changes) {
-			const payload = Object.assign({ cookie: $session.cookie }, change)
-			const { asset_group } = await POST('/api/admin/assets/quickentry-update.post', payload)
+			const { asset_group } = await POST('/api/admin/assets/quickentry-update.post', change, true)
 		}
 		$hot_changes = []
 		$saveable = false

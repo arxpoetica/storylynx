@@ -52,18 +52,12 @@
 
 	import Button from '../../components/elements/Button.svelte'
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
-	import { POST } from '../../../../utils/loaders.js'
-
 	function enter(event) {
 	}
+
+	import { POST } from '../../../../utils/loaders.js'
 	async function search() {
-		const res = await POST(
-			'/api/admin/stories/image-search-page.post',
-			Object.assign({ cookie: $session.cookie }, { search_term }),
-		)
+		const res = await POST('/api/admin/stories/image-search-page.post', { search_term }, true)
 		assets = res.assets
 	}
 

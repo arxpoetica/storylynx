@@ -19,10 +19,6 @@
 	import Sequence from './Sequence.svelte'
 	import Navigation from './layout/Navigation.svelte'
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
-
 	$: $navigation = story.navigation
 </script>
 

@@ -21,9 +21,8 @@
 <slot name="post-site"></slot>
 
 <script>
-	import { onMount, getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
+	import { onMount } from 'svelte'
+	import { page } from '../../stores/app-store.js'
 
 	import Header from './Header.svelte'
 	import Footer from './Footer.svelte'

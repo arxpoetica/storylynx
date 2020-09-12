@@ -34,9 +34,6 @@
 
 	const html_edit_str = code => Object.keys(code).length ? 'Edit' : 'Add'
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { code_to_html } from './html-utils.js'
 	import { POST } from '../../../../utils/loaders.js'
 
@@ -49,11 +46,8 @@
 
 
 		// for each
-		const { html_block } = await POST(
-			'/api/admin/stories/html-upsert.post',
-			Object.assign({ cookie: $session.cookie }, block),
-		)
 		$clip.asset_bins[bin_index].html_blocks[block_index] = html_block
+		const { html_block } = await POST('/api/admin/stories/html-upsert.post', block, true)
 
 		edit_html = false
 		$saving = false

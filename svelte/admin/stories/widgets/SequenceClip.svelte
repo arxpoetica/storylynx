@@ -67,18 +67,12 @@
 		setTimeout(() => $preview_clip = JSON.parse(JSON.stringify(sequence.clips[index])), 0)
 	}
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
-
 	async function save() {
-		const res = await POST('/api/admin/stories/clip-update.post', {
-			cookie: $session.cookie,
-			clip: $preview_clip,
-		})
+		const res = await POST('/api/admin/stories/clip-update.post', { clip: $preview_clip }, true)
 		sequence.clips[index] = $preview_clip
 	}
+
 	async function cancel() {
 		// MORE TODO: !!!!!
 		$preview_clip = undefined

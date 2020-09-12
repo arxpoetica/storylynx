@@ -11,17 +11,14 @@
 <SavePanel/>
 
 <script>
-	import { onMount, getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session, page } = get_sapper_stores()
+	import { onMount } from 'svelte'
 
 	import AdminHeader from './AdminHeader.svelte'
 	import AdminBar from './AdminBar.svelte'
 	import SavePanel from './SavePanel.svelte'
 	import AssetPreview from './AssetPreview.svelte'
-	// $: admin = $session.user
 
-	import { color_scheme } from '../../../../stores/app-store.js'
+	import { page, color_scheme } from '../../../../stores/app-store.js'
 	import { fullwidth } from '../../../../stores/admin-store.js'
 
 	// DOM ONLY STUFF ---------- >>>>

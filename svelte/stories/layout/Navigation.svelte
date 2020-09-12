@@ -29,13 +29,10 @@
 </nav>
 
 <script>
-	import { onMount, getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
-
 	export let story
 
 	import { url_hash } from '../../../utils/story-utils.js'
+	import { page } from '../../../stores/app-store.js'
 	import { story_scroll } from '../../../stores/story-store.js'
 
 	const href = nav => `/stories/${$page.params.story}/${nav.slug.toLowerCase()}`
@@ -63,6 +60,7 @@
 	let timeout = false
 	$: show = $story_scroll < 100 && !timeout
 
+	import { onMount } from 'svelte'
 	onMount(() => {
 		set_widths()
 		setTimeout(() => timeout = true, 3000)

@@ -16,9 +16,6 @@
 	import { preview_clip, messenger } from '../../../../stores/admin-store.js'
 	$: $messenger = iframe ? iframe.contentWindow.postMessage : () => {}
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
 
 	// NOTE: this little dance is so that it doesn't `load()` every time `$preview_clip` is changed
@@ -28,11 +25,10 @@
 	async function load() {
 		loaded = true
 		const { story } = await POST('/api/admin/stories/sequence-preview.post', {
-			cookie: $session.cookie,
 			title: sequence.story.slug.toLowerCase(),
 			slug: sequence.slug.toLowerCase(),
 			clip_id: $preview_clip.id,
-		})
+		}, true)
 		$messenger({ sequence: story.sequence, clip: $preview_clip })
 	}
 </script>

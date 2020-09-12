@@ -1,3 +1,4 @@
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <label class={classes} class:checked on:click|stopPropagation={handler}>
 	<span class="box">
 		{#if checked}

@@ -1,4 +1,6 @@
 import fetch from 'cross-fetch'
+import { get } from 'svelte/store'
+import { session } from '../stores/app-store.js'
 
 export const handleError = (error, res) => {
 	console.log(require('ansi-colors').red('Error:'), error.message)
@@ -22,9 +24,11 @@ export const GET = async function(url) {
 	}
 }
 
-export const POST = async function(url, body) {
+export const POST = async function(url, body, add_auth) {
 	try {
 		body = body || {}
+		if (add_auth) { body.cookie = get(session).cookie }
+
 		const res = await fetch(process.env.LYNX_HOST + url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

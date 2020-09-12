@@ -23,9 +23,7 @@
 </div>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
+	import { session, color_scheme } from '../../../../stores/app-store.js'
 
 	let menu
 	let open = false
@@ -40,11 +38,11 @@
 		}
 	}
 
-	import { color_scheme } from '../../../../stores/app-store.js'
 	function toggle_color_scheme() {
 		$color_scheme = $color_scheme === 'auto' ? 'dark' : ($color_scheme === 'dark' ? 'light' : 'auto')
 	}
 
+	import { GET } from '../../../../utils/loaders.js'
 	async function logout(event) {
 		event.preventDefault()
 		await GET('/api/auth/logout.get')

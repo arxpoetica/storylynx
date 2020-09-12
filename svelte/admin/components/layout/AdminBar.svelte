@@ -33,9 +33,7 @@
 </nav>
 
 <script>
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { page } = get_sapper_stores()
+	import { page } from '../../../../stores/app-store.js'
 	const on = (path, segment) => path.includes(`/admin/${segment}`)
 
 	import { GET } from '../../../../utils/loaders.js'

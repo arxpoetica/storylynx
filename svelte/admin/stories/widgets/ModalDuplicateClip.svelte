@@ -27,17 +27,13 @@
 	import Modal from '../../components/widgets/Modal.svelte'
 	import Errors from '../../components/widgets/Errors.svelte'
 
-	import { getContext } from 'svelte'
-	const { get_sapper_stores } = getContext('@sapper/app')
-	const { session } = get_sapper_stores()
 	import { POST } from '../../../../utils/loaders.js'
 
 	let validator
 	(async() => {
 		const res = await POST('/api/admin/stories/sequences-list.post', {
-			cookie: $session.cookie,
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
-		})
+		}, true)
 		sequences = res.sequences
 		parent_id = sequence.id
 
@@ -62,12 +58,11 @@
 		errors = []
 
 		const res = await POST('/api/admin/stories/clip-duplicate.post', {
-			cookie: $session.cookie,
 			clip,
 			slug,
 			parent_id: parent.id,
 			order: `${parent.order}-${order}`,
-		})
+		}, true)
 		// console.log(res)
 		sequence.clips = [...sequence.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
 
