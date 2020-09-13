@@ -1,6 +1,6 @@
 <iframe
 	bind:this={iframe}
-	src="/admin-preview/{sequence.story.slug.toLowerCase()}/{sequence.slug.toLowerCase()}"
+	src="/admin-preview/{sequence.story.slug}/{sequence.slug}"
 	frameborder="0"
 	title="clip preview"
 >
@@ -25,8 +25,8 @@
 	async function load() {
 		loaded = true
 		const { story } = await POST('/api/admin/stories/sequence-preview.post', {
-			title: sequence.story.slug.toLowerCase(),
-			slug: sequence.slug.toLowerCase(),
+			story_slug: sequence.story.slug,
+			sequence_slug: sequence.slug,
 			clip_id: $preview_clip.id,
 		})
 		$messenger({ sequence: story.sequence, clip: $preview_clip })

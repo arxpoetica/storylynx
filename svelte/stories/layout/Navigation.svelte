@@ -35,8 +35,8 @@
 	import { page } from '../../../stores/app-store.js'
 	import { story_scroll } from '../../../stores/story-store.js'
 
-	const href = nav => `/stories/${$page.params.story}/${nav.slug.toLowerCase()}`
-	const current = nav => nav.slug.toLowerCase() === $page.params.sequence
+	const href = nav => `/stories/${$page.params.story}/${nav.slug}`
+	const current = nav => nav.slug === $page.params.sequence
 
 	// scrolling helpers:
 
