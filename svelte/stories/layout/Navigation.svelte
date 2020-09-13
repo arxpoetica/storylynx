@@ -4,9 +4,9 @@
 	<div class="evil-wrap">
 		<!-- {JSON.stringify($page.params)} -->
 		<ul bind:this={seq} class="sequences" style="transform:translateX(-{pos_x}px);">
-			{#each story.navigation as nav, index}
+			{#each story.navigation as nav, index (nav.order)}
 				{#if !nav.hide_navigation}
-					<li class="sequence sequence-{index}" class:current={current(nav)}>
+					<li class="sequence sequence-{index}" class:current={nav.slug === $page.params.sequence}>
 						<h2><a href={href(nav)}>{nav.slug}</a></h2>
 						{#if nav.subnavigation.length}
 							<ul class="clips">
@@ -36,7 +36,6 @@
 	import { story_scroll } from '../../../stores/story-store.js'
 
 	const href = nav => `/stories/${$page.params.story}/${nav.slug}`
-	const current = nav => nav.slug === $page.params.sequence
 
 	// scrolling helpers:
 
