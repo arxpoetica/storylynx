@@ -78,8 +78,6 @@
 </div>
 
 <script>
-	// export let sequence
-
 	import {
 		preview_clip as clip,
 		templates,

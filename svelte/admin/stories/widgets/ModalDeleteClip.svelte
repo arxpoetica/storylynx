@@ -2,12 +2,13 @@
 	<Errors {errors}/>
 	<p>Are you sure you want to delete this clip and all it's contents?</p>
 	<p class="warning">THIS ACTION CANNOT BE UNDONE.</p>
-	<Button title="I'm sure. Delete my clip." classes="blank alert" handler={delete_clip}/>
+	<Button title="I'm sure. Delete my clip." classes="alert" handler={delete_clip}/>
 	<Button title="Cancel" handler={() => open = false}/>
 </Modal>
 
 <script>
-	export let sequence
+	import { seq } from '../../../../stores/admin-store.js'
+
 	export let clip
 	export let open
 
@@ -29,7 +30,7 @@
 			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
 			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
 		})
-		sequence.clips = sequence.clips.filter(clip => clip.id !== res.deleted_clip.id)
+		$seq.clips = $seq.clips.filter(clip => clip.id !== res.deleted_clip.id)
 
 		saving = false
 		open = false

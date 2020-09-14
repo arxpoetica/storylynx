@@ -1,5 +1,5 @@
 <div class="tools" class:expanded>
-	<h2>{sequence.slug}</h2>
+	<h2>{$seq.slug}</h2>
 	<Button classes="small blank" handler={toggle_all}>
 		<span class="text">{expanded ? 'Collapse' : 'Expand'} All</span>
 		<span class="svg"><Caret/></span>
@@ -7,14 +7,14 @@
 </div>
 
 <script>
-	export let sequence
+	import { seq, visible_bins } from '../../../../stores/admin-store.js'
+	$: expanded = $seq && $visible_bins[$seq.id].size
+
 	import Button from '../../components/elements/Button.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 
-	import { visible_bins } from '../../../../stores/admin-store.js'
-	$: expanded = $visible_bins[sequence.id].size
 	function toggle_all() {
-		sequence.clips.map(clip => $visible_bins[sequence.id][expanded ? 'delete' : 'add'](clip.id))
+		$seq.clips.map(clip => $visible_bins[$seq.id][expanded ? 'delete' : 'add'](clip.id))
 		$visible_bins = $visible_bins
 	}
 </script>

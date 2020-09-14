@@ -11,7 +11,8 @@
 </Modal>
 
 <script>
-	export let sequence
+	import { seq } from '../../../../stores/admin-store.js'
+
 	export let clip
 	export let open
 	let sequences = []
@@ -35,7 +36,7 @@
 			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
 		})
 		sequences = res.sequences
-		parent_id = sequence.id
+		parent_id = $seq.id
 
 		const { default: FastestValidator } = await import('fastest-validator')
 		validator = (new FastestValidator()).compile({
@@ -64,7 +65,7 @@
 			order: `${parent.order}-${order}`,
 		})
 		// console.log(res)
-		sequence.clips = [...sequence.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
+		$seq.clips = [...$seq.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
 
 		saving = false
 		open = false

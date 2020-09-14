@@ -1,6 +1,6 @@
 <iframe
 	bind:this={iframe}
-	src="/admin-preview/{sequence.story.slug}/{sequence.slug}"
+	src="/admin-preview/{$seq.story.slug}/{$seq.slug}"
 	frameborder="0"
 	title="clip preview"
 >
@@ -10,10 +10,9 @@
 {/if}
 
 <script>
-	export let sequence
 	let iframe
 
-	import { preview_clip, messenger } from '../../../../stores/admin-store.js'
+	import { seq, preview_clip, messenger } from '../../../../stores/admin-store.js'
 	$: $messenger = iframe ? iframe.contentWindow.postMessage : () => {}
 
 	import { POST } from '../../../../utils/loaders.js'
@@ -25,8 +24,8 @@
 	async function load() {
 		loaded = true
 		const { story } = await POST('/api/admin/stories/sequence-preview.post', {
-			story_slug: sequence.story.slug,
-			sequence_slug: sequence.slug,
+			story_slug: $seq.story.slug,
+			sequence_slug: $seq.slug,
 			clip_id: $preview_clip.id,
 		})
 		$messenger({ sequence: story.sequence, clip: $preview_clip })

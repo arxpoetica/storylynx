@@ -1,27 +1,42 @@
-<Scaffolding title="Stories" fullwidth={true}>
-	<div class="dash">
-		<div class="toolbar">
-			<h2>Story: <a href="/admin/stories">{sequence.story.title}</a> / {sequence.slug}</h2>
-		</div>
-		<div class="wrap">
-			<div class="panes">
-				<div class="pane developer">
-					<SequenceEditor bind:sequence/>
-				</div>
-				<div class="pane sequence">
-					<PreviewPane {sequence}/>
+{#if $seq}
+	<Scaffolding title="Stories" fullwidth={true}>
+		<div class="dash">
+			<div class="toolbar">
+				<h2>Story: <a href="/admin/stories">{$seq.story.title}</a> / {$seq.slug}</h2>
+			</div>
+			<div class="wrap">
+				<div class="panes">
+					<div class="pane developer">
+						<SequenceTools/>
+						{#each $seq.clips as clip, index (clip.id)}
+							<SequenceClip {clip} {index}/>
+						{/each}
+					</div>
+					<div class="pane sequence">
+						<PreviewPane/>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</Scaffolding>
+	</Scaffolding>
+{/if}
 
 <script>
-	export let sequence = {}
+	import {
+		seq,
+		visible_bins,
+		templates,
+		theme_elements,
+		template_transitions,
+		html_templates,
+		html_colors
+	} from '../../../stores/admin-store.js'
+
+	export let sequence
+	$: setTimeout(() => $seq = sequence, 0)
+	$: if ($seq && !$visible_bins[$seq.id]) { $visible_bins[$seq.id] = new Set(); }
 
 	// passing variables to the template wrapper of the layout theme
-	import { templates, theme_elements, template_transitions, html_templates, html_colors }
-		from '../../../stores/admin-store.js'
 	export let enum_templates = []
 	export let enum_theme_elements = []
 	export let enum_template_transitions = []
@@ -34,7 +49,8 @@
 	$: $html_colors = enum_html_colors
 
 	import Scaffolding from '../components/layout/Scaffolding.svelte'
-	import SequenceEditor from './widgets/SequenceEditor.svelte'
+	import SequenceTools from './widgets/SequenceTools.svelte'
+	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
 </script>
 

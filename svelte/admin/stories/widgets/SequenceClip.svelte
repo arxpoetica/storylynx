@@ -1,5 +1,4 @@
-<div class="clip" class:open={$visible_bins[sequence.id].has(clip.id)} class:selected class:saveable>
-
+<div class="clip" class:open={$visible_bins[$seq.id].has(clip.id)} class:selected class:saveable>
 	<div class="header">
 		{#if !selected}
 			<!-- FIXME: make this a component -->
@@ -11,39 +10,24 @@
 				<span class="svg"><Caret/></span>
 			</h2>
 		{/if}
-		<div class="button-wrap">
-			<Button title="Delete" classes="alert blank" handler={() => handle_delete(index)}/>
-			<!-- TODO: disable the `duplicate` button IF THE CLIP is being worked on / edited / not saved -->
-			<Button title="Duplicate" classes="blank plain" handler={() => duplicate(index)}/>
-			{#if selected}
-				<Button title={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
-				<Button title="Save" classes="good" handler={save} disabled={!saveable}/>
-			{:else}
-				<Button title="Edit" handler={edit}/>
-			{/if}
-		</div>
+		<SequenceActions {index} {selected} {saveable} bind:preview_string/>
 	</div>
-
 	{#if selected}
-		<SequenceForm {sequence}/>
+		<SequenceForm/>
 	{/if}
-
-	<AssetBins {sequence} {clip} selectedclip={selected}/>
+	<AssetBins {clip} selectedclip={selected}/>
 </div>
 
 <script>
-	export let sequence
 	export let clip
 	export let index
-	export let duplicate
-	export let handle_delete
 
+	import SequenceActions from './SequenceActions.svelte'
 	import AssetBins from './AssetBins.svelte'
-	import Button from '../../components/elements/Button.svelte'
 	import SequenceForm from './SequenceForm.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 
-	import { preview_clip, messenger, visible_bins } from '../../../../stores/admin-store.js'
+	import { seq, preview_clip, messenger, visible_bins/* , saveable */ } from '../../../../stores/admin-store.js'
 	$: selected = $preview_clip && $preview_clip.id === clip.id
 	$: clip_string = selected && JSON.stringify(clip)
 	$: preview_string = selected && JSON.stringify($preview_clip)
@@ -53,30 +37,12 @@
 	}
 
 	function toggle(id) {
-		if ($visible_bins[sequence.id].has(id)) {
-			$visible_bins[sequence.id].delete(id)
+		if ($visible_bins[$seq.id].has(id)) {
+			$visible_bins[$seq.id].delete(id)
 		} else {
-			$visible_bins[sequence.id].add(id)
+			$visible_bins[$seq.id].add(id)
 		}
 		$visible_bins = $visible_bins
-	}
-
-	async function edit() {
-		// MORE TODO: !!!!!
-		cancel()
-		setTimeout(() => $preview_clip = JSON.parse(JSON.stringify(sequence.clips[index])), 0)
-	}
-
-	import { POST } from '../../../../utils/loaders.js'
-	async function save() {
-		await POST('/api/admin/stories/clip-update.post', { clip: $preview_clip })
-		sequence.clips[index] = $preview_clip
-	}
-
-	async function cancel() {
-		// MORE TODO: !!!!!
-		$preview_clip = undefined
-		preview_string = ''
 	}
 </script>
 
@@ -126,15 +92,6 @@
 			height: 6rem;
 			transform: rotate(270deg);
 			line-height: 0;
-		}
-	}
-	.button-wrap {
-		display: flex;
-		justify-content: flex-end;
-		margin: 0;
-		:global(.button) {
-			margin: 0 0 0 15rem;
-			&:first-child { margin: 0; }
 		}
 	}
 </style>
