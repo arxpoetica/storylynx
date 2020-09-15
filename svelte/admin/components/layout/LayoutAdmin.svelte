@@ -1,3 +1,5 @@
+<svelte:body on:click={event => $target = event.target}/>
+
 <div class="lynx-admin-layout scheme-{$color_scheme}">
 	<AdminHeader/>
 	<div class="body" class:fullwidth={$fullwidth}>
@@ -19,7 +21,7 @@
 	import AssetPreview from './AssetPreview.svelte'
 
 	import { page, color_scheme } from '../../../../stores/app-store.js'
-	import { fullwidth } from '../../../../stores/admin-store.js'
+	import { target, fullwidth } from '../../../../stores/admin-store.js'
 
 	// DOM ONLY STUFF ---------- >>>>
 	let html

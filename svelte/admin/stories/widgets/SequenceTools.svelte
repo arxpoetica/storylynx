@@ -24,7 +24,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 0 0 40rem;
+		margin: 0 0 20rem;
 		padding: 12rem 15rem;
 		background-color: var(--admin-accent-0);
 		border-radius: 2rem;

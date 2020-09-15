@@ -19,11 +19,18 @@
 			</div>
 		</div>
 	</Scaffolding>
+	{#if duplicate_clip}
+		<ModalDuplicateClip clip={duplicate_clip} bind:open={duplicate_clip}/>
+	{/if}
+	{#if delete_clip}
+		<ModalDeleteClip clip={delete_clip} bind:open={delete_clip}/>
+	{/if}
 {/if}
 
 <script>
 	import {
 		seq,
+		handlers,
 		visible_bins,
 		templates,
 		theme_elements,
@@ -52,6 +59,15 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
+	import ModalDuplicateClip from './widgets/ModalDuplicateClip.svelte'
+	import ModalDeleteClip from './widgets/ModalDeleteClip.svelte'
+
+	let duplicate_clip
+	let delete_clip
+	$handlers = {
+		duplicate: index => duplicate_clip = $seq.clips[index],
+		delete: index => delete_clip = $seq.clips[index],
+	}
 </script>
 
 <style type="text/scss">
@@ -81,7 +97,7 @@
 		bottom: 0;
 		left: 0;
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: 600rem auto;
 	}
 	.pane {
 		position: relative;
@@ -90,8 +106,7 @@
 		@mixin scrollbar {}
 	}
 	.developer {
-		max-width: 772rem;
-		padding: 40rem;
+		padding: 20rem;
 	}
 	.sequence {
 		border-left: 1px solid var(--admin-accent-2);

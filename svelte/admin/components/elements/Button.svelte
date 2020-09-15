@@ -5,7 +5,7 @@
 		class="button {classes}"
 		{style}
 		class:disabled
-		on:click|stopPropagation={event => handler(event)}
+		on:click={event => internal_handler(event)}
 	>
 		<slot>{title}</slot>
 	</a>
@@ -15,7 +15,7 @@
 		class="button {classes}"
 		{style}
 		{disabled}
-		on:click|stopPropagation={event => handler(event)}
+		on:click={event => internal_handler(event)}
 	>
 		<slot>{title}</slot>
 	</button>
@@ -28,7 +28,14 @@
 	export let title = 'Click'
 	export let disabled
 	export let element
+	export let stop_propagation
 	export let handler = () => {}
+	function internal_handler(event) {
+		if (stop_propagation) {
+			event.stopPropagation()
+		}
+		handler(event)
+	}
 </script>
 
 <style type="text/scss">
@@ -100,6 +107,11 @@
 			background-color: var(--admin-alert);
 			color: var(--admin-text);
 			&:hover { background-color: var(--admin-alert-dark); }
+		}
+		&.dark {
+			background-color: var(--admin-bg);
+			color: var(--admin-accent-4);
+			&:hover { background-color: var(--admin-accent-0); }
 		}
 		&.plain {
 			background-color: var(--admin-text);
