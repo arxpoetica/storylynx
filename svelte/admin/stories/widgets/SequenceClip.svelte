@@ -1,4 +1,20 @@
-<div class="clip" class:open={$visible_bins[$seq.id].has(clip.id)} class:selected class:saveable>
+<div
+	bind:this={elem}
+	class="clip"
+	class:open={$visible_bins[$seq.id].has(clip.id)}
+	class:selected
+	class:saveable
+
+	draggable="true"
+	on:dragstart={event => dragstart(event)}
+	on:dragenter={event => dragenter(event)}
+	on:dragover={event => dragover(event)}
+	on:dragleave={event => dragleave(event)}
+	on:drop={event => drop(event)}
+	on:dragend={event => dragend(event)}
+
+
+>
 	<div class="header">
 		<h2 on:click={() => toggle(clip.id)}>
 			<span class="svg"><Caret/></span>
@@ -32,6 +48,49 @@
 </div>
 
 <script>
+	let elem
+	let drag_src_elem = null
+	function dragstart(event) {
+		drag_src_elem = elem
+		event.dataTransfer.effectAllowed = 'move'
+		event.dataTransfer.setData('text/html', elem.outerHTML)
+		elem.classList.add('drag-elem')
+	}
+	function dragenter(event) {}
+	function dragover(event) {
+		event.preventDefault()
+		elem.classList.add('over')
+		event.dataTransfer.dropEffect = 'move'
+		// return false
+	}
+	function dragleave(event) {
+		elem.classList.remove('over')
+	}
+	function drop(event) {
+		event.stopPropagation()
+		if (drag_src_elem !== elem) {
+			// Set the source column's HTML to the HTML of the column we dropped on.
+			console.log(elem)
+			console.log(elem.outerHTML)
+
+			//drag_src_elem.innerHTML = elem.innerHTML
+			//elem.innerHTML = event.dataTransfer.getData('text/html')
+
+			// elem.parentNode.removeChild(drag_src_elem)
+			// const drop_html = event.dataTransfer.getData('text/html')
+			// elem.insertAdjacentHTML('beforebegin', drop_html)
+			// const drop_elem = elem.previousSibling
+			// addDnDHandlers(drop_elem)
+		}
+		elem.classList.remove('over')
+		// return false
+	}
+	function dragend(event) {
+		elem.classList.remove('over')
+	}
+
+
+
 	export let clip
 	export let index
 
@@ -98,6 +157,8 @@
 		padding: 20rem 20rem 0;
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
+		cursor: pointer;
+		user-select: none;
 		&:last-child { margin: 0; }
 		&:hover .actions { opacity: 0.75; }
 		&.open h2 .svg { transform: rotate(360deg); }

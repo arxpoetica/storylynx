@@ -36,12 +36,12 @@
 		theme_elements,
 		template_transitions,
 		html_templates,
-		html_colors
+		html_colors,
 	} from '../../../stores/admin-store.js'
 
 	export let sequence
 	$: setTimeout(() => $seq = sequence, 0)
-	$: if ($seq && !$visible_bins[$seq.id]) { $visible_bins[$seq.id] = new Set(); }
+	$: if ($seq && !$visible_bins[$seq.id]) { $visible_bins[$seq.id] = new Set() }
 
 	// passing variables to the template wrapper of the layout theme
 	export let enum_templates = []
