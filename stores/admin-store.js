@@ -13,19 +13,13 @@ export const egg_preview = writable(null)
 
 export const content_vars = writable()
 
-// === >>> HandsonTable Table Editor
-
-export const hot = writable(null)
-export const hot_loaded = writable(null)
-export const hot_changes = writable([])
-
 // === >>> Quick Arrange
 
 export const assets = writable([])
 export const current_group = writable(-1)
 export const groups = writable([])
 
-// === >>> Sequence Editor
+// ==================================== >>> Sequence Editor
 
 export const seq = writable()
 export const preview_clip = writable(null)
@@ -37,21 +31,24 @@ export const template_transitions = writable([])
 export const html_templates = writable([])
 export const html_colors = writable([])
 
-// === >>> HTML EditorJS Editor
-
-// ...to come...
-
 // === >>> Iframe Clip Preview
 
 export const messenger = writable()
 
+// === >>> Drag & Drop
+
+export const drag_elem = writable()
+export const swap_elem = writable()
+export const insert_before = writable()
+export const seq_order = writable([])
+
+// === >>> HandsonTable Table Editor
+
+export const hot = writable(null)
+export const hot_loaded = writable(null)
+export const hot_changes = writable([])
 
 
+// === >>> HTML EditorJS Editor
 
-
-
-
-
-// === >>> DEPRECATED / NEVER USED
-
-// export const FileStackLoaded = writable(false)
+// ...to come...

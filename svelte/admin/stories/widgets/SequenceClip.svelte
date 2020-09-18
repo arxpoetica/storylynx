@@ -1,5 +1,6 @@
 <div
 	bind:this={elem}
+	id="{clip.id}_{index}_{clip.order}"
 	class="clip"
 	class:open={$visible_bins[$seq.id].has(clip.id)}
 	class:selected
@@ -7,13 +8,9 @@
 
 	draggable="true"
 	on:dragstart={event => dragstart(event)}
-	on:dragenter={event => dragenter(event)}
 	on:dragover={event => dragover(event)}
-	on:dragleave={event => dragleave(event)}
-	on:drop={event => drop(event)}
 	on:dragend={event => dragend(event)}
-
-
+	class:dragging
 >
 	<div class="header">
 		<h2 on:click={() => toggle(clip.id)}>
@@ -21,6 +18,7 @@
 			<span class="texts">
 				{clip.slug}
 				<span class="order">({clip.order})</span>
+				<span class="order">({clip.id})</span>
 			</span>
 		</h2>
 		<div class="actions" class:open>
@@ -48,49 +46,6 @@
 </div>
 
 <script>
-	let elem
-	let drag_src_elem = null
-	function dragstart(event) {
-		drag_src_elem = elem
-		event.dataTransfer.effectAllowed = 'move'
-		event.dataTransfer.setData('text/html', elem.outerHTML)
-		elem.classList.add('drag-elem')
-	}
-	function dragenter(event) {}
-	function dragover(event) {
-		event.preventDefault()
-		elem.classList.add('over')
-		event.dataTransfer.dropEffect = 'move'
-		// return false
-	}
-	function dragleave(event) {
-		elem.classList.remove('over')
-	}
-	function drop(event) {
-		event.stopPropagation()
-		if (drag_src_elem !== elem) {
-			// Set the source column's HTML to the HTML of the column we dropped on.
-			console.log(elem)
-			console.log(elem.outerHTML)
-
-			//drag_src_elem.innerHTML = elem.innerHTML
-			//elem.innerHTML = event.dataTransfer.getData('text/html')
-
-			// elem.parentNode.removeChild(drag_src_elem)
-			// const drop_html = event.dataTransfer.getData('text/html')
-			// elem.insertAdjacentHTML('beforebegin', drop_html)
-			// const drop_elem = elem.previousSibling
-			// addDnDHandlers(drop_elem)
-		}
-		elem.classList.remove('over')
-		// return false
-	}
-	function dragend(event) {
-		elem.classList.remove('over')
-	}
-
-
-
 	export let clip
 	export let index
 
@@ -104,6 +59,10 @@
 	import {
 		target,
 		seq,
+		seq_order,
+		drag_elem,
+		swap_elem,
+		insert_before,
 		visible_bins,
 		handlers,
 		preview_clip,
@@ -148,6 +107,76 @@
 		await POST('/api/admin/stories/clip-update.post', { clip: $preview_clip })
 		$seq.clips[index] = $preview_clip
 	}
+
+	let elem
+	let dragging = false
+
+	function dragstart(event) {
+		dragging = true
+		$drag_elem = elem
+		event.dataTransfer.effectAllowed = 'move'
+		event.dataTransfer.setData('text/html', $drag_elem.outerHTML)
+	}
+
+	function dragover(event) {
+		event.preventDefault()
+		event.dataTransfer.dropEffect = 'move'
+		const { currentTarget: target, clientY } = event
+		if (target !== $drag_elem) {
+			const { top, bottom } = target.getBoundingClientRect()
+			$insert_before = (clientY - top) / (bottom - top) < 0.5
+
+			if ($insert_before) {
+				target.parentNode.insertBefore($drag_elem, target)
+			} else {
+				target.parentNode.insertBefore(target, $drag_elem)
+			}
+			$swap_elem = target
+		}
+	}
+
+	async function dragend(event) {
+
+		const parent = event.currentTarget.parentNode
+
+		const clip_changes = [...parent.children].map((child, child_index) => {
+			let [id, index, order] = child.id.split('_')
+			index = parseInt(index)
+
+			if (child_index === index) {
+				return false
+			}
+
+			// probably only need to account for 10,000 clips, hence padStart => 6 ordinals:
+			const prefix = order.split('-')[0]
+			const suffix = String((child_index + 1) * 100).padStart(6, 0)
+			return { id, index, order: `${prefix}-${suffix}` }
+		}).filter(Boolean)
+
+		if (clip_changes.length) {
+			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes })
+
+			if (res.error) {
+				alert('Something went wrong. Resetting clip order. Please contact the administrator of this site for assistance.')
+				const reset_clips = [...$seq.clips]
+				$seq.clips = []
+				setTimeout(() => $seq.clips = reset_clips, 0)
+			} else {
+				$seq.clips = $seq.clips
+					.map(clip => {
+						const found = clip_changes.find(change => change.id === clip.id)
+						if (found) {
+							clip.order = found.order
+						}
+						return clip
+					})
+					.sort((one, two) => one.order.localeCompare(two.order))
+			}
+		}
+
+		$drag_elem = undefined
+		dragging = false
+	}
 </script>
 
 <style type="text/scss">
@@ -169,6 +198,10 @@
 		&.saveable {
 			box-shadow: 0 0 0 3rem var(--admin-warn);
 			.secondary { display: none; }
+		}
+		&.dragging {
+			box-shadow: inset 0 0 0 3rem var(--admin-accent-2);
+			opacity: 0.25;
 		}
 	}
 	.header {

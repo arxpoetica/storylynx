@@ -8,9 +8,11 @@
 				<div class="panes">
 					<div class="pane developer">
 						<SequenceTools/>
-						{#each $seq.clips as clip, index (clip.id)}
-							<SequenceClip {clip} {index}/>
-						{/each}
+						<div class="clips">
+							{#each $seq.clips as clip, index (clip.id)}
+								<SequenceClip {clip} {index}/>
+							{/each}
+						</div>
 					</div>
 					<div class="pane sequence">
 						<PreviewPane/>
