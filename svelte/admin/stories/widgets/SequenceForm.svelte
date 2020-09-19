@@ -1,13 +1,9 @@
 <div class="form">
 
-	<!-- Order -->
-	<!-- Asset Bins =>>>>>> -->
-
 	<div class="row">
 		<Input
 			label="Title"
 			sublabel="Displays in sequence navigation, unless &quot;Hide Navigation&quot; checked."
-			prelabel={$clip.order}
 			bind:value={$clip.slug}
 			required={true}
 		/>

@@ -6,10 +6,11 @@
 	class:selected
 	class:saveable
 
-	draggable="true"
+	draggable={!$preview_clip}
 	on:dragstart={event => dragstart(event)}
 	on:dragover={event => dragover(event)}
 	on:dragend={event => dragend(event)}
+	class:draggable={!$preview_clip}
 	class:dragging
 >
 	<div class="header">
@@ -17,8 +18,8 @@
 			<span class="svg"><Caret/></span>
 			<span class="texts">
 				{clip.slug}
-				<span class="order">({clip.order})</span>
-				<span class="order">({clip.id})</span>
+				<!-- <span class="order">({clip.order})</span> -->
+				<!-- <span class="order">({clip.id})</span> -->
 			</span>
 		</h2>
 		<div class="actions" class:open>
@@ -41,15 +42,15 @@
 	</div>
 	{#if selected}
 		<SequenceForm/>
+	{:else}
+		<AssetBins {clip} selectedclip={selected}/>
 	{/if}
-	<AssetBins {clip} selectedclip={selected}/>
 </div>
 
 <script>
 	export let clip
 	export let index
 
-	// import SequenceActions from './SequenceActions.svelte'
 	import Button from '../../components/elements/Button.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
@@ -136,7 +137,6 @@
 	}
 
 	async function dragend(event) {
-
 		const parent = event.currentTarget.parentNode
 
 		const clip_changes = [...parent.children].map((child, child_index) => {
@@ -186,8 +186,6 @@
 		padding: 20rem 20rem 0;
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
-		cursor: pointer;
-		user-select: none;
 		&:last-child { margin: 0; }
 		&:hover .actions { opacity: 0.75; }
 		&.open h2 .svg { transform: rotate(360deg); }
@@ -198,6 +196,10 @@
 		&.saveable {
 			box-shadow: 0 0 0 3rem var(--admin-warn);
 			.secondary { display: none; }
+		}
+		&.draggable {
+			cursor: pointer;
+			user-select: none;
 		}
 		&.dragging {
 			box-shadow: inset 0 0 0 3rem var(--admin-accent-2);
