@@ -1,6 +1,6 @@
 <div
 	bind:this={elem}
-	id="{clip.id}_{index}_{clip.order}"
+	id="{clip.id}_{index}"
 	class="clip"
 	class:open={$visible_bins[$seq.id].has(clip.id)}
 	class:selected
@@ -19,7 +19,7 @@
 			<span class="texts">
 				{clip.slug}
 				<!-- <span class="order">({clip.order})</span> -->
-				<!-- <span class="order">({clip.id})</span> -->
+				<span class="order">({clip.id})</span>
 			</span>
 		</h2>
 		<div class="actions" class:open>
@@ -140,17 +140,9 @@
 		const parent = event.currentTarget.parentNode
 
 		const clip_changes = [...parent.children].map((child, child_index) => {
-			let [id, index, order] = child.id.split('_')
-			index = parseInt(index)
-
-			if (child_index === index) {
-				return false
-			}
-
-			// probably only need to account for 10,000 clips, hence padStart => 6 ordinals:
-			const prefix = order.split('-')[0]
-			const suffix = String((child_index + 1) * 100).padStart(6, 0)
-			return { id, index, order: `${prefix}-${suffix}` }
+			let [id, index] = child.id.split('_')
+			if (child_index === parseInt(index)) { return false }
+			return { id, order: child_index }
 		}).filter(Boolean)
 
 		if (clip_changes.length) {
@@ -162,15 +154,11 @@
 				$seq.clips = []
 				setTimeout(() => $seq.clips = reset_clips, 0)
 			} else {
-				$seq.clips = $seq.clips
-					.map(clip => {
-						const found = clip_changes.find(change => change.id === clip.id)
-						if (found) {
-							clip.order = found.order
-						}
-						return clip
-					})
-					.sort((one, two) => one.order.localeCompare(two.order))
+				$seq.clips = $seq.clips.map(clip => {
+					const found = clip_changes.find(change => change.id === clip.id)
+					if (found) { clip.order = found.order }
+					return clip
+				}).sort((one, two) => one.order - two.order)
 			}
 		}
 
