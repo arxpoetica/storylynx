@@ -153,13 +153,16 @@
 				const reset_clips = [...$seq.clips]
 				$seq.clips = []
 				setTimeout(() => $seq.clips = reset_clips, 0)
-			} else {
-				$seq.clips = $seq.clips.map(clip => {
-					const found = clip_changes.find(change => change.id === clip.id)
-					if (found) { clip.order = found.order }
-					return clip
-				}).sort((one, two) => one.order - two.order)
+				$drag_elem = undefined
+				dragging = false
+				return false
 			}
+
+			$seq.clips = $seq.clips.map(clip => {
+				const found = clip_changes.find(change => change.id === clip.id)
+				if (found) { clip.order = found.order }
+				return clip
+			}).sort((one, two) => one.order - two.order)
 		}
 
 		$drag_elem = undefined

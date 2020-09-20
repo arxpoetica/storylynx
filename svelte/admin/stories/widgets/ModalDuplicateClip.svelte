@@ -1,12 +1,39 @@
-<Modal title="Duplicate Clip" subtitle={clip.slug} bind:open loading={!sequences.length} {saving}>
-	{#if sequences.length}
-		<Input label="Slug" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
-		<Select label="Parent Sequence" bind:value={parent_id} required={true} {options}/>
-		{#if parent}
-			<Input type="number" label="Order" prelabel="{parent.order}-" bind:value={order} required={true}/>
-		{/if}
-		<Errors {errors}/>
-		<Button title="Save" classes="good" handler={save}/>
+<Modal
+	title={ask ? `Jump to the "${jump_seq.title}" sequence containing the new "${new_clip.slug}" clip?` : 'Duplicate Clip'}
+	subtitle={ask ? '' : clip.slug}
+	bind:open
+	loading={!sequences.length}
+	{saving}
+>
+	{#if ask}
+		<Button
+			title="Yes, take me there!"
+			classes="good"
+			href="/admin/stories/{$seq.story.id}/{jump_seq.id}"
+			handler={() => open = false}
+		/>
+		<Button title="No thanks." classes="plain" handler={() => open = false}/>
+	{:else if sequences.length}
+		<div class="contents">
+			<Input label="Title" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
+			<Select
+				label="Sequence"
+				bind:value={parent_id}
+				primary={false}
+				required={true}
+				options={seq_options}
+				on:change={() => prior_clip_id = ''}
+			/>
+			<Select
+				label="Clip Position"
+				sublabel="Select a clip to place the duplicate clip after."
+				bind:value={prior_clip_id}
+				required={true}
+				options={clip_options}
+			/>
+			<Errors {errors}/>
+			<Button title="Save" classes="good" handler={save}/>
+		</div>
 	{/if}
 </Modal>
 
@@ -15,12 +42,17 @@
 
 	export let clip
 	export let open
+	let ask
+	let new_clip
+	let jump_seq
 	let sequences = []
-	$: options = sequences.map(seq => ({ id: seq.id, text: seq.slug }))
 	let slug = ''
 	let parent_id = ''
 	$: parent = parent_id ? sequences.find(seq => seq.id === parent_id) : undefined
-	let order = 0
+	let prior_clip_id = ''
+	$: seq_options = sequences.map(seq => ({ id: seq.id, text: seq.title ? `${seq.title} (${seq.slug})` : seq.slug }))
+	$: clip_options = (sequences.find(seq => seq.id === parent_id) || { clips: [] }).clips
+		.map(clip => ({ id: clip.id, text: clip.slug || `Clip ${clip.order}` }))
 
 	import Input from '../../components/elements/Input.svelte'
 	import Select from '../../components/elements/Select.svelte'
@@ -32,17 +64,16 @@
 
 	let validator
 	(async() => {
-		const res = await POST('/api/admin/stories/sequences-list.post', {
-			story_id: 'ck63z9yk8mjk90904fj1gsnlf',
-		})
-		sequences = res.sequences
+		const res = await POST('/api/admin/stories/sequences-list.post', { story_id: $seq.story.id })
 		parent_id = $seq.id
+		prior_clip_id = clip.id
+		sequences = res.sequences
 
 		const { default: FastestValidator } = await import('fastest-validator')
 		validator = (new FastestValidator()).compile({
-			slug: 'string|empty:false|min:3|max:250',
-			parent: 'string',
-			order: 'number|integer|min:0|max:9999',
+			'Title': 'string|empty:false|min:3|max:250',
+			'Sequence': 'string|empty:false',
+			'Clip Order': 'string|empty:false',
 			$$strict: true,
 		})
 	})()
@@ -51,25 +82,68 @@
 	let saving = false
 	async function save() {
 		saving = true
-		const valid = validator({ slug, parent: parent ? parent.id : false, order })
+		const valid = validator({
+			'Title': slug,
+			'Sequence': parent ? parent.id : false,
+			'Clip Order': prior_clip_id,
+		})
 		if (valid !== true) {
 			errors = valid
+			saving = false
 			return
 		}
 		errors = []
 
+		jump_seq = sequences.find(seq => seq.id === parent.id)
+		const clip_index = jump_seq.clips.findIndex(clip => clip.id === prior_clip_id)
+
+		let insertion_order
+		const clip_changes = jump_seq.clips.map(({ id }, index) => {
+			if (index < clip_index) {
+				return false
+			} else if (index === clip_index) {
+				insertion_order = index + 1
+				return false
+			}
+			return { id, order: index + 1 }
+		}).filter(Boolean)
+
+		if (clip_changes.length) {
+			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes })
+			if (res.error) {
+				alert('Something went wrong. The clip could not be duplicated. Please contact the administrator of this site for assistance.')
+				saving = false
+				open = false
+				return false
+			}
+		}
+
 		const res = await POST('/api/admin/stories/clip-duplicate.post', {
-			clip,
+			clip: Object.assign({ parentName: jump_seq.order }, clip),
 			slug,
 			parent_id: parent.id,
-			order: `${parent.order}-${order}`,
+			order: insertion_order,
 		})
-		// console.log(res)
-		$seq.clips = [...$seq.clips, res.created_clip].sort((one, two) => two.id.localeCompare(one.id))
+		new_clip = res.created_clip
 
 		saving = false
-		open = false
+		if (jump_seq.id === $seq.id) {
+			// just reorder the clips
+			$seq.clips = $seq.clips.map(clip => {
+				const found = clip_changes.find(change => change.id === clip.id)
+				if (found) { clip.order = found.order }
+				return clip
+			})
+			$seq.clips = [...$seq.clips, new_clip].sort((one, two) => one.order - two.order)
+			open = false
+		} else {
+			ask = true
+		}
 	}
 </script>
 
-<!-- <style type="text/scss"></style> -->
+<style type="text/scss">
+	.contents :global(select) {
+		max-width: 370rem;
+	}
+</style>

@@ -27,7 +27,7 @@
 		margin: 0 0 20rem;
 		padding: 12rem 15rem;
 		background-color: var(--admin-accent-0);
-		border-radius: 2rem;
+		border-radius: 12rem;
 		&.expanded .svg { transform: rotate(360deg); }
 	}
 	h2 {

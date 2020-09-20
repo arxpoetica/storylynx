@@ -30,7 +30,28 @@
 			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
 			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
 		})
-		$seq.clips = $seq.clips.filter(clip => clip.id !== res.deleted_clip.id)
+		if (res.error) {
+			alert('Something went wrong. The clip could not be deleted. Please contact the administrator of this site for assistance.')
+			saving = false
+			open = false
+			return false
+		}
+
+		const deleted_index = $seq.clips.findIndex(deleted_clip => deleted_clip.id === clip.id)
+		const clip_changes = $seq.clips.map(({ id }, index) => {
+			if (index <= deleted_index) { return false }
+			return { id, order: index - 1 }
+		}).filter(Boolean)
+
+		if (clip_changes.length) {
+			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes })
+		}
+		$seq.clips = $seq.clips
+			.filter((clip, index) => index !== deleted_index)
+			.map((clip, index) => {
+				clip.order = index
+				return clip
+			})
 
 		saving = false
 		open = false

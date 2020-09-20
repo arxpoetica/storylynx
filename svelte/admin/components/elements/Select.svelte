@@ -5,7 +5,7 @@
 		{#if required}<span class="required"> *</span>{/if}
 	</span>
 	<span class="select">
-		<select bind:value>
+		<select bind:value on:change={() => dispatch('change', { value })}>
 			{#if primary}
 				<option value="">{primary}</option>
 			{/if}
@@ -23,6 +23,9 @@
 </label>
 
 <script>
+	import { createEventDispatcher } from 'svelte'
+	const dispatch = createEventDispatcher()
+
 	import SelectCaret from '../../../svg/select-caret.svelte'
 
 	export let label = 'Label'
@@ -91,6 +94,9 @@
 		pointer-events: none;
 	}
 	.sublabel {
-		font-weight: normal;
+		display: block;
+		margin: 8rem 0 0;
+		font: 13rem/1 var(--admin-font);
+		opacity: 0.6;
 	}
 </style>
