@@ -17,6 +17,9 @@
 					<div class="pane sequence">
 						<PreviewPane/>
 					</div>
+					{#if edit_asset}
+						<PanelEditAsset asset={edit_asset} bind:open={edit_asset}/>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -30,45 +33,31 @@
 {/if}
 
 <script>
-	import {
-		seq,
-		handlers,
-		visible_bins,
-		templates,
-		theme_elements,
-		template_transitions,
-		html_templates,
-		html_colors,
-	} from '../../../stores/admin-store.js'
+	import { seq, handlers, visible_bins, enums } from '../../../stores/admin-store.js'
 
 	export let sequence
 	$: setTimeout(() => $seq = sequence, 0)
 	$: if ($seq && !$visible_bins[$seq.id]) { $visible_bins[$seq.id] = new Set() }
 
 	// passing variables to the template wrapper of the layout theme
-	export let enum_templates = []
-	export let enum_theme_elements = []
-	export let enum_template_transitions = []
-	export let enum_html_templates = []
-	export let enum_html_colors = []
-	$: $templates = enum_templates
-	$: $theme_elements = enum_theme_elements
-	$: $template_transitions = enum_template_transitions
-	$: $html_templates = enum_html_templates
-	$: $html_colors = enum_html_colors
+	export let sequence_enums
+	$: $enums = sequence_enums
 
 	import Scaffolding from '../components/layout/Scaffolding.svelte'
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
+	import PanelEditAsset from './widgets/PanelEditAsset.svelte'
 	import ModalDuplicateClip from './widgets/ModalDuplicateClip.svelte'
 	import ModalDeleteClip from './widgets/ModalDeleteClip.svelte'
 
 	let duplicate_clip
 	let delete_clip
+	let edit_asset
 	$handlers = {
 		duplicate: index => duplicate_clip = $seq.clips[index],
 		delete: index => delete_clip = $seq.clips[index],
+		edit_asset: asset => edit_asset = asset,
 	}
 </script>
 
@@ -99,7 +88,7 @@
 		bottom: 0;
 		left: 0;
 		display: grid;
-		grid-template-columns: 600rem auto;
+		grid-template-columns: var(--admin-panel-width) auto;
 	}
 	.pane {
 		position: relative;

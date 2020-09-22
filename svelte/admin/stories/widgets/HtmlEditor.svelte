@@ -5,13 +5,13 @@
 		<input type="text" bind:value={name} placeholder="Give this HTML group a name..."/>
 		<select bind:value={template}>
 			<option value="">Select an HTML template (leave blank for default)</option>
-			{#each $html_templates as template}
+			{#each $enums.html_templates as template}
 				<option value={template}>{template}</option>
 			{/each}
 		</select>
 		<select bind:value={color}>
 			<option value="">Select a highlight color (leave blank for no color)</option>
-			{#each $html_colors as color}
+			{#each $enums.html_colors as color}
 				<option value={color}>{color}</option>
 			{/each}
 		</select>
@@ -36,7 +36,7 @@
 	export let cancel = () => {}
 
 	import { onMount, onDestroy } from 'svelte'
-	import { html_templates, html_colors } from '../../../../stores/admin-store.js'
+	import { enums } from '../../../../stores/admin-store.js'
 
 	import Button from '../../components/elements/Button.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'

@@ -3,7 +3,7 @@
 	id="{clip.id}_{index}"
 	class="clip"
 	class:open={$visible_bins[$seq.id].has(clip.id)}
-	class:selected
+	class:editing
 	class:saveable
 
 	draggable={!$preview_clip}
@@ -24,7 +24,7 @@
 		</h2>
 		<div class="actions" class:open>
 			<div class="primary">
-				{#if selected}
+				{#if editing}
 					<Button title={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
 					<Button title="Save" classes="good" handler={save} disabled={!saveable}/>
 				{:else}
@@ -40,10 +40,15 @@
 			</div>
 		</div>
 	</div>
-	{#if selected}
-		<SequenceForm/>
-	{:else}
-		<AssetBins {clip} selectedclip={selected}/>
+	{#if $visible_bins[$seq.id].has(clip.id) || editing}
+		<div class="body">
+				<SequenceForm/>
+			{#if editing}
+				<AssetBinsForm/>
+			{:else}
+				<AssetBins {clip} selectedclip={editing}/>
+			{/if}
+		</div>
 	{/if}
 </div>
 
@@ -55,12 +60,12 @@
 	import Caret from '../../../svg/select-caret.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import SequenceForm from './SequenceForm.svelte'
+	import AssetBinsForm from './AssetBinsForm.svelte'
 	import AssetBins from './AssetBins.svelte'
 
 	import {
 		target,
 		seq,
-		seq_order,
 		drag_elem,
 		swap_elem,
 		insert_before,
@@ -78,10 +83,10 @@
 		open = false
 	}
 
-	$: selected = $preview_clip && $preview_clip.id === clip.id
-	$: clip_string = selected && JSON.stringify(clip)
-	$: preview_string = selected && JSON.stringify($preview_clip)
-	$: saveable = selected && clip_string !== preview_string
+	$: editing = $preview_clip && $preview_clip.id === clip.id
+	$: clip_string = editing && JSON.stringify(clip)
+	$: preview_string = editing && JSON.stringify($preview_clip)
+	$: saveable = editing && clip_string !== preview_string
 	$: if (preview_string) {
 		$messenger({ clip: $preview_clip })
 	}
@@ -180,7 +185,7 @@
 		&:last-child { margin: 0; }
 		&:hover .actions { opacity: 0.75; }
 		&.open h2 .svg { transform: rotate(360deg); }
-		&.selected {
+		&.editing {
 			box-shadow: var(--admin-form-shadow);
 			.actions { opacity: 1; }
 		}

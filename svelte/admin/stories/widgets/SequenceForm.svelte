@@ -16,21 +16,21 @@
 			label="Template"
 			bind:value={template_id}
 			required={true}
-			options={$templates}
+			options={$enums.templates}
 		/>
 	</div>
 	<div class="row full">
 		<MultiSelect
 			label="Theme Elements"
 			bind:values={$clip.theme_elements}
-			options={$theme_elements}
+			options={$enums.theme_elements}
 		/>
 	</div>
 	<div class="row full">
 		<MultiSelect
 			label="Transitions"
 			bind:values={$clip.transitions}
-			options={$template_transitions}
+			options={$enums.template_transitions}
 		/>
 	</div>
 	<div class="row full">
@@ -74,12 +74,7 @@
 </div>
 
 <script>
-	import {
-		preview_clip as clip,
-		templates,
-		theme_elements,
-		template_transitions,
-	} from '../../../../stores/admin-store.js'
+	import { preview_clip as clip, enums } from '../../../../stores/admin-store.js'
 
 	let template_id
 	let init
@@ -108,7 +103,7 @@
 		align-items: flex-start;
 		grid-template-columns: 2fr 1fr;
 		grid-column-gap: 20rem;
-		max-width: 600rem;
+		max-width: var(--admin-panel-width);
 		&.full { grid-template-columns: 1fr; }
 		&.styles { grid-template-columns: repeat(5, 1fr); }
 	}

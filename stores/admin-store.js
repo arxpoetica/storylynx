@@ -25,11 +25,7 @@ export const seq = writable()
 export const preview_clip = writable(null)
 export const handlers = writable()
 export const visible_bins = storable('story.visible-bins', {})
-export const templates = writable([])
-export const theme_elements = writable([])
-export const template_transitions = writable([])
-export const html_templates = writable([])
-export const html_colors = writable([])
+export const enums = writable({})
 
 // === >>> Iframe Clip Preview
 
@@ -40,7 +36,6 @@ export const messenger = writable()
 export const drag_elem = writable()
 export const swap_elem = writable()
 export const insert_before = writable()
-export const seq_order = writable([])
 
 // === >>> HandsonTable Table Editor
 

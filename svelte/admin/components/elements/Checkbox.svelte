@@ -58,6 +58,16 @@
 				}
 			}
 		}
+		&.alert {
+			&.checked .box { background-color: var(--admin-alert-light); }
+			&.checked .svg { color: var(--admin-alert-dusk); }
+			input {
+				&:checked {
+					border-color: var(--admin-alert-dusk);
+					background-color: var(--admin-alert-dark);
+				}
+			}
+		}
 	}
 	.box {
 		display: block;
