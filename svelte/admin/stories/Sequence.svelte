@@ -17,9 +17,6 @@
 					<div class="pane sequence">
 						<PreviewPane/>
 					</div>
-					{#if edit_asset}
-						<PanelEditAsset asset={edit_asset} bind:open={edit_asset}/>
-					{/if}
 				</div>
 			</div>
 		</div>
@@ -47,17 +44,14 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
-	import PanelEditAsset from './widgets/PanelEditAsset.svelte'
 	import ModalDuplicateClip from './widgets/ModalDuplicateClip.svelte'
 	import ModalDeleteClip from './widgets/ModalDeleteClip.svelte'
 
 	let duplicate_clip
 	let delete_clip
-	let edit_asset
 	$handlers = {
 		duplicate: index => duplicate_clip = $seq.clips[index],
 		delete: index => delete_clip = $seq.clips[index],
-		edit_asset: asset => edit_asset = asset,
 	}
 </script>
 
