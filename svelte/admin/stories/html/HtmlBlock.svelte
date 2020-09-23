@@ -5,7 +5,7 @@
 			bind:template={block.template}
 			bind:color={block.color}
 			bind:data={block.code}
-			update={data => $clip.asset_bins[bin_index].html_blocks[block_index].code = data}
+			update={data => $preview_clip.asset_bins[bin_index].html_blocks[block_index].code = data}
 			save={data => save(data, bin_index, block_index)}
 			cancel={backup => cancel(backup, bin_index, block_index)}
 		/>
@@ -26,7 +26,7 @@
 	export let selectedclip
 	let edit_html = false
 
-	import { saving, saveable, preview_clip as clip } from '../../../../stores/admin-store.js'
+	import { saving, saveable, preview_clip } from '../../../../stores/admin-store.js'
 
 	import Button from '../../components/elements/Button.svelte'
 	import HtmlEditor from './HtmlEditor.svelte'
@@ -40,23 +40,22 @@
 	const save = async(data, bin_index, block_index) => {
 		$saving = true
 
-		const block = $clip.asset_bins[bin_index].html_blocks[block_index]
+		const block = $preview_clip.asset_bins[bin_index].html_blocks[block_index]
 		block.html = code_to_html(block.code)
-		block.asset_bin_id = $clip.asset_bins[bin_index].id
-
+		block.asset_bin_id = $preview_clip.asset_bins[bin_index].id
 
 		// for each
-		$clip.asset_bins[bin_index].html_blocks[block_index] = html_block
 		const { html_block } = await POST('/api/admin/stories/html-upsert.post', block)
+		$preview_clip.asset_bins[bin_index].html_blocks[block_index] = html_block
 
 		edit_html = false
 		$saving = false
 	}
 
 	const cancel = (backup, bin_index, block_index) => {
-		$clip.asset_bins[bin_index].html_blocks[block_index].code = backup
-		$clip.asset_bins[bin_index].html_blocks[block_index].html
-			= code_to_html($clip.asset_bins[bin_index].html_blocks[block_index].code)
+		$preview_clip.asset_bins[bin_index].html_blocks[block_index].code = backup
+		$preview_clip.asset_bins[bin_index].html_blocks[block_index].html
+			= code_to_html($preview_clip.asset_bins[bin_index].html_blocks[block_index].code)
 		edit_html = false
 	}
 </script>

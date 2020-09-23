@@ -36,7 +36,7 @@
 	let edit_html = false
 
 	import AssetThumb from '../../components/widgets/AssetThumb.svelte'
-	import HtmlBlock from './HtmlBlock.svelte'
+	import HtmlBlock from '../html/HtmlBlock.svelte'
 	import { seq } from '../../../../stores/admin-store.js'
 </script>
 

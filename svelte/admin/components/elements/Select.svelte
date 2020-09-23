@@ -5,6 +5,7 @@
 		{#if required}<span class="required"> *</span>{/if}
 	</span>
 	<span class="select">
+		<!-- svelte-ignore a11y-no-onchange -->
 		<select bind:value on:change={() => dispatch('change', { value })}>
 			{#if primary}
 				<option value="">{primary}</option>

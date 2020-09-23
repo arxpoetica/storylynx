@@ -44,8 +44,8 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
-	import ModalDuplicateClip from './widgets/ModalDuplicateClip.svelte'
-	import ModalDeleteClip from './widgets/ModalDeleteClip.svelte'
+	import ModalDuplicateClip from './modals/ModalDuplicateClip.svelte'
+	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
 
 	let duplicate_clip
 	let delete_clip

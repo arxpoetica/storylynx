@@ -40,7 +40,7 @@
 
 	import Button from '../../components/elements/Button.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
-	import SimpleImageComponent from './SimpleImageComponent.svelte'
+	import SimpleImageComponent from '../widgets/SimpleImageComponent.svelte'
 
 	let editor
 	let components = []
@@ -52,7 +52,7 @@
 		const List = (await import('@editorjs/list')).default
 		const Quote = (await import('@editorjs/quote')).default
 		const Delimiter = (await import('@editorjs/delimiter')).default
-		const { ConstructSimpleImage } = await import('./SimpleImage.js')
+		const { ConstructSimpleImage } = await import('../widgets/SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
 		backup = JSON.parse(JSON.stringify(data))

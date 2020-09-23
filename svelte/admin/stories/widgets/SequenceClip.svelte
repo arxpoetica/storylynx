@@ -60,8 +60,8 @@
 	import Caret from '../../../svg/select-caret.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import SequenceForm from './SequenceForm.svelte'
-	import AssetBinsForm from './AssetBinsForm.svelte'
-	import AssetBins from './AssetBins.svelte'
+	import AssetBinsForm from '../assets/AssetBinsForm.svelte'
+	import AssetBins from '../assets/AssetBins.svelte'
 
 	import {
 		target,
