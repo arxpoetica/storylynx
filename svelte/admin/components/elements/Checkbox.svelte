@@ -1,22 +1,27 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<label class={classes} class:checked on:click|stopPropagation={handler}>
-	<span class="box">
-		{#if checked}
-			<span class="svg"><Checkmark/></span>
-		{/if}
-		<input bind:checked type="checkbox">
-	</span>
-	{#if label}
-		<span class="label">
-			{label}
-			{#if required}<span class="required"> *</span>{/if}
+<label class="checkbox {classes}" class:checked on:click|stopPropagation={handler}>
+	<span class="group">
+		<span class="box">
+			{#if checked}
+				<span class="svg"><Checkmark/></span>
+			{/if}
+			<input bind:checked type="checkbox">
 		</span>
+		{#if label}
+			<span class="label">
+				{label}
+				{#if required}<span class="required"> *</span>{/if}
+			</span>
+		{/if}
+	</span>
+	{#if sublabel}
+		<span class="sublabel">{sublabel}</span>
 	{/if}
 </label>
 
 <script>
 	export let label
-	// export let sublabel
+	export let sublabel
 	export let required
 	export let checked = false
 	export let handler = () => {}
@@ -26,9 +31,7 @@
 
 <style type="text/scss">
 	label {
-		display: flex;
-		align-items: center;
-		white-space: nowrap;
+		display: block;
 		&.checked .box { background-color: var(--admin-accent-2); }
 		&.blue {
 			&.checked .box { background-color: var(--admin-color-2); }
@@ -68,6 +71,11 @@
 				}
 			}
 		}
+	}
+	.group {
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
 	}
 	.box {
 		display: block;
@@ -111,5 +119,11 @@
 	}
 	.label {
 		margin: 0 0 0 10rem;
+	}
+	.sublabel {
+		display: block;
+		margin: 0 0 0 42rem;
+		font: 13rem/1 var(--admin-font);
+		opacity: 0.6;
 	}
 </style>

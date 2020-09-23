@@ -12,12 +12,11 @@
 		<!-- html: => "<h2>...</h2>" -->
 
 	{#each $clip.asset_bins as bin, index (bin.id)}
-		<div class="bin">
+		<div class="bin rows">
 			<!-- <h3>Asset Bin {index + 1}</h3> -->
 			<Select
 				label="Assets Transition"
 				bind:value={bin.transition}
-				required={true}
 				options={$enums.asset_transitions}
 			/>
 			<div class="assets">
@@ -41,8 +40,6 @@
 					{/each}
 				</div>
 			{/if} -->
-
-
 		</div>
 	{/each}
 </div>

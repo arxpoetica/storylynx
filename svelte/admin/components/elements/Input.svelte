@@ -48,7 +48,6 @@
 <style type="text/scss">
 	label {
 		display: block;
-		margin: 0 0 20rem;
 	}
 	.label {
 		display: block;

@@ -30,9 +30,7 @@
 </script>
 
 <style type="text/scss">
-	.multi-select {
-		margin: 0 0 20rem;
-	}
+	// .multi-select {}
 	.label {
 		margin: 0 0 8rem;
 		font: bold 15rem/1 var(--admin-font);

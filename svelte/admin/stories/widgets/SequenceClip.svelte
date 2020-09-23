@@ -42,8 +42,8 @@
 	</div>
 	{#if $visible_bins[$seq.id].has(clip.id) || editing}
 		<div class="body">
-				<SequenceForm/>
 			{#if editing}
+				<SequenceForm/>
 				<AssetBinsForm/>
 			{:else}
 				<AssetBins {clip} selectedclip={editing}/>
@@ -200,6 +200,30 @@
 		&.dragging {
 			box-shadow: inset 0 0 0 3rem var(--admin-accent-2);
 			opacity: 0.25;
+		}
+		// THIS IS FOR THE FORMS
+		:global {
+			.rows {
+				display: grid;
+				grid-template-columns: 1fr;
+				grid-gap: 20rem;
+			}
+			.row {
+				display: grid;
+				align-items: flex-start;
+				grid-template-columns: 2fr 1fr;
+				grid-column-gap: 20rem;
+				max-width: var(--admin-panel-width);
+				&.full { grid-template-columns: 1fr; }
+				&.split {
+					grid-template-columns: 1fr 1fr;
+					.checkbox { margin-top: 22rem; }
+				}
+				&.fives {
+					grid-template-columns: repeat(5, 1fr);
+					.checkbox { margin-top: 22rem; }
+				}
+			}
 		}
 	}
 	.header {

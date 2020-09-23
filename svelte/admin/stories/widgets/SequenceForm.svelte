@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form rows">
 
 	<div class="row">
 		<Input
@@ -36,7 +36,7 @@
 	<div class="row full">
 		<div class="label">Padding</div>
 		<div class="sublabel">Gap padding only applies to space between columns in multi-column layouts.</div>
-		<div class="row styles">
+		<div class="row fives">
 			<Input sublabel="Top" type="number" bind:value={$clip.styles.top}/>
 			<Input sublabel="Bottom" type="number" bind:value={$clip.styles.bottom}/>
 			<Input sublabel="Left" type="number" bind:value={$clip.styles.left}/>
@@ -94,18 +94,9 @@
 <style type="text/scss">
 	.form {
 		margin: 10rem 0 30rem 0;
-		padding: 20rem 20rem 0;
+		padding: 20rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
 		border-radius: 12rem;
-	}
-	.row {
-		display: grid;
-		align-items: flex-start;
-		grid-template-columns: 2fr 1fr;
-		grid-column-gap: 20rem;
-		max-width: var(--admin-panel-width);
-		&.full { grid-template-columns: 1fr; }
-		&.styles { grid-template-columns: repeat(5, 1fr); }
 	}
 	.label {
 		margin: 0 0 8rem;
