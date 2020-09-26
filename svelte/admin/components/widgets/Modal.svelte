@@ -60,6 +60,26 @@
 		padding: 40rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.8);
 		z-index: 100;
+		:global {
+			.rows {
+				display: grid;
+				grid-template-columns: 1fr;
+				grid-gap: 20rem;
+			}
+			.row {
+				display: grid;
+				grid-template-columns: 1fr;
+				grid-column-gap: 20rem;
+				&.split {
+					grid-template-columns: 1fr 1fr;
+					.checkbox { margin-top: 22rem; }
+				}
+				&.fives {
+					grid-template-columns: repeat(5, 1fr);
+					.checkbox { margin-top: 22rem; }
+				}
+			}
+		}
 	}
 	.back {
 		position: absolute;

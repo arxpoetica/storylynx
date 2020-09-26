@@ -28,7 +28,7 @@
 			clip_id: clip.id,
 			style_id: clip.style ? clip.style.id : false,
 			asset_bin_ids: clip.asset_bins.map(bin => bin.id),
-			html_block_ids: clip.asset_bins.map(bin => bin.html_blocks.map(block => block.id)).flat(),
+			asset_ids: clip.asset_bins.map(bin => bin.assets.map(asset => asset.id)).flat(),
 		})
 		if (res.error) {
 			alert('Something went wrong. The clip could not be deleted. Please contact the administrator of this site for assistance.')

@@ -14,25 +14,33 @@
 		/>
 		<Button title="No thanks." classes="plain" handler={() => open = false}/>
 	{:else if sequences.length}
-		<div class="contents">
-			<Input label="Title" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
-			<Select
-				label="Sequence"
-				bind:value={parent_id}
-				primary={false}
-				required={true}
-				options={seq_options}
-				on:change={() => prior_clip_id = ''}
-			/>
-			<Select
-				label="Clip Position"
-				sublabel="Select a clip to place the duplicate clip after."
-				bind:value={prior_clip_id}
-				required={true}
-				options={clip_options}
-			/>
-			<Errors {errors}/>
-			<Button title="Save" classes="good" handler={save}/>
+		<div class="contents rows">
+			<div class="row">
+				<Input label="Title" sublabel="This field will display in the navigation." bind:value={slug} required={true} autofocus={true}/>
+			</div>
+			<div class="row">
+				<Select
+					label="Sequence"
+					bind:value={parent_id}
+					primary={false}
+					required={true}
+					options={seq_options}
+					on:change={() => prior_clip_id = ''}
+				/>
+			</div>
+			<div class="row">
+				<Select
+					label="Clip Position"
+					sublabel="Select a clip to place the duplicate clip after."
+					bind:value={prior_clip_id}
+					required={true}
+					options={clip_options}
+				/>
+			</div>
+			<div class="row">
+				<Errors {errors}/>
+				<Button title="Save" classes="good" handler={save}/>
+			</div>
 		</div>
 	{/if}
 </Modal>
