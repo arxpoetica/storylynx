@@ -22,11 +22,10 @@
 			<div class="assets">
 				<div class="tools">
 					<p class="instructions">Click on a row below to show / hide details.</p>
-
 				</div>
 				{#if bin.assets.length}
 					{#each bin.assets as asset, index}
-						<AssetForm bind:asset {index}/>
+						<AssetRow bind:asset {index}/>
 					{/each}
 				{:else}
 					<p>[No assets]</p>
@@ -56,7 +55,7 @@
 	// })
 	// $: if (init) { $clip.template = template_id }
 
-	import AssetForm from './AssetForm.svelte'
+	import AssetRow from './AssetRow.svelte'
 	// import Input from '../../components/elements/Input.svelte'
 	import Select from '../../components/elements/Select.svelte'
 	// import MultiSelect from '../../components/elements/MultiSelect.svelte'

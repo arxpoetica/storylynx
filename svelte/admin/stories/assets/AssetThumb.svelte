@@ -1,14 +1,19 @@
-<div class="thumb" on:mouseenter={() => hovering = true} on:mouseleave={() => hovering = false}>
+<div
+	class="thumb"
+	on:mouseenter={() => hovering = true}
+	on:mouseleave={() => hovering = false}
+	on:click|stopPropagation={() => {}}
+>
 	{#if asset.mime_type.includes('image')}
 		<div class="img" style="background-image:url({src(asset.handle)});"></div>
 	{:else if asset.mime_type.includes('video')}
 		<div class="svg"><VideoIcon/></div>
 	{:else if asset.mime_type.includes('audio')}
 		<div class="svg"><AudioIcon/></div>
+	{:else if asset.mime_type.includes('html')}
+		<div class="svg"><HtmlIcon/></div>
 	{:else}
-		<div class="asset">
-			{asset.mime_type}
-		</div>
+		<div class="svg"><UnknownIcon/></div>
 	{/if}
 	{#if hovering}
 		<div class="popup">
@@ -18,8 +23,12 @@
 				<!-- svelte-ignore a11y-media-has-caption -->
 				<video controls autoplay loop><source src={asset.url} type={asset.mime_type}/></video>
 			<!-- {:else if asset.mime_type.includes('audio')} -->
+			{:else if asset.mime_type.includes('html')}
+				<div class="html">
+					{asset.html.replace(/\s+/g, ' ').substring(0, 1000)}
+				</div>
 			{:else}
-				{asset.mime_type}
+				<div class="other">{asset.mime_type}</div>
 			{/if}
 		</div>
 	{/if}
@@ -31,6 +40,8 @@
 
 	import VideoIcon from '../../../svg/asset-icon-video.svelte'
 	import AudioIcon from '../../../svg/asset-icon-audio.svelte'
+	import HtmlIcon from '../../../svg/asset-icon-html.svelte'
+	import UnknownIcon from '../../../svg/asset-icon-unknown.svelte'
 
 	function src(handle) {
 		return `https://media.graphcms.com/output=format:jpg/resize=width:600/${handle}`
@@ -64,7 +75,6 @@
 		top: 50%;
 		left: calc(100% + 10rem);
 		width: 312rem;
-		min-height: 100rem;
 		padding: 6rem;
 		background-color: var(--admin-accent-2);
 		transform: translateY(-50%);
@@ -80,5 +90,15 @@
 			transform: translateY(-50%);
 		}
 		img, video { width: 100%; }
+		.html {
+			overflow: hidden;
+			display: -webkit-box;
+			padding: 10rem;
+			-webkit-line-clamp: 10;
+			-webkit-box-orient: vertical;
+			background-color: var(--admin-accent-1);
+			font: 12rem/1 var(--admin-font);
+		}
+		.other { height: 75rem; }
 	}
 </style>

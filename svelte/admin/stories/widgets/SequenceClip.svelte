@@ -19,7 +19,7 @@
 			<span class="texts">
 				{clip.slug}
 				<!-- <span class="order">({clip.order})</span> -->
-				<span class="order">({clip.id})</span>
+				<!-- <span class="order">({clip.id})</span> -->
 			</span>
 		</h2>
 		<div class="actions" class:open>
