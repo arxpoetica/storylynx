@@ -1,5 +1,5 @@
 {#if Object.keys(block.code).length}
-	<code>{html}{#if expandable}{#if !expanded}...{/if}&nbsp;<Button title={expanded ? 'less' : 'more'} classes="blank" handler={() => expanded = !expanded}/>{/if}</code>
+	<code>{html}{#if expandable}{#if !expanded}...{/if}&nbsp;<Button label={expanded ? 'less' : 'more'} classes="blank" handler={() => expanded = !expanded}/>{/if}</code>
 {/if}
 
 <script>

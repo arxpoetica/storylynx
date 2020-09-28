@@ -7,7 +7,7 @@
 		class:disabled
 		on:click={event => internal_handler(event)}
 	>
-		<slot>{title}</slot>
+		<slot>{label}</slot>
 	</a>
 {:else}
 	<button
@@ -17,7 +17,7 @@
 		{disabled}
 		on:click={event => internal_handler(event)}
 	>
-		<slot>{title}</slot>
+		<slot>{label}</slot>
 	</button>
 {/if}
 
@@ -25,7 +25,7 @@
 	export let href = false
 	export let classes = ''
 	export let style
-	export let title = 'Click'
+	export let label = 'Click'
 	export let disabled
 	export let element
 	export let stop_propagation

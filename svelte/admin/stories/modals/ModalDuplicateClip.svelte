@@ -7,12 +7,12 @@
 >
 	{#if ask}
 		<Button
-			title="Yes, take me there!"
+			label="Yes, take me there!"
 			classes="good"
 			href="/admin/stories/{$seq.story.id}/{jump_seq.id}"
 			handler={() => open = false}
 		/>
-		<Button title="No thanks." classes="plain" handler={() => open = false}/>
+		<Button label="No thanks." classes="plain" handler={() => open = false}/>
 	{:else if sequences.length}
 		<div class="contents rows">
 			<div class="row">
@@ -39,7 +39,7 @@
 			</div>
 			<div class="row">
 				<Errors {errors}/>
-				<Button title="Save" classes="good" handler={save}/>
+				<Button label="Save" classes="good" handler={save}/>
 			</div>
 		</div>
 	{/if}

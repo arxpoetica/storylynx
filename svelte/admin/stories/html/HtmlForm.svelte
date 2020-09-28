@@ -24,7 +24,7 @@
 	<div class="html-editor">
 		<!-- <button on:click={show}>Show HTML</button> -->
 		<div id="editor-js" class="editor-js"></div>
-		<Button title="Insert block" classes="small" handler={() => insert_block()}/>
+		<Button label="Insert block" classes="small" handler={() => insert_block()}/>
 	</div>
 
 </div>

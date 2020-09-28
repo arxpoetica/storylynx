@@ -15,7 +15,7 @@
 		{/if}
 
 		{#if checkeditems.filter(checked => checked).length}
-			<Button title="Move Selected Items to Trash" classes="alert" handler={send_dispatch}/>
+			<Button label="Move Selected Items to Trash" classes="alert" handler={send_dispatch}/>
 		{/if}
 	</div> -->
 	<!-- {#if items_count > page_size}

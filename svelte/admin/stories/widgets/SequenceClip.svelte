@@ -25,17 +25,17 @@
 		<div class="actions" class:open>
 			<div class="primary">
 				{#if editing}
-					<Button title={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
-					<Button title="Save" classes="good" handler={save} disabled={!saveable}/>
+					<Button label={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
+					<Button label="Save" classes="good" handler={save} disabled={!saveable}/>
 				{:else}
-					<Button title="Edit" classes="dark" handler={edit}/>
+					<Button label="Edit" classes="dark" handler={edit}/>
 				{/if}
 			</div>
 			<div class="secondary" on:click|stopPropagation={() => {}}>
 				<button class="reveal" on:click={() => open = !open}><PostIcon/></button>
 				<div class="dropdown">
-					<Button title="Duplicate" classes="blank plain" handler={() => $handlers.duplicate(index)}/>
-					<Button title="Delete" classes="alert blank" handler={() => $handlers.delete(index)}/>
+					<Button label="Duplicate" classes="blank plain" handler={() => $handlers.duplicate(index)}/>
+					<Button label="Delete" classes="alert blank" handler={() => $handlers.delete(index)}/>
 				</div>
 			</div>
 		</div>
@@ -47,6 +47,14 @@
 				<AssetBinsForm/>
 			{:else}
 				<AssetBins {clip} selectedclip={editing}/>
+				<!-- {#if bin.html_blocks.length}
+					<div class="html-blocks">
+						<h3>HTML Blocks</h3>
+						{#each bin.html_blocks as block, block_index}
+							<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
+						{/each}
+					</div>
+				{/if} -->
 			{/if}
 		</div>
 	{/if}

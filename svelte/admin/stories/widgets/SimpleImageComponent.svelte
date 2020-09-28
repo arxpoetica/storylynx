@@ -8,7 +8,7 @@
 			bind:value={search_term}
 			placeholder="Search for an image by filename..."
 		/>
-		<Button title="Search" classes="small" handler={search} bind:element={input_button}/>
+		<Button label="Search" classes="small" handler={search} bind:element={input_button}/>
 	</div>
 	<div class="preview" class:on={assets.length}>
 		{#if assets.length}

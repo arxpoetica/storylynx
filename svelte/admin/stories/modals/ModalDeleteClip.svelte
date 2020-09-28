@@ -2,8 +2,8 @@
 	<Errors {errors}/>
 	<p>Are you sure you want to delete this clip and all it's contents?</p>
 	<p class="warning">THIS ACTION CANNOT BE UNDONE.</p>
-	<Button title="I'm sure. Delete my clip." classes="alert" handler={delete_clip}/>
-	<Button title="Cancel" handler={() => open = false}/>
+	<Button label="I'm sure. Delete my clip." classes="alert" handler={delete_clip}/>
+	<Button label="Cancel" handler={() => open = false}/>
 </Modal>
 
 <script>

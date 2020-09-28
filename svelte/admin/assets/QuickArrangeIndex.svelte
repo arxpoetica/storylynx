@@ -1,7 +1,7 @@
 <Scaffolding title="Assets Quick Arrange" fullwidth={true} actions={true}>
 
 	<div class="actions" slot="actions">
-		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
+		<Button label="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
 
 	<div class="columns">
@@ -12,7 +12,7 @@
 		<div bind:this={groups_col} class="col col-groups">
 			<QuickarrangeToolbar items={groups} title="Grouped Assets" type="green">
 				<div class="bar">
-					<Button title="Add Group" handler={add_group} classes="good"/>
+					<Button label="Add Group" handler={add_group} classes="good"/>
 				</div>
 			</QuickarrangeToolbar>
 			{#if $groups}

@@ -1,7 +1,7 @@
 <Scaffolding title={model} actions={true} toolbar={true}>
 
 	<div class="actions" slot="actions">
-		<Button {href} title="Create {singular}"/>
+		<Button label="Create {singular}" {href}/>
 	</div>
 
 	<div class="toolbar" slot="toolbar">

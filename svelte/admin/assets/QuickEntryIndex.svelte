@@ -1,7 +1,7 @@
 <Scaffolding title="Assets Quick Entry" fullwidth={true} actions={true}>
 
 	<div class="actions" slot="actions">
-		<Button title="Save Asset Groups" disabled={!$saveable} handler={save}/>
+		<Button label="Save Asset Groups" disabled={!$saveable} handler={save}/>
 	</div>
 
 	<div class="quick-entry">

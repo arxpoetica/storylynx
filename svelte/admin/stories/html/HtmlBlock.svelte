@@ -3,7 +3,7 @@
 		<HtmlCode {block}/>
 		{#if selectedclip}
 			<div class="create-html">
-				<Button title="{html_edit_str(block.code)} HTML" classes="good blank" handler={() => edit_html = true}/>
+				<Button label="{html_edit_str(block.code)} HTML" classes="good blank" handler={() => edit_html = true}/>
 			</div>
 		{/if}
 	{/if}

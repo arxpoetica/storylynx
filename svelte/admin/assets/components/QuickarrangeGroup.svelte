@@ -14,9 +14,9 @@
 		{#if group.changes || $current_group === g_index}
 			<div class="tools">
 				{#if group.changes}
-					<Button title="Save" classes="button-save tiny" handler={() => save_group(group, g_index)}/>
+					<Button label="Save" classes="button-save tiny" handler={() => save_group(group, g_index)}/>
 				{:else if $current_group === g_index}
-					<Button title="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
+					<Button label="Delete" classes="alert tiny" handler={() => delete_group(group, g_index)}/>
 				{/if}
 			</div>
 		{/if}
