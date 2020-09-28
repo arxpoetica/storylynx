@@ -1,18 +1,19 @@
-<div class="buttons">
+<div class="buttons {classes}">
 	<slot></slot>
 </div>
 
+<script>
+	export let classes = ''
+</script>
+
 <style type="text/scss">
 	.buttons {
-		// min-width: 50%;
-		// display: grid;
-		// grid-gap: 10rem;
-		// grid-template-columns: repeat(auto-fill, minmax(150rem, 1fr));
 		display: flex;
 		align-items: center;
-		// margin: 0 -6rem;
-		:global(.button) {
-			margin: 0 6rem;
-		}
+		margin: 0 -6rem 20rem -6rem;
+		min-height: 36rem;
+		&.no-margin { margin: 0 -6rem; }
+		&.align-right { justify-content: flex-end; }
+		:global(.button) { margin: 0 6rem; }
 	}
 </style>

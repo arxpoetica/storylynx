@@ -27,10 +27,19 @@
 
 <script>
 	export let asset
-	// export let index
-	export let remove = false
+	export let remove_ids
 
+	let remove = false
 	let editing
+
+	$: if (remove) {
+		if (!remove_ids.find(id => id === asset.id)) {
+			remove_ids.push(asset.id)
+			remove_ids = remove_ids
+		}
+	} else {
+		remove_ids = remove_ids.filter(id => id !== asset.id)
+	}
 
 	import AssetThumb from './AssetThumb.svelte'
 	import Checkbox from '../../components/elements/Checkbox.svelte'
@@ -69,6 +78,6 @@
 	}
 	.actions {
 		display: none;
-		// :global(> label) { transform: scale(0.8); }
+		:global(> label) { transform: scale(0.9); }
 	}
 </style>

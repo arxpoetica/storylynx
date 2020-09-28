@@ -44,7 +44,12 @@
 		<div class="body">
 			{#if editing}
 				<SequenceForm/>
-				<AssetBinsForm/>
+				<div class="bins">
+					<!-- order: 1 -->
+					{#each $preview_clip.asset_bins as bin, bin_index (bin.id)}
+						<AssetBinForm bind:bin clip_index={index} {bin_index} />
+					{/each}
+				</div>
 			{:else}
 				<AssetBins {clip} selectedclip={editing}/>
 				<!-- {#if bin.html_blocks.length}
@@ -68,7 +73,7 @@
 	import Caret from '../../../svg/select-caret.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
 	import SequenceForm from './SequenceForm.svelte'
-	import AssetBinsForm from '../assets/AssetBinsForm.svelte'
+	import AssetBinForm from '../assets/AssetBinForm.svelte'
 	import AssetBins from '../assets/AssetBins.svelte'
 
 	import {
@@ -81,7 +86,6 @@
 		handlers,
 		preview_clip,
 		messenger,
-		// saveable,
 	} from '../../../../stores/admin-store.js'
 	import { POST } from '../../../../utils/loaders.js'
 
