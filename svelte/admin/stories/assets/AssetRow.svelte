@@ -1,14 +1,18 @@
-<!-- <div class="asset">
-	{#if asset.mime_type.includes('image')}
-		<img src="https://media.graphcms.com/output=format:jpg/resize=width:520/{asset.handle}" alt={asset.filename}/>
-	{:else if asset.mime_type.includes('video')}
-		<video controls><source src={asset.url} type={asset.mime_type}/></video>
-	{:else}
-		<div class="unknown-mimetype">{asset.mime_type}</div>
-	{/if}
-</div> -->
+<div
+	bind:this={elem}
+	id="{asset.id}_{asset.order}"
+	class="asset-row"
+	class:remove
 
-<div class="asset-row" class:remove>
+	on:mousedown={() => draggable = true}
+	on:mouseup={() => draggable = false}
+
+	{draggable}
+	on:dragstart={event => dragging = dragstart(event, elem, !draggable)}
+	on:dragover={event => dragover(event, elem, !draggable)}
+	on:dragend={event => dragend(event)}
+	class:dragging
+>
 	<div class="header" on:click={() => editing = !editing}>
 		<AssetThumb {asset}/>
 		<h3><span>{asset.filename || asset.name || `Unnamed asset ${asset.order}`}</span></h3>
@@ -26,6 +30,9 @@
 </div>
 
 <script>
+	export let bin
+	export let clip_index
+	export let bin_index
 	export let asset
 	export let remove_ids
 
@@ -45,17 +52,73 @@
 	import Checkbox from '../../components/elements/Checkbox.svelte'
 	import AssetForm from './AssetForm.svelte'
 	import HtmlForm from '../html/HtmlForm.svelte'
+
+	import { POST } from '../../../../utils/loaders.js'
+	import { dragstart, dragover } from '../../../../utils/story-utils.js'
+	import { seq, drag_elem, swap_elem } from '../../../../stores/admin-store.js'
+
+	let elem
+	let dragging = false
+	export let draggable = false
+
+	async function dragend(event) {
+		let prev = elem.previousElementSibling
+		let next = elem.nextElementSibling
+		let prev_order = parseInt(prev ? prev.id.split('_')[1] : 0)
+		let next_order = parseInt(next
+			? next.id.split('_')[1]
+			: (Math.ceil((prev_order + 0.5) / 10000) * 10000) + 10000
+		)
+
+		let asset_changes = []
+		const new_order = Math.floor((next_order - prev_order) / 2)
+		if (new_order < 1) {
+			// need to reorder all the items
+			asset_changes = [...elem.parentNode.children].map((child, child_index) => {
+				return { id: child.id.split('_')[0], order: (child_index + 1) * 10000 }
+			})
+		} else {
+			// just reorder the one
+			asset_changes = [{ id: elem.id.split('_')[0], order: prev_order + new_order }]
+		}
+
+		const res = await POST('/api/admin/stories/assets-reorder.post', { asset_changes })
+
+		let updated_assets
+		if (res.error) {
+			alert('Something went wrong. Resetting assets order. Please contact the administrator of this site for assistance.')
+			updated_assets = [...$seq.clips[clip_index].asset_bins[bin_index].assets]
+		} else {
+			updated_assets = bin.assets.map(asset => {
+				const found = asset_changes.find(change => change.id === asset.id)
+				if (found) { asset.order = found.order }
+				return asset
+			}).sort((one, two) => one.order - two.order)
+		}
+
+		bin.assets = updated_assets
+		$seq.clips[clip_index].asset_bins[bin_index].assets = []
+		setTimeout(() => $seq.clips[clip_index].asset_bins[bin_index].assets = updated_assets, 0)
+
+		$drag_elem = undefined
+		dragging = false
+	}
 </script>
 
 <style type="text/scss">
 	.asset-row {
 		position: relative;
 		cursor: pointer;
+		user-select: none;
 		// &:hover { background-color: rgba(var(--admin-text-rgb), 0.1); }
 		&.remove { color: var(--admin-alert-light); }
 		&:hover,
 		&.remove {
 			.actions { display: block; }
+		}
+		&.dragging {
+			box-shadow: inset 0 0 0 2rem var(--admin-accent-2);
+			opacity: 0.5;
 		}
 	}
 	.header {

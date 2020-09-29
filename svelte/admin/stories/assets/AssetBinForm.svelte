@@ -14,13 +14,13 @@
 			bind:value={bin.transition}
 			options={$enums.asset_transitions}
 		/>
+		<div class="tools">
+			<p class="instructions">Click on a row below to toggle details. Drag and drop rows to reorder them.</p>
+		</div>
 		<div class="assets">
-			<div class="tools">
-				<p class="instructions">Click on a row below to show / hide details.</p>
-			</div>
 			{#if bin.assets.length}
 				{#each bin.assets as asset (asset.id)}
-					<AssetRow bind:asset bind:remove_ids/>
+					<AssetRow bind:bin {clip_index} {bin_index} bind:asset bind:remove_ids bind:draggable/>
 				{/each}
 			{:else}
 				<p>[No assets]</p>
@@ -38,6 +38,7 @@
 	export let bin_index
 	let remove_ids = []
 	let open_remove_modal
+	let draggable = false
 
 	import { enums } from '../../../../stores/admin-store.js'
 
@@ -60,8 +61,10 @@
 	.assets {
 		display: grid;
 		grid-gap: 3rem;
+		min-height: 32rem;
 	}
 	.instructions {
+		margin: 0;
 		font: 13rem/1 var(--admin-font);
 		opacity: 0.6;
 	}

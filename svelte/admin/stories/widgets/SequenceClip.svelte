@@ -6,11 +6,11 @@
 	class:editing
 	class:saveable
 
-	draggable={!$preview_clip}
-	on:dragstart={event => dragstart(event)}
-	on:dragover={event => dragover(event)}
+	{draggable}
+	on:dragstart={event => dragging = dragstart(event, elem, !draggable)}
+	on:dragover={event => dragover(event, elem, !draggable)}
 	on:dragend={event => dragend(event)}
-	class:draggable={!$preview_clip}
+	class:draggable
 	class:dragging
 >
 	<div class="header">
@@ -81,7 +81,6 @@
 		seq,
 		drag_elem,
 		swap_elem,
-		insert_before,
 		visible_bins,
 		handlers,
 		preview_clip,
@@ -128,32 +127,12 @@
 
 	let elem
 	let dragging = false
+	$: draggable = !$preview_clip
 
-	function dragstart(event) {
-		dragging = true
-		$drag_elem = elem
-		event.dataTransfer.effectAllowed = 'move'
-		event.dataTransfer.setData('text/html', $drag_elem.outerHTML)
-	}
-
-	function dragover(event) {
-		event.preventDefault()
-		event.dataTransfer.dropEffect = 'move'
-		const { currentTarget: target, clientY } = event
-		if (target !== $drag_elem) {
-			const { top, bottom } = target.getBoundingClientRect()
-			$insert_before = (clientY - top) / (bottom - top) < 0.5
-
-			if ($insert_before) {
-				target.parentNode.insertBefore($drag_elem, target)
-			} else {
-				target.parentNode.insertBefore(target, $drag_elem)
-			}
-			$swap_elem = target
-		}
-	}
+	import { dragstart, dragover } from '../../../../utils/story-utils.js'
 
 	async function dragend(event) {
+		if (!draggable) { return }
 		const parent = event.currentTarget.parentNode
 
 		const clip_changes = [...parent.children].map((child, child_index) => {
