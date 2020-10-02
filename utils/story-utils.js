@@ -12,7 +12,7 @@ export const prep_clip_for_preview = (edited_clip, original_clip) => {
 
 
 import { get } from 'svelte/store'
-import { drag_elem, swap_elem } from '../stores/admin-store.js'
+import { drag_elem } from '../stores/admin-store.js'
 
 export const dragstart = (event, elem, not_draggable) => {
 	if (not_draggable) { return }
@@ -35,15 +35,38 @@ export const dragover = (event, elem, not_draggable) => {
 		} else {
 			elem.parentNode.insertBefore(elem, $drag_elem)
 		}
-		swap_elem.set(elem)
 	}
 }
 
-export const new_order = (prev, next) => {
-	const order = Math.floor((prev - next) / 2)
-	if (order < 1) {
-		// guard; need to reorder all the items
-	}
-	return order
-}
+export const get_unknown_order = prev_order => (Math.ceil((prev_order + 0.5) / 10000) * 10000) + 10000
+export const get_order_tween = (prev_order, next_order) => Math.floor((next_order - prev_order) / 2)
 
+export const get_changes = elem => {
+	let changes = []
+
+	const curr_index = parseInt(elem.id.split('_')[1])
+
+	const prev_parts = (elem.previousElementSibling || { id: '_-1_0' }).id.split('_')
+	const prev_index = parseInt(prev_parts[1])
+	const prev_order = parseInt(prev_parts[2])
+
+	const next_order = elem.nextElementSibling
+		? parseInt(elem.nextElementSibling.id.split('_')[2])
+		: get_unknown_order(prev_order)
+
+	// only need to check against one of the siblings, so checking against previous index
+	if (prev_index !== curr_index - 1) {
+		const order_tween = get_order_tween(prev_order, next_order)
+		if (order_tween < 1) {
+			// need to reorder all the items
+			changes = [...elem.parentNode.children].map((child, child_index) => {
+				return { id: child.id.split('_')[0], order: (child_index + 1) * 10000 }
+			})
+		} else {
+			// just reorder the one
+			changes = [{ id: elem.id.split('_')[0], order: prev_order + order_tween }]
+		}
+	}
+
+	return changes
+}

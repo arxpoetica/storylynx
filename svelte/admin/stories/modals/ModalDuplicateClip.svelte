@@ -69,6 +69,7 @@
 	import Errors from '../../components/widgets/Errors.svelte'
 
 	import { POST } from '../../../../utils/loaders.js'
+	import { get_unknown_order, get_order_tween } from '../../../../utils/story-utils.js'
 
 	let validator
 	(async() => {
@@ -103,18 +104,30 @@
 		errors = []
 
 		jump_seq = sequences.find(seq => seq.id === parent.id)
-		const clip_index = jump_seq.clips.findIndex(clip => clip.id === prior_clip_id)
+		const jump_clip_index = jump_seq.clips.findIndex(clip => clip.id === prior_clip_id)
+		const jump_clip_prev = jump_seq.clips[jump_clip_index]
+		const jump_clip_next = jump_seq.clips[jump_clip_index + 1]
+		const prev_order = jump_clip_prev.order
 
 		let insertion_order
-		const clip_changes = jump_seq.clips.map(({ id }, index) => {
-			if (index < clip_index) {
-				return false
-			} else if (index === clip_index) {
-				insertion_order = index + 1
-				return false
-			}
-			return { id, order: index + 1 }
-		}).filter(Boolean)
+		let clip_changes = []
+		const next_order = jump_clip_next ? jump_clip_next.order : get_unknown_order(prev_order)
+		const order_tween = get_order_tween(prev_order, next_order)
+		if (order_tween < 1) {
+			// need to reorder all the items
+			clip_changes = jump_seq.clips.map(({ id }, index) => {
+				if (index <= jump_clip_index) {
+					if (index === jump_clip_index) {
+						insertion_order = (index + 2) * 10000
+					}
+					return { id, order: (index + 1) * 10000 }
+				}
+				return { id, order: (index + 2) * 10000 }
+			}).filter(Boolean)
+		} else {
+			// just set the new duplicate clip order
+			insertion_order = prev_order + order_tween
+		}
 
 		if (clip_changes.length) {
 			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes })

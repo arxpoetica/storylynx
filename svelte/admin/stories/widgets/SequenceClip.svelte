@@ -1,6 +1,6 @@
 <div
 	bind:this={elem}
-	id="{clip.id}_{index}"
+	id="{clip.id}_{index}_{clip.order}"
 	class="clip"
 	class:open={$visible_bins[$seq.id].has(clip.id)}
 	class:editing
@@ -9,7 +9,7 @@
 	{draggable}
 	on:dragstart={event => dragging = dragstart(event, elem, !draggable)}
 	on:dragover={event => dragover(event, elem, !draggable)}
-	on:dragend={event => dragend(event)}
+	on:dragend={dragend}
 	class:draggable
 	class:dragging
 >
@@ -80,7 +80,6 @@
 		target,
 		seq,
 		drag_elem,
-		swap_elem,
 		visible_bins,
 		handlers,
 		preview_clip,
@@ -129,20 +128,15 @@
 	let dragging = false
 	$: draggable = !$preview_clip
 
-	import { dragstart, dragover } from '../../../../utils/story-utils.js'
+	import { dragstart, dragover, get_changes } from '../../../../utils/story-utils.js'
 
-	async function dragend(event) {
+	async function dragend() {
 		if (!draggable) { return }
-		const parent = event.currentTarget.parentNode
 
-		const clip_changes = [...parent.children].map((child, child_index) => {
-			let [id, index] = child.id.split('_')
-			if (child_index === parseInt(index)) { return false }
-			return { id, order: child_index }
-		}).filter(Boolean)
+		const changes = get_changes(elem)
 
-		if (clip_changes.length) {
-			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes })
+		if (changes.length) {
+			const res = await POST('/api/admin/stories/clips-reorder.post', { clip_changes: changes })
 
 			if (res.error) {
 				alert('Something went wrong. Resetting clip order. Please contact the administrator of this site for assistance.')
@@ -155,7 +149,7 @@
 			}
 
 			$seq.clips = $seq.clips.map(clip => {
-				const found = clip_changes.find(change => change.id === clip.id)
+				const found = changes.find(change => change.id === clip.id)
 				if (found) { clip.order = found.order }
 				return clip
 			}).sort((one, two) => one.order - two.order)

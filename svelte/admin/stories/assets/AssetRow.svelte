@@ -1,6 +1,6 @@
 <div
 	bind:this={elem}
-	id="{asset.id}_{asset.order}"
+	id="{asset.id}_{index}_{asset.order}"
 	class="asset-row"
 	class:remove
 
@@ -10,7 +10,7 @@
 	{draggable}
 	on:dragstart={event => dragging = dragstart(event, elem, !draggable)}
 	on:dragover={event => dragover(event, elem, !draggable)}
-	on:dragend={event => dragend(event)}
+	on:dragend={dragend}
 	class:dragging
 >
 	<div class="header" on:click={() => editing = !editing}>
@@ -31,6 +31,7 @@
 
 <script>
 	export let bin
+	export let index
 	export let clip_index
 	export let bin_index
 	export let asset
@@ -54,51 +55,37 @@
 	import HtmlForm from '../html/HtmlForm.svelte'
 
 	import { POST } from '../../../../utils/loaders.js'
-	import { dragstart, dragover } from '../../../../utils/story-utils.js'
-	import { seq, drag_elem, swap_elem } from '../../../../stores/admin-store.js'
+	import { dragstart, dragover, get_changes } from '../../../../utils/story-utils.js'
+	import { seq, drag_elem } from '../../../../stores/admin-store.js'
 
 	let elem
 	let dragging = false
 	export let draggable = false
 
-	async function dragend(event) {
-		let prev = elem.previousElementSibling
-		let next = elem.nextElementSibling
-		let prev_order = parseInt(prev ? prev.id.split('_')[1] : 0)
-		let next_order = parseInt(next
-			? next.id.split('_')[1]
-			: (Math.ceil((prev_order + 0.5) / 10000) * 10000) + 10000
-		)
+	async function dragend() {
+		if (!draggable) { return }
 
-		let asset_changes = []
-		const new_order = Math.floor((next_order - prev_order) / 2)
-		if (new_order < 1) {
-			// need to reorder all the items
-			asset_changes = [...elem.parentNode.children].map((child, child_index) => {
-				return { id: child.id.split('_')[0], order: (child_index + 1) * 10000 }
-			})
-		} else {
-			// just reorder the one
-			asset_changes = [{ id: elem.id.split('_')[0], order: prev_order + new_order }]
+		const changes = get_changes(elem)
+
+		if (changes.length) {
+			const res = await POST('/api/admin/stories/assets-reorder.post', { asset_changes: changes })
+
+			let updated_assets
+			if (res.error) {
+				alert('Something went wrong. Resetting assets order. Please contact the administrator of this site for assistance.')
+				updated_assets = [...$seq.clips[clip_index].asset_bins[bin_index].assets]
+			} else {
+				updated_assets = bin.assets.map(asset => {
+					const found = changes.find(change => change.id === asset.id)
+					if (found) { asset.order = found.order }
+					return asset
+				}).sort((one, two) => one.order - two.order)
+			}
+
+			bin.assets = updated_assets
+			$seq.clips[clip_index].asset_bins[bin_index].assets = []
+			setTimeout(() => $seq.clips[clip_index].asset_bins[bin_index].assets = updated_assets, 0)
 		}
-
-		const res = await POST('/api/admin/stories/assets-reorder.post', { asset_changes })
-
-		let updated_assets
-		if (res.error) {
-			alert('Something went wrong. Resetting assets order. Please contact the administrator of this site for assistance.')
-			updated_assets = [...$seq.clips[clip_index].asset_bins[bin_index].assets]
-		} else {
-			updated_assets = bin.assets.map(asset => {
-				const found = asset_changes.find(change => change.id === asset.id)
-				if (found) { asset.order = found.order }
-				return asset
-			}).sort((one, two) => one.order - two.order)
-		}
-
-		bin.assets = updated_assets
-		$seq.clips[clip_index].asset_bins[bin_index].assets = []
-		setTimeout(() => $seq.clips[clip_index].asset_bins[bin_index].assets = updated_assets, 0)
 
 		$drag_elem = undefined
 		dragging = false

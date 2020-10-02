@@ -19,8 +19,8 @@
 		</div>
 		<div class="assets">
 			{#if bin.assets.length}
-				{#each bin.assets as asset (asset.id)}
-					<AssetRow bind:bin {clip_index} {bin_index} bind:asset bind:remove_ids bind:draggable/>
+				{#each bin.assets as asset, index (asset.id)}
+					<AssetRow bind:bin {index} {clip_index} {bin_index} bind:asset bind:remove_ids bind:draggable/>
 				{/each}
 			{:else}
 				<p>[No assets]</p>

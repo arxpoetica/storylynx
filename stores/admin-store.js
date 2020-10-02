@@ -34,7 +34,6 @@ export const messenger = writable()
 // === >>> Drag & Drop
 
 export const drag_elem = writable()
-export const swap_elem = writable()
 
 // === >>> HandsonTable Table Editor
 
