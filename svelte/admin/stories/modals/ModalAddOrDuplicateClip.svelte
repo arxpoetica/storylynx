@@ -1,6 +1,6 @@
 <Modal
-	title={ask ? `Jump to the "${jump_seq.title}" sequence containing the new "${new_clip.slug}" clip?` : 'Duplicate Clip'}
-	subtitle={ask ? '' : clip.slug}
+	title={ask ? `Jump to the "${jump_seq.title}" sequence containing the new "${new_clip.slug}" clip?` : `${type} Clip`}
+	subtitle={type === 'Duplicate' ? (ask ? '' : clip.slug) : ''}
 	bind:open
 	loading={!sequences.length}
 	{saving}
@@ -31,7 +31,7 @@
 			<div class="row">
 				<Select
 					label="Clip Position"
-					sublabel="Select a clip to place the duplicate clip after."
+					sublabel="Select a clip to place the {type.toLowerCase()} clip after."
 					bind:value={prior_clip_id}
 					required={true}
 					options={clip_options}
@@ -50,6 +50,8 @@
 
 	export let clip
 	export let open
+	export let type
+
 	let ask
 	let new_clip
 	let jump_seq
@@ -139,8 +141,8 @@
 			}
 		}
 
-		const res = await POST('/api/admin/stories/clip-duplicate.post', {
-			clip: Object.assign({ parentName: jump_seq.order }, clip),
+		const res = await POST('/api/admin/stories/clip-create.post', {
+			clip: Object.assign({ parent_name: jump_seq.order }, clip),
 			slug,
 			parent_id: parent.id,
 			order: insertion_order,

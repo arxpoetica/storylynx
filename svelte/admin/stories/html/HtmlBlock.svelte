@@ -11,8 +11,6 @@
 
 <script>
 	export let block
-	export let bin_index
-	export let block_index
 	export let selectedclip
 	let edit_html = false
 

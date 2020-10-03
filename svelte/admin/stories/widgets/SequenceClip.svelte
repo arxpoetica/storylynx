@@ -227,11 +227,6 @@
 		.texts {
 			margin: 0 0 0 5rem;
 		}
-		.order {
-			font: 12rem/1.2 var(--admin-font);
-			white-space: nowrap;
-			opacity: 0.5;
-		}
 		.svg {
 			min-width: 12rem;
 			max-width: 12rem;

@@ -21,8 +21,8 @@
 			</div>
 		</div>
 	</Scaffolding>
-	{#if duplicate_clip}
-		<ModalDuplicateClip clip={duplicate_clip} bind:open={duplicate_clip}/>
+	{#if new_clip}
+		<ModalAddOrDuplicateClip clip={new_clip} bind:open={new_clip} type={new_clip_type}/>
 	{/if}
 	{#if delete_clip}
 		<ModalDeleteClip clip={delete_clip} bind:open={delete_clip}/>
@@ -44,13 +44,21 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
-	import ModalDuplicateClip from './modals/ModalDuplicateClip.svelte'
+	import ModalAddOrDuplicateClip from './modals/ModalAddOrDuplicateClip.svelte'
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
 
-	let duplicate_clip
+	let new_clip
+	let new_clip_type
 	let delete_clip
 	$handlers = {
-		duplicate: index => duplicate_clip = $seq.clips[index],
+		new() {
+			new_clip_type = 'New'
+			new_clip = { template: $enums.templates[0].id }
+		},
+		duplicate: index => {
+			new_clip_type = 'Duplicate'
+			new_clip = $seq.clips[index]
+		},
 		delete: index => delete_clip = $seq.clips[index],
 	}
 </script>
