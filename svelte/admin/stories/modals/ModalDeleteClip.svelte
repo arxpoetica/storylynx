@@ -42,7 +42,7 @@
 
 		saving = false
 		open = false
-	} 
+	}
 </script>
 
 <style type="text/scss">

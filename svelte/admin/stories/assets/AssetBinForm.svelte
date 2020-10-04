@@ -3,8 +3,8 @@
 		{#if remove_ids.length}
 			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
 		{:else}
-			<Button label="Add Assets" classes="blank good" handler={() => console.log('ho')}/>
-			<Button label="Add HTML" classes="blank good" handler={() => console.log('ho')}/>
+			<Button label="Add Assets" classes="blank good plus" handler={() => $handlers.add_assets()}/>
+			<Button label="Add HTML" classes="blank good plus" handler={() => $handlers.add_assets()}/>
 		{/if}
 	</Buttons>
 	<div class="rows">
@@ -40,7 +40,7 @@
 	let open_remove_modal
 	let draggable = false
 
-	import { enums } from '../../../../stores/admin-store.js'
+	import { handlers, enums } from '../../../../stores/admin-store.js'
 
 	import AssetRow from './AssetRow.svelte'
 	import Select from '../../components/elements/Select.svelte'

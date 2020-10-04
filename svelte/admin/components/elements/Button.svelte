@@ -8,6 +8,7 @@
 		on:click={event => internal_handler(event)}
 	>
 		<slot>{label}</slot>
+		{#if classes.includes('plus')}<span class="svg"><Plus/></span>{/if}
 	</a>
 {:else}
 	<button
@@ -18,6 +19,7 @@
 		on:click={event => internal_handler(event)}
 	>
 		<slot>{label}</slot>
+		{#if classes.includes('plus')}<span class="svg"><Plus/></span>{/if}
 	</button>
 {/if}
 
@@ -36,6 +38,7 @@
 		}
 		handler(event)
 	}
+	import Plus from '../../../svg/icon-plus.svelte'
 </script>
 
 <style type="text/scss">
@@ -163,5 +166,11 @@
 			background-color: transparent;
 			color: var(--admin-accent-2);
 		}
+	}
+	.svg {
+		width: 10rem;
+		height: 10rem;
+		margin: 0 0 0 6rem;
+		line-height: 0;
 	}
 </style>

@@ -9,7 +9,7 @@
 		<div class="texts">
 			<div class="info">
 				<h2>
-					{asset_group.title || '[This Asset has no title.]'} 
+					{asset_group.title || '[This Asset has no title.]'}
 					{#if asset_group.year}
 						<span>({asset_group.year})</span>
 					{/if}

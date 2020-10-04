@@ -71,7 +71,7 @@
 	import Errors from '../../components/widgets/Errors.svelte'
 
 	import { POST } from '../../../../utils/loaders.js'
-	import { get_unknown_order, get_order_tween } from '../../../../utils/story-utils.js'
+	import { get_unknown_order, get_order_mid_distance } from '../../../../utils/story-utils.js'
 
 	let validator
 	(async() => {
@@ -114,8 +114,8 @@
 		let insertion_order
 		let clip_changes = []
 		const next_order = jump_clip_next ? jump_clip_next.order : get_unknown_order(prev_order)
-		const order_tween = get_order_tween(prev_order, next_order)
-		if (order_tween < 1) {
+		const order_mid_distance = get_order_mid_distance(prev_order, next_order)
+		if (order_mid_distance < 1) {
 			// need to reorder all the items
 			clip_changes = jump_seq.clips.map(({ id }, index) => {
 				if (index <= jump_clip_index) {
@@ -128,7 +128,7 @@
 			}).filter(Boolean)
 		} else {
 			// just set the new duplicate clip order
-			insertion_order = prev_order + order_tween
+			insertion_order = prev_order + order_mid_distance
 		}
 
 		if (clip_changes.length) {

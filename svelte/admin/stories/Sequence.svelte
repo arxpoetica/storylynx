@@ -27,6 +27,9 @@
 	{#if delete_clip}
 		<ModalDeleteClip clip={delete_clip} bind:open={delete_clip}/>
 	{/if}
+	{#if add_assets}
+		<ModalAddAssets clip={add_assets} bind:open={add_assets}/>
+	{/if}
 {/if}
 
 <script>
@@ -46,20 +49,25 @@
 	import PreviewPane from './widgets/PreviewPane.svelte'
 	import ModalAddOrDuplicateClip from './modals/ModalAddOrDuplicateClip.svelte'
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
+	import ModalAddAssets from './modals/ModalAddAssets.svelte'
 
 	let new_clip
 	let new_clip_type
 	let delete_clip
+	let add_assets
 	$handlers = {
-		new() {
+		create_clip: () => {
 			new_clip_type = 'New'
 			new_clip = { template: $enums.templates[0].id }
 		},
-		duplicate: index => {
+		duplicate_clip: index => {
 			new_clip_type = 'Duplicate'
 			new_clip = $seq.clips[index]
 		},
-		delete: index => delete_clip = $seq.clips[index],
+		delete_clip: index => delete_clip = $seq.clips[index],
+		add_assets: () => {
+			console.log('unsure what to do here yet, but putting in place')
+		},
 	}
 </script>
 

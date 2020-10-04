@@ -71,7 +71,7 @@
 	})
 	onDestroy(() => {
 		// FIXME:
-		// if (window.confirm('You have unsaved items? Are you sure you want to leave?')) { 
+		// if (window.confirm('You have unsaved items? Are you sure you want to leave?')) {
 			// TODO: make this a generic reset util function somewhere...
 			$assets = []
 			$current_group = -1

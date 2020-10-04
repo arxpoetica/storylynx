@@ -118,7 +118,7 @@
 	async function delete_group(group, index) {
 		$saving = true
 
-		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) { 
+		if (!group.id.includes('NOID-') && window.confirm('Are you sure you want to delete this group? This is not recoverable.')) {
 			const { asset_group } = await POST('/api/admin/assets/quickarrange-delete.post', { id: group.id })
 			$groups.splice(index, 1)
 			$groups = $groups

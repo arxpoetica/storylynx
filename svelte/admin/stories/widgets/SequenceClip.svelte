@@ -34,8 +34,8 @@
 			<div class="secondary" on:click|stopPropagation={() => {}}>
 				<button class="reveal" on:click={() => open = !open}><PostIcon/></button>
 				<div class="dropdown">
-					<Button label="Duplicate" classes="blank plain" handler={() => $handlers.duplicate(index)}/>
-					<Button label="Delete" classes="alert blank" handler={() => $handlers.delete(index)}/>
+					<Button label="Duplicate" classes="blank plain" handler={() => $handlers.duplicate_clip(index)}/>
+					<Button label="Delete" classes="alert blank" handler={() => $handlers.delete_clip(index)}/>
 				</div>
 			</div>
 		</div>

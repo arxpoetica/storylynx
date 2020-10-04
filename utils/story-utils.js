@@ -39,7 +39,7 @@ export const dragover = (event, elem, not_draggable) => {
 }
 
 export const get_unknown_order = prev_order => (Math.ceil((prev_order + 0.5) / 10000) * 10000) + 10000
-export const get_order_tween = (prev_order, next_order) => Math.floor((next_order - prev_order) / 2)
+export const get_order_mid_distance = (prev_order, next_order) => Math.floor((next_order - prev_order) / 2)
 
 export const get_changes = elem => {
 	let changes = []
@@ -56,15 +56,15 @@ export const get_changes = elem => {
 
 	// only need to check against one of the siblings, so checking against previous index
 	if (prev_index !== curr_index - 1) {
-		const order_tween = get_order_tween(prev_order, next_order)
-		if (order_tween < 1) {
+		const order_mid_distance = get_order_mid_distance(prev_order, next_order)
+		if (order_mid_distance < 1) {
 			// need to reorder all the items
 			changes = [...elem.parentNode.children].map((child, child_index) => {
 				return { id: child.id.split('_')[0], order: (child_index + 1) * 10000 }
 			})
 		} else {
 			// just reorder the one
-			changes = [{ id: elem.id.split('_')[0], order: prev_order + order_tween }]
+			changes = [{ id: elem.id.split('_')[0], order: prev_order + order_mid_distance }]
 		}
 	}
 

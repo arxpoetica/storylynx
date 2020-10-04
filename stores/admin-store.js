@@ -35,6 +35,10 @@ export const messenger = writable()
 
 export const drag_elem = writable()
 
+// === >>> Uppy Asset Loader
+
+export const uppy_loaded = writable(null)
+
 // === >>> HandsonTable Table Editor
 
 export const hot = writable(null)
