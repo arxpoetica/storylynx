@@ -1,29 +1,44 @@
-<Modal title="Add Assets" bind:open {saving} saving_text="adding">
+<Modal title="Add Assets" bind:open {saving} saving_text="adding" classes="fullscreen">
 	<!-- <Errors {errors}/> -->
 	<!-- <p>Are you sure you want to delete this clip and all it's contents?</p> -->
 	<!-- <p class="warning">THIS ACTION CANNOT BE UNDONE.</p> -->
 	<!-- <Button label="I'm sure. Delete my clip." classes="alert" handler={delete_clip}/> -->
 	<!-- <Button label="Cancel" handler={() => open = false}/> -->
-	<div class="container">
-		{#if upload}
-			<Uppy/>
-		{:else}
-			<AssetPicker/>
-		{/if}
+	<div class="columns">
+		<div class="col">
+			{#if upload}
+				<Uppy/>
+			{:else}
+				<AssetPicker {bin} bind:picked/>
+			{/if}
+		</div>
+		<div class="col">
+			<div class="thumbs">
+				{#each [...picked] as [key, asset] (key)}
+					<div class="thumb">
+						<div class="fitter">
+							<AssetThumbIcon {asset}/>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
 	</div>
 </Modal>
 
 <script>
-	import { seq } from '../../../../stores/admin-store.js'
+	import { assets, seq } from '../../../../stores/admin-store.js'
 
-	export let clip
+	export let bin
 	export let open
 
 	let upload = false
+ 	let picked = new Map()
 
 	import Modal from '../../components/widgets/Modal.svelte'
 	import Uppy from '../uppy/Uppy.svelte'
 	import AssetPicker from '../uppy/AssetPicker.svelte'
+	import AssetThumbIcon from '../assets/AssetThumbIcon.svelte'
 	// import Button from '../../components/elements/Button.svelte'
 	// import Errors from '../../components/widgets/Errors.svelte'
 
@@ -70,10 +85,32 @@
 </script>
 
 <style type="text/scss">
-	.container {
-		height: 500rem;
+	.columns {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 40rem;
+		height: 100%;
 	}
-	// .warning {
-	// 	color: var(--admin-alert);
-	// }
+	.thumbs {
+		display: grid;
+		grid-gap: 40rem;
+		grid-template-columns: repeat(auto-fill, minmax(150rem, 1fr)) ;
+	}
+	.thumb {
+		overflow: hidden;
+		position: relative;
+		padding: 0 0 100%;
+		background-color: var(--admin-accent-0);
+		border-radius: 12rem;
+	}
+	.fitter {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
 </style>

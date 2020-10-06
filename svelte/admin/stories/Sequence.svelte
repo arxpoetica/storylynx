@@ -28,7 +28,7 @@
 		<ModalDeleteClip clip={delete_clip} bind:open={delete_clip}/>
 	{/if}
 	{#if add_assets}
-		<ModalAddAssets clip={add_assets} bind:open={add_assets}/>
+		<ModalAddAssets bin={add_assets} bind:open={add_assets}/>
 	{/if}
 {/if}
 
@@ -65,9 +65,7 @@
 			new_clip = $seq.clips[index]
 		},
 		delete_clip: index => delete_clip = $seq.clips[index],
-		add_assets: () => {
-			console.log('unsure what to do here yet, but putting in place')
-		},
+		add_assets: (clip_index, bin_index) => add_assets = $seq.clips[clip_index].asset_bins[bin_index],
 	}
 </script>
 

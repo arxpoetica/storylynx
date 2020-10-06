@@ -1,7 +1,7 @@
 <svelte:window on:keydown={event => escape(event)}/>
 
 {#if open}
-	<div class="modal">
+	<div class="modal {classes}">
 		<div class="back" on:click={() => open = false}></div>
 		<div class="box">
 			<div class="header">
@@ -32,6 +32,7 @@
 
 <script>
 	export let open = false
+	export let classes = ''
 	export let loading = false
 	export let saving = false
 	export let saving_text = 'saving'
@@ -60,6 +61,19 @@
 		padding: 40rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.8);
 		z-index: 100;
+		&.fullscreen {
+			.box {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				max-width: none;
+				height: 100%;
+			}
+			.body {
+				overflow: hidden;
+				flex: 1;
+			}
+		}
 		:global {
 			.rows {
 				display: grid;

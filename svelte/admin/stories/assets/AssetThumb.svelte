@@ -4,17 +4,7 @@
 	on:mouseleave={() => hovering = false}
 	on:click|stopPropagation={() => {}}
 >
-	{#if asset.mime_type.includes('image')}
-		<div class="img" style="background-image:url({src(asset.handle)});"></div>
-	{:else if asset.mime_type.includes('video')}
-		<div class="svg"><VideoIcon/></div>
-	{:else if asset.mime_type.includes('audio')}
-		<div class="svg"><AudioIcon/></div>
-	{:else if asset.mime_type.includes('html')}
-		<div class="svg"><HtmlIcon/></div>
-	{:else}
-		<div class="svg"><UnknownIcon/></div>
-	{/if}
+	<ThumbIcon {asset}/>
 	{#if hovering}
 		<div class="popup">
 			{#if asset.mime_type.includes('image')}
@@ -38,14 +28,8 @@
 	export let asset
 	let hovering = false
 
-	import VideoIcon from '../../../svg/asset-icon-video.svelte'
-	import AudioIcon from '../../../svg/asset-icon-audio.svelte'
-	import HtmlIcon from '../../../svg/asset-icon-html.svelte'
-	import UnknownIcon from '../../../svg/asset-icon-unknown.svelte'
-
-	function src(handle) {
-		return `https://media.graphcms.com/output=format:jpg/resize=width:600/${handle}`
-	}
+	import ThumbIcon from './AssetThumbIcon.svelte'
+	import { src } from './asset-helpers.js'
 </script>
 
 <style type="text/scss">
@@ -55,17 +39,6 @@
 		justify-content: center;
 		align-items: center;
 		height: 32rem;
-	}
-	.img {
-		position: relative;
-		width: 100%;
-		padding: 0 0 100%;
-		background: none no-repeat center transparent;
-		background-size: cover;
-	}
-	.svg {
-		width: 22rem;
-		height: 22rem;
 	}
 	.popup {
 		display: flex;

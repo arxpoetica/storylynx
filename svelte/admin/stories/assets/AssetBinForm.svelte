@@ -3,8 +3,14 @@
 		{#if remove_ids.length}
 			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
 		{:else}
-			<Button label="Add Assets" classes="blank good plus" handler={() => $handlers.add_assets()}/>
-			<Button label="Add HTML" classes="blank good plus" handler={() => $handlers.add_assets()}/>
+			<Button
+				label="Add Assets"
+				classes="blank good plus"
+				handler={() => $handlers.add_assets(clip_index, bin_index)}/>
+			<Button
+				label="Add HTML"
+				classes="blank good plus"
+				handler={() => $handlers.add_assets()}/>
 		{/if}
 	</Buttons>
 	<div class="rows">
