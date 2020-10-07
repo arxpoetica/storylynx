@@ -2,7 +2,7 @@
 	<AssetThumb {asset}/>
 	<h3><span>{asset.filename}</span></h3>
 	<div class="actions">
-		<Checkbox classes="good" bind:checked={asset.picked}/>
+		<Checkbox classes="good" propagate={true} bind:checked={asset.picked}/>
 	</div>
 </div>
 

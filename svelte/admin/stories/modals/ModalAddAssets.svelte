@@ -9,17 +9,13 @@
 			{#if upload}
 				<Uppy/>
 			{:else}
-				<AssetPicker {bin} bind:picked/>
+				<AssetPicker {bin} bind:assets bind:picked/>
 			{/if}
 		</div>
 		<div class="col">
-			<div class="thumbs">
+			<div class="tiles">
 				{#each [...picked] as [key, asset] (key)}
-					<div class="thumb">
-						<div class="fitter">
-							<AssetThumbIcon {asset}/>
-						</div>
-					</div>
+					<AssetPickerTile {asset} bind:assets bind:picked/>
 				{/each}
 			</div>
 		</div>
@@ -27,20 +23,21 @@
 </Modal>
 
 <script>
-	import { assets, seq } from '../../../../stores/admin-store.js'
+	// import { assets, seq } from '../../../../stores/admin-store.js'
 
 	export let bin
 	export let open
 
 	let upload = false
+	let assets = []
  	let picked = new Map()
 
 	import Modal from '../../components/widgets/Modal.svelte'
 	import Uppy from '../uppy/Uppy.svelte'
 	import AssetPicker from '../uppy/AssetPicker.svelte'
-	import AssetThumbIcon from '../assets/AssetThumbIcon.svelte'
 	// import Button from '../../components/elements/Button.svelte'
 	// import Errors from '../../components/widgets/Errors.svelte'
+	import AssetPickerTile from '../uppy/AssetPickerTile.svelte'
 
 	import { POST } from '../../../../utils/loaders.js'
 
@@ -91,26 +88,10 @@
 		grid-gap: 40rem;
 		height: 100%;
 	}
-	.thumbs {
+	.tiles {
 		display: grid;
 		grid-gap: 40rem;
-		grid-template-columns: repeat(auto-fill, minmax(150rem, 1fr)) ;
-	}
-	.thumb {
-		overflow: hidden;
-		position: relative;
-		padding: 0 0 100%;
-		background-color: var(--admin-accent-0);
-		border-radius: 12rem;
-	}
-	.fitter {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
+		grid-template-columns: repeat(auto-fill, minmax(150rem, 1fr));
+		padding: 20rem 15rem 0 0;
 	}
 </style>

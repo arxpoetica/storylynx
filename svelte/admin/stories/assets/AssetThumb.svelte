@@ -2,7 +2,7 @@
 	class="thumb"
 	on:mouseenter={() => hovering = true}
 	on:mouseleave={() => hovering = false}
-	on:click|stopPropagation={() => {}}
+	on:click={() => {}}
 >
 	<ThumbIcon {asset}/>
 	{#if hovering}

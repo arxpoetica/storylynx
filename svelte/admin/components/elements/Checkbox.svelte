@@ -1,5 +1,5 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="checkbox {classes}" class:checked on:click|stopPropagation={handler}>
+<label class="checkbox {classes}" class:checked on:click={event => internal_handler(event)}>
 	<span class="group">
 		<span class="box">
 			{#if checked}
@@ -26,7 +26,15 @@
 	export let checked = false
 	export let handler = () => {}
 	export let classes = ''
+	export let propagate = false
 	import Checkmark from '../../../svg/checkmark.svelte'
+
+	function internal_handler(event) {
+		if (!propagate) {
+			event.stopPropagation()
+		}
+		handler(event)
+	}
 </script>
 
 <style type="text/scss">
