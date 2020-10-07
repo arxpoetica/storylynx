@@ -1,12 +1,12 @@
 <div class="row" class:picked={asset.picked} on:click={toggle_asset}>
-	<AssetThumb {asset}/>
-	<h3><span>{asset.filename}</span></h3>
-	<div class="actions">
-		<Checkbox classes="good" propagate={true} bind:checked={asset.picked}/>
-	</div>
+	<div><AssetThumb {asset}/></div>
+	<div class="filename"><span>{asset.filename}</span></div>
+	<div class="timestamp">{dayjs(asset.created).format('MMM D, YYYY h:mma')}</div>
+	<div><Checkbox classes="good" propagate={true} bind:checked={asset.picked}/></div>
 </div>
 
 <script>
+	import dayjs from 'dayjs'
 	import AssetThumb from '../assets/AssetThumb.svelte'
 	import Checkbox from '../../components/elements/Checkbox.svelte'
 
@@ -36,35 +36,38 @@
 
 <style type="text/scss">
 	.row {
-		display: grid;
-		grid-template-columns: 50rem 1fr 50rem;
-		grid-gap: 20rem;
 		position: relative;
-		margin: 0 0 6rem;
+		display: table-row;
+		background-color: var(--admin-accent-1);
+		border: 1rem solid var(--admin-accent-0);
+		color: inherit;
+		text-decoration: none;
 		cursor: pointer;
 		user-select: none;
-		&:hover { background-color: var(--admin-accent-0); }
-		&.picked { background-color: rgba(var(--admin-good-rgb), 0.1); }
-		&:hover,
-		&.picked {
-			.actions { display: flex; }
+		&:hover { background-color: var(--admin-color-1); }
+		&.picked { background-color: rgba(var(--admin-good-rgb), 0.4); }
+		> div {
+			display: table-cell;
+			padding: 0 12rem;
+			vertical-align: middle;
+			&:first-child { padding: 0 12rem 0 0; }
+			&:last-child { padding: 0 18rem 0 12rem; }
 		}
 	}
-	h3 {
-		overflow: hidden;
-		display: flex;
-		align-items: center;
-		margin: 0;
-		span {
+	.filename {
+		position: relative;
+		&::before {
+			content: '&nbsp;';
+			visibility: hidden;
+		}
+		> span {
 			overflow: hidden;
-			display: block;
-			font: 13rem/1 var(--admin-font);
+			position: absolute;
+			left: 12rem;
+			right: 12rem;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 	}
-	.actions {
-		display: none;
-		align-items: center;
-	}
+	.timestamp { white-space: nowrap; }
 </style>

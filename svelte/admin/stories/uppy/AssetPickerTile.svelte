@@ -1,9 +1,8 @@
-<div class="tile">
+<div class="tile" on:click={remove}>
 	<div class="fitter">
 		<AssetThumbIcon {asset}/>
-
 	</div>
-	<div class="remove" on:click={remove}><Remove/></div>
+	<div class="remove"><Remove/></div>
 </div>
 
 <script>
@@ -36,6 +35,7 @@
 	.tile {
 		position: relative;
 		padding: 0 0 100%;
+		cursor: pointer;
 	}
 	.fitter {
 		overflow: hidden;
@@ -52,13 +52,12 @@
 	}
 	.remove {
 		position: absolute;
-		top: -15rem;
-		right: -15rem;
+		top: 5rem;
+		right: 5rem;
 		width: 30rem;
 		height: 30rem;
 		padding: 5rem;
 		background-color: var(--admin-accent-0);
 		border-radius: 100%;
-		cursor: pointer;
 	}
 </style>

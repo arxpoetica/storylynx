@@ -47,7 +47,7 @@
 				<div class="bins">
 					<!-- order: 1 -->
 					{#each $preview_clip.asset_bins as bin, bin_index (bin.id)}
-						<AssetBinForm bind:bin clip_index={index} {bin_index} />
+						<AssetBinForm bind:bin clip_index={index} {bin_index} {saveable}/>
 					{/each}
 				</div>
 			{:else}

@@ -2,7 +2,7 @@
 	<Errors {errors}/>
 	<p>Are you sure you want to remove these assets from this bin?</p>
 	<p>NOTE: media assets are just disconnected and continue to exist in the archive.</p>
-	<p class="warning">However, HTML will be deleted and is not recoverable.</p>
+	<p class="warning-severe">However, HTML will be deleted and is not recoverable.</p>
 	<p class="warning">THIS ACTION CANNOT BE UNDONE.</p>
 	<Buttons classes="no-margin align-right">
 		<Button label="Cancel" handler={() => open = false}/>
@@ -41,12 +41,9 @@
 			return false
 		}
 
-		// FIXME: reorder these!!!!!
-		// FIXME: reorder these!!!!!
-		// FIXME: reorder these!!!!!
-		// FIXME: reorder these!!!!!
 		bin.assets = bin.assets.filter(asset => !remove_ids.find(id => id === asset.id))
 		$seq.clips[clip_index].asset_bins[bin_index].assets = bin.assets
+		remove_ids = []
 
 		saving = false
 		open = false
@@ -54,6 +51,12 @@
 </script>
 
 <style type="text/scss">
+	.warning-severe {
+		display: inline-block;
+		padding: 3rem 5rem;
+		background-color: var(--admin-alert);
+		color: var(--admin-text);
+	}
 	.warning {
 		color: var(--admin-alert);
 	}

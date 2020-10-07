@@ -1,8 +1,11 @@
 <div class="picker">
-	<div class="form">
-		<Input label="Search" bind:value={search}/>
-	</div>
-	<div class="assets">
+	<div class="table">
+		<div class="header">
+			<div class="thumb-td"></div>
+			<div class="filename">Filename</div>
+			<div class="timestamp">Created</div>
+			<div class="actions"></div>
+		</div>
 		{#each [...picked] as [key, asset] (key)}
 			<AssetPickerRow bind:assets bind:picked {asset}/>
 		{/each}
@@ -15,55 +18,22 @@
 </div>
 
 <script>
-	import { POST } from '../../../../utils/loaders.js'
-	import Input from '../../components/elements/Input.svelte'
 	import AssetPickerRow from './AssetPickerRow.svelte'
 
-	export let bin
+	export let assets
 	export let picked
-
-	let assets = []
-	$: asset_ids = bin.assets.map(asset => asset.id)
-
-	let search = ''
-	let prior_search
-	let timer
-	$: if (search !== prior_search) {
-		clearTimeout(timer)
-		prior_search = search
-		timer = setTimeout(async() => {
-			assets = await load_assets({
-				ids: [...asset_ids, ...[...picked].map(([key]) => key)],
-				search,
-				page: 1,
-				page_size: 50,
-				column: 'published',
-				sort: 'asc',
-			})
-		}, 400)
-	}
-
-	async function load_assets(payload) {
-		const res = await POST('/api/admin/uppy/assets-page.post', payload)
-		return res.assets
-	}
 </script>
 
 <style type="text/scss">
 	.picker {
-		display: grid;
-		grid-template-rows: auto 1fr;
-		height: 100%;
-	}
-	.form {
-		margin: 0 3rem 40rem;
-	}
-	.assets {
-		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
+		position: relative;
 		height: 100%;
 		@mixin scrollbar {}
 		:global {
 			.thumb {
+				width: 50rem;
 				height: 50rem;
 				background-color: var(--admin-accent-2);
 			}
@@ -75,4 +45,31 @@
 			}
 		}
 	}
+	.table {
+		display: table;
+		width: 100%;
+		border-collapse: collapse;
+		border-spacing: 0;
+		font: 14rem/1.2 $font;
+	}
+	.header {
+		display: table-row;
+		font: $bold 11rem/0 $font;
+		text-transform: uppercase;
+		// cursor: pointer;
+		> div {
+			position: sticky;
+			top: 0;
+			display: table-cell;
+			height: 40rem;
+			padding: 0 12rem;
+			background-color: var(--admin-color-1);
+			vertical-align: middle;
+			z-index: 1;
+			&:first-child { padding: 0 0 0 12rem; }
+		}
+	}
+	.actions { width: 46rem;}
+	.thumb-td { width: 74rem;}
+	.filename { width: 100%; }
 </style>

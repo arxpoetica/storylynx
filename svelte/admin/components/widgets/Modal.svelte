@@ -142,7 +142,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 150rem;
+		height: 100%;
 		color: var(--admin-accent-0);
 		animation: rotate-color 2.5s linear infinite;
 	}

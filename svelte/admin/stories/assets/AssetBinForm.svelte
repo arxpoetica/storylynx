@@ -6,10 +6,12 @@
 			<Button
 				label="Add Assets"
 				classes="blank good plus"
+				disabled={saveable}
 				handler={() => $handlers.add_assets(clip_index, bin_index)}/>
 			<Button
 				label="Add HTML"
 				classes="blank good plus"
+				disabled={saveable}
 				handler={() => $handlers.add_assets()}/>
 		{/if}
 	</Buttons>
@@ -35,13 +37,14 @@
 	</div>
 </div>
 {#if open_remove_modal}
-	<ModalRemoveAssets bind:bin {clip_index} {bin_index} {remove_ids} bind:open={open_remove_modal}/>
+	<ModalRemoveAssets bind:bin {clip_index} {bin_index} bind:remove_ids bind:open={open_remove_modal}/>
 {/if}
 
 <script>
 	export let bin
 	export let clip_index
 	export let bin_index
+	export let saveable
 	let remove_ids = []
 	let open_remove_modal
 	let draggable = false

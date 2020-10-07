@@ -27,8 +27,8 @@
 	{#if delete_clip}
 		<ModalDeleteClip clip={delete_clip} bind:open={delete_clip}/>
 	{/if}
-	{#if add_assets}
-		<ModalAddAssets bin={add_assets} bind:open={add_assets}/>
+	{#if assets_info}
+		<ModalAddAssets data={assets_info} bind:open={assets_info}/>
 	{/if}
 {/if}
 
@@ -54,7 +54,7 @@
 	let new_clip
 	let new_clip_type
 	let delete_clip
-	let add_assets
+	let assets_info
 	$handlers = {
 		create_clip: () => {
 			new_clip_type = 'New'
@@ -65,7 +65,13 @@
 			new_clip = $seq.clips[index]
 		},
 		delete_clip: index => delete_clip = $seq.clips[index],
-		add_assets: (clip_index, bin_index) => add_assets = $seq.clips[clip_index].asset_bins[bin_index],
+		add_assets: (clip_index, bin_index) => {
+			assets_info = {
+				bin: $seq.clips[clip_index].asset_bins[bin_index],
+				clip_index,
+				bin_index,
+			}
+		},
 	}
 </script>
 
