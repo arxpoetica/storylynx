@@ -32,7 +32,6 @@
 		saving = true
 		errors = []
 
-		console.log('removing assets!!!')
 		const res = await POST('/api/admin/stories/assets-delete.post', { asset_ids: remove_ids })
 		if (res.error) {
 			alert('Something went wrong. The assets could not be removed. Please contact the administrator of this site for assistance.')

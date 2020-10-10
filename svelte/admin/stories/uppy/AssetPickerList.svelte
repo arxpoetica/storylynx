@@ -1,4 +1,4 @@
-<div class="picker">
+<div class="picker-list">
 	<div class="table">
 		<div class="header">
 			<div class="thumb-td"></div>
@@ -25,7 +25,7 @@
 </script>
 
 <style type="text/scss">
-	.picker {
+	.picker-list {
 		overflow-x: hidden;
 		overflow-y: auto;
 		position: relative;

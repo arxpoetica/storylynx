@@ -7,16 +7,8 @@
 			<Buttons classes="no-margin align-right">
 				<Button label="Upload New Assets" classes="blank plus" handler={() => upload = true}/>
 			</Buttons>
-			<AssetPicker bind:picked {existing_ids}/>
+			<AssetPicker bind:picked {existing_ids} handler={add_assets}/>
 		{/if}
-		<Buttons classes="no-margin align-right">
-			<Button
-				label="Add Asset{picked.size < 2 ? '' : 's'}"
-				classes="good"
-				disabled={!picked.size}
-				handler={add_assets}
-			/>
-		</Buttons>
 	</div>
 </Modal>
 
@@ -69,8 +61,10 @@
 <style type="text/scss">
 	.main {
 		display: grid;
-		grid-template-rows: auto 1fr auto;
+		grid-template-rows: auto 1fr;
 		height: 100%;
-		grid-gap: 40rem;
+		&.upload {
+			grid-template-rows: 1fr;
+		}
 	}
 </style>

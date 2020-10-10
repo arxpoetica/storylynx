@@ -1,21 +1,31 @@
-<div class="search">
-	<Input label="Search" sublabel="Search by filename" bind:value={search}/>
-</div>
-<div class="columns">
-	<div class="col">
-		{#if loading}
-			<Hourglass bind:loading/>
-		{:else}
-			<AssetPickerList bind:assets bind:picked/>
-		{/if}
+<div class="picker">
+	<div class="search">
+		<Input label="Search" sublabel="Enter part or all of the filename." bind:value={search}/>
 	</div>
-	<div class="col col-tiles">
-		<div class="tiles">
-			{#each [...picked] as [key, asset] (key)}
-				<AssetPickerTile {asset} bind:assets bind:picked/>
-			{/each}
+	<div class="columns">
+		<div class="col">
+			{#if loading}
+				<Hourglass bind:loading/>
+			{:else}
+				<AssetPickerList bind:assets bind:picked/>
+			{/if}
+		</div>
+		<div class="col col-tiles">
+			<div class="tiles">
+				{#each [...picked] as [key, asset] (key)}
+					<AssetPickerTile {asset} bind:assets bind:picked/>
+				{/each}
+			</div>
 		</div>
 	</div>
+	<Buttons classes="no-margin align-right">
+		<Button
+			label="Add Asset{picked.size < 2 ? '' : 's'}"
+			classes="good"
+			disabled={!picked.size}
+			{handler}
+		/>
+	</Buttons>
 </div>
 
 <script>
@@ -29,6 +39,7 @@
 
 	export let existing_ids = []
 	export let picked = new Map()
+	export let handler = () => {}
 	let assets = []
 	let loading = true
 
@@ -59,6 +70,13 @@
 </script>
 
 <style type="text/scss">
+	.picker {
+		overflow: hidden;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		grid-gap: 20rem;
+		height: 100%;
+	}
 	.search {
 		width: var(--admin-panel-width);
 		margin: 0 3rem;
