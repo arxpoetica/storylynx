@@ -1,14 +1,13 @@
-<div class="actions">
-	<div class="search">
-		<Input label="Search" sublabel="Search by filename" bind:value={search}/>
-	</div>
-	<Buttons classes="no-margin align-right">
-		<Button label="Upload New Assets" classes="blank plus" handler={() => upload = true}/>
-	</Buttons>
+<div class="search">
+	<Input label="Search" sublabel="Search by filename" bind:value={search}/>
 </div>
 <div class="columns">
 	<div class="col">
-		<AssetPickerList bind:assets bind:picked/>
+		{#if loading}
+			<Hourglass bind:loading/>
+		{:else}
+			<AssetPickerList bind:assets bind:picked/>
+		{/if}
 	</div>
 	<div class="col col-tiles">
 		<div class="tiles">
@@ -23,6 +22,7 @@
 	import { POST } from '../../../../utils/loaders.js'
 	import AssetPickerList from './AssetPickerList.svelte'
 	import AssetPickerTile from './AssetPickerTile.svelte'
+	import Hourglass from '../../components/widgets/Hourglass.svelte'
 	import Input from '../../components/elements/Input.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
 	import Button from '../../components/elements/Button.svelte'
@@ -30,11 +30,13 @@
 	export let existing_ids = []
 	export let picked = new Map()
 	let assets = []
+	let loading = true
 
 	let search = ''
 	let prior_search
 	let timer
 	$: if (search !== prior_search) {
+		loading = true
 		clearTimeout(timer)
 		prior_search = search
 		timer = setTimeout(async() => {
@@ -46,6 +48,7 @@
 				column: 'created',
 				sort: 'desc',
 			})
+			loading = false
 		}, 400)
 	}
 
@@ -56,11 +59,6 @@
 </script>
 
 <style type="text/scss">
-	.actions {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-	}
 	.search {
 		width: var(--admin-panel-width);
 		margin: 0 3rem;

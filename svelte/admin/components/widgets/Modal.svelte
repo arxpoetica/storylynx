@@ -15,12 +15,7 @@
 			</div>
 			<div class="body">
 				{#if loading || saving}
-					<div class="hourglass">
-						<div class="svg">
-							<Hourglass/>
-						</div>
-						<p>...{loading ? 'loading' : saving_text}...</p>
-					</div>
+					<Hourglass bind:loading {saving_text}/>
 				{:else}
 					<slot></slot>
 				{/if}
@@ -38,8 +33,8 @@
 	export let saving_text = 'saving'
 	export let title = 'Alert!'
 	export let subtitle
+	import Hourglass from './Hourglass.svelte'
 	import Close from '../../../svg/admin-close.svelte'
-	import Hourglass from '../../../svg/hourglass.svelte'
 	function escape(event) {
 		if (open && event.key === 'Escape') {
 			open = false
@@ -136,24 +131,5 @@
 	}
 	.body {
 		position: relative;
-	}
-	.hourglass {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-		color: var(--admin-accent-0);
-		animation: rotate-color 2.5s linear infinite;
-	}
-	.svg {
-		width: 30rem;
-		height: 47rem;
-		margin: 0 0 10rem;
-	}
-	@keyframes rotate-color {
-		0% { color: var(--admin-accent-0); }
-		50% { color: var(--admin-bg); }
-		100% { color: var(--admin-accent-0); }
 	}
 </style>

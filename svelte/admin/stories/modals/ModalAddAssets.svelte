@@ -4,6 +4,9 @@
 		{#if upload}
 			<Uppy/>
 		{:else}
+			<Buttons classes="no-margin align-right">
+				<Button label="Upload New Assets" classes="blank plus" handler={() => upload = true}/>
+			</Buttons>
 			<AssetPicker bind:picked {existing_ids}/>
 		{/if}
 		<Buttons classes="no-margin align-right">
