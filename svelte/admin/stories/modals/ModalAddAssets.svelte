@@ -79,12 +79,11 @@
 	async function add_assets() {
 		saving = true
 		// errors = []
-
-		const order_start = data.bin.assets[data.bin.assets.length - 1].order
+		const assets_length = data.bin.assets.length
+		const order_start = assets_length ? data.bin.assets[assets_length - 1].order : 0
 		const assets = [...picked].map(([key], index) => {
 			return { id: key, order: order_start + ((index + 1) * 10000) }
 		})
-
 		const res = await POST('/api/admin/uppy/assets-add.post', {
 			bin_id: data.bin.id,
 			assets,
