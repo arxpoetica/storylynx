@@ -2,7 +2,7 @@
 	<!-- <Errors {errors}/> -->
 	<div class="main" class:upload>
 		{#if upload}
-			<Uppy/>
+			<Uppy bind:upload/>
 		{:else}
 			<Buttons classes="no-margin align-right">
 				<Button label="Upload New Assets" classes="blank plus" handler={() => upload = true}/>

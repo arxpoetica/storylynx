@@ -1,4 +1,11 @@
-<div class="uppy" id="uppy-dashboard"></div>
+<div class="uppy-component">
+	<div class="uppy" id="uppy-dashboard"></div>
+	<Buttons classes="no-margin align-right">
+		<Button label="Cancel" classes="blank warn" handler={() => upload = false}/>
+		<Button label="Upload Assets" classes="good" handler={start_upload}/>
+	</Buttons>
+</div>
+
 <!-- <button class="UppyModalOpenerBtn">Upload</button> -->
 
 <script>
@@ -8,11 +15,22 @@
 
 	// import Input from '../../components/elements/Input.svelte'
 	// import Select from '../../components/elements/Select.svelte'
-	// import Button from '../../components/elements/Button.svelte'
+	import Buttons from '../../components/elements/Buttons.svelte'
+	import Button from '../../components/elements/Button.svelte'
 	// import SimpleImageComponent from '../widgets/SimpleImageComponent.svelte'
 
+	export let upload = true
 	let uppy
+	// let files = new Set()
 	// let components = []
+
+	async function start_upload() {
+		// const files = uppy.getFiles()
+		// console.log(files)
+		// debugger
+		// // const res = await uppy.upload()
+		// // console.log(res)
+	}
 
 	onMount(async() => {
 		if (!$uppy_loaded) {
@@ -26,21 +44,7 @@
 			$uppy_loaded = true
 		}
 
-		// // And their styles (for UI plugins)
-		// // With webpack and `style-loader`, you can require them like this:
-		// require('@uppy/core/dist/style.css')
-		// require('@uppy/dashboard/dist/style.css')
-
-		// const uppy = new Uppy()
-		// 	.use(Dashboard, { trigger: '#select-files' })
-		// 	.use(XHRUpload, { endpoint: 'https://api2.transloadit.com' })
-		// uppy.on('complete', (result) => {
-		// 	console.log('Upload complete! We’ve uploaded these files:', result.successful)
-		// })
-
-
 		const Uppy = (await import('@uppy/core')).default
-		// const XHRUpload = (await import('@uppy/xhr-upload')).default
 		const Dashboard = (await import('@uppy/dashboard')).default
 		const GoogleDrive = (await import('@uppy/google-drive')).default
 		const Dropbox = (await import('@uppy/dropbox')).default
@@ -48,7 +52,7 @@
 		const Facebook = (await import('@uppy/facebook')).default
 		const Webcam = (await import('@uppy/webcam')).default
 		const ImageEditor = (await import('@uppy/image-editor')).default
-		// const Tus = (await import('@uppy/tus')).default
+		const XHRUpload = (await import('@uppy/xhr-upload')).default
 
 		const { classList } = document.querySelector('.lynx-admin-layout')
 		let theme = 'light'
@@ -66,13 +70,44 @@
 				// maxNumberOfFiles: 50,
 				// allowedFileTypes: ['image/*', 'video/*']
 			},
+			// // see: https://github.com/transloadit/uppy/tree/master/packages/%40uppy/store-default
+			// store: new (class SvelteStore {
+			// 	constructor () {
+			// 		this.state = {}
+			// 		this.callbacks = []
+			// 	}
+			// 	getState() {
+			// 		return this.state
+			// 	}
+			// 	setState(patch) {
+			// 		const prevState = Object.assign({}, this.state)
+			// 		const nextState = Object.assign({}, this.state, patch)
+			// 		this.state = nextState
+			// 		console.log(Object.entries(this.state.files))
+			// 		// this.state.files.forEach(file => console.log(file))
+			// 		// console.log(JSON.stringify(this.state.files, null, 2))
+			// 		this._publish(prevState, nextState, patch)
+			// 	}
+			// 	subscribe(listener) {
+			// 		this.callbacks.push(listener)
+			// 		return () => {
+			// 			// Remove the listener.
+			// 			this.callbacks.splice(this.callbacks.indexOf(listener), 1)
+			// 		}
+			// 	}
+			// 	_publish(...args) {
+			// 		this.callbacks.forEach((listener) => listener(...args))
+			// 	}
+			// })(),
 		})
 			.use(Dashboard, {
 				target: '#uppy-dashboard',
 				inline: true,
 				showProgressDetails: true,
 				note: 'Files limited to 25 MB in size.',
-				height: 450,
+				width: '100%',
+				height: '100%',
+				hideUploadButton: true,
 				metaFields: [
 					{ id: 'name', name: 'Name', placeholder: 'file name' },
 					{ id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
@@ -85,7 +120,9 @@
 			.use(Facebook, { target: Dashboard, companionUrl: 'https://companion.uppy.io' })
 			.use(Webcam, { target: Dashboard })
 			.use(ImageEditor, { target: Dashboard })
-		// 	.use(Tus, { endpoint: 'https://master.tus.io/files/' })
+			.use(XHRUpload, {
+				endpoint: process.env.LYNX_HOST + '/api/admin/uppy/assets-upload.post',
+			})
 
 		uppy.on('complete', result => {
 			console.log('successful files:', result.successful)
@@ -117,8 +154,27 @@
 </script>
 
 <style type="text/scss">
+	.uppy-component {
+		overflow: hidden;
+		display: grid;
+		grid-template-rows: 1fr auto;
+		grid-gap: 40rem;
+		height: 100%;
+	}
 	.uppy {
+		overflow: hidden;
 		:global {
+			.uppy-Root { height: 100%; }
+			.uppy-Dashboard-inner {
+				background-color: transparent;
+				border-color: var(--admin-accent-4);
+			}
+			.uppy-Dashboard-AddFiles {
+				border-color: var(--admin-accent-4);
+			}
+			.uppy-DashboardTab-btn:hover {
+				background-color: var(--admin-bg);
+			}
 			.uppy-Dashboard-poweredByIcon {
 				width: 11rem;
 				height: 11rem;

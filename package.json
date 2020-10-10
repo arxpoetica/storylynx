@@ -24,7 +24,6 @@
     "@uppy/google-drive": "1.5.16",
     "@uppy/image-editor": "0.1.6",
     "@uppy/instagram": "1.4.16",
-    "@uppy/tus": "1.7.7",
     "@uppy/webcam": "1.7.0",
     "@uppy/xhr-upload": "1.6.4",
     "ansi-colors": "4.1.1",
