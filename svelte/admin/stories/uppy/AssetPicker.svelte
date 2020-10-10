@@ -1,75 +1,87 @@
-<div class="picker">
-	<div class="table">
-		<div class="header">
-			<div class="thumb-td"></div>
-			<div class="filename">Filename</div>
-			<div class="timestamp">Created</div>
-			<div class="actions"></div>
+<div class="actions">
+	<div class="search">
+		<Input label="Search" sublabel="Search by filename" bind:value={search}/>
+	</div>
+	<Buttons classes="no-margin align-right">
+		<Button label="Upload New Assets" classes="blank plus" handler={() => upload = true}/>
+	</Buttons>
+</div>
+<div class="columns">
+	<div class="col">
+		<AssetPickerList bind:assets bind:picked/>
+	</div>
+	<div class="col col-tiles">
+		<div class="tiles">
+			{#each [...picked] as [key, asset] (key)}
+				<AssetPickerTile {asset} bind:assets bind:picked/>
+			{/each}
 		</div>
-		{#each [...picked] as [key, asset] (key)}
-			<AssetPickerRow bind:assets bind:picked {asset}/>
-		{/each}
-		{#each assets as asset (asset.id)}
-			{#if !picked.has(asset.id)}
-				<AssetPickerRow bind:assets bind:picked {asset}/>
-			{/if}
-		{/each}
 	</div>
 </div>
 
 <script>
-	import AssetPickerRow from './AssetPickerRow.svelte'
+	import { POST } from '../../../../utils/loaders.js'
+	import AssetPickerList from './AssetPickerList.svelte'
+	import AssetPickerTile from './AssetPickerTile.svelte'
+	import Input from '../../components/elements/Input.svelte'
+	import Buttons from '../../components/elements/Buttons.svelte'
+	import Button from '../../components/elements/Button.svelte'
 
-	export let assets
-	export let picked
+	export let existing_ids = []
+	export let picked = new Map()
+	let assets = []
+
+	let search = ''
+	let prior_search
+	let timer
+	$: if (search !== prior_search) {
+		clearTimeout(timer)
+		prior_search = search
+		timer = setTimeout(async() => {
+			assets = await load_assets({
+				ids: [...existing_ids, ...[...picked].map(([key]) => key)],
+				search,
+				page: 1,
+				page_size: 50,
+				column: 'created',
+				sort: 'desc',
+			})
+		}, 400)
+	}
+
+	async function load_assets(payload) {
+		const res = await POST('/api/admin/uppy/assets-page.post', payload)
+		return res.assets
+	}
 </script>
 
 <style type="text/scss">
-	.picker {
-		overflow-x: hidden;
-		overflow-y: auto;
-		position: relative;
-		height: 100%;
+	.actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+	.search {
+		width: var(--admin-panel-width);
+		margin: 0 3rem;
+	}
+	.columns {
+		overflow: hidden;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 40rem;
+	}
+	.col {
+		overflow: hidden;
+	}
+	.col-tiles {
+		overflow: auto;
+		padding: 0 40rem 0 0;
 		@mixin scrollbar {}
-		:global {
-			.thumb {
-				width: 50rem;
-				height: 50rem;
-				background-color: var(--admin-accent-2);
-			}
-			.popup {
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				transform: translateX(-50%) translateY(-50%);
-			}
-		}
 	}
-	.table {
-		display: table;
-		width: 100%;
-		border-collapse: collapse;
-		border-spacing: 0;
-		font: 14rem/1.2 $font;
+	.tiles {
+		display: grid;
+		grid-gap: 40rem;
+		grid-template-columns: repeat(auto-fill, minmax(150rem, 1fr));
 	}
-	.header {
-		display: table-row;
-		font: $bold 11rem/0 $font;
-		text-transform: uppercase;
-		// cursor: pointer;
-		> div {
-			position: sticky;
-			top: 0;
-			display: table-cell;
-			height: 40rem;
-			padding: 0 12rem;
-			background-color: var(--admin-color-1);
-			vertical-align: middle;
-			z-index: 1;
-			&:first-child { padding: 0 0 0 12rem; }
-		}
-	}
-	.actions { width: 46rem;}
-	.thumb-td { width: 74rem;}
-	.filename { width: 100%; }
 </style>
