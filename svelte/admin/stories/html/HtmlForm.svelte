@@ -20,7 +20,6 @@
 		</div>
 	</div>
 
-
 	<div class="html-editor">
 		<!-- <button on:click={show}>Show HTML</button> -->
 		<div id="editor-js" class="editor-js"></div>

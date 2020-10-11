@@ -46,21 +46,12 @@
 			{#if editing}
 				<SequenceForm/>
 				<div class="bins">
-					<!-- order: 1 -->
 					{#each $preview_clip.asset_bins as bin, bin_index (bin.id)}
 						<AssetBinForm bind:bin clip_index={index} {bin_index} {saveable}/>
 					{/each}
 				</div>
 			{:else}
 				<AssetBins {clip} selectedclip={editing}/>
-				<!-- {#if bin.html_blocks.length}
-					<div class="html-blocks">
-						<h3>HTML Blocks</h3>
-						{#each bin.html_blocks as block, block_index}
-							<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
-						{/each}
-					</div>
-				{/if} -->
 			{/if}
 		</div>
 	{/if}

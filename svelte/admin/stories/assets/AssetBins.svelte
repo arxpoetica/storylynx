@@ -17,23 +17,6 @@
 						<p>[No assets]</p>
 					</div>
 				{/if}
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- FIXME: need to reinvent our approach to displaying and editing HTML !!!!! -->
-				<!-- {#if bin.html_blocks.length}
-					{#if bin.html_blocks.length}
-						<div class="html-blocks">
-							<h3>HTML Blocks</h3>
-							{#each bin.html_blocks as block, block_index}
-								<HtmlBlock bind:block {bin_index} {block_index} {selectedclip}/>
-							{/each}
-						</div>
-					{/if}
-				{/if} -->
 			</div>
 		{/each}
 	</div>
@@ -41,11 +24,7 @@
 
 <script>
 	export let clip
-	// export let selectedclip
-	// let edit_html = false
-
 	import AssetThumb from '../../components/widgets/AssetThumb.svelte'
-	// import HtmlBlock from '../html/HtmlBlock.svelte'
 </script>
 
 <style type="text/scss">
