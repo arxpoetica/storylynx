@@ -33,6 +33,9 @@
 	{#if html_info}
 		<ModalAddHtml data={html_info} bind:open={html_info}/>
 	{/if}
+	{#if delete_bin_info}
+		<ModalDeleteBin data={delete_bin_info} bind:open={delete_bin_info}/>
+	{/if}
 {/if}
 
 <script>
@@ -54,12 +57,14 @@
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
 	import ModalAddAssets from './modals/ModalAddAssets.svelte'
 	import ModalAddHtml from './modals/ModalAddHtml.svelte'
+	import ModalDeleteBin from './modals/ModalDeleteBin.svelte'
 
 	let new_clip
 	let new_clip_type
 	let delete_clip
 	let assets_info
 	let html_info
+	let delete_bin_info
 	$handlers = {
 		create_clip: () => {
 			new_clip_type = 'New'
@@ -82,6 +87,12 @@
 				bin: $seq.clips[clip_index].asset_bins[bin_index],
 				clip_index,
 				bin_index,
+			}
+		},
+		delete_bin: (clip_index, bin_index) => {
+			delete_bin_info = {
+				bin: $seq.clips[clip_index].asset_bins[bin_index],
+				clip_index,
 			}
 		},
 	}

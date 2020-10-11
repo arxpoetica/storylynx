@@ -26,7 +26,7 @@
 				label="Delete Bin"
 				classes="blank alert"
 				disabled={saveable}
-				handler={() => {}}/>
+				handler={() => $handlers.delete_bin(clip_index, bin_index)}/>
 			<Button
 				label="Add HTML"
 				classes="blank good plus"
