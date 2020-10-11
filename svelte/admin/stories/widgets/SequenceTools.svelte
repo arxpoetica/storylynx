@@ -19,8 +19,7 @@
 	import Button from '../../components/elements/Button.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 	function toggle_all() {
-		$seq.clips.map(clip => $visible_bins[$seq.id][expanded ? 'delete' : 'add'](clip.id))
-		$visible_bins = $visible_bins
+		$visible_bins[$seq.id] = new Set(expanded ? [] : $seq.clips.map(clip => clip.id))
 	}
 </script>
 
