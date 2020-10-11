@@ -39,6 +39,9 @@
 		width: 100%;
 	}
 	.shield {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		position: absolute;
 		top: 0;
 		right: 0;

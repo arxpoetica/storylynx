@@ -96,7 +96,6 @@
 	}
 	.toolbar {
 		padding: 12rem 20rem;
-		border-bottom: 1rem solid var(--admin-accent-2);
 		background-color: var(--admin-accent-1);
 		font: 12rem/1 (--admin-font);
 		h2 {
@@ -120,12 +119,11 @@
 		position: relative;
 		overflow: auto;
 		// padding: 20rem;
+		border-right: 1px solid var(--admin-accent-1);
 		@mixin scrollbar {}
 	}
 	.developer {
 		padding: 20rem;
 	}
-	.sequence {
-		border-left: 1px solid var(--admin-accent-2);
-	}
+	// .sequence {}
 </style>

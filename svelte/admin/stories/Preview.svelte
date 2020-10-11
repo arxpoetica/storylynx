@@ -102,6 +102,17 @@
 </script>
 
 <style type="text/scss">
+	:global(.admin-preview-section body) {
+		&::-webkit-scrollbar { width: 12rem;}
+		&::-webkit-scrollbar-track {
+			background-color: #4a5a64;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #74858d;
+			border-left: 1rem solid #4a5a64;
+			border-radius: 12rem;
+		}
+	}
 	.story-layout {
 		position: relative;
 		z-index: 1;
