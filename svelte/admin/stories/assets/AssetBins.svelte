@@ -49,10 +49,11 @@
 </script>
 
 <style type="text/scss">
+	.bins {
+		display: grid;
+		grid-gap: 20rem;;
+	}
 	.bin-section {
-		margin: 0 0 20rem;
-		padding: 0 0 20rem;
-		border-bottom: 1rem solid var(--admin-accent-2);
 		&:last-child {
 			// margin: 0;
 			padding: 0;

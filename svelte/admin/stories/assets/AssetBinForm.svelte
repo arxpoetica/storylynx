@@ -23,6 +23,11 @@
 			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
 		{:else}
 			<Button
+				label="Delete Bin"
+				classes="blank alert"
+				disabled={saveable}
+				handler={() => {}}/>
+			<Button
 				label="Add HTML"
 				classes="blank good plus"
 				disabled={saveable}
@@ -59,7 +64,6 @@
 
 <style type="text/scss">
 	.bin {
-		margin: 0 0 20rem;
 		padding: 20rem 20rem 10rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
 		border-radius: 12rem;

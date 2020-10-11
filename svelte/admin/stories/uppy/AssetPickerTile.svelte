@@ -1,8 +1,11 @@
-<div class="tile" on:click={remove}>
-	<div class="fitter">
-		<AssetThumbIcon {asset}/>
+<div class="tile">
+	<div class="out" on:click={remove}>
+		<div class="in">
+			<AssetThumbIcon {asset}/>
+		</div>
+		<div class="remove"><Remove/></div>
 	</div>
-	<div class="remove"><Remove/></div>
+	<h3>{asset.filename}</h3>
 </div>
 
 <script>
@@ -32,12 +35,19 @@
 </script>
 
 <style type="text/scss">
-	.tile {
+	// .tile {}
+	h3 {
+		margin: 8rem 8rem 0;
+		font: 11rem/1.3 var(--admin-font);
+		text-transform: uppercase;
+		word-break: break-word;
+	}
+	.out {
 		position: relative;
 		padding: 0 0 100%;
 		cursor: pointer;
 	}
-	.fitter {
+	.in {
 		overflow: hidden;
 		display: flex;
 		justify-content: center;

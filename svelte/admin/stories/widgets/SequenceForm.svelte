@@ -93,7 +93,6 @@
 
 <style type="text/scss">
 	.form {
-		margin: 10rem 0 30rem 0;
 		padding: 20rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
 		border-radius: 12rem;

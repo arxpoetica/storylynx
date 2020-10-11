@@ -15,17 +15,16 @@
 >
 	<div class="header">
 		<h2 on:click={() => toggle(clip.id)}>
-			<span class="svg"><Caret/></span>
-			<span class="texts">
-				{clip.slug}
-				<!-- <span class="order">({clip.order})</span> -->
-				<!-- <span class="order">({clip.id})</span> -->
+			<span class="thumb">
+				<AssetThumbIcon asset={find_asset()}/>
 			</span>
+			<span class="svg"><Caret/></span>
+			<span class="text">{clip.slug}</span>
 		</h2>
 		<div class="actions" class:open>
 			<div class="primary">
 				{#if editing}
-					<Button label={saveable ? 'Cancel' : 'Close'} classes="warn" handler={cancel}/>
+					<Button label="Cancel" classes="warn" handler={cancel}/>
 					<Button label="Save" classes="good" handler={save} disabled={!saveable}/>
 				{:else}
 					<Button label="Edit" classes="dark" handler={edit}/>
@@ -34,8 +33,10 @@
 			<div class="secondary" on:click|stopPropagation={() => {}}>
 				<button class="reveal" on:click={() => open = !open}><PostIcon/></button>
 				<div class="dropdown">
-					<Button label="Duplicate" classes="blank plain" handler={() => $handlers.duplicate_clip(index)}/>
-					<Button label="Delete" classes="alert blank" handler={() => $handlers.delete_clip(index)}/>
+					<Button label="New Asset Bin" classes="blank plain plus"/>
+					<Button label="Duplicate Clip" classes="blank plain plus" handler={() => $handlers.duplicate_clip(index)}/>
+					<div></div>
+					<Button label="Delete Clip" classes="alert blank" handler={() => $handlers.delete_clip(index)}/>
 				</div>
 			</div>
 		</div>
@@ -69,6 +70,7 @@
 	export let clip
 	export let index
 
+	import AssetThumbIcon from '../assets/AssetThumbIcon.svelte'
 	import Button from '../../components/elements/Button.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
 	import PostIcon from '../../../svg/admin-post.svelte'
@@ -76,31 +78,28 @@
 	import AssetBinForm from '../assets/AssetBinForm.svelte'
 	import AssetBins from '../assets/AssetBins.svelte'
 
-	import {
-		target,
-		seq,
-		drag_elem,
-		visible_bins,
-		handlers,
-		preview_clip,
-		messenger,
-	} from '../../../../stores/admin-store.js'
+	import { target, seq, drag_elem, visible_bins, handlers, preview_clip, messenger }
+		from '../../../../stores/admin-store.js'
 	import { POST } from '../../../../utils/loaders.js'
 
 	let open = false
 	// FIXME: this works, but it's inneffecient. It gets called on EVERY CLIP.
-	$: if ($target) {
-		open = false
-	}
+	$: if ($target) { open = false }
 
 	$: editing = $preview_clip && $preview_clip.id === clip.id
 	$: clip_string = editing && JSON.stringify(clip)
 	$: preview_string = editing && JSON.stringify($preview_clip)
 	$: saveable = editing && clip_string !== preview_string
-	$: if (preview_string) {
-		$messenger({ clip: $preview_clip })
-	}
+	$: if (preview_string) { $messenger({ clip: $preview_clip }) }
 
+	function find_asset() {
+		let found_asset
+		clip.asset_bins.find(bin => {
+			found_asset = bin.assets.find(asset => asset)
+			return found_asset
+		})
+		return found_asset || { mime_type: 'na' }
+	}
 	function toggle(id) {
 		if ($visible_bins[$seq.id].has(id)) {
 			$visible_bins[$seq.id].delete(id)
@@ -162,9 +161,10 @@
 
 <style type="text/scss">
 	.clip {
-		display: flow-root;
+		display: grid;
+		grid-gap: 20rem;
 		margin: 0 0 20rem;
-		padding: 20rem 20rem 0;
+		padding: 13rem 20rem;
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
 		&:last-child { margin: 0; }
@@ -213,7 +213,6 @@
 	}
 	.header {
 		display: flex;
-		margin: 0 0 20rem;
 	}
 	h2 {
 		display: flex;
@@ -224,7 +223,7 @@
 		font: bold 14rem/1 var(--admin-font);
 		cursor: pointer;
 		user-select: none;
-		.texts {
+		.text {
 			margin: 0 0 0 5rem;
 		}
 		.svg {
@@ -234,6 +233,17 @@
 			transform: rotate(270deg);
 			line-height: 0;
 		}
+	}
+	.thumb {
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 50rem;
+		height: 50rem;
+		margin-right: 8rem;
+		background-color: var(--admin-accent-0);
+		border-radius: 5rem;
 	}
 	.actions {
 		display: flex;
@@ -293,5 +303,11 @@
 		border-radius: 5rem;
 		background-color: var(--admin-accent-0);
 		z-index: 1;
+		div { height: 20rem; }
+	}
+	.body,
+	.bins {
+		display: grid;
+		grid-gap: 20rem;
 	}
 </style>
