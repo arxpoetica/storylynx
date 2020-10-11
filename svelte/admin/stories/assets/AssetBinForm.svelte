@@ -26,7 +26,7 @@
 				label="Add HTML"
 				classes="blank good plus"
 				disabled={saveable}
-				handler={() => $handlers.add_assets()}/>
+				handler={() => $handlers.add_html(clip_index, bin_index)}/>
 			<Button
 				label="Add Assets"
 				classes="blank good plus"

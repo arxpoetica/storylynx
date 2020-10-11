@@ -30,6 +30,9 @@
 	{#if assets_info}
 		<ModalAddAssets data={assets_info} bind:open={assets_info}/>
 	{/if}
+	{#if html_info}
+		<ModalAddHtml data={html_info} bind:open={html_info}/>
+	{/if}
 {/if}
 
 <script>
@@ -50,11 +53,13 @@
 	import ModalAddOrDuplicateClip from './modals/ModalAddOrDuplicateClip.svelte'
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
 	import ModalAddAssets from './modals/ModalAddAssets.svelte'
+	import ModalAddHtml from './modals/ModalAddHtml.svelte'
 
 	let new_clip
 	let new_clip_type
 	let delete_clip
 	let assets_info
+	let html_info
 	$handlers = {
 		create_clip: () => {
 			new_clip_type = 'New'
@@ -67,6 +72,13 @@
 		delete_clip: index => delete_clip = $seq.clips[index],
 		add_assets: (clip_index, bin_index) => {
 			assets_info = {
+				bin: $seq.clips[clip_index].asset_bins[bin_index],
+				clip_index,
+				bin_index,
+			}
+		},
+		add_html: (clip_index, bin_index) => {
+			html_info = {
 				bin: $seq.clips[clip_index].asset_bins[bin_index],
 				clip_index,
 				bin_index,
