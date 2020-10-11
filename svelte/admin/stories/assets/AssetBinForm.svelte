@@ -1,22 +1,5 @@
 <div class="bin">
-	<Buttons classes="no-margin align-right">
-		{#if remove_ids.length}
-			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
-		{:else}
-			<Button
-				label="Add Assets"
-				classes="blank good plus"
-				disabled={saveable}
-				handler={() => $handlers.add_assets(clip_index, bin_index)}/>
-			<Button
-				label="Add HTML"
-				classes="blank good plus"
-				disabled={saveable}
-				handler={() => $handlers.add_assets()}/>
-		{/if}
-	</Buttons>
 	<div class="rows">
-		<!-- <h3>Asset Bin {bin_index + 1}</h3> -->
 		<Select
 			label="Assets Transition"
 			bind:value={bin.transition}
@@ -35,6 +18,22 @@
 			{/if}
 		</div>
 	</div>
+	<Buttons classes="no-margin align-right">
+		{#if remove_ids.length}
+			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
+		{:else}
+			<Button
+				label="Add HTML"
+				classes="blank good plus"
+				disabled={saveable}
+				handler={() => $handlers.add_assets()}/>
+			<Button
+				label="Add Assets"
+				classes="blank good plus"
+				disabled={saveable}
+				handler={() => $handlers.add_assets(clip_index, bin_index)}/>
+		{/if}
+	</Buttons>
 </div>
 {#if open_remove_modal}
 	<ModalRemoveAssets bind:bin {clip_index} {bin_index} bind:remove_ids bind:open={open_remove_modal}/>
@@ -61,12 +60,13 @@
 <style type="text/scss">
 	.bin {
 		margin: 0 0 20rem;
-		padding: 20rem;
-		// background-color: rgba(var(--admin-accent-0-rgb), 0.2);
+		padding: 20rem 20rem 10rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
 		border-radius: 12rem;
 	}
-	// .rows {}
+	.rows {
+		margin: 0 0 10rem;
+	}
 	.assets {
 		display: grid;
 		grid-gap: 3rem;

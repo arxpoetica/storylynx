@@ -11,9 +11,9 @@
 			<span class="prelabel">{prelabel}</span>
 		{/if}
 		{#if type === 'number'}
-			<input bind:this={input} type="number" {required} {step} {min} {max} bind:value on:change={() => dispatch('change', { value })}/>
+			<input bind:this={input} type="number" {required} {step} {min} {max} bind:value on:keydown={capture}/>
 		{:else}
-			<input bind:this={input} type="text" {required} {pattern} bind:value on:change={() => dispatch('change', { value })}/>
+			<input bind:this={input} type="text" {required} {pattern} bind:value on:keydown={capture}/>
 		{/if}
 	</span>
 	{#if sublabel}
@@ -36,6 +36,16 @@
 	export let step = 'any'
 	export let min
 	export let max
+
+	let prior_value = ''
+	function capture() {
+		setTimeout(() => {
+			if (value.trim() !== prior_value.trim()) {
+				dispatch('type', { value })
+			}
+			prior_value = value
+		}, 0)
+	}
 
 	let input
 	onMount(() => {

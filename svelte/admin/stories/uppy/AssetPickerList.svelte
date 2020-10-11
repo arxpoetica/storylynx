@@ -1,27 +1,48 @@
 <div class="picker-list">
-	<div class="table">
-		<div class="header">
-			<div class="thumb-td"></div>
-			<div class="filename">Filename</div>
-			<div class="timestamp">Created</div>
-			<div class="actions"></div>
-		</div>
-		{#each [...picked] as [key, asset] (key)}
-			<AssetPickerRow bind:assets bind:picked {asset}/>
-		{/each}
-		{#each assets as asset (asset.id)}
-			{#if !picked.has(asset.id)}
+	{#if picked.size}
+		<div class="table">
+			<div class="header">
+				<div class="thumb-td"></div>
+				<div class="filename">Filename</div>
+				<div class="timestamp">Created</div>
+				<div class="actions"></div>
+			</div>
+			{#each [...picked] as [key, asset] (key)}
 				<AssetPickerRow bind:assets bind:picked {asset}/>
-			{/if}
-		{/each}
-	</div>
+			{/each}
+		</div>
+	{/if}
+	{#if loading}
+		<Hourglass bind:loading/>
+	{:else}
+		{#if assets.length}
+			<div class="table">
+				<div class="header">
+					<div class="thumb-td"></div>
+					<div class="filename">Filename</div>
+					<div class="timestamp">Created</div>
+					<div class="actions"></div>
+				</div>
+				{#each assets as asset (asset.id)}
+					{#if !picked.has(asset.id)}
+						<AssetPickerRow bind:assets bind:picked {asset}/>
+					{/if}
+				{/each}
+			</div>
+		{:else}
+			<div class="no-content">No files with name containing search "{search.trim()}".</div>
+		{/if}
+	{/if}
 </div>
 
 <script>
 	import AssetPickerRow from './AssetPickerRow.svelte'
+	import Hourglass from '../../components/widgets/Hourglass.svelte'
 
 	export let assets
 	export let picked
+	export let search
+	export let loading
 </script>
 
 <style type="text/scss">
@@ -42,6 +63,16 @@
 				top: 50%;
 				left: 50%;
 				transform: translateX(-50%) translateY(-50%);
+			}
+			.hourglass {
+				position: absolute;
+				background-color: rgba(var(--admin-accent-0-rgb), 0.5);
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				color: white;
+				z-index: 1;
 			}
 		}
 	}
@@ -72,4 +103,5 @@
 	.actions { width: 46rem;}
 	.thumb-td { width: 74rem;}
 	.filename { width: 100%; }
+	.no-content { padding: 20rem 0 0; }
 </style>
