@@ -21,7 +21,7 @@
 			<span class="svg"><Caret/></span>
 			<span class="text">{clip.slug}</span>
 		</h2>
-		<div class="actions" class:open>
+		<div class="actions" class:dropdown-open={dropdown_open}>
 			<div class="primary">
 				{#if editing}
 					<Button label="Cancel" classes="warn" handler={cancel}/>
@@ -30,15 +30,12 @@
 					<Button label="Edit" classes="dark" handler={edit}/>
 				{/if}
 			</div>
-			<div class="secondary" on:click|stopPropagation={() => {}}>
-				<button class="reveal" on:click={() => open = !open}><PostIcon/></button>
-				<div class="dropdown">
-					<Button label="New Asset Bin" classes="blank plain plus"/>
-					<Button label="Duplicate Clip" classes="blank plain plus" handler={() => $handlers.duplicate_clip(index)}/>
-					<div></div>
-					<Button label="Delete Clip" classes="alert blank" handler={() => $handlers.delete_clip(index)}/>
-				</div>
-			</div>
+			<Dropdown bind:open={dropdown_open} hide={saveable}>
+				<Button label="New Asset Bin" classes="good small plus"/>
+				<Button label="Duplicate Clip" classes="good small plus" handler={() => $handlers.duplicate_clip(index)}/>
+				<div></div>
+				<Button label="Delete Clip" classes="blank small alert" handler={() => $handlers.delete_clip(index)}/>
+			</Dropdown>
 		</div>
 	</div>
 	{#if $visible_bins[$seq.id].has(clip.id) || editing}
@@ -63,19 +60,18 @@
 
 	import AssetThumbIcon from '../assets/AssetThumbIcon.svelte'
 	import Button from '../../components/elements/Button.svelte'
+	import Dropdown from '../../components/elements/Dropdown.svelte'
 	import Caret from '../../../svg/select-caret.svelte'
-	import PostIcon from '../../../svg/admin-post.svelte'
 	import SequenceForm from './SequenceForm.svelte'
 	import AssetBinForm from '../assets/AssetBinForm.svelte'
 	import AssetBins from '../assets/AssetBins.svelte'
 
-	import { target, seq, drag_elem, visible_bins, handlers, preview_clip, messenger }
+	import { seq, drag_elem, visible_bins, handlers, preview_clip, messenger }
 		from '../../../../stores/admin-store.js'
 	import { POST } from '../../../../utils/loaders.js'
 
 	let open = false
-	// FIXME: this works, but it's inneffecient. It gets called on EVERY CLIP.
-	$: if ($target) { open = false }
+	let dropdown_open = false
 
 	$: editing = $preview_clip && $preview_clip.id === clip.id
 	$: clip_string = editing && JSON.stringify(clip)
@@ -159,7 +155,12 @@
 		background-color: var(--admin-accent-1);
 		border-radius: 15rem;
 		&:last-child { margin: 0; }
-		&:hover .actions { opacity: 0.75; }
+		&:hover {
+			.actions {
+				opacity: 0.75;
+				&.dropdown-open { opacity: 1; }
+			}
+		}
 		&.open h2 .svg { transform: rotate(360deg); }
 		&.editing {
 			box-shadow: var(--admin-form-shadow);
@@ -167,7 +168,6 @@
 		}
 		&.saveable {
 			box-shadow: 0 0 0 3rem var(--admin-warn);
-			.secondary { display: none; }
 		}
 		&.draggable {
 			cursor: pointer;
@@ -240,10 +240,7 @@
 		display: flex;
 		align-items: center;
 		opacity: 0;
-		&.open {
-			opacity: 1;
-			.dropdown { display: block; }
-		}
+		&.dropdown-open { opacity: 1; }
 	}
 	.primary {
 		display: flex;
@@ -251,50 +248,6 @@
 			margin: 0 0 0 10rem;
 			&:first-child { margin: 0; }
 		}
-	}
-	.secondary {
-		position: relative;
-		display: flex;
-		margin: 0 0 0 10rem;
-		:global(.button) {
-			margin: 10rem 0 0;
-			&:first-child { margin: 0; }
-		}
-	}
-	.reveal {
-		width: 34rem;
-		height: 34rem;
-		margin: 0;
-		padding: 0;
-		padding: 8rem;
-		background-color: var(--admin-bg);
-		border: 0;
-		border-radius: 100%;
-		line-height: 0;
-		color: var(--admin-accent-4);
-		transition: all 0.15s ease-in-out;
-		cursor: pointer;
-		-webkit-appearance: none;
-		user-select: none;
-		&:hover,
-		.actions.open & {
-			background-color: var(--admin-accent-0);
-		}
-		&:focus {
-			outline: none;
-			box-shadow: var(--admin-form-shadow);
-		}
-	}
-	.dropdown {
-		display: none;
-		position: absolute;
-		top: calc(100% + 8rem);
-		right: 0;
-		padding: 10rem;
-		border-radius: 5rem;
-		background-color: var(--admin-accent-0);
-		z-index: 1;
-		div { height: 20rem; }
 	}
 	.body,
 	.bins {

@@ -1,10 +1,22 @@
 <div class="bin">
 	<div class="rows">
-		<Select
-			label="Assets Transition"
-			bind:value={bin.transition}
-			options={$enums.asset_transitions}
-		/>
+		<div class="row">
+			<Select
+				label="Assets Transition"
+				bind:value={bin.transition}
+				options={$enums.asset_transitions}
+			/>
+			{#if !saveable}
+				<div class="actions" class:open>
+					<Dropdown bind:open>
+						<Button label="Add Assets" classes="small plus" handler={() => $handlers.add_assets(clip_index, bin_index)}/>
+						<Button label="Add HTML" classes="small plus" handler={() => $handlers.add_html(clip_index, bin_index)}/>
+						<div></div>
+						<Button label="Delete Bin" classes="blank small alert" handler={() => $handlers.delete_bin(clip_index, bin_index)}/>
+					</Dropdown>
+				</div>
+			{/if}
+		</div>
 		<div class="tools">
 			<p class="instructions">Click on a row below to toggle details. Drag and drop rows to reorder them.</p>
 		</div>
@@ -18,27 +30,11 @@
 			{/if}
 		</div>
 	</div>
-	<Buttons classes="no-margin align-right">
-		{#if remove_ids.length}
+	{#if remove_ids.length}
+		<Buttons classes="no-margin align-right">
 			<Button label="Remove Assets" classes="alert" handler={() => open_remove_modal = true}/>
-		{:else}
-			<Button
-				label="Delete Bin"
-				classes="blank alert"
-				disabled={saveable}
-				handler={() => $handlers.delete_bin(clip_index, bin_index)}/>
-			<Button
-				label="Add HTML"
-				classes="blank good plus"
-				disabled={saveable}
-				handler={() => $handlers.add_html(clip_index, bin_index)}/>
-			<Button
-				label="Add Assets"
-				classes="blank good plus"
-				disabled={saveable}
-				handler={() => $handlers.add_assets(clip_index, bin_index)}/>
-		{/if}
-	</Buttons>
+		</Buttons>
+	{/if}
 </div>
 {#if open_remove_modal}
 	<ModalRemoveAssets bind:bin {clip_index} {bin_index} bind:remove_ids bind:open={open_remove_modal}/>
@@ -52,10 +48,12 @@
 	let remove_ids = []
 	let open_remove_modal
 	let draggable = false
+	let open = false
 
 	import { handlers, enums } from '../../../../stores/admin-store.js'
 
 	import AssetRow from './AssetRow.svelte'
+	import Dropdown from '../../components/elements/Dropdown.svelte'
 	import Select from '../../components/elements/Select.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
 	import Button from '../../components/elements/Button.svelte'
@@ -67,9 +65,22 @@
 		padding: 20rem 20rem 10rem;
 		background-color: rgba(var(--admin-accent-0-rgb), 0.2);
 		border-radius: 12rem;
+		&:hover {
+			.actions {
+				opacity: 0.75;
+				&.open { opacity: 1; }
+			}
+		}
 	}
 	.rows {
 		margin: 0 0 10rem;
+	}
+	.actions {
+		display: flex;
+		justify-content: flex-end;
+		opacity: 0;
+		&.open { opacity: 1; }
+		// :global(.reveal) { transform: scale(0.75); }
 	}
 	.assets {
 		display: grid;

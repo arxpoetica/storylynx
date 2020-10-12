@@ -84,9 +84,9 @@
 		}
 		&.small {
 			height: 30rem;
-			line-height: 30rem;
 			padding: 0 10rem;
-			font-size: 12rem;
+			font: bold 13rem/30rem var(--admin-font);
+			letter-spacing: 0.5rem;
 		}
 		// &.large {
 		// 	padding: 10rem 30rem;
