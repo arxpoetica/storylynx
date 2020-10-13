@@ -21,6 +21,9 @@
 			</div>
 		</div>
 	</Scaffolding>
+	{#if new_asset_bin_info}
+		<ModalNewAssetBin data={new_asset_bin_info} bind:open={new_asset_bin_info}/>
+	{/if}
 	{#if new_clip}
 		<ModalAddOrDuplicateClip clip={new_clip} bind:open={new_clip} type={new_clip_type}/>
 	{/if}
@@ -53,12 +56,14 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
+	import ModalNewAssetBin from './modals/ModalNewAssetBin.svelte'
 	import ModalAddOrDuplicateClip from './modals/ModalAddOrDuplicateClip.svelte'
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
 	import ModalAddAssets from './modals/ModalAddAssets.svelte'
 	import ModalAddHtml from './modals/ModalAddHtml.svelte'
 	import ModalDeleteBin from './modals/ModalDeleteBin.svelte'
 
+	let new_asset_bin_info
 	let new_clip
 	let new_clip_type
 	let delete_clip
@@ -66,6 +71,12 @@
 	let html_info
 	let delete_bin_info
 	$handlers = {
+		new_asset_bin: clip_index => {
+			new_asset_bin_info = {
+				clip: $seq.clips[clip_index],
+				clip_index,
+			}
+		},
 		create_clip: () => {
 			new_clip_type = 'New'
 			new_clip = { template: $enums.templates[0].id }

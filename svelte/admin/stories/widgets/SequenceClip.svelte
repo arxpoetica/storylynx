@@ -31,7 +31,7 @@
 				{/if}
 			</div>
 			<Dropdown bind:open={dropdown_open} hide={saveable}>
-				<Button label="New Asset Bin" classes="good small plus"/>
+				<Button label="New Asset Bin" classes="good small plus" handler={() => $handlers.new_asset_bin(index)}/>
 				<Button label="Duplicate Clip" classes="good small plus" handler={() => $handlers.duplicate_clip(index)}/>
 				<div></div>
 				<Button label="Delete Clip" classes="blank small alert" handler={() => $handlers.delete_clip(index)}/>
