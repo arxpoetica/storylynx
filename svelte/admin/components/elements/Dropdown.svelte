@@ -24,7 +24,6 @@
 	.dropdown {
 		position: relative;
 		display: flex;
-		margin: 0 0 0 10rem;
 		&.open .menu { display: grid; }
 		&.hide { display: none; }
 	}

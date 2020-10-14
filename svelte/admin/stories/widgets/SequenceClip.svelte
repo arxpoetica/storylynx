@@ -44,7 +44,7 @@
 				<SequenceForm/>
 				<div class="bins">
 					{#each $preview_clip.asset_bins as bin, bin_index (bin.id)}
-						<AssetBinForm bind:bin clip_index={index} {bin_index} {saveable}/>
+						<AssetBinForm {clip} bind:bin clip_index={index} {bin_index} {saveable}/>
 					{/each}
 				</div>
 			{:else}
@@ -244,10 +244,7 @@
 	}
 	.primary {
 		display: flex;
-		:global(.button) {
-			margin: 0 0 0 10rem;
-			&:first-child { margin: 0; }
-		}
+		:global(.button) { margin: 0 10rem 0 0; }
 	}
 	.body,
 	.bins {
