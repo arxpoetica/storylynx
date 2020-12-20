@@ -18,6 +18,7 @@
     "@editorjs/list": "1.5.0",
     "@editorjs/quote": "2.3.0",
     "@google-cloud/storage": "5.5.0",
+    "@uppy/aws-s3": "1.7.3",
     "@uppy/core": "1.13.2",
     "@uppy/dashboard": "1.12.8",
     "@uppy/dropbox": "1.4.16",
