@@ -1,7 +1,7 @@
 <div class="uppy-component">
 	<div class="uppy" id="uppy-dashboard"></div>
 	<Buttons classes="no-margin align-right">
-		<Button label="Cancel" classes="blank warn" handler={() => upload = false}/>
+		<Button label="Cancel" classes="blank warn" handler={cancel}/>
 		<Button label="Upload Assets" classes="good" handler={start_upload}/>
 	</Buttons>
 </div>
@@ -19,7 +19,9 @@
 	import Button from '../../components/elements/Button.svelte'
 	// import SimpleImageComponent from '../widgets/SimpleImageComponent.svelte'
 
+	export let open
 	export let upload = true
+	export let upload_only
 	let uppy
 	// let files = new Set()
 	// let components = []
@@ -30,6 +32,10 @@
 		// debugger
 		// // const res = await uppy.upload()
 		// // console.log(res)
+	}
+	function cancel() {
+		if (upload_only) { open = false }
+		upload = false
 	}
 
 	onMount(async() => {

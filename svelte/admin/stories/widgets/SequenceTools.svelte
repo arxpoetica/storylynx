@@ -6,6 +6,9 @@
 			<span class="svg"><Caret/></span>
 		</Button>
 	</div>
+	<Buttons>
+		<Button label="Upload Assets" classes="blank plus" handler={() => $handlers.upload_assets()}/>
+	</Buttons>
 	<Buttons classes="align-right">
 		<Button label="New Clip" classes="blank good plus" handler={() => $handlers.create_clip()}/>
 	</Buttons>
@@ -24,10 +27,17 @@
 </script>
 
 <style type="text/scss">
+	.tools {
+		display: flex;
+		flex-direction: column;
+		:global(> .buttons) { order: 1; }
+		:global(> .buttons:last-child) { order: 3; }
+	}
 	.header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		order: 2;
 		margin: 0 0 20rem;
 		padding: 12rem 15rem;
 		background-color: var(--admin-accent-0);

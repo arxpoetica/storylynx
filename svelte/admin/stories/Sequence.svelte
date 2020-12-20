@@ -21,6 +21,9 @@
 			</div>
 		</div>
 	</Scaffolding>
+	{#if upload_assets_info}
+		<ModalUploadAssets data={upload_assets_info} bind:open={upload_assets_info}/>
+	{/if}
 	{#if new_asset_bin_info}
 		<ModalNewAssetBin data={new_asset_bin_info} bind:open={new_asset_bin_info}/>
 	{/if}
@@ -56,6 +59,7 @@
 	import SequenceTools from './widgets/SequenceTools.svelte'
 	import SequenceClip from './widgets/SequenceClip.svelte'
 	import PreviewPane from './widgets/PreviewPane.svelte'
+	import ModalUploadAssets from './modals/ModalUploadAssets.svelte'
 	import ModalNewAssetBin from './modals/ModalNewAssetBin.svelte'
 	import ModalAddOrDuplicateClip from './modals/ModalAddOrDuplicateClip.svelte'
 	import ModalDeleteClip from './modals/ModalDeleteClip.svelte'
@@ -63,6 +67,7 @@
 	import ModalAddHtml from './modals/ModalAddHtml.svelte'
 	import ModalDeleteBin from './modals/ModalDeleteBin.svelte'
 
+	let upload_assets_info
 	let new_asset_bin_info
 	let new_clip
 	let new_clip_type
@@ -71,6 +76,7 @@
 	let html_info
 	let delete_bin_info
 	$handlers = {
+		upload_assets: () => upload_assets_info = true,
 		new_asset_bin: clip_index => {
 			new_asset_bin_info = {
 				clip: $seq.clips[clip_index],

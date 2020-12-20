@@ -14,6 +14,7 @@
 		min-height: 36rem;
 		&.no-margin { margin: 0 -6rem; }
 		&.align-right { justify-content: flex-end; }
+		&.align-apart { justify-content: space-between; }
 		:global(.button) { margin: 0 6rem; }
 	}
 </style>
