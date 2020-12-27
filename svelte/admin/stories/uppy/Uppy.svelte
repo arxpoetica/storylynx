@@ -11,27 +11,30 @@
 <script>
 	import { onMount, onDestroy } from 'svelte'
 	import { uppy_loaded } from '../../../../stores/admin-store.js'
-	// import { code_to_html } from './html-utils.js'
+	import { POST } from '../../../../utils/loaders.js'
 
-	// import Input from '../../components/elements/Input.svelte'
-	// import Select from '../../components/elements/Select.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
 	import Button from '../../components/elements/Button.svelte'
-	// import SimpleImageComponent from '../widgets/SimpleImageComponent.svelte'
 
 	export let open
 	export let upload = true
 	export let upload_only
 	let uppy
-	// let files = new Set()
-	// let components = []
+	let uppy_files = []
 
 	async function start_upload() {
-		// const files = uppy.getFiles()
-		// console.log(files)
-		// debugger
-		// // const res = await uppy.upload()
-		// // console.log(res)
+		uppy_files = uppy.getFiles()
+		const url = '/api/admin/signed-urls.post'
+		const signed_files = await POST(url, {
+			files: uppy_files.map(file => {
+				return { name: file.name, type: file.type }
+			}),
+		})
+		for (const file of uppy_files) {
+			const found = signed_files.find(signed => signed.name === file.name)
+			file.signed_url = found.url
+		}
+		const res = await uppy.upload()
 	}
 	function cancel() {
 		if (upload_only) { open = false }
@@ -52,6 +55,7 @@
 
 		const Uppy = (await import('@uppy/core')).default
 		const Dashboard = (await import('@uppy/dashboard')).default
+		const AwsS3 = (await import('@uppy/aws-s3')).default
 		const GoogleDrive = (await import('@uppy/google-drive')).default
 		const Dropbox = (await import('@uppy/dropbox')).default
 		const Instagram = (await import('@uppy/instagram')).default
@@ -69,13 +73,16 @@
 		) { theme = 'dark' }
 
 		window.uppy = uppy = new Uppy({
+			// id: 'uppyUpload',
 			debug: true,
 			autoProceed: false,
 			restrictions: {
 				maxFileSize: 25000000,
-				// maxNumberOfFiles: 50,
-				// allowedFileTypes: ['image/*', 'video/*']
+				maxNumberOfFiles: 20,
+				// minNumberOfFiles: null,
+				// allowedFileTypes: ['image/*', 'audio/*', 'video/*']
 			},
+			// logger: Uppy.debugLogger,
 			// // see: https://github.com/transloadit/uppy/tree/master/packages/%40uppy/store-default
 			// store: new (class SvelteStore {
 			// 	constructor () {
@@ -110,6 +117,8 @@
 				target: '#uppy-dashboard',
 				inline: true,
 				showProgressDetails: true,
+				// showLinkToFileUploadResult: false,
+				// proudlyDisplayPoweredByUppy: false,
 				note: 'Files limited to 25 MB in size.',
 				width: '100%',
 				height: '100%',
@@ -128,11 +137,26 @@
 			.use(ImageEditor, { target: Dashboard })
 			.use(XHRUpload, {
 				endpoint: process.env.LYNX_HOST + '/api/admin/uppy/assets-upload.post',
+			.use(AwsS3, {
+				fields: [],
+				limit: 5,
+				// timeout: 1000 * 60, // 1 minute
+				// metaFields: [],
+				getUploadParameters: async(file) => {
+					return {
+						method: 'PUT',
+						url: file.signed_url,
+						fields: {},
+						headers: { 'Content-Type': file.type },
+					}
+				},
+				// getResponseData: (responseText, response) => {},
 			})
 
 		uppy.on('complete', result => {
 			console.log('successful files:', result.successful)
 			console.log('failed files:', result.failed)
+			// TODO: handle success and fail
 		})
 
 	})
@@ -171,6 +195,10 @@
 		overflow: hidden;
 		:global {
 			.uppy-Root { height: 100%; }
+			.uppy-Root svg {
+				width: auto;
+				height: auto;
+			}
 			.uppy-Dashboard-inner {
 				background-color: transparent;
 				border-color: var(--admin-accent-4);
