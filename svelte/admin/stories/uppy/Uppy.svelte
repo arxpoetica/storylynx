@@ -56,13 +56,8 @@
 		const Uppy = (await import('@uppy/core')).default
 		const Dashboard = (await import('@uppy/dashboard')).default
 		const AwsS3 = (await import('@uppy/aws-s3')).default
-		const GoogleDrive = (await import('@uppy/google-drive')).default
-		const Dropbox = (await import('@uppy/dropbox')).default
-		const Instagram = (await import('@uppy/instagram')).default
-		const Facebook = (await import('@uppy/facebook')).default
 		const Webcam = (await import('@uppy/webcam')).default
 		const ImageEditor = (await import('@uppy/image-editor')).default
-		const XHRUpload = (await import('@uppy/xhr-upload')).default
 
 		const { classList } = document.querySelector('.lynx-admin-layout')
 		let theme = 'light'
@@ -129,14 +124,6 @@
 				],
 				theme,
 			})
-			.use(GoogleDrive, { target: Dashboard, companionUrl: 'https://companion.uppy.io' })
-			.use(Dropbox, { target: Dashboard, companionUrl: 'https://companion.uppy.io' })
-			.use(Instagram, { target: Dashboard, companionUrl: 'https://companion.uppy.io' })
-			.use(Facebook, { target: Dashboard, companionUrl: 'https://companion.uppy.io' })
-			.use(Webcam, { target: Dashboard })
-			.use(ImageEditor, { target: Dashboard })
-			.use(XHRUpload, {
-				endpoint: process.env.LYNX_HOST + '/api/admin/uppy/assets-upload.post',
 			.use(AwsS3, {
 				fields: [],
 				limit: 5,
@@ -152,6 +139,8 @@
 				},
 				// getResponseData: (responseText, response) => {},
 			})
+			.use(Webcam, { target: Dashboard })
+			.use(ImageEditor, { target: Dashboard })
 
 		uppy.on('complete', result => {
 			console.log('successful files:', result.successful)

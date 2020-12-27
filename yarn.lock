@@ -136,14 +136,6 @@
     qs-stringify "^1.1.0"
     url-parse "^1.4.7"
 
-"@uppy/companion-client@^1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-1.5.4.tgz#11a9d2ee91a13789ca083f88a3ac7378b3fb20ed"
-  integrity sha512-AmrKamjHraqm/eV00ps8brw5ajI9NqjzBotTtPH9QaC+D3wIQ/EoWZNTGx4OlGYRahEoVr1K6hhlyUoHmEQc4w==
-  dependencies:
-    "@uppy/utils" "^3.2.3"
-    namespace-emitter "^2.0.1"
-
 "@uppy/companion-client@^1.6.1":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-1.6.1.tgz#0e2f91b606eee5b50c225faa8bda908999480aa0"
@@ -186,36 +178,6 @@
     preact "8.2.9"
     resize-observer-polyfill "^1.5.0"
 
-"@uppy/dropbox@1.4.16":
-  version "1.4.16"
-  resolved "https://registry.yarnpkg.com/@uppy/dropbox/-/dropbox-1.4.16.tgz#c068beaf08609fea49eee2c2e89b9d2b5585bbba"
-  integrity sha512-ugc8Jf/ILKtun9ycf08tVPFUlcwlP4M1ly1U2GtQnUlqE8q0yvVA8NN5F3a7ULBzilgq5/Dpoe8suEluDOwugA==
-  dependencies:
-    "@uppy/companion-client" "^1.5.4"
-    "@uppy/provider-views" "^1.7.7"
-    "@uppy/utils" "^3.2.3"
-    preact "8.2.9"
-
-"@uppy/facebook@1.1.16":
-  version "1.1.16"
-  resolved "https://registry.yarnpkg.com/@uppy/facebook/-/facebook-1.1.16.tgz#170840d8fb2e2290cb98ba883db5bb364a62121b"
-  integrity sha512-3BTdAk/tNd5ibuArx0dNzFR3Cqz0s1/Za1ubIJGmjOXRvNdjgoziTG//sRdLBClNt7OPiv4ZFpyA+TTMReeZrg==
-  dependencies:
-    "@uppy/companion-client" "^1.5.4"
-    "@uppy/provider-views" "^1.7.7"
-    "@uppy/utils" "^3.2.3"
-    preact "8.2.9"
-
-"@uppy/google-drive@1.5.16":
-  version "1.5.16"
-  resolved "https://registry.yarnpkg.com/@uppy/google-drive/-/google-drive-1.5.16.tgz#12f37a0c8320980edda901b335d1fd5bb8a84ecb"
-  integrity sha512-es6rKyY3iUnpX6i5LNt/okzz5GIQKdnE8GS/GzbIlywsenRFw9hpRo5oqIDFqkKCQ4t0PKOoB5kb1d18VfJxuw==
-  dependencies:
-    "@uppy/companion-client" "^1.5.4"
-    "@uppy/provider-views" "^1.7.7"
-    "@uppy/utils" "^3.2.3"
-    preact "8.2.9"
-
 "@uppy/image-editor@0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@uppy/image-editor/-/image-editor-0.1.6.tgz#c90a6bec72810825297f6f18fb3809b7fb2e9afc"
@@ -229,16 +191,6 @@
   resolved "https://registry.yarnpkg.com/@uppy/informer/-/informer-1.5.11.tgz#ebd5b8960838e47ec2088a2ce0e6b914b664a283"
   integrity sha512-sZIWKvV3UO5Epk6V2e5girlzgsqukDAKnLkZh6nOqjSGRkMudGUrEZwuSOB496lBVqo38BTavI/zf+eLvrdBlA==
   dependencies:
-    "@uppy/utils" "^3.2.3"
-    preact "8.2.9"
-
-"@uppy/instagram@1.4.16":
-  version "1.4.16"
-  resolved "https://registry.yarnpkg.com/@uppy/instagram/-/instagram-1.4.16.tgz#72b514580d8a751faff71feff41b46f3082a2a09"
-  integrity sha512-dTP8U0E4syP2I4JCgg9KbXkgAXd98xKEHdp2r9e6cSzeaImPZg4H7uofeo9dNRvxZ67K1Zy2YMr/Gx/FHrAbVA==
-  dependencies:
-    "@uppy/companion-client" "^1.5.4"
-    "@uppy/provider-views" "^1.7.7"
     "@uppy/utils" "^3.2.3"
     preact "8.2.9"
 
@@ -299,15 +251,6 @@
   dependencies:
     "@uppy/utils" "^3.2.3"
     preact "8.2.9"
-
-"@uppy/xhr-upload@1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-1.6.4.tgz#c0d2b46626854d5c5f8ca64bad5d4213eb214ffb"
-  integrity sha512-Q+Fg+I+Tfpkl8WeAHnF+iIkxyVbTl06A3ihG3/LW/rB5e6Byb81E1DGVdkD71OtbIGk/Pn0DRPsqY5cSKUibsA==
-  dependencies:
-    "@uppy/companion-client" "^1.5.4"
-    "@uppy/utils" "^3.2.3"
-    cuid "^2.1.1"
 
 "@uppy/xhr-upload@^1.6.7":
   version "1.6.7"
