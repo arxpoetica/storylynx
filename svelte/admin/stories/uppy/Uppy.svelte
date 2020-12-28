@@ -56,6 +56,8 @@
 		const AwsS3 = (await import('@uppy/aws-s3')).default
 		const Webcam = (await import('@uppy/webcam')).default
 		const ImageEditor = (await import('@uppy/image-editor')).default
+		const ProgressBar = (await import('@uppy/progress-bar')).default
+		const GoldenRetriever = (await import('@uppy/golden-retriever')).default
 
 		const { classList } = document.querySelector('.lynx-admin-layout')
 		let theme = 'light'
@@ -107,13 +109,20 @@
 				// preferredVideoMimeType: ['video/mp4'],
 			})
 			.use(ImageEditor, { target: Dashboard })
+			.use(ProgressBar, { fixed: true })
+			.use(GoldenRetriever, { serviceWorker: false })
 
-		
+		// TODO: hook up a service worker in the main storylynx template
+		// SEE: https://uppy.io/docs/golden-retriever/#Usage
+		// navigator.serviceWorker
+		// 	.register('/sw.js') // path to your bundled service worker with GoldenRetriever service worker
+		// 	.then(registration => console.log('ServiceWorker registration successful with scope: ', registration.scope))
+		// 	.catch(error => console.log('Registration failed with ' + error))
+
 		uppy
 			.on('file-added', () => uppy_files = uppy.getFiles())
 			.on('file-removed', () => uppy_files = uppy.getFiles())
-			.on('complete', result => {
-			})
+			.on('complete', result => open = false)
 
 	})
 
