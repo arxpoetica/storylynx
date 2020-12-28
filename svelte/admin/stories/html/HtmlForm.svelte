@@ -53,7 +53,7 @@
 		const { ConstructSimpleImage } = await import('../widgets/SimpleImage.js')
 		const SimpleImage = ConstructSimpleImage(SimpleImageComponent, components)
 
-		window.editor = editor = new EditorJS({
+		editor = new EditorJS({
 			data: asset.code,
 			holderId: 'editor-js',
 			tools: {

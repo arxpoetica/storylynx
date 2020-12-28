@@ -2,11 +2,9 @@
 	<div class="uppy" id="uppy-dashboard"></div>
 	<Buttons classes="no-margin align-right">
 		<Button label="Cancel" classes="blank warn" handler={cancel}/>
-		<Button label="Upload Assets" classes="good" handler={start_upload}/>
+		<Button label="Upload Assets" classes="good" handler={start_upload} disabled={!uppy_files.length}/>
 	</Buttons>
 </div>
-
-<!-- <button class="UppyModalOpenerBtn">Upload</button> -->
 
 <script>
 	import { onMount, onDestroy } from 'svelte'
@@ -67,53 +65,23 @@
 			|| classList.contains('scheme-dark')
 		) { theme = 'dark' }
 
-		window.uppy = uppy = new Uppy({
+		uppy = new Uppy({
 			// id: 'uppyUpload',
 			debug: true,
 			autoProceed: false,
 			restrictions: {
 				maxFileSize: 25000000,
-				maxNumberOfFiles: 20,
+				maxNumberOfFiles: 100,
 				// minNumberOfFiles: null,
-				// allowedFileTypes: ['image/*', 'audio/*', 'video/*']
+				allowedFileTypes: ['image/*', 'audio/*', 'video/*']
 			},
 			// logger: Uppy.debugLogger,
-			// // see: https://github.com/transloadit/uppy/tree/master/packages/%40uppy/store-default
-			// store: new (class SvelteStore {
-			// 	constructor () {
-			// 		this.state = {}
-			// 		this.callbacks = []
-			// 	}
-			// 	getState() {
-			// 		return this.state
-			// 	}
-			// 	setState(patch) {
-			// 		const prevState = Object.assign({}, this.state)
-			// 		const nextState = Object.assign({}, this.state, patch)
-			// 		this.state = nextState
-			// 		console.log(Object.entries(this.state.files))
-			// 		// this.state.files.forEach(file => console.log(file))
-			// 		// console.log(JSON.stringify(this.state.files, null, 2))
-			// 		this._publish(prevState, nextState, patch)
-			// 	}
-			// 	subscribe(listener) {
-			// 		this.callbacks.push(listener)
-			// 		return () => {
-			// 			// Remove the listener.
-			// 			this.callbacks.splice(this.callbacks.indexOf(listener), 1)
-			// 		}
-			// 	}
-			// 	_publish(...args) {
-			// 		this.callbacks.forEach((listener) => listener(...args))
-			// 	}
-			// })(),
 		})
 			.use(Dashboard, {
 				target: '#uppy-dashboard',
 				inline: true,
 				showProgressDetails: true,
 				// showLinkToFileUploadResult: false,
-				// proudlyDisplayPoweredByUppy: false,
 				note: 'Files limited to 25 MB in size.',
 				width: '100%',
 				height: '100%',
@@ -125,50 +93,35 @@
 				theme,
 			})
 			.use(AwsS3, {
-				fields: [],
-				limit: 5,
-				// timeout: 1000 * 60, // 1 minute
-				// metaFields: [],
-				getUploadParameters: async(file) => {
-					return {
-						method: 'PUT',
-						url: file.signed_url,
-						fields: {},
-						headers: { 'Content-Type': file.type },
-					}
-				},
-				// getResponseData: (responseText, response) => {},
+				getUploadParameters: async(file) => ({
+					method: 'PUT',
+					url: file.signed_url,
+					fields: {},
+					headers: { 'Content-Type': file.type },
+				}),
 			})
-			.use(Webcam, { target: Dashboard })
+			.use(Webcam, {
+				target: Dashboard,
+				// countdown: true,
+				showRecordingLength: true,
+				// preferredVideoMimeType: ['video/mp4'],
+			})
 			.use(ImageEditor, { target: Dashboard })
 
-		uppy.on('complete', result => {
-			console.log('successful files:', result.successful)
-			console.log('failed files:', result.failed)
-			// TODO: handle success and fail
-		})
+		
+		uppy
+			.on('file-added', () => uppy_files = uppy.getFiles())
+			.on('file-removed', () => uppy_files = uppy.getFiles())
+			.on('complete', result => {
+			})
 
 	})
 
-	// function insert_block() {
-	// 	editor.blocks.insert('paragraph', null, null, editor.blocks.getBlocksCount(), true)
-	// }
-
 	onDestroy(() => {
-		// if ((editor && editor.destroy) || components.length) {
-		// 	for (let comp of components) {
-		// 		comp.$destroy()
-		// 	}
-		// 	editor.destroy()
-		// 	editor = null
-		// }
-
-
-		// if ($hot) {
-		// 	$hot.destroy()
-		// 	$hot = null
-		// }
-
+		if (uppy) {
+			uppy.close()
+			uppy = null
+		}
 	})
 </script>
 

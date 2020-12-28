@@ -37,7 +37,7 @@
 	let table_init
 	$: if ($hot_loaded && table && !table_init) {
 		table_init = true
-		window.hot = $hot = new Handsontable(table, Object.assign({
+		$hot = new Handsontable(table, Object.assign({
 			data: [['no data']],
 			rowHeaders: true,
 			colHeaders: true,
