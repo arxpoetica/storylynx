@@ -10,7 +10,7 @@
 	import Uppy from '../uppy/Uppy.svelte'
 	// import Errors from '../../components/widgets/Errors.svelte'
 
-	export let data
+	// export let data
 	export let open
 	let upload_only = true
 </script>
