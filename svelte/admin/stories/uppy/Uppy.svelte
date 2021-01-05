@@ -78,6 +78,13 @@
 				allowedFileTypes: ['image/*', 'audio/*', 'video/*']
 			},
 			// logger: Uppy.debugLogger,
+			onBeforeFileAdded: (current, files) => {
+				if (current.name.match(/[^a-z0-9\_\-\.]+/gi)) {
+					alert(`The file named ${current.name} is invalid.\n\nFile names must be alphanumeric and additionally only contain underscores, hyphens, or periods.`)
+					return false
+				}
+				return true
+			},
 		})
 			.use(Dashboard, {
 				target: '#uppy-dashboard',
