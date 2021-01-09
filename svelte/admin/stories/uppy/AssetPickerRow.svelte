@@ -2,7 +2,9 @@
 	<div><AssetThumb {asset}/></div>
 	<div class="filename"><span>{asset.filename}</span></div>
 	<div class="timestamp">{dayjs(asset.created).format('MMM D, YYYY h:mma')}</div>
-	<div><Checkbox classes="good" propagate={true} bind:checked={asset.picked}/></div>
+	{#if can_pick}
+		<div><Checkbox classes="good" propagate={true} bind:checked={asset.picked}/></div>
+	{/if}
 </div>
 
 <script>
@@ -13,6 +15,7 @@
 	export let assets
 	export let picked
 	export let asset
+	export let can_pick
 
 	function toggle_asset() {
 		if (picked.has(asset.id)) {

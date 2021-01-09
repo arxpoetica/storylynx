@@ -15,6 +15,8 @@
 	import Button from '../../components/elements/Button.svelte'
 
 	export let open
+	export let saving
+	export let uploaded
 	export let upload = true
 	export let upload_only
 	let uppy
@@ -129,9 +131,27 @@
 		uppy
 			.on('file-added', () => uppy_files = uppy.getFiles())
 			.on('file-removed', () => uppy_files = uppy.getFiles())
-			.on('complete', result => open = false)
+			.on('complete', result => {
+				saving = true
+				poll(result.successful.map(file => file.name))
+			})
 
 	})
+
+	let timer
+	async function poll(filenames) {
+		clearTimeout(timer)
+		const { count } = await POST('/api/admin/uppy/assets-upload-check.post', { filenames })
+		if (count >= filenames.length) {
+			if (upload_only) {
+				const { assets } = await POST('/api/admin/uppy/assets-upload-page.post', { filenames })
+				uploaded = assets
+			}
+			saving = false
+		} else {
+			timer = setTimeout(() => poll(filenames), 2500)
+		}
+	}
 
 	onDestroy(() => {
 		if (uppy) {

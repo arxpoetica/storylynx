@@ -5,10 +5,12 @@
 				<div class="thumb-td"></div>
 				<div class="filename">Filename</div>
 				<div class="timestamp">Created</div>
-				<div class="actions"></div>
+				{#if can_pick}
+					<div class="actions"></div>
+				{/if}
 			</div>
 			{#each [...picked] as [key, asset] (key)}
-				<AssetPickerRow bind:assets bind:picked {asset}/>
+				<AssetPickerRow bind:assets bind:picked {asset} {can_pick}/>
 			{/each}
 		</div>
 	{/if}
@@ -21,11 +23,13 @@
 					<div class="thumb-td"></div>
 					<div class="filename">Filename</div>
 					<div class="timestamp">Created</div>
-					<div class="actions"></div>
+					{#if can_pick}
+						<div class="actions"></div>
+					{/if}
 				</div>
 				{#each assets as asset (asset.id)}
 					{#if !picked.has(asset.id)}
-						<AssetPickerRow bind:assets bind:picked {asset}/>
+						<AssetPickerRow bind:assets bind:picked {asset} {can_pick}/>
 					{/if}
 				{/each}
 			</div>
@@ -43,6 +47,7 @@
 	export let picked
 	export let search
 	export let loading
+	export let can_pick = true
 </script>
 
 <style type="text/scss">
@@ -50,6 +55,7 @@
 		overflow-x: hidden;
 		overflow-y: auto;
 		position: relative;
+		width: 100%;
 		height: 100%;
 		@mixin scrollbar {}
 		:global {
