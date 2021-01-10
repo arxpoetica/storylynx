@@ -1,9 +1,23 @@
 <div class="uppy-component">
-	<div class="uppy" id="uppy-dashboard"></div>
+	{#if uploaded}
+		<AssetPickerList assets={uploaded} picked={new Map()} can_pick={false}/>
+	{:else}
+		<div class="uppy" id="uppy-dashboard"></div>
+	{/if}
 	<Buttons classes="no-margin align-right">
-		<Button label="Cancel" classes="blank warn" handler={cancel}/>
-		<Button label="Upload Assets" classes="good" handler={start_upload} disabled={!uppy_files.length}/>
+		<Button label={button_label} classes="blank warn" handler={cancel}/>
+		{#if !uploaded}
+			<Button label="Upload Assets" classes="good" handler={start_upload} disabled={!uppy_files.length}/>
+		{/if}
 	</Buttons>
+	{#if saving}
+		<div class="saver">
+			<h2>Please wait.</h2>
+			<p>Please wait while we finish the upload process.<br>This may take a few minutes.</p>
+			<br>
+			<Hourglass saving_text="uploading"/>
+		</div>
+	{/if}
 </div>
 
 <script>
@@ -11,16 +25,20 @@
 	import { uppy_loaded } from '../../../../stores/admin-store.js'
 	import { POST } from '../../../../utils/loaders.js'
 
+	import AssetPickerList from './AssetPickerList.svelte'
 	import Buttons from '../../components/elements/Buttons.svelte'
 	import Button from '../../components/elements/Button.svelte'
+	import Hourglass from '../../components/widgets/Hourglass.svelte'
 
 	export let open
-	export let saving
-	export let uploaded
 	export let upload = true
+	export let uploaded = false
 	export let upload_only
 	let uppy
 	let uppy_files = []
+	let saving = false
+
+	$: button_label = upload_only ? 'Close' : (uploaded ? 'Done' : 'Cancel')
 
 	async function start_upload() {
 		uppy_files = uppy.getFiles()
@@ -143,10 +161,8 @@
 		clearTimeout(timer)
 		const { count } = await POST('/api/admin/uppy/assets-upload-check.post', { filenames })
 		if (count >= filenames.length) {
-			if (upload_only) {
-				const { assets } = await POST('/api/admin/uppy/assets-upload-page.post', { filenames })
-				uploaded = assets
-			}
+			const { assets } = await POST('/api/admin/uppy/assets-upload-page.post', { filenames })
+			uploaded = assets
 			saving = false
 		} else {
 			timer = setTimeout(() => poll(filenames), 2500)
@@ -164,10 +180,14 @@
 <style type="text/scss">
 	.uppy-component {
 		overflow: hidden;
+		position: relative;
 		display: grid;
 		grid-template-rows: 1fr auto;
 		grid-gap: 40rem;
 		height: 100%;
+		:global(.picker-list) {
+			height: auto;
+		}
 	}
 	.uppy {
 		overflow: hidden;
@@ -194,6 +214,23 @@
 			.uppy-size--md .uppy-Dashboard-AddFiles-title {
 				max-width: none;
 			}
+		}
+	}
+	.saver {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		text-align: center;
+		background-color: var(--admin-bg);
+		z-index: 10000;
+		:global(.hourglass) {
+			height: auto;
 		}
 	}
 </style>
